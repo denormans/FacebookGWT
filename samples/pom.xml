@@ -2,19 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>facebook-gwt-samples</artifactId>
+  <packaging>war</packaging>
+
+  <name>Facebook GWT Samples</name>
+
   <parent>
     <artifactId>facebook-gwt</artifactId>
     <groupId>com.denormans</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>facebook-gwt-samples</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>com.denormans</groupId>
       <artifactId>facebook-gwt-api</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -30,8 +35,6 @@
   </dependencies>
 
   <build>
-    <finalName>multipaas-${artifactId}-${project.version}</finalName>
-
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -39,14 +42,18 @@
         <configuration>
           <module>com.denormans.facebookgwt.samples.FacebookGWTSamples</module>
           
+          <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+
+          <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
         </configuration>
         <executions>
           <execution>
+            <id>compile-gwt</id>
             <goals>
-              <!-- Need to ensure JavaDoc is up to date on normal services and remove hand-maintained Async classes -->
-              <!--<goal>generateAsync</goal>-->
-              <goal>resources</goal>
+              <goal>compile</goal>
             </goals>
+            <configuration>
+            </configuration>
           </execution>
         </executions>
       </plugin>
