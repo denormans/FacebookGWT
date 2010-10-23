@@ -1,19 +1,22 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>facebook-gwt-api</artifactId>
-  <packaging>jar</packaging>
-
-  <name>facebook-gwt-api</name>
-
   <parent>
-    <groupId>com.denormans</groupId>
     <artifactId>facebook-gwt</artifactId>
+    <groupId>com.denormans</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>facebook-gwt-samples</artifactId>
 
   <dependencies>
+    <dependency>
+      <groupId>com.denormans</groupId>
+      <artifactId>facebook-gwt-api</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
@@ -34,8 +37,8 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
-          <module>com.denormans.facebookgwt.api</module>
-          <servicePattern>**/api/client/*Service.java</servicePattern>
+          <module>com.denormans.facebookgwt.samples.FacebookGWTSamples</module>
+          
         </configuration>
         <executions>
           <execution>
