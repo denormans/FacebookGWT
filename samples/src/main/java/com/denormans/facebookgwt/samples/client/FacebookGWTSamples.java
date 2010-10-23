@@ -19,8 +19,12 @@
 package com.denormans.facebookgwt.samples.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * <tt>FacebookGWTSamples</tt>
@@ -29,7 +33,39 @@ import com.google.gwt.user.client.ui.RootPanel;
  * @version 1.0
  */
 public class FacebookGWTSamples implements EntryPoint {
+  private static final Logger Log = Logger.getLogger(FacebookGWTSamples.class.getName());
+
+  private static FacebookGWTSamples sInstance;
+
+  public static FacebookGWTSamples get() {
+    if (sInstance == null) {
+      throw new IllegalStateException("Module not loaded");
+    }
+
+    return sInstance;
+  }
+
   public void onModuleLoad() {
+    if (sInstance != null) {
+      return;
+    }
+
+    sInstance = this;
+
+    GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
+      @Override
+      public void onUncaughtException(final Throwable t) {
+        handleError("An unknown error occurred", t);
+      }
+    });
+
+    RootPanel.get("FBGWTLoadingTextID").setVisible(false);
     RootPanel.get().add(new HTML("Module Loaded..."));
+
+    Log.info("FacebookGWTSamples Module loaded");
+  }
+
+  public void handleError(final String message, final Throwable t) {
+    Log.log(Level.SEVERE, message, t);
   }
 }

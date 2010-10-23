@@ -19,7 +19,9 @@
 body {
   background-color: white;
   color: black;
-  font-family: Arial, sans-serif;
+  font-family: Tahoma, Verdana, Arial, sans-serif;
   font-size: small;
   margin: 8px;
 }
+
+#FBGWTLoadingTextID { font-size: 8px; font-style: italic; color: #888; }
