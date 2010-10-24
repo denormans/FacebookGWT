@@ -18,6 +18,12 @@
 
 package com.denormans.facebookgwt.samples.client;
 
+import com.denormans.facebookgwt.api.client.FacebookGWTAPI;
+import com.denormans.facebookgwt.api.client.events.FacebookInitFailureEvent;
+import com.denormans.facebookgwt.api.client.events.FacebookInitFailureHandler;
+import com.denormans.facebookgwt.api.client.events.FacebookInitSuccessEvent;
+import com.denormans.facebookgwt.api.client.events.FacebookInitSuccessHandler;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HTML;
@@ -26,24 +32,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * <tt>FacebookGWTSamples</tt>
- *
- * @author mnorman
- * @version 1.0
- */
 public class FacebookGWTSamples implements EntryPoint {
   private static final Logger Log = Logger.getLogger(FacebookGWTSamples.class.getName());
 
   private static FacebookGWTSamples sInstance;
-
-  public static FacebookGWTSamples get() {
-    if (sInstance == null) {
-      throw new IllegalStateException("Module not loaded");
-    }
-
-    return sInstance;
-  }
 
   public void onModuleLoad() {
     if (sInstance != null) {
@@ -60,12 +52,44 @@ public class FacebookGWTSamples implements EntryPoint {
     });
 
     RootPanel.get("FBGWTLoadingTextID").setVisible(false);
-    RootPanel.get().add(new HTML("Module Loaded..."));
+    RootPanel.get().add(new HTML("Module Loaded"));
+
+    FacebookGWTAPI.get().addFacebookInitFailureHandler(new FacebookInitFailureHandler() {
+      @Override
+      public void onFacebookInitFailure(final FacebookInitFailureEvent event) {
+        handleError("Facebook failed to load");
+      }
+    });
+    FacebookGWTAPI.get().initialize();
+
+    FacebookGWTAPI.get().addFacebookInitSuccessHandler(new FacebookInitSuccessHandler() {
+      @Override
+      public void onFacebookInitialized(final FacebookInitSuccessEvent event) {
+        RootPanel.get().add(new HTML("Facebook Loaded"));
+        Log.info("Facebook loaded");
+      }
+    });
 
     Log.info("FacebookGWTSamples Module loaded");
   }
 
+  public void handleError(final String message) {
+    handleError(message, null);
+  }
+
   public void handleError(final String message, final Throwable t) {
-    Log.log(Level.SEVERE, message, t);
+    if (t != null) {
+      Log.log(Level.SEVERE, message, t);
+    } else {
+      Log.log(Level.SEVERE, message);
+    }
+  }
+
+  public static FacebookGWTSamples get() {
+    if (sInstance == null) {
+      throw new IllegalStateException("Module not loaded");
+    }
+
+    return sInstance;
   }
 }
