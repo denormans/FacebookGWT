@@ -18,15 +18,13 @@
 
 package com.denormans.facebookgwt.api.client.events;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.event.shared.EventHandler;
 
-public interface HasFacebookInitSuccessHandler extends HasHandlers {
+public interface FBInitSuccessHandler extends EventHandler {
   /**
-   * Adds a {@link FacebookInitSuccessEvent} handler.
+   * Called when {@link FBInitSuccessEvent} is fired.
    *
-   * @param handler the handler
-   * @return the registration for the event
+   * @param event the {@link FBInitSuccessEvent} that was fired
    */
-  HandlerRegistration addFacebookInitSuccessHandler(FacebookInitSuccessHandler handler);
+  void onFBInitSuccess(FBInitSuccessEvent event);
 }

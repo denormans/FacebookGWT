@@ -18,11 +18,11 @@
 
 package com.denormans.facebookgwt.api.client;
 
-import com.denormans.facebookgwt.api.client.events.FacebookInitFailureEvent;
-import com.denormans.facebookgwt.api.client.events.FacebookInitFailureHandler;
-import com.denormans.facebookgwt.api.client.events.FacebookInitSuccessEvent;
-import com.denormans.facebookgwt.api.client.events.FacebookInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.events.HasFacebookInitHandlers;
+import com.denormans.facebookgwt.api.client.events.FBInitFailureEvent;
+import com.denormans.facebookgwt.api.client.events.FBInitFailureHandler;
+import com.denormans.facebookgwt.api.client.events.FBInitSuccessEvent;
+import com.denormans.facebookgwt.api.client.events.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.events.HasFBInitHandlers;
 
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
@@ -38,17 +38,17 @@ import com.google.gwt.user.client.Window;
 
 import java.util.logging.Logger;
 
-public final class FacebookGWTAPI implements HasFacebookInitHandlers {
+public final class FacebookGWTAPI implements HasFBInitHandlers {
   private static final Logger Log = Logger.getLogger(FacebookGWTAPI.class.getName());
 
   public enum InitializationState { Uninitialized, Initializing, Initialized }
 
-  private static final String FacebookRootElementID = "fb-root";
-  private static final String FacebookScriptElementID = "fb-script-all";
+  public static final int InitializationTimeout = 10;
+
+  public static final String FacebookRootElementID = "fb-root";
+  public static final String FacebookScriptElementID = "fb-script-all";
   private static final String FacebookScriptServer = "connect.facebook.net";
   private static final String FacebookScriptLocation = "en_US/all.js";
-
-  private static final int InitializationTimeout = 10;
 
   private static FacebookGWTAPI sInstance;
 
@@ -58,14 +58,25 @@ public final class FacebookGWTAPI implements HasFacebookInitHandlers {
   private Timer initializationTimer;
 
   /**
-   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered as required for when Facebook is initialized.
+   * Returns the current initialization state.  If {@link #initialize} call hasn't been called yet, the state is {@link InitializationState#Uninitialized}.
+   *
+   * @return the initialization state.
+   */
+  public InitializationState getInitializationState() {
+    return initializationState;
+  }
+
+  /**
+   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered to be called when Facebook is initialized.
+   *
+   * Uses the default initialization timeout.
    */
   public void initialize() {
     initialize(InitializationTimeout);
   }
 
   /**
-   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered as required for when Facebook is initialized.
+   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered to be called when Facebook is initialized.
    * <p>
    * Calling this method will eventually fire all registered init events, even if already initialized.
    *
@@ -113,7 +124,7 @@ public final class FacebookGWTAPI implements HasFacebookInitHandlers {
         initializationTimer = new Timer() {
           @Override
           public void run() {
-            FacebookInitFailureEvent.fire(FacebookGWTAPI.this);
+            FBInitFailureEvent.fire(FacebookGWTAPI.this);
           }
         };
       }
@@ -152,26 +163,22 @@ public final class FacebookGWTAPI implements HasFacebookInitHandlers {
     initializationTimer.cancel();
     initializationTimer = null;
 
-    Log.fine("Facebook initialized!");
+    Log.fine("Facebook initialized");
     fireInitSuccess();
   }
 
   private void fireInitSuccess() {
-    FacebookInitSuccessEvent.fire(this);
-  }
-
-  public InitializationState getInitializationState() {
-    return initializationState;
+    FBInitSuccessEvent.fire(this);
   }
 
   @Override
-  public HandlerRegistration addFacebookInitSuccessHandler(final FacebookInitSuccessHandler handler) {
-    return eventBus.addHandler(FacebookInitSuccessEvent.getType(), handler);
+  public HandlerRegistration addFBInitSuccessHandler(final FBInitSuccessHandler handler) {
+    return eventBus.addHandler(FBInitSuccessEvent.getType(), handler);
   }
 
   @Override
-  public HandlerRegistration addFacebookInitFailureHandler(final FacebookInitFailureHandler handler) {
-    return eventBus.addHandler(FacebookInitFailureEvent.getType(), handler);
+  public HandlerRegistration addFBInitFailureHandler(final FBInitFailureHandler handler) {
+    return eventBus.addHandler(FBInitFailureEvent.getType(), handler);
   }
 
   @Override

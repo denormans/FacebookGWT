@@ -18,5 +18,47 @@
 
 package com.denormans.facebookgwt.api.client.events;
 
-public interface HasFacebookInitHandlers extends HasFacebookInitSuccessHandler, HasFacebookInitFailureHandler {
+import com.google.gwt.event.shared.GwtEvent;
+
+public class FBInitFailureEvent extends GwtEvent<FBInitFailureHandler> {
+  private static Type<FBInitFailureHandler> sType;
+
+  /**
+   * Fires a Facebook init failure event on all registered handlers in the handler
+   * manager. If no such handlers exist, this method will do nothing.
+   *
+   * @param source the source of the handlers
+   */
+  public static void fire(HasFBInitFailureHandler source) {
+    if (sType != null) {
+      FBInitFailureEvent event = new FBInitFailureEvent();
+      source.fireEvent(event);
+    }
+  }
+
+  /**
+   * Gets the type associated with this event.
+   *
+   * @return returns the handler type
+   */
+  public static Type<FBInitFailureHandler> getType() {
+    if (sType == null) {
+      sType = new Type<FBInitFailureHandler>();
+    }
+
+    return sType;
+  }
+
+  protected FBInitFailureEvent() {
+  }
+
+  @Override
+  public Type<FBInitFailureHandler> getAssociatedType() {
+    return sType;
+  }
+
+  @Override
+  protected void dispatch(final FBInitFailureHandler handler) {
+    handler.onFBInitFailure(this);
+  }
 }

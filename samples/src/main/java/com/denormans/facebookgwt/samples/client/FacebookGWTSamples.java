@@ -19,10 +19,10 @@
 package com.denormans.facebookgwt.samples.client;
 
 import com.denormans.facebookgwt.api.client.FacebookGWTAPI;
-import com.denormans.facebookgwt.api.client.events.FacebookInitFailureEvent;
-import com.denormans.facebookgwt.api.client.events.FacebookInitFailureHandler;
-import com.denormans.facebookgwt.api.client.events.FacebookInitSuccessEvent;
-import com.denormans.facebookgwt.api.client.events.FacebookInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.events.FBInitFailureEvent;
+import com.denormans.facebookgwt.api.client.events.FBInitFailureHandler;
+import com.denormans.facebookgwt.api.client.events.FBInitSuccessEvent;
+import com.denormans.facebookgwt.api.client.events.FBInitSuccessHandler;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -35,6 +35,8 @@ import java.util.logging.Logger;
 
 public class FacebookGWTSamples implements EntryPoint {
   private static final Logger Log = Logger.getLogger(FacebookGWTSamples.class.getName());
+
+  private static final String SamplesFacebookApplicationID = "160704113964450";
 
   private static FacebookGWTSamples sInstance;
 
@@ -55,16 +57,16 @@ public class FacebookGWTSamples implements EntryPoint {
       }
     });
 
-    initFailureHandlerRegistration = FacebookGWTAPI.get().addFacebookInitFailureHandler(new FacebookInitFailureHandler() {
+    initFailureHandlerRegistration = FacebookGWTAPI.get().addFBInitFailureHandler(new FBInitFailureHandler() {
       @Override
-      public void onFacebookInitFailure(final FacebookInitFailureEvent event) {
+      public void onFBInitFailure(final FBInitFailureEvent event) {
         handleError("Facebook failed to load");
       }
     });
 
-    initSuccessHandlerRegistration = FacebookGWTAPI.get().addFacebookInitSuccessHandler(new FacebookInitSuccessHandler() {
+    initSuccessHandlerRegistration = FacebookGWTAPI.get().addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
-      public void onFacebookInitialized(final FacebookInitSuccessEvent event) {
+      public void onFBInitSuccess(final FBInitSuccessEvent event) {
         handleFacebookInitialized();
 
         // Don't want to do this twice

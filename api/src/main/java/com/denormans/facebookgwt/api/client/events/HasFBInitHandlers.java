@@ -18,15 +18,5 @@
 
 package com.denormans.facebookgwt.api.client.events;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
-
-public interface HasFacebookInitFailureHandler extends HasHandlers {
-  /**
-   * Adds a {@link FacebookInitFailureEvent} handler.
-   *
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addFacebookInitFailureHandler(FacebookInitFailureHandler handler);
+public interface HasFBInitHandlers extends HasFBInitSuccessHandler, HasFBInitFailureHandler {
 }
