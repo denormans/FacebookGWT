@@ -26,6 +26,7 @@ import com.denormans.facebookgwt.api.client.events.FacebookInitSuccessHandler;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -36,6 +37,9 @@ public class FacebookGWTSamples implements EntryPoint {
   private static final Logger Log = Logger.getLogger(FacebookGWTSamples.class.getName());
 
   private static FacebookGWTSamples sInstance;
+
+  private HandlerRegistration initFailureHandlerRegistration;
+  private HandlerRegistration initSuccessHandlerRegistration;
 
   public void onModuleLoad() {
     if (sInstance != null) {
@@ -54,21 +58,26 @@ public class FacebookGWTSamples implements EntryPoint {
     RootPanel.get("FBGWTLoadingTextID").setVisible(false);
     RootPanel.get().add(new HTML("Module Loaded"));
 
-    FacebookGWTAPI.get().addFacebookInitFailureHandler(new FacebookInitFailureHandler() {
+    initFailureHandlerRegistration = FacebookGWTAPI.get().addFacebookInitFailureHandler(new FacebookInitFailureHandler() {
       @Override
       public void onFacebookInitFailure(final FacebookInitFailureEvent event) {
         handleError("Facebook failed to load");
       }
     });
-    FacebookGWTAPI.get().initialize();
 
-    FacebookGWTAPI.get().addFacebookInitSuccessHandler(new FacebookInitSuccessHandler() {
+    initSuccessHandlerRegistration = FacebookGWTAPI.get().addFacebookInitSuccessHandler(new FacebookInitSuccessHandler() {
       @Override
       public void onFacebookInitialized(final FacebookInitSuccessEvent event) {
         RootPanel.get().add(new HTML("Facebook Loaded"));
         Log.info("Facebook loaded");
+
+        // Don't want to do this twice
+        initFailureHandlerRegistration.removeHandler();
+        initSuccessHandlerRegistration.removeHandler();
       }
     });
+
+    FacebookGWTAPI.get().initialize();
 
     Log.info("FacebookGWTSamples Module loaded");
   }

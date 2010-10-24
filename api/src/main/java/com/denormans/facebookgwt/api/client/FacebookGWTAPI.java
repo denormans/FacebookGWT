@@ -32,9 +32,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 
@@ -43,34 +41,56 @@ import java.util.logging.Logger;
 public final class FacebookGWTAPI implements HasFacebookInitHandlers {
   private static final Logger Log = Logger.getLogger(FacebookGWTAPI.class.getName());
 
+  public enum InitializationState { Uninitialized, Initializing, Initialized }
+
   private static final String FacebookRootElementID = "fb-root";
   private static final String FacebookScriptElementID = "fb-script-all";
   private static final String FacebookScriptServer = "connect.facebook.net";
   private static final String FacebookScriptLocation = "en_US/all.js";
 
-  private static final int InitializationTimeout = 10000;
+  private static final int InitializationTimeout = 10;
 
   private static FacebookGWTAPI sInstance;
 
   private EventBus eventBus = new SimpleEventBus();
 
-  private boolean isInitializing;
-  private boolean isInitialized;
+  private InitializationState initializationState = InitializationState.Uninitialized;
   private Timer initializationTimer;
 
   /**
    * Initialize Facebook.  This is handled asynchronously so callbacks should be registered as required for when Facebook is initialized.
-   *
-   * @return <tt>true</tt> if initialization was initiated.  <tt>false</tt> if initialization has already begun or is complete.
    */
-  public synchronized boolean initialize() {
-    if (isInitializing || isInitialized) {
-      return false;
+  public void initialize() {
+    initialize(InitializationTimeout);
+  }
+
+  /**
+   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered as required for when Facebook is initialized.
+   * <p>
+   * Calling this method will eventually fire all registered init events, even if already initialized.
+   *
+   * @param initializationTimeout The timeout (in seconds) before an init failure event is fired.
+   */
+  public synchronized void initialize(final int initializationTimeout) {
+    if (initializationState == InitializationState.Initializing) {
+      return;
     }
 
-    isInitializing = true;
+    if (initializationState == InitializationState.Initialized) {
+      fireInitSuccess();
+      return;
+    }
+
+    initializationState = InitializationState.Initializing;
     Log.fine("Initializing Facebook...");
     setupFBAsyncInitCallback();
+
+    if (hasFacebookScriptElement()) {
+      // found the script block, so assume we're initialized
+      initializationState = InitializationState.Initialized;
+      fireInitSuccess();
+      return;
+    }
 
     Document doc = Document.get();
     Element fbRootElement = doc.getElementById(FacebookRootElementID);
@@ -81,35 +101,36 @@ public final class FacebookGWTAPI implements HasFacebookInitHandlers {
       bodyElement.appendChild(fbRootElement);
     }
 
-    ScriptElement script = Document.get().createScriptElement();
+    ScriptElement script = doc.createScriptElement();
     script.setType("text/javascript");
     script.setId(FacebookScriptElementID);
     script.setSrc(Window.Location.getProtocol() + "//" + FacebookScriptServer + "/" + FacebookScriptLocation);
     // facebook seems to think this async is necessary
     script.setPropertyBoolean("async", true);
 
-    if (initializationTimer == null) {
-      initializationTimer = new Timer() {
-        @Override
-        public void run() {
-          FacebookInitFailureEvent.fire(FacebookGWTAPI.this);
-          unloadFacebookScript();
-        }
-      };
+    if (initializationTimeout > 0) {
+      if (initializationTimer == null) {
+        initializationTimer = new Timer() {
+          @Override
+          public void run() {
+            FacebookInitFailureEvent.fire(FacebookGWTAPI.this);
+          }
+        };
+      }
+      initializationTimer.cancel();
+      initializationTimer.schedule(initializationTimeout * 1000);
     }
-    initializationTimer.schedule(InitializationTimeout);
 
     fbRootElement.appendChild(script);
-
-    return true;
   }
 
-  /**
-   * Cancel facebook initialization
-   */
-  public void cancelInitialization() {
-    initializationTimer.cancel();
-    unloadFacebookScript();
+  private boolean hasFacebookScriptElement() {
+    Document doc = Document.get();
+    if (doc.getElementById(FacebookScriptElementID) != null) {
+      return true;
+    }
+
+    return false;
   }
 
   private native void setupFBAsyncInitCallback() /*-{
@@ -126,41 +147,21 @@ public final class FacebookGWTAPI implements HasFacebookInitHandlers {
   }-*/;
 
   private void handleFBAsyncInit() {
-    isInitialized = true;
+    initializationState = InitializationState.Initialized;
+
     initializationTimer.cancel();
+    initializationTimer = null;
+
     Log.fine("Facebook initialized!");
+    fireInitSuccess();
+  }
+
+  private void fireInitSuccess() {
     FacebookInitSuccessEvent.fire(this);
-    unloadFacebookScript();
   }
 
-  public boolean isInitializing() {
-    return isInitializing;
-  }
-
-  public boolean isInitialized() {
-    return isInitialized;
-  }
-
-  private void unloadFacebookScript() {
-    if (true) {
-      return;
-    }
-
-    // IE doesn't allow the script tag to be removed inside the script itself.
-    DeferredCommand.addCommand(new Command() {
-      @Override
-      public void execute() {
-        Log.fine("Unloading Facebook script");
-
-        Element scriptElement = Document.get().getElementById(FacebookScriptElementID);
-        if (scriptElement != null) {
-          Element parentElement = scriptElement.getParentElement();
-          if (parentElement != null) {
-            parentElement.removeChild(scriptElement);
-          }
-        }
-      }
-    });
+  public InitializationState getInitializationState() {
+    return initializationState;
   }
 
   @Override
