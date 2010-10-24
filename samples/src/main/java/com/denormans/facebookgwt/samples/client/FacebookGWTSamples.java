@@ -68,8 +68,7 @@ public class FacebookGWTSamples implements EntryPoint {
     initSuccessHandlerRegistration = FacebookGWTAPI.get().addFacebookInitSuccessHandler(new FacebookInitSuccessHandler() {
       @Override
       public void onFacebookInitialized(final FacebookInitSuccessEvent event) {
-        RootPanel.get().add(new HTML("Facebook Loaded"));
-        Log.info("Facebook loaded");
+        handleFacebookInitialized();
 
         // Don't want to do this twice
         initFailureHandlerRegistration.removeHandler();
@@ -80,6 +79,11 @@ public class FacebookGWTSamples implements EntryPoint {
     FacebookGWTAPI.get().initialize();
 
     Log.info("FacebookGWTSamples Module loaded");
+  }
+
+  private void handleFacebookInitialized() {
+    RootPanel.get().add(new HTML("Facebook Loaded"));
+    Log.info("Facebook loaded");
   }
 
   public void handleError(final String message) {
