@@ -55,9 +55,6 @@ public class FacebookGWTSamples implements EntryPoint {
       }
     });
 
-    RootPanel.get("FBGWTLoadingTextID").setVisible(false);
-    RootPanel.get().add(new HTML("Module Loaded"));
-
     initFailureHandlerRegistration = FacebookGWTAPI.get().addFacebookInitFailureHandler(new FacebookInitFailureHandler() {
       @Override
       public void onFacebookInitFailure(final FacebookInitFailureEvent event) {
@@ -78,7 +75,14 @@ public class FacebookGWTSamples implements EntryPoint {
 
     FacebookGWTAPI.get().initialize();
 
+    handleModuleLoaded();
+
     Log.info("FacebookGWTSamples Module loaded");
+  }
+
+  private void handleModuleLoaded() {
+    RootPanel.get("FBGWTLoadingTextID").setVisible(false);
+    RootPanel.get().add(new HTML("Module Loaded"));
   }
 
   private void handleFacebookInitialized() {
