@@ -16,17 +16,15 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.events.init;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.event.shared.EventHandler;
 
-public interface HasFBInitFailureHandler extends HasHandlers {
+public interface FBInitFailureHandler extends EventHandler {
   /**
-   * Adds a {@link FBInitFailureEvent} handler.
+   * Called when {@link FBInitFailureEvent} is fired.
    *
-   * @param handler the handler
-   * @return the registration for the event
+   * @param event the {@link FBInitFailureEvent} that was fired
    */
-  HandlerRegistration addFBInitFailureHandler(FBInitFailureHandler handler);
+  void onFBInitFailure(FBInitFailureEvent event);
 }

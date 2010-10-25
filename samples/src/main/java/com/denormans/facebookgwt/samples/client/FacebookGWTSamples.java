@@ -19,10 +19,18 @@
 package com.denormans.facebookgwt.samples.client;
 
 import com.denormans.facebookgwt.api.client.FacebookGWTAPI;
-import com.denormans.facebookgwt.api.client.events.FBInitFailureEvent;
-import com.denormans.facebookgwt.api.client.events.FBInitFailureHandler;
-import com.denormans.facebookgwt.api.client.events.FBInitSuccessEvent;
-import com.denormans.facebookgwt.api.client.events.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.events.auth.FBLoginEvent;
+import com.denormans.facebookgwt.api.client.events.auth.FBLoginHandler;
+import com.denormans.facebookgwt.api.client.events.auth.FBLogoutEvent;
+import com.denormans.facebookgwt.api.client.events.auth.FBLogoutHandler;
+import com.denormans.facebookgwt.api.client.events.auth.FBSessionChangeEvent;
+import com.denormans.facebookgwt.api.client.events.auth.FBSessionChangeHandler;
+import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeEvent;
+import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeHandler;
+import com.denormans.facebookgwt.api.client.events.init.FBInitFailureEvent;
+import com.denormans.facebookgwt.api.client.events.init.FBInitFailureHandler;
+import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
+import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -90,6 +98,34 @@ public class FacebookGWTSamples implements EntryPoint {
   private void handleFacebookInitialized() {
     RootPanel.get().add(new HTML("Facebook Loaded"));
     Log.info("Facebook loaded");
+
+    FacebookGWTAPI.get().addFBLoginHandler(new FBLoginHandler() {
+      @Override
+      public void onFBLogin(final FBLoginEvent event) {
+        Log.info("Login event");
+      }
+    });
+
+    FacebookGWTAPI.get().addFBLogoutHandler(new FBLogoutHandler() {
+      @Override
+      public void onFBLogout(final FBLogoutEvent event) {
+        Log.info("Logout event");
+      }
+    });
+
+    FacebookGWTAPI.get().addFBSessionChangeHandler(new FBSessionChangeHandler() {
+      @Override
+      public void onFBSessionChange(final FBSessionChangeEvent event) {
+        Log.info("Session change event");
+      }
+    });
+
+    FacebookGWTAPI.get().addFBStatusChangeHandler(new FBStatusChangeHandler() {
+      @Override
+      public void onFBStatusChange(final FBStatusChangeEvent event) {
+        Log.info("Status change event");
+      }
+    });
   }
 
   public void handleError(final String message) {

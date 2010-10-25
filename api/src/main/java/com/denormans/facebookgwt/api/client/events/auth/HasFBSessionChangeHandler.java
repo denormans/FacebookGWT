@@ -16,49 +16,17 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.events.auth;
 
-import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
 
-public class FBInitSuccessEvent extends GwtEvent<FBInitSuccessHandler> {
-  private static Type<FBInitSuccessHandler> sType;
-
+public interface HasFBSessionChangeHandler extends HasHandlers {
   /**
-   * Fires a Facebook init success event on all registered handlers in the handler
-   * manager. If no such handlers exist, this method will do nothing.
+   * Adds a {@link FBSessionChangeEvent} handler.
    *
-   * @param source the source of the handlers
+   * @param handler the handler
+   * @return the registration for the event
    */
-  public static void fire(HasFBInitSuccessHandler source) {
-    if (sType != null) {
-      FBInitSuccessEvent event = new FBInitSuccessEvent();
-      source.fireEvent(event);
-    }
-  }
-
-  /**
-   * Gets the type associated with this event.
-   *
-   * @return returns the handler type
-   */
-  public static Type<FBInitSuccessHandler> getType() {
-    if (sType == null) {
-      sType = new Type<FBInitSuccessHandler>();
-    }
-
-    return sType;
-  }
-
-  protected FBInitSuccessEvent() {
-  }
-
-  @Override
-  public Type<FBInitSuccessHandler> getAssociatedType() {
-    return sType;
-  }
-
-  @Override
-  protected void dispatch(final FBInitSuccessHandler handler) {
-    handler.onFBInitSuccess(this);
-  }
+  HandlerRegistration addFBSessionChangeHandler(FBSessionChangeHandler handler);
 }

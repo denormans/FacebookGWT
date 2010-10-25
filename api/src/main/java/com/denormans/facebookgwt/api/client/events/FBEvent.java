@@ -18,47 +18,45 @@
 
 package com.denormans.facebookgwt.api.client.events;
 
-import com.google.gwt.event.shared.GwtEvent;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FBInitFailureEvent extends GwtEvent<FBInitFailureHandler> {
-  private static Type<FBInitFailureHandler> sType;
+public enum FBEvent {
+  AuthLogin("auth.login"),
+  AuthLogout("auth.logout"),
+  AuthSessionChange("auth.sessionChange"),
+  AuthStatusChange("auth.statusChange"),
+  XFBMLRender("xfbml.render"),
+  EdgeCreate("edge.create"),
+  CommentsAdd("comments.add"),
+  FBLog("fb.log");
 
-  /**
-   * Fires a Facebook init failure event on all registered handlers in the handler
-   * manager. If no such handlers exist, this method will do nothing.
-   *
-   * @param source the source of the handlers
-   */
-  public static void fire(HasFBInitFailureHandler source) {
-    if (sType != null) {
-      FBInitFailureEvent event = new FBInitFailureEvent();
-      source.fireEvent(event);
-    }
-  }
+  private static final Map<String, FBEvent> sEventByApiValue = createEventByApiValueMap();
 
-  /**
-   * Gets the type associated with this event.
-   *
-   * @return returns the handler type
-   */
-  public static Type<FBInitFailureHandler> getType() {
-    if (sType == null) {
-      sType = new Type<FBInitFailureHandler>();
+  private static Map<String, FBEvent> createEventByApiValueMap() {
+    HashMap<String, FBEvent> events = new HashMap<String, FBEvent>();
+
+    for (final FBEvent event : values()) {
+      events.put(event.getApiValue(), event);
     }
 
-    return sType;
+    return events;
   }
 
-  protected FBInitFailureEvent() {
+  private String apiValue;
+
+  FBEvent(final String apiValue) {
+    this.apiValue = apiValue;
   }
 
-  @Override
-  public Type<FBInitFailureHandler> getAssociatedType() {
-    return sType;
+  public String getApiValue() {
+    return apiValue;
   }
 
-  @Override
-  protected void dispatch(final FBInitFailureHandler handler) {
-    handler.onFBInitFailure(this);
+  public static FBEvent valueFromApiValue(final String apiValue) {
+    if (apiValue == null) {
+      return null;
+    }
+    return sEventByApiValue.get(apiValue);
   }
 }

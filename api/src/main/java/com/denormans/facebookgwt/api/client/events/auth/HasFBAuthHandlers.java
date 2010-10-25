@@ -16,15 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.events.auth;
 
-import com.google.gwt.event.shared.EventHandler;
-
-public interface FBInitFailureHandler extends EventHandler {
-  /**
-   * Called when {@link FBInitFailureEvent} is fired.
-   *
-   * @param event the {@link FBInitFailureEvent} that was fired
-   */
-  void onFBInitFailure(FBInitFailureEvent event);
+public interface HasFBAuthHandlers extends HasFBLoginHandler, HasFBLogoutHandler, HasFBSessionChangeHandler, HasFBStatusChangeHandler {
 }

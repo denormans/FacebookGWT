@@ -16,7 +16,13 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.events.auth;
 
-public interface HasFBInitHandlers extends HasFBInitSuccessHandler, HasFBInitFailureHandler {
+public interface FBLogoutHandler extends FBAuthHandler {
+  /**
+   * Called when {@link FBLogoutEvent} is fired.
+   *
+   * @param event the {@link FBLogoutEvent} that was fired
+   */
+  void onFBLogout(FBLogoutEvent event);
 }

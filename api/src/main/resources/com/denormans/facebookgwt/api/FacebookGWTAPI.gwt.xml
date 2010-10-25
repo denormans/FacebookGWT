@@ -5,4 +5,5 @@
   <inherits name="com.google.gwt.jsonp.Jsonp"/>
 
   <source path="client"/>
+  <source path="shared"/>
 </module>
