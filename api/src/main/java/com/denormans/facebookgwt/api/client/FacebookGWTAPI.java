@@ -224,6 +224,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
   }
 
   private JSFunction subscribeToEvent(final FBEvent event) {
+    Log.fine("Subscribing to event: " + event);
     return subscribeToEventJS(event.getApiValue());
   }
 
@@ -240,6 +241,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
   }-*/;
 
   private void unsubscribeFromEvent(final FBEvent event, final JSFunction callback) {
+    Log.fine("Unsubscribing from event: " + event);
     unsubscribeFromEventJS(event.getApiValue(), callback);
   }
 
