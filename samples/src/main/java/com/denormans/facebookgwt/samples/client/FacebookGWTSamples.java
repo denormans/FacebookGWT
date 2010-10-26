@@ -31,10 +31,14 @@ import com.denormans.facebookgwt.api.client.events.init.FBInitFailureEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitFailureHandler;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
+import com.denormans.facebookgwt.api.client.js.FBInitOptions;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -83,7 +87,7 @@ public class FacebookGWTSamples implements EntryPoint {
       }
     });
 
-    FacebookGWTAPI.get().initialize();
+    FacebookGWTAPI.get().initialize(FBInitOptions.create(SamplesFacebookApplicationID));
 
     handleModuleLoaded();
 
@@ -124,6 +128,18 @@ public class FacebookGWTSamples implements EntryPoint {
       @Override
       public void onFBStatusChange(final FBStatusChangeEvent event) {
         Log.info("Status change event");
+      }
+    });
+
+    FacebookGWTAPI.get().retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error retrieving login status", caught);
+      }
+
+      @Override
+      public void onSuccess(final FBAuthEventResponse result) {
+        Log.info("Retrieved login status: " + new JSONObject(result).toString());
       }
     });
   }

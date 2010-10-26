@@ -27,23 +27,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class FBAuthEventResponse extends JavaScriptObject {
+public class FBAuthEventResponse extends JavaScriptObject {
   protected FBAuthEventResponse() {
   }
 
-  public FBUserStatus getConvertedStatus() {
+  public final FBUserStatus getConvertedStatus() {
     return FBUserStatus.valueFromApiValue(getStatus());
   }
 
-  public native String getStatus() /*-{
+  public final native String getStatus() /*-{
     return this.status;
   }-*/;
 
-  public native FBSession getSession() /*-{
+  public final native FBSession getSession() /*-{
     return this.session;
   }-*/;
 
-  public List<FBExtendedPermission> getConvertedPermissions() {
+  public final List<FBExtendedPermission> getConvertedPermissions() {
     return convertPermissionsFromApiValues(getPermissions());
   }
 
@@ -57,7 +57,7 @@ public final class FBAuthEventResponse extends JavaScriptObject {
     return permissions;
   }
 
-  public List<String> getPermissions() {
+  public final List<String> getPermissions() {
     return splitPermissionValues(getPermissionsJS());
   }
 

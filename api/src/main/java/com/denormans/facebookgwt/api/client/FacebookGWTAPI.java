@@ -35,7 +35,9 @@ import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.events.init.HasFBInitHandlers;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
+import com.denormans.facebookgwt.api.client.js.FBInitOptions;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
@@ -49,6 +51,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +60,7 @@ import java.util.logging.Logger;
 public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandlers {
   private static final Logger Log = Logger.getLogger(FacebookGWTAPI.class.getName());
 
-  public enum InitializationState { Uninitialized, Initializing, Initialized }
+  public enum InitializationState { Uninitialized, LoadingScript, ScriptLoaded, Initialized }
 
   public static final int InitializationTimeout = 10;
 
@@ -97,9 +100,11 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
    * Initialize Facebook.  This is handled asynchronously so callbacks should be registered to be called when Facebook is initialized.
    *
    * Uses the default initialization timeout.
+   *
+   * @param initOptions initialization options
    */
-  public void initialize() {
-    initialize(InitializationTimeout);
+  public void initialize(final FBInitOptions initOptions) {
+    initialize(initOptions, InitializationTimeout);
   }
 
   /**
@@ -107,10 +112,11 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
    * <p>
    * Calling this method will eventually fire all registered init events, even if already initialized.
    *
+   * @param initOptions initialization options
    * @param initializationTimeout The timeout (in seconds) before an init failure event is fired.
    */
-  public synchronized void initialize(final int initializationTimeout) {
-    if (initializationState == InitializationState.Initializing) {
+  public synchronized void initialize(final FBInitOptions initOptions, final int initializationTimeout) {
+    if (initializationState == InitializationState.LoadingScript || initializationState == InitializationState.ScriptLoaded) {
       return;
     }
 
@@ -119,9 +125,10 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
       return;
     }
 
-    initializationState = InitializationState.Initializing;
+    initializationState = InitializationState.LoadingScript;
     Log.fine("Initializing Facebook...");
-    setupFBAsyncInitCallback();
+
+    setupFBAsyncInitCallback(initOptions);
 
     if (hasFacebookScriptElement()) {
       // found the script block, so assume we're initialized
@@ -168,31 +175,122 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
       return true;
     }
 
+    // enhance: check other script elements for facebook API access (?)
+
     return false;
   }
 
-  private native void setupFBAsyncInitCallback() /*-{
-    var self = this;
-    var oldFBAsyncInit = $wnd.fbAsyncInit;
-    $wnd.fbAsyncInit = function() {
-      // call the old one first
-      if (oldFBAsyncInit) {
-        oldFBAsyncInit();
-      }
+  private native void setupFBAsyncInitCallback(final FBInitOptions initOptions) /*-{
+    try {
+      var self = this;
+      var oldFBAsyncInit = $wnd.fbAsyncInit;
+      $wnd.fbAsyncInit = function() {
+        try {
+          // call the old one first
+          if (oldFBAsyncInit) {
+            oldFBAsyncInit();
+          }
 
-      self.@com.denormans.facebookgwt.api.client.FacebookGWTAPI::handleFBAsyncInit()();
+          self.@com.denormans.facebookgwt.api.client.FacebookGWTAPI::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/js/FBInitOptions;)(initOptions);
+        } catch(e) {
+          @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Ljava/lang/String;)(String(e));
+        }
+      }
+    } catch(e) {
     }
   }-*/;
 
-  private void handleFBAsyncInit() {
-    initializationState = InitializationState.Initialized;
+  private void handleFBAsyncInit(final FBInitOptions initOptions) {
+    initializationState = InitializationState.ScriptLoaded;
 
     initializationTimer.cancel();
     initializationTimer = null;
 
+    if (initOptions != null) {
+      executeFBInit(initOptions);
+    }
+
+    initializationState = InitializationState.Initialized;
+
     Log.fine("Facebook initialized");
     fireInitSuccess();
   }
+
+  public native void executeFBInit(final FBInitOptions initOptions) /*-{
+    try {
+      $wnd.FB.init(initOptions);
+    } catch(e) {
+      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Ljava/lang/String;)(String(e));
+    }
+  }-*/;
+
+  /**
+   * Retrieves the login status asynchronously via the Facebook JSAPI.
+   *
+   * @param callback The callback to receive the results
+   */
+  public native void retrieveLoginStatus(final AsyncCallback<FBAuthEventResponse> callback) /*-{
+    try {
+      $wnd.FB.getLoginStatus(function(response) {
+        callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+      });
+    } catch(e) {
+      var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Ljava/lang/String;)(String(e));
+      callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
+    }
+  }-*/;
+
+  private static void raiseException(final String message) {
+    GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
+    if (uncaughtExceptionHandler == null) {
+      throw new FBException(message);
+    }
+
+    uncaughtExceptionHandler.onUncaughtException(createException(message));
+  }
+
+  private static FBException createException(final String message) {
+    FBException fbException = new FBException(message);
+    fbException.fillInStackTrace();
+    return fbException;
+  }
+
+  private JSFunction subscribeToEvent(final FBEvent event) {
+    Log.fine("Subscribing to event: " + event);
+    return subscribeToEventJS(event.getApiValue());
+  }
+
+  private native JSFunction subscribeToEventJS(final String eventName) /*-{
+    try {
+      var self = this;
+      var callback = function(response) {
+        try {
+          self.@com.denormans.facebookgwt.api.client.FacebookGWTAPI::handleFBEvent(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(eventName, response);
+        } catch(e) {
+          @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Ljava/lang/String;)(String(e));
+        }
+      };
+
+      $wnd.FB.Event.subscribe(eventName, callback);
+
+      return callback;
+    } catch(e) {
+      return @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Ljava/lang/String;)(String(e));
+    }
+  }-*/;
+
+  private void unsubscribeFromEvent(final FBEvent event, final JSFunction callback) {
+    Log.fine("Unsubscribing from event: " + event);
+    unsubscribeFromEventJS(event.getApiValue(), callback);
+  }
+
+  private native void unsubscribeFromEventJS(final String eventName, final JSFunction callback) /*-{
+    try {
+      $wnd.FB.Event.unsubscribe(eventName, callback);
+    } catch(e) {
+      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Ljava/lang/String;)(String(e));
+    }
+  }-*/;
 
   private void handleFBEvent(final String eventName, final JavaScriptObject apiResponse) {
     FBEvent event = FBEvent.valueFromApiValue(eventName);
@@ -222,32 +320,6 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
         Log.warning("Unknown event: " + event);
     }
   }
-
-  private JSFunction subscribeToEvent(final FBEvent event) {
-    Log.fine("Subscribing to event: " + event);
-    return subscribeToEventJS(event.getApiValue());
-  }
-
-  private native JSFunction subscribeToEventJS(final String eventName) /*-{
-    var self = this;
-
-    var callback = function(response) {
-      self.@com.denormans.facebookgwt.api.client.FacebookGWTAPI::handleFBEvent(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(eventName, response);
-    };
-
-    $wnd.FB.Event.subscribe(eventName, callback);
-
-    return callback;
-  }-*/;
-
-  private void unsubscribeFromEvent(final FBEvent event, final JSFunction callback) {
-    Log.fine("Unsubscribing from event: " + event);
-    unsubscribeFromEventJS(event.getApiValue(), callback);
-  }
-
-  private native void unsubscribeFromEventJS(final String eventName, final JSFunction callback) /*-{
-    $wnd.FB.Event.unsubscribe(eventName, callback);
-  }-*/;
 
   protected void fireInitSuccess() {
     FBInitSuccessEvent.fire(this);

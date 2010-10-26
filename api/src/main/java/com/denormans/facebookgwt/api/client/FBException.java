@@ -16,11 +16,22 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.facebookgwt.api.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
+public class FBException extends RuntimeException {
+  public FBException() {
+    super();
+  }
 
-public class FBSession extends JavaScriptObject {
-  protected FBSession() {
+  public FBException(final String message) {
+    super(message);
+  }
+
+  public FBException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
+
+  public FBException(final Throwable cause) {
+    super(cause);
   }
 }
