@@ -19,31 +19,36 @@
 package com.denormans.facebookgwt.api.client.js;
 
 import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
-import com.denormans.facebookgwt.api.shared.FBUserStatus;
 
 import com.google.gwt.core.client.JavaScriptObject;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
-public class FBAuthEventResponse extends JavaScriptObject {
-  protected FBAuthEventResponse() {
+public class FBLoginOptions extends JavaScriptObject {
+  public static FBLoginOptions create() {
+    return FBLoginOptions.createObject().cast();
   }
 
-  public final FBUserStatus getStatus() {
-    return FBUserStatus.valueFromApiValue(getApiStatus());
+  public static FBLoginOptions create(final Collection<FBExtendedPermission> permissions) {
+    FBLoginOptions loginOptions = create();
+
+    loginOptions.setPermissions(permissions);
+
+    return loginOptions;
   }
 
-  public final native String getApiStatus() /*-{
-    return this.status;
-  }-*/;
+  public static FBLoginOptions create(final FBExtendedPermission... permissions) {
+    FBLoginOptions loginOptions = create();
 
-  public final native boolean hasSession() /*-{
-    return this.session != null;
-  }-*/;
+    loginOptions.setPermissions(permissions);
 
-  public final native FBSession getSession() /*-{
-    return this.session;
-  }-*/;
+    return loginOptions;
+  }
+
+  protected FBLoginOptions() {
+  }
 
   public final List<FBExtendedPermission> getPermissions() {
     return FBExtendedPermission.valuesFromApiValues(getApiPermissions());
@@ -55,5 +60,26 @@ public class FBAuthEventResponse extends JavaScriptObject {
 
   private native String getPermissionsJS() /*-{
     return this.perms;
+  }-*/;
+
+  public final void setPermissions(final FBExtendedPermission... permissions) {
+    setPermissions(Arrays.asList(permissions));
+  }
+
+  public final void setPermissions(final Collection<FBExtendedPermission> permissions) {
+    setApiPermissions(FBExtendedPermission.toApiValues(permissions));
+  }
+
+  public final void setApiPermissions(final String... permissions) {
+    setApiPermissions(Arrays.asList(permissions));
+  }
+
+  public final void setApiPermissions(final Collection<String> permissions) {
+    String permissionsText = FBExtendedPermission.joinApiValues(permissions);
+    setPermissionsJS(permissionsText);
+  }
+
+  private native void setPermissionsJS(final String permissions) /*-{
+    this.perms = permissions;
   }-*/;
 }

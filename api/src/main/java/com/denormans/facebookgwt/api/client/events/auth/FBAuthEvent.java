@@ -34,7 +34,7 @@ public abstract class FBAuthEvent<H extends FBAuthHandler> extends GwtEvent<H> {
   private FBAuthEventResponse apiResponse;
 
   protected FBAuthEvent(final FBAuthEventResponse apiResponse) {
-    this(apiResponse.getConvertedStatus(), apiResponse.getSession(), apiResponse.getConvertedPermissions());
+    this(apiResponse.getStatus(), apiResponse.getSession(), apiResponse.getPermissions());
     this.apiResponse = apiResponse;
   }
 

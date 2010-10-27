@@ -53,6 +53,11 @@
               <goal>compile</goal>
             </goals>
             <configuration>
+              <draftCompile>true</draftCompile>
+              <enableAssertions>true</enableAssertions>
+              <logLevel>INFO</logLevel>
+              <style>DETAILED</style>
+              <localWorkers>2</localWorkers>
             </configuration>
           </execution>
         </executions>

@@ -36,6 +36,7 @@ import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.events.init.HasFBInitHandlers;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBInitOptions;
+import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -200,6 +201,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     }
   }-*/;
 
+  @SuppressWarnings ({ "UnusedDeclaration" })
   private void handleFBAsyncInit(final FBInitOptions initOptions) {
     initializationState = InitializationState.ScriptLoaded;
 
@@ -240,6 +242,28 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     }
   }-*/;
 
+  public void login(final AsyncCallback<FBAuthEventResponse> callback) {
+    login(callback, null);
+  }
+
+  public native void login(final AsyncCallback<FBAuthEventResponse> callback, final FBLoginOptions loginOptions) /*-{
+    try {
+      $wnd.FB.login(function(response) {
+        if (callback != null) {
+          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+        }
+      }, loginOptions);
+    } catch(e) {
+      if (callback != null) {
+        var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Ljava/lang/String;)(String(e));
+        callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
+      } else {
+        @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Ljava/lang/String;)(String(e));
+      }
+    }
+  }-*/;
+
+  @SuppressWarnings ( { "UnusedDeclaration", "ThrowableResultOfMethodCallIgnored" })
   private static void raiseException(final String message) {
     GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
     if (uncaughtExceptionHandler == null) {
@@ -292,6 +316,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     }
   }-*/;
 
+  @SuppressWarnings ({ "UnusedDeclaration" })
   private void handleFBEvent(final String eventName, final JavaScriptObject apiResponse) {
     FBEvent event = FBEvent.valueFromApiValue(eventName);
     if (event == null) {

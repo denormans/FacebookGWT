@@ -33,12 +33,17 @@ import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBInitOptions;
+import com.denormans.facebookgwt.api.shared.FBUserStatus;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -89,14 +94,27 @@ public class FacebookGWTSamples implements EntryPoint {
 
     FacebookGWTAPI.get().initialize(FBInitOptions.create(SamplesFacebookApplicationID));
 
-    handleModuleLoaded();
+    handleModuleLoad();
 
     Log.info("FacebookGWTSamples Module loaded");
   }
 
-  private void handleModuleLoaded() {
+  private void handleModuleLoad() {
     RootPanel.get("FBGWTLoadingTextID").setVisible(false);
     RootPanel.get().add(new HTML("Module Loaded"));
+
+    FlowPanel container = new FlowPanel();
+
+    Button loginButton = new Button("Connect");
+    loginButton.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(final ClickEvent event) {
+        login();
+      }
+    });
+    container.add(loginButton);
+
+    RootPanel.get().add(container);
   }
 
   private void handleFacebookInitialized() {
@@ -106,28 +124,28 @@ public class FacebookGWTSamples implements EntryPoint {
     FacebookGWTAPI.get().addFBLoginHandler(new FBLoginHandler() {
       @Override
       public void onFBLogin(final FBLoginEvent event) {
-        Log.info("Login event");
+        handleLogin();
       }
     });
 
     FacebookGWTAPI.get().addFBLogoutHandler(new FBLogoutHandler() {
       @Override
       public void onFBLogout(final FBLogoutEvent event) {
-        Log.info("Logout event");
+        handleLogout();
       }
     });
 
     FacebookGWTAPI.get().addFBSessionChangeHandler(new FBSessionChangeHandler() {
       @Override
       public void onFBSessionChange(final FBSessionChangeEvent event) {
-        Log.info("Session change event");
+        handleSessionChange();
       }
     });
 
     FacebookGWTAPI.get().addFBStatusChangeHandler(new FBStatusChangeHandler() {
       @Override
       public void onFBStatusChange(final FBStatusChangeEvent event) {
-        Log.info("Status change event");
+        handleStatusChange();
       }
     });
 
@@ -140,8 +158,42 @@ public class FacebookGWTSamples implements EntryPoint {
       @Override
       public void onSuccess(final FBAuthEventResponse result) {
         Log.info("Retrieved login status: " + new JSONObject(result).toString());
+        if (result.hasSession() && result.getStatus() == FBUserStatus.Connected) {
+          handleLogin();
+        }
       }
     });
+  }
+
+  public void login() {
+    FacebookGWTAPI.get().login(new AsyncCallback<FBAuthEventResponse>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error logging in", caught);
+      }
+
+      @Override
+      public void onSuccess(final FBAuthEventResponse result) {
+        // should be able to ignore
+        Log.info("Login result: " + new JSONObject(result).toString());
+      }
+    });
+  }
+
+  public void handleLogin() {
+    Log.info("Login event");
+  }
+
+  public void handleLogout() {
+    Log.info("Logout event");
+  }
+
+  private void handleSessionChange() {
+    Log.info("Session change event");
+  }
+
+  private void handleStatusChange() {
+    Log.info("Status change event");
   }
 
   public void handleError(final String message) {

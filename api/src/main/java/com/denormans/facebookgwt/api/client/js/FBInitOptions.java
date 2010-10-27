@@ -38,11 +38,11 @@ public class FBInitOptions extends JavaScriptObject {
    * @return the init options
    */
   public static FBInitOptions create(final String applicationID) {
-    FBInitOptions fbInitOptions = create();
+    FBInitOptions initOptions = create();
 
-    fbInitOptions.setApplicationID(applicationID);
+    initOptions.setApplicationID(applicationID);
 
-    return fbInitOptions;
+    return initOptions;
   }
 
   /**
@@ -54,12 +54,12 @@ public class FBInitOptions extends JavaScriptObject {
    * @return the init options
    */
   public static FBInitOptions create(final String applicationID, final boolean parseXFBMLTags) {
-    FBInitOptions fbInitOptions = create();
+    FBInitOptions initOptions = create();
 
-    fbInitOptions.setApplicationID(applicationID);
-    fbInitOptions.setParseXFBMLTags(parseXFBMLTags);
+    initOptions.setApplicationID(applicationID);
+    initOptions.setParseXFBMLTags(parseXFBMLTags);
 
-    return fbInitOptions;
+    return initOptions;
   }
 
   protected FBInitOptions() {

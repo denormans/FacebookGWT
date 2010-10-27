@@ -18,8 +18,12 @@
 
 package com.denormans.facebookgwt.api.shared;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public enum FBExtendedPermission {
@@ -116,8 +120,14 @@ public enum FBExtendedPermission {
     this.apiValue = apiValue;
   }
 
-  public String getApiValue() {
-    return apiValue;
+  public static List<FBExtendedPermission> valuesFromApiValues(final List<String> permissionApiValues) {
+    List<FBExtendedPermission> permissions = new ArrayList<FBExtendedPermission>(permissionApiValues.size());
+
+    for (final String permissionApiValue : permissionApiValues) {
+      permissions.add(valueFromApiValue(permissionApiValue));
+    }
+
+    return permissions;
   }
 
   public static FBExtendedPermission valueFromApiValue(final String apiValue) {
@@ -125,5 +135,36 @@ public enum FBExtendedPermission {
       return null;
     }
     return sPermissionByApiValue.get(apiValue);
+  }
+
+  public static List<String> splitApiValues(final String permissionApiValues) {
+    return Arrays.asList(permissionApiValues.split(","));
+  }
+
+  public static List<String> toApiValues(final Collection<FBExtendedPermission> permissions) {
+    List<String> apiPermissions = new ArrayList<String>(permissions.size());
+    for (final FBExtendedPermission permission : permissions) {
+      apiPermissions.add(permission.getApiValue());
+    }
+    return apiPermissions;
+  }
+
+  public static String joinApiValues(final Collection<String> permissions) {
+    StringBuilder builder = new StringBuilder();
+    boolean isFirst = true;
+    for (final String permission : permissions) {
+      if (!isFirst) {
+        builder.append(permission);
+      } else {
+        isFirst = false;
+      }
+      builder.append(permission);
+    }
+
+    return builder.toString();
+  }
+
+  public String getApiValue() {
+    return apiValue;
   }
 }
