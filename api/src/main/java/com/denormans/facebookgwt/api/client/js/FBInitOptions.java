@@ -18,9 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.js;
 
-import com.google.gwt.core.client.JavaScriptObject;
-
-public class FBInitOptions extends JavaScriptObject {
+public class FBInitOptions extends EnhancedJavaScriptObject {
   /**
    * Create an empty init options, to be filled in.
    *

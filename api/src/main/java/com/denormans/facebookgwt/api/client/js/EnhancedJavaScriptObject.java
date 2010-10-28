@@ -16,25 +16,16 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.auth;
+package com.denormans.facebookgwt.api.client.js;
 
-import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBSession;
-import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
-import com.denormans.facebookgwt.api.shared.FBUserStatus;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.json.client.JSONObject;
 
-import com.google.gwt.event.shared.GwtEvent;
-
-import java.util.List;
-
-public abstract class FBAuthEvent<H extends FBAuthHandler> extends GwtEvent<H> {
-  private FBAuthEventResponse authEventResponse;
-
-  protected FBAuthEvent(final FBAuthEventResponse authEventResponse) {
-    this.authEventResponse = authEventResponse;
+public class EnhancedJavaScriptObject extends JavaScriptObject {
+  protected EnhancedJavaScriptObject() {
   }
 
-  public FBAuthEventResponse getAuthEventResponse() {
-    return authEventResponse;
+  public final String getJSONString() {
+    return new JSONObject(this).toString();
   }
 }

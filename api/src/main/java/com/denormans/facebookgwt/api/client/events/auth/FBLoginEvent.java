@@ -19,11 +19,6 @@
 package com.denormans.facebookgwt.api.client.events.auth;
 
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBSession;
-import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
-import com.denormans.facebookgwt.api.shared.FBUserStatus;
-
-import java.util.List;
 
 public class FBLoginEvent extends FBAuthEvent<FBLoginHandler> {
   private static Type<FBLoginHandler> sType;
@@ -43,22 +38,6 @@ public class FBLoginEvent extends FBAuthEvent<FBLoginHandler> {
   }
 
   /**
-   * Fires a {@link FBLoginEvent} on all registered handlers in the handler
-   * manager. If no such handlers exist, this method will do nothing.
-   *
-   * @param source the source of the handlers
-   * @param userStatus the user status
-   * @param session the session
-   * @param permissions the extended permissions
-   */
-  public static void fire(HasFBLoginHandler source, final FBUserStatus userStatus, final FBSession session, final List<FBExtendedPermission> permissions) {
-    if (sType != null) {
-      FBLoginEvent event = new FBLoginEvent(userStatus, session, permissions);
-      source.fireEvent(event);
-    }
-  }
-
-  /**
    * Gets the type associated with this event.
    *
    * @return returns the handler type
@@ -73,10 +52,6 @@ public class FBLoginEvent extends FBAuthEvent<FBLoginHandler> {
 
   protected FBLoginEvent(final FBAuthEventResponse apiResponse) {
     super(apiResponse);
-  }
-
-  protected FBLoginEvent(final FBUserStatus userStatus, final FBSession session, final List<FBExtendedPermission> permissions) {
-    super(userStatus, session, permissions);
   }
 
   @Override

@@ -18,13 +18,8 @@
 
 package com.denormans.facebookgwt.api.client.events.stub;
 
-import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBSession;
 import com.denormans.facebookgwt.api.client.events.auth.FBAuthEvent;
-import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
-import com.denormans.facebookgwt.api.shared.FBUserStatus;
-
-import java.util.List;
+import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 
 public class FBStubEvent extends FBAuthEvent<FBStubHandler> {
   private static Type<FBStubHandler> sType;
@@ -44,22 +39,6 @@ public class FBStubEvent extends FBAuthEvent<FBStubHandler> {
   }
 
   /**
-   * Fires a {@link FBStubEvent} on all registered handlers in the handler
-   * manager. If no such handlers exist, this method will do nothing.
-   *
-   * @param source the source of the handlers
-   * @param userStatus the user status
-   * @param session the session
-   * @param permissions the extended permissions
-   */
-  public static void fire(HasFBStubHandler source, final FBUserStatus userStatus, final FBSession session, final List<FBExtendedPermission> permissions) {
-    if (sType != null) {
-      FBStubEvent event = new FBStubEvent(userStatus, session, permissions);
-      source.fireEvent(event);
-    }
-  }
-
-  /**
    * Gets the type associated with this event.
    *
    * @return returns the handler type
@@ -74,10 +53,6 @@ public class FBStubEvent extends FBAuthEvent<FBStubHandler> {
 
   protected FBStubEvent(final FBAuthEventResponse apiResponse) {
     super(apiResponse);
-  }
-
-  protected FBStubEvent(final FBUserStatus userStatus, final FBSession session, final List<FBExtendedPermission> permissions) {
-    super(userStatus, session, permissions);
   }
 
   @Override

@@ -21,11 +21,9 @@ package com.denormans.facebookgwt.api.client.js;
 import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
 import com.denormans.facebookgwt.api.shared.FBUserStatus;
 
-import com.google.gwt.core.client.JavaScriptObject;
-
 import java.util.List;
 
-public class FBAuthEventResponse extends JavaScriptObject {
+public class FBAuthEventResponse extends EnhancedJavaScriptObject {
   protected FBAuthEventResponse() {
   }
 
@@ -41,6 +39,10 @@ public class FBAuthEventResponse extends JavaScriptObject {
     return this.session != null;
   }-*/;
 
+  public final boolean isConnected() {
+    return hasSession() && getStatus() == FBUserStatus.Connected;
+  }
+
   public final native FBSession getSession() /*-{
     return this.session;
   }-*/;
@@ -54,6 +56,6 @@ public class FBAuthEventResponse extends JavaScriptObject {
   }
 
   private native String getPermissionsJS() /*-{
-    return this.perms;
+    return this.perms || "";
   }-*/;
 }

@@ -16,25 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.auth;
+package com.denormans.facebookgwt.samples.client.showcase;
 
-import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBSession;
-import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
-import com.denormans.facebookgwt.api.shared.FBUserStatus;
+import com.google.gwt.user.client.ui.IsWidget;
 
-import com.google.gwt.event.shared.GwtEvent;
-
-import java.util.List;
-
-public abstract class FBAuthEvent<H extends FBAuthHandler> extends GwtEvent<H> {
-  private FBAuthEventResponse authEventResponse;
-
-  protected FBAuthEvent(final FBAuthEventResponse authEventResponse) {
-    this.authEventResponse = authEventResponse;
-  }
-
-  public FBAuthEventResponse getAuthEventResponse() {
-    return authEventResponse;
-  }
+public interface Showcase extends IsWidget {
 }

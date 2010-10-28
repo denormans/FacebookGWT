@@ -18,41 +18,52 @@
 
 package com.denormans.facebookgwt.api.client.js;
 
-import java.util.Date;
+import com.google.gwt.core.client.JsArrayString;
 
-public class FBSession extends EnhancedJavaScriptObject {
-  protected FBSession() {
+import java.util.ArrayList;
+import java.util.List;
+
+public class JavaScriptError extends EnhancedJavaScriptObject {
+  protected JavaScriptError() {
   }
 
-  public final native String getSessionKey() /*-{
-    return this.session_key;
-  }-*/;
+  public final String getDetailMessage() {
+    String detailMessage = getMessage();
 
-  public final native String getUserID() /*-{
-    return this.uid;
-  }-*/;
+    String filename = getFileName();
+    int lineNumber = getLineNumber();
 
-  public final Date getExpirationDate() {
-    return new Date(getExpirationInSeconds() * 1000);
+    if (filename != null && filename.length() > 0) {
+      return detailMessage + " (" + filename + ", line " + lineNumber + ")";
+    } else {
+      return detailMessage;
+    }
   }
 
-  public final native int getExpirationInSeconds() /*-{
-    return this.expires || 0;
+  public final native String getMessage() /*-{
+    return this.message || "";
   }-*/;
 
-  public final native String getSecret() /*-{
-    return this.secret;
+  public final native String getFileName() /*-{
+    return this.fileName || "";
   }-*/;
 
-  public final native String getBaseDomain() /*-{
-    return this.base_domain;
+  public final native int getLineNumber() /*-{
+    return this.lineNumber || 0;
   }-*/;
 
-  public final native String getAccessToken() /*-{
-    return this.access_token;
-  }-*/;
+  public final List<String> getStack() {
+    JsArrayString stackJS = getStackJS();
+    int stackSize = stackJS.length();
+    List<String> stack = new ArrayList<String>(stackSize);
+    for (int index = 0; index < stackSize; index++) {
+      String value = stackJS.get(index);
+      stack.add(value);
+    }
+    return stack;
+  }
 
-  public final native String getSignature() /*-{
-    return this.sig;
+  private final native JsArrayString getStackJS() /*-{
+    return this.stack || [];
   }-*/;
 }

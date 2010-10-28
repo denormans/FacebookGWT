@@ -20,13 +20,11 @@ package com.denormans.facebookgwt.api.client.js;
 
 import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
 
-import com.google.gwt.core.client.JavaScriptObject;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class FBLoginOptions extends JavaScriptObject {
+public class FBLoginOptions extends EnhancedJavaScriptObject {
   public static FBLoginOptions create() {
     return FBLoginOptions.createObject().cast();
   }
@@ -59,7 +57,7 @@ public class FBLoginOptions extends JavaScriptObject {
   }
 
   private native String getPermissionsJS() /*-{
-    return this.perms;
+    return this.perms || "";
   }-*/;
 
   public final void setPermissions(final FBExtendedPermission... permissions) {

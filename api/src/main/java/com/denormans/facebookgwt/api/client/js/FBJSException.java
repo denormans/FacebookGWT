@@ -18,41 +18,42 @@
 
 package com.denormans.facebookgwt.api.client.js;
 
-import java.util.Date;
+import com.denormans.facebookgwt.api.client.FBGWTException;
 
-public class FBSession extends EnhancedJavaScriptObject {
-  protected FBSession() {
+public class FBJSException extends FBGWTException {
+  private JavaScriptError javaScriptError;
+
+  public FBJSException(final JavaScriptError javaScriptError) {
+    this.javaScriptError = javaScriptError;
   }
 
-  public final native String getSessionKey() /*-{
-    return this.session_key;
-  }-*/;
-
-  public final native String getUserID() /*-{
-    return this.uid;
-  }-*/;
-
-  public final Date getExpirationDate() {
-    return new Date(getExpirationInSeconds() * 1000);
+  public FBJSException(final String message, final JavaScriptError javaScriptError) {
+    super(message);
+    this.javaScriptError = javaScriptError;
   }
 
-  public final native int getExpirationInSeconds() /*-{
-    return this.expires || 0;
-  }-*/;
+  public FBJSException(final String message, final Throwable cause, final JavaScriptError javaScriptError) {
+    super(message, cause);
+    this.javaScriptError = javaScriptError;
+  }
 
-  public final native String getSecret() /*-{
-    return this.secret;
-  }-*/;
+  public FBJSException(final Throwable cause, final JavaScriptError javaScriptError) {
+    super(cause);
+    this.javaScriptError = javaScriptError;
+  }
 
-  public final native String getBaseDomain() /*-{
-    return this.base_domain;
-  }-*/;
+  public JavaScriptError getJavaScriptError() {
+    return javaScriptError;
+  }
 
-  public final native String getAccessToken() /*-{
-    return this.access_token;
-  }-*/;
-
-  public final native String getSignature() /*-{
-    return this.sig;
-  }-*/;
+  @Override
+  public String getMessage() {
+    String message = super.getMessage();
+    String jsErrorMessage = getJavaScriptError().getDetailMessage();
+    if (message != null && message.length() > 0) {
+      return message + " - " + jsErrorMessage;
+    } else {
+      return jsErrorMessage;
+    }
+  }
 }

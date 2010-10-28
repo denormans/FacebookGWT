@@ -18,20 +18,20 @@
 
 package com.denormans.facebookgwt.api.client;
 
-public class FBException extends RuntimeException {
-  public FBException() {
+public class FBGWTException extends RuntimeException {
+  public FBGWTException() {
     super();
   }
 
-  public FBException(final String message) {
+  public FBGWTException(final String message) {
     super(message);
   }
 
-  public FBException(final String message, final Throwable cause) {
+  public FBGWTException(final String message, final Throwable cause) {
     super(message, cause);
   }
 
-  public FBException(final Throwable cause) {
+  public FBGWTException(final Throwable cause) {
     super(cause);
   }
 }
