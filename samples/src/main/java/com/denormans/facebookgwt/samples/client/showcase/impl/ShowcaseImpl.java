@@ -4,6 +4,7 @@ import com.denormans.facebookgwt.api.client.FacebookGWTAPI;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
+import com.denormans.facebookgwt.api.client.js.FBSession;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 
@@ -53,6 +54,9 @@ public class ShowcaseImpl extends Composite implements Showcase {
     FacebookGWTAPI.get().addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
+        FBSession session = FacebookGWTAPI.get().getSession();
+        Log.info("Session before login status: " + session.getJSONString());
+
         FacebookGWTAPI.get().retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
           @Override
           public void onFailure(final Throwable caught) {
@@ -64,6 +68,9 @@ public class ShowcaseImpl extends Composite implements Showcase {
             Log.info("Retrieved login status: " + new JSONObject(result).toString());
 
             updateConnectionButtons(result.isConnected());
+
+            FBSession session = FacebookGWTAPI.get().getSession();
+            Log.info("Session after login status: " + session.getJSONString());
           }
         });
       }

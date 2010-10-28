@@ -38,6 +38,7 @@ import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.js.FBJSException;
 import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
+import com.denormans.facebookgwt.api.client.js.FBSession;
 import com.denormans.facebookgwt.api.client.js.JavaScriptError;
 
 import com.google.gwt.core.client.GWT;
@@ -241,6 +242,14 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     } catch(e) {
       var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
       callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
+    }
+  }-*/;
+
+  public native FBSession getSession() /*-{
+    try {
+      return $wnd.FB.getSession();
+    } catch(e) {
+      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
     }
   }-*/;
 
