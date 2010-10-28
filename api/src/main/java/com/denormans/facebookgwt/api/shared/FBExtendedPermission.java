@@ -154,7 +154,7 @@ public enum FBExtendedPermission {
     boolean isFirst = true;
     for (final String permission : permissions) {
       if (!isFirst) {
-        builder.append(permission);
+        builder.append(",");
       } else {
         isFirst = false;
       }
