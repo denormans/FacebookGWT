@@ -19,14 +19,6 @@
 package com.denormans.facebookgwt.samples.client;
 
 import com.denormans.facebookgwt.api.client.FacebookGWTAPI;
-import com.denormans.facebookgwt.api.client.events.auth.FBLoginEvent;
-import com.denormans.facebookgwt.api.client.events.auth.FBLoginHandler;
-import com.denormans.facebookgwt.api.client.events.auth.FBLogoutEvent;
-import com.denormans.facebookgwt.api.client.events.auth.FBLogoutHandler;
-import com.denormans.facebookgwt.api.client.events.auth.FBSessionChangeEvent;
-import com.denormans.facebookgwt.api.client.events.auth.FBSessionChangeHandler;
-import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeEvent;
-import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.events.init.FBInitFailureEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitFailureHandler;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
@@ -86,7 +78,7 @@ public class FacebookGWTSamples implements EntryPoint {
     initSuccessHandlerRegistration = FacebookGWTAPI.get().addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
-        handleFacebookInitialized();
+        Log.info("Facebook loaded");
 
         // Don't want to do this twice
         initFailureHandlerRegistration.removeHandler();
@@ -97,62 +89,6 @@ public class FacebookGWTSamples implements EntryPoint {
     FacebookGWTAPI.get().initialize(FBInitOptions.create(SamplesFacebookApplicationID));
 
     Log.info("FacebookGWTSamples Module loaded");
-  }
-
-  private void handleFacebookInitialized() {
-    Log.info("Facebook loaded");
-
-    FacebookGWTAPI.get().addFBLoginHandler(new FBLoginHandler() {
-      @Override
-      public void onFBLogin(final FBLoginEvent event) {
-        handleLogin(event);
-      }
-    });
-
-    FacebookGWTAPI.get().addFBLogoutHandler(new FBLogoutHandler() {
-      @Override
-      public void onFBLogout(final FBLogoutEvent event) {
-        handleLogout(event);
-      }
-    });
-
-    FacebookGWTAPI.get().addFBSessionChangeHandler(new FBSessionChangeHandler() {
-      @Override
-      public void onFBSessionChange(final FBSessionChangeEvent event) {
-        handleSessionChange(event);
-      }
-    });
-
-    FacebookGWTAPI.get().addFBStatusChangeHandler(new FBStatusChangeHandler() {
-      @Override
-      public void onFBStatusChange(final FBStatusChangeEvent event) {
-        handleStatusChange(event);
-      }
-    });
-  }
-
-  public void handleLogin(final FBLoginEvent event) {
-    if (Log.isLoggable(Level.FINE)) {
-      Log.fine("Login event: " + event.getAuthEventResponse().getJSONString());
-    }
-  }
-
-  public void handleLogout(final FBLogoutEvent event) {
-    if (Log.isLoggable(Level.FINE)) {
-      Log.fine("Logout event: " + event.getAuthEventResponse().getJSONString());
-    }
-  }
-
-  private void handleSessionChange(final FBSessionChangeEvent event) {
-    if (Log.isLoggable(Level.FINE)) {
-      Log.fine("Session change event: " + event.getAuthEventResponse().getJSONString());
-    }
-  }
-
-  private void handleStatusChange(final FBStatusChangeEvent event) {
-    if (Log.isLoggable(Level.FINE)) {
-      Log.fine("Status change event: " + event.getAuthEventResponse().getJSONString());
-    }
   }
 
   public void handleError(final String message) {

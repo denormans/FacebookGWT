@@ -18,18 +18,11 @@
 
 package com.denormans.facebookgwt.api.client.events.auth;
 
+import com.denormans.facebookgwt.api.client.events.FBEvent;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 
-import com.google.gwt.event.shared.GwtEvent;
-
-public abstract class FBAuthEvent<H extends FBAuthHandler> extends GwtEvent<H> {
-  private FBAuthEventResponse authEventResponse;
-
+public abstract class FBAuthEvent<H extends FBAuthHandler> extends FBEvent<H, FBAuthEventResponse> {
   protected FBAuthEvent(final FBAuthEventResponse authEventResponse) {
-    this.authEventResponse = authEventResponse;
-  }
-
-  public FBAuthEventResponse getAuthEventResponse() {
-    return authEventResponse;
+    super(authEventResponse);
   }
 }

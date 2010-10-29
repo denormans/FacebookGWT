@@ -18,23 +18,45 @@
 
 package com.denormans.facebookgwt.api.client.events;
 
-import com.denormans.facebookgwt.api.client.js.EnhancedJavaScriptObject;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.google.gwt.event.shared.GwtEvent;
+public enum FBEventType {
+  AuthLogin("auth.login"),
+  AuthLogout("auth.logout"),
+  AuthSessionChange("auth.sessionChange"),
+  AuthStatusChange("auth.statusChange"),
+  XFBMLRender("xfbml.render"),
+  EdgeCreate("edge.create"),
+  CommentsAdd("comments.add"),
+  FBLog("fb.log");
 
-public abstract class FBEvent<H extends FBEventHandler, R extends EnhancedJavaScriptObject> extends GwtEvent<H> {
-  private R apiResponse;
+  private static final Map<String, FBEventType> sEventByApiValue = createEventByApiValueMap();
 
-  protected FBEvent(final R apiResponse) {
-    this.apiResponse = apiResponse;
+  private static Map<String, FBEventType> createEventByApiValueMap() {
+    HashMap<String, FBEventType> events = new HashMap<String, FBEventType>();
+
+    for (final FBEventType eventType : values()) {
+      events.put(eventType.getApiValue(), eventType);
+    }
+
+    return events;
   }
 
-  public R getApiResponse() {
-    return apiResponse;
+  private String apiValue;
+
+  FBEventType(final String apiValue) {
+    this.apiValue = apiValue;
   }
 
-  @Override
-  public String toString() {
-    return super.toString() + "[apiResponse=" + apiResponse.getJSONString() + "]" + "";
+  public String getApiValue() {
+    return apiValue;
+  }
+
+  public static FBEventType valueFromApiValue(final String apiValue) {
+    if (apiValue == null) {
+      return null;
+    }
+    return sEventByApiValue.get(apiValue);
   }
 }

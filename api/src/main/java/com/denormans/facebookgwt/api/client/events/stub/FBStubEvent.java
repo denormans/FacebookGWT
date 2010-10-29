@@ -18,10 +18,10 @@
 
 package com.denormans.facebookgwt.api.client.events.stub;
 
-import com.denormans.facebookgwt.api.client.events.auth.FBAuthEvent;
+import com.denormans.facebookgwt.api.client.events.FBEvent;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 
-public class FBStubEvent extends FBAuthEvent<FBStubHandler> {
+public class FBStubEvent extends FBEvent<FBStubHandler, FBAuthEventResponse> {
   private static Type<FBStubHandler> sType;
 
   /**

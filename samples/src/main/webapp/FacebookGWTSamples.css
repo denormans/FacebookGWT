@@ -8,4 +8,16 @@ body {
 
 #FBGWTLoadingTextID { font-size: 8px; font-style: italic; color: #888; }
 
-#FBGWTHeader { font-size: 16px; font-weight: bold; color: #aaa; }
+.FBGWTHeader { font-size: 16px; font-weight: bold; color: #888; border-bottom: 1px solid #999; padding: 3px; }
+
+.FBGWTMainContent { padding: 6px; }
+
+.FBGWTEventContainer { border-top: 1px solid #999; }
+
+.FBGWTEventMessage { padding: 6px; }
+
+.FBGWTEventMessage:nth-child(even) { background-color: #ddd; }
+
+.FBGWTTitle { font-size: 12px; font-weight: bold; color: #333; display: block; }
+
+.FBGWTEvent { display: block; }

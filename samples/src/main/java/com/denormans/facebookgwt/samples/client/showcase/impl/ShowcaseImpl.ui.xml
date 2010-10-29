@@ -1,14 +1,23 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <g:DockLayoutPanel>
-    <g:north size="24">
+    <g:north size="32">
       <g:HTML styleName="FBGWTHeader">Showcase</g:HTML>
     </g:north>
     <g:center>
-      <g:FlowPanel>
-        <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
-        <g:Button ui:field="logoutButton" enabled="false" visible="false">Logout</g:Button>
-      </g:FlowPanel>
+      <g:SplitLayoutPanel>
+        <g:center>
+          <g:FlowPanel styleName="FBGWTMainContent">
+            <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
+            <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
+          </g:FlowPanel>
+        </g:center>
+        <g:south size="150">
+          <g:ScrollPanel ui:field="eventContainer" styleName="FBGWTEventContainer">
+            <g:FlowPanel ui:field="eventPanel"></g:FlowPanel>
+          </g:ScrollPanel>
+        </g:south>
+      </g:SplitLayoutPanel>
     </g:center>
   </g:DockLayoutPanel>
 </ui:UiBinder>

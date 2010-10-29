@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client;
 
-import com.denormans.facebookgwt.api.client.events.FBEvent;
+import com.denormans.facebookgwt.api.client.events.FBEventType;
 import com.denormans.facebookgwt.api.client.events.FBEventHandler;
 import com.denormans.facebookgwt.api.client.events.auth.FBLoginEvent;
 import com.denormans.facebookgwt.api.client.events.auth.FBLoginHandler;
@@ -80,7 +80,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
   private InitializationState initializationState = InitializationState.Uninitialized;
   private Timer initializationTimer;
 
-  private Map<FBEvent, JSFunction> callbackFunctionsByEvent = new HashMap<FBEvent, JSFunction>();
+  private Map<FBEventType, JSFunction> callbackFunctionsByEvent = new HashMap<FBEventType, JSFunction>();
 
   /**
    * Determines whether or not Facebook has been initialized with this API.
@@ -327,9 +327,9 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     return fbjsException;
   }
 
-  private JSFunction subscribeToEvent(final FBEvent event) {
-    Log.fine("Subscribing to event: " + event);
-    return subscribeToEventJS(event.getApiValue());
+  private JSFunction subscribeToEvent(final FBEventType eventType) {
+    Log.fine("Subscribing to event: " + eventType);
+    return subscribeToEventJS(eventType.getApiValue());
   }
 
   private native JSFunction subscribeToEventJS(final String eventName) /*-{
@@ -351,9 +351,9 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     }
   }-*/;
 
-  private void unsubscribeFromEvent(final FBEvent event, final JSFunction callback) {
-    Log.fine("Unsubscribing from event: " + event);
-    unsubscribeFromEventJS(event.getApiValue(), callback);
+  private void unsubscribeFromEvent(final FBEventType eventType, final JSFunction callback) {
+    Log.fine("Unsubscribing from event: " + eventType);
+    unsubscribeFromEventJS(eventType.getApiValue(), callback);
   }
 
   private native void unsubscribeFromEventJS(final String eventName, final JSFunction callback) /*-{
@@ -366,13 +366,13 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
 
   @SuppressWarnings ({ "UnusedDeclaration" })
   private void handleFBEvent(final String eventName, final JavaScriptObject apiResponse) {
-    FBEvent event = FBEvent.valueFromApiValue(eventName);
-    if (event == null) {
+    FBEventType eventType = FBEventType.valueFromApiValue(eventName);
+    if (eventType == null) {
       Log.warning("Unknown event: " + eventName);
       return;
     }
 
-    switch (event) {
+    switch (eventType) {
       case AuthLogin:
         fireLogin(apiResponse.<FBAuthEventResponse>cast());
         break;
@@ -390,7 +390,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
         break;
 
       default:
-        Log.warning("Unknown event: " + event);
+        Log.warning("Unknown event: " + eventType);
     }
   }
 
@@ -430,28 +430,28 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
 
   @Override
   public HandlerRegistration addFBLoginHandler(final FBLoginHandler handler) {
-    return addFBEventHandler(handler, FBLoginEvent.getType(), FBEvent.AuthLogin);
+    return addFBEventHandler(handler, FBLoginEvent.getType(), FBEventType.AuthLogin);
   }
 
   @Override
   public HandlerRegistration addFBLogoutHandler(final FBLogoutHandler handler) {
-    return addFBEventHandler(handler, FBLogoutEvent.getType(), FBEvent.AuthLogout);
+    return addFBEventHandler(handler, FBLogoutEvent.getType(), FBEventType.AuthLogout);
   }
 
   @Override
   public HandlerRegistration addFBSessionChangeHandler(final FBSessionChangeHandler handler) {
-    return addFBEventHandler(handler, FBSessionChangeEvent.getType(), FBEvent.AuthSessionChange);
+    return addFBEventHandler(handler, FBSessionChangeEvent.getType(), FBEventType.AuthSessionChange);
   }
 
   @Override
   public HandlerRegistration addFBStatusChangeHandler(final FBStatusChangeHandler handler) {
-    return addFBEventHandler(handler, FBStatusChangeEvent.getType(), FBEvent.AuthStatusChange);
+    return addFBEventHandler(handler, FBStatusChangeEvent.getType(), FBEventType.AuthStatusChange);
   }
 
-  private <H extends FBEventHandler> HandlerRegistration addFBEventHandler(final H handler, final GwtEvent.Type<H> eventType, final FBEvent fbEvent) {
-    if (callbackFunctionsByEvent.get(fbEvent) == null) {
-      JSFunction callbackFunction = subscribeToEvent(fbEvent);
-      callbackFunctionsByEvent.put(fbEvent, callbackFunction);
+  private <H extends FBEventHandler> HandlerRegistration addFBEventHandler(final H handler, final GwtEvent.Type<H> eventType, final FBEventType fbEventType) {
+    if (callbackFunctionsByEvent.get(fbEventType) == null) {
+      JSFunction callbackFunction = subscribeToEvent(fbEventType);
+      callbackFunctionsByEvent.put(fbEventType, callbackFunction);
     }
 
     final HandlerRegistration handlerRegistration = eventBus.addHandler(eventType, handler);
@@ -464,10 +464,10 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
         DeferredCommand.addCommand(new Command() {
           @Override
           public void execute() {
-            JSFunction callbackFunction = callbackFunctionsByEvent.get(fbEvent);
+            JSFunction callbackFunction = callbackFunctionsByEvent.get(fbEventType);
             if (callbackFunction != null && eventBus.getCount(eventType) == 0) {
-              unsubscribeFromEvent(fbEvent, callbackFunction);
-              callbackFunctionsByEvent.remove(fbEvent);
+              unsubscribeFromEvent(fbEventType, callbackFunction);
+              callbackFunctionsByEvent.remove(fbEventType);
             }
           }
         });
