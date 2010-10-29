@@ -18,15 +18,22 @@
 
 package com.denormans.facebookgwt.api.shared;
 
+import com.denormans.facebookgwt.api.client.js.FBPermissions;
+
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum FBExtendedPermission {
+public enum FBPermission {
   // Publishing Permissions
   PublishStream("publish_stream"),
   CreateEvent("create_event"),
@@ -36,6 +43,7 @@ public enum FBExtendedPermission {
 
   // Data Permissions
   Email("email"),
+  ContactEmail("contact_email"),
   ReadFriendlists("read_friendlists"),
   ReadInsights("read_insights"),
   ReadMailbox("read_mailbox"),
@@ -93,21 +101,21 @@ public enum FBExtendedPermission {
   // Page Permissions
   ManagePages("manage_pages");
 
-  public static final EnumSet<FBExtendedPermission> PublishingPermissions = EnumSet.range(PublishStream, OfflineAccess);
+  public static final EnumSet<FBPermission> PublishingPermissions = EnumSet.range(PublishStream, OfflineAccess);
 
-  public static final EnumSet<FBExtendedPermission> UserDataPermissions = EnumSet.range(UserAboutMe, UserWorkHistory);
-  public static final EnumSet<FBExtendedPermission> FriendsDataPermissions = EnumSet.range(FriendsAboutMe, FriendsWorkHistory);
+  public static final EnumSet<FBPermission> UserDataPermissions = EnumSet.range(UserAboutMe, UserWorkHistory);
+  public static final EnumSet<FBPermission> FriendsDataPermissions = EnumSet.range(FriendsAboutMe, FriendsWorkHistory);
 
-  public static final EnumSet<FBExtendedPermission> DataPermissions = EnumSet.range(Email, FriendsWorkHistory);
+  public static final EnumSet<FBPermission> DataPermissions = EnumSet.range(Email, FriendsWorkHistory);
 
-  public static final EnumSet<FBExtendedPermission> PagePermissions = EnumSet.of(ManagePages);
+  public static final EnumSet<FBPermission> PagePermissions = EnumSet.of(ManagePages);
 
-  private static final Map<String, FBExtendedPermission> sPermissionByApiValue = createPermissionByApiValueMap();
+  private static final Map<String, FBPermission> sPermissionByApiValue = createPermissionByApiValueMap();
 
-  private static Map<String, FBExtendedPermission> createPermissionByApiValueMap() {
-    HashMap<String, FBExtendedPermission> permissions = new HashMap<String, FBExtendedPermission>();
+  private static Map<String, FBPermission> createPermissionByApiValueMap() {
+    HashMap<String, FBPermission> permissions = new HashMap<String, FBPermission>();
 
-    for (final FBExtendedPermission permission : values()) {
+    for (final FBPermission permission : values()) {
       permissions.put(permission.getApiValue(), permission);
     }
 
@@ -116,12 +124,12 @@ public enum FBExtendedPermission {
 
   private String apiValue;
 
-  FBExtendedPermission(final String apiValue) {
+  FBPermission(final String apiValue) {
     this.apiValue = apiValue;
   }
 
-  public static List<FBExtendedPermission> valuesFromApiValues(final List<String> permissionApiValues) {
-    List<FBExtendedPermission> permissions = new ArrayList<FBExtendedPermission>(permissionApiValues.size());
+  public static List<FBPermission> valuesFromApiValues(final List<String> permissionApiValues) {
+    List<FBPermission> permissions = new ArrayList<FBPermission>(permissionApiValues.size());
 
     for (final String permissionApiValue : permissionApiValues) {
       permissions.add(valueFromApiValue(permissionApiValue));
@@ -130,20 +138,35 @@ public enum FBExtendedPermission {
     return permissions;
   }
 
-  public static FBExtendedPermission valueFromApiValue(final String apiValue) {
+  public static FBPermission valueFromApiValue(final String apiValue) {
     if (apiValue == null) {
       return null;
     }
     return sPermissionByApiValue.get(apiValue);
   }
 
-  public static List<String> splitApiValues(final String permissionApiValues) {
-    return Arrays.asList(permissionApiValues.split(","));
+  public static List<String> parseApiValues(final String permissionApiValues) {
+    if (permissionApiValues == null || permissionApiValues.trim().length() == 0) {
+      return Collections.emptyList();
+    }
+
+    if (permissionApiValues.trim().charAt(0) != '{') {
+      return Arrays.asList(permissionApiValues.split(","));
+    }
+
+    JSONValue jsonValue = JSONParser.parseStrict(permissionApiValues);
+    JSONObject jsonObject = jsonValue.isObject();
+    if (jsonObject == null) {
+      return Collections.emptyList();
+    }
+
+    FBPermissions permissions = jsonObject.getJavaScriptObject().cast();
+    return permissions.getAllApiPermissions();
   }
 
-  public static List<String> toApiValues(final Collection<FBExtendedPermission> permissions) {
+  public static List<String> toApiValues(final Collection<FBPermission> permissions) {
     List<String> apiPermissions = new ArrayList<String>(permissions.size());
-    for (final FBExtendedPermission permission : permissions) {
+    for (final FBPermission permission : permissions) {
       apiPermissions.add(permission.getApiValue());
     }
     return apiPermissions;

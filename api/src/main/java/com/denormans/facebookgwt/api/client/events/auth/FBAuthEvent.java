@@ -19,13 +19,8 @@
 package com.denormans.facebookgwt.api.client.events.auth;
 
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBSession;
-import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
-import com.denormans.facebookgwt.api.shared.FBUserStatus;
 
 import com.google.gwt.event.shared.GwtEvent;
-
-import java.util.List;
 
 public abstract class FBAuthEvent<H extends FBAuthHandler> extends GwtEvent<H> {
   private FBAuthEventResponse authEventResponse;

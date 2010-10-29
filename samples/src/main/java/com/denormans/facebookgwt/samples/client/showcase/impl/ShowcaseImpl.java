@@ -6,7 +6,7 @@ import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.js.FBSession;
-import com.denormans.facebookgwt.api.shared.FBExtendedPermission;
+import com.denormans.facebookgwt.api.shared.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 
@@ -71,6 +71,8 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
             updateConnectionButtons(result.isConnected());
 
+            Log.info("Permissions: " + result.getPermissions());
+
             FBSession session = FacebookGWTAPI.get().getSession();
             Log.info("Session after login status: " + session.getJSONString());
           }
@@ -81,7 +83,6 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   private void updateConnectionButtons(final boolean isConnected) {
     loginButton.setEnabled(true);
-    loginButton.setVisible(true);
     logoutButton.setEnabled(isConnected);
     logoutButton.setVisible(isConnected);
   }
@@ -98,9 +99,11 @@ public class ShowcaseImpl extends Composite implements Showcase {
       public void onSuccess(final FBAuthEventResponse result) {
         Log.info("Login result: " + result.getJSONString());
 
+        Log.info("Permissions: " + result.getPermissions());
+
         updateConnectionButtons(result.isConnected());
       }
-    }, FBLoginOptions.create(FBExtendedPermission.Email, FBExtendedPermission.UserPhotoVideoTags));
+    }, FBLoginOptions.create(FBPermission.Email, FBPermission.UserPhotoVideoTags));
   }
 
   @UiHandler ("logoutButton")

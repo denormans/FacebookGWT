@@ -20,7 +20,6 @@ package com.denormans.facebookgwt.api.client.js;
 
 import com.google.gwt.core.client.JsArrayString;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class JavaScriptError extends EnhancedJavaScriptObject {
@@ -53,14 +52,7 @@ public class JavaScriptError extends EnhancedJavaScriptObject {
   }-*/;
 
   public final List<String> getStack() {
-    JsArrayString stackJS = getStackJS();
-    int stackSize = stackJS.length();
-    List<String> stack = new ArrayList<String>(stackSize);
-    for (int index = 0; index < stackSize; index++) {
-      String value = stackJS.get(index);
-      stack.add(value);
-    }
-    return stack;
+    return convertJSArrayStringToList(getStackJS());
   }
 
   private final native JsArrayString getStackJS() /*-{

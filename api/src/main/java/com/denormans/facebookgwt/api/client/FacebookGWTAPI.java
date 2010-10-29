@@ -62,7 +62,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandlers {
-  private static final Logger Log = Logger.getLogger(FacebookGWTAPI.class.getName());
+  public static final Logger Log = Logger.getLogger(FacebookGWTAPI.class.getName());
 
   public enum InitializationState { Uninitialized, LoadingScript, ScriptLoaded, Initialized }
 
