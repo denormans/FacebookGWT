@@ -16,24 +16,24 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.stub;
+package com.denormans.facebookgwt.api.client.events.edge;
 
 import com.denormans.facebookgwt.api.client.events.FBEvent;
-import com.denormans.facebookgwt.api.client.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.js.FBEdgeCreateEventResponse;
 
-public class FBStubEvent extends FBEvent<FBStubHandler, FBEventResponse> {
-  private static Type<FBStubHandler> sType;
+public class FBEdgeCreateEvent extends FBEvent<FBEdgeCreateHandler, FBEdgeCreateEventResponse> {
+  private static Type<FBEdgeCreateHandler> sType;
 
   /**
-   * Fires a {@link FBStubEvent} on all registered handlers in the handler
+   * Fires a {@link FBEdgeCreateEvent} on all registered handlers in the handler
    * manager. If no such handlers exist, this method will do nothing.
    *
    * @param source the source of the handlers
    * @param apiResponse the Facebook JS API response
    */
-  public static void fire(HasFBStubHandler source, final FBEventResponse apiResponse) {
+  public static void fire(HasFBEdgeCreateHandler source, final FBEdgeCreateEventResponse apiResponse) {
     if (sType != null) {
-      FBStubEvent event = new FBStubEvent(apiResponse);
+      FBEdgeCreateEvent event = new FBEdgeCreateEvent(apiResponse);
       source.fireEvent(event);
     }
   }
@@ -43,25 +43,25 @@ public class FBStubEvent extends FBEvent<FBStubHandler, FBEventResponse> {
    *
    * @return returns the handler type
    */
-  public static Type<FBStubHandler> getType() {
+  public static Type<FBEdgeCreateHandler> getType() {
     if (sType == null) {
-      sType = new Type<FBStubHandler>();
+      sType = new Type<FBEdgeCreateHandler>();
     }
 
     return sType;
   }
 
-  protected FBStubEvent(final FBEventResponse apiResponse) {
+  protected FBEdgeCreateEvent(final FBEdgeCreateEventResponse apiResponse) {
     super(apiResponse);
   }
 
   @Override
-  public Type<FBStubHandler> getAssociatedType() {
+  public Type<FBEdgeCreateHandler> getAssociatedType() {
     return sType;
   }
 
   @Override
-  protected void dispatch(final FBStubHandler handler) {
-    handler.onFBStub(this);
+  protected void dispatch(final FBEdgeCreateHandler handler) {
+    handler.onFBEdgeCreate(this);
   }
 }

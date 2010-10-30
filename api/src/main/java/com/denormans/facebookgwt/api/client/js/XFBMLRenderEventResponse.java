@@ -18,35 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.js;
 
-import com.denormans.facebookgwt.api.shared.Transformer;
-
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.json.client.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class EnhancedJavaScriptObject extends JavaScriptObject {
-  protected EnhancedJavaScriptObject() {
+public class XFBMLRenderEventResponse extends FBEventResponse {
+  protected XFBMLRenderEventResponse() {
   }
 
-  public static List<String> convertJSArrayStringToList(final JsArrayString jsArray) {
-    return convertJSArrayStringToList(jsArray, Transformer.IdentityTransformer.<String>get());
-  }
 
-  public static <T> List<T> convertJSArrayStringToList(final JsArrayString jsArray, final Transformer<String, T> transformer) {
-    int stackSize = jsArray.length();
-    List<T> list = new ArrayList<T>(stackSize);
-    for (int index = 0; index < stackSize; index++) {
-      final String originalValue = jsArray.get(index);
-      T value = transformer.transform(originalValue);
-      list.add(value);
-    }
-    return list;
-  }
-
-  public final String getJSONString() {
-    return new JSONObject(this).toString();
-  }
 }

@@ -16,46 +16,37 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.gwtutil.client.js;
 
-import com.denormans.facebookgwt.api.shared.FBPermission;
-import com.denormans.facebookgwt.api.shared.FBUserStatus;
+import com.denormans.facebookgwt.api.shared.Transformer;
 
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
+import com.google.gwt.json.client.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class FBAuthEventResponse extends FBEventResponse {
-  protected FBAuthEventResponse() {
+public class EnhancedJSObject extends JavaScriptObject {
+  protected EnhancedJSObject() {
   }
 
-  public final FBUserStatus getStatus() {
-    return FBUserStatus.valueFromApiValue(getApiStatus());
+  public static List<String> convertJSArrayStringToList(final JsArrayString jsArray) {
+    return convertJSArrayStringToList(jsArray, Transformer.IdentityTransformer.<String>get());
   }
 
-  public final native String getApiStatus() /*-{
-    return this.status;
-  }-*/;
-
-  public final native boolean hasSession() /*-{
-    return this.session != null;
-  }-*/;
-
-  public final boolean isConnected() {
-    return hasSession() && getStatus() == FBUserStatus.Connected;
+  public static <T> List<T> convertJSArrayStringToList(final JsArrayString jsArray, final Transformer<String, T> transformer) {
+    int stackSize = jsArray.length();
+    List<T> list = new ArrayList<T>(stackSize);
+    for (int index = 0; index < stackSize; index++) {
+      final String originalValue = jsArray.get(index);
+      T value = transformer.transform(originalValue);
+      list.add(value);
+    }
+    return list;
   }
 
-  public final native FBSession getSession() /*-{
-    return this.session;
-  }-*/;
-
-  public final List<FBPermission> getPermissions() {
-    return FBPermission.valuesFromApiValues(getApiPermissions());
+  public final String getJSONString() {
+    return new JSONObject(this).toString();
   }
-
-  public final List<String> getApiPermissions() {
-    return FBPermission.parseApiValues(getPermissionsJS());
-  }
-
-  private native String getPermissionsJS() /*-{
-    return this.perms || "";
-  }-*/;
 }

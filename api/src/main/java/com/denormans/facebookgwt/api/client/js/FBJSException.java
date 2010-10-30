@@ -19,30 +19,31 @@
 package com.denormans.facebookgwt.api.client.js;
 
 import com.denormans.facebookgwt.api.client.FBGWTException;
+import com.denormans.gwtutil.client.js.JSError;
 
 public class FBJSException extends FBGWTException {
-  private JavaScriptError javaScriptError;
+  private JSError javaScriptError;
 
-  public FBJSException(final JavaScriptError javaScriptError) {
+  public FBJSException(final JSError javaScriptError) {
     this.javaScriptError = javaScriptError;
   }
 
-  public FBJSException(final String message, final JavaScriptError javaScriptError) {
+  public FBJSException(final String message, final JSError javaScriptError) {
     super(message);
     this.javaScriptError = javaScriptError;
   }
 
-  public FBJSException(final String message, final Throwable cause, final JavaScriptError javaScriptError) {
+  public FBJSException(final String message, final Throwable cause, final JSError javaScriptError) {
     super(message, cause);
     this.javaScriptError = javaScriptError;
   }
 
-  public FBJSException(final Throwable cause, final JavaScriptError javaScriptError) {
+  public FBJSException(final Throwable cause, final JSError javaScriptError) {
     super(cause);
     this.javaScriptError = javaScriptError;
   }
 
-  public JavaScriptError getJavaScriptError() {
+  public JSError getJavaScriptError() {
     return javaScriptError;
   }
 

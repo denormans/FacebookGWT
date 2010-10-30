@@ -12,7 +12,7 @@ import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeEvent;
 import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.js.EnhancedJavaScriptObject;
+import com.denormans.gwtutil.client.js.EnhancedJSObject;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.js.FBSession;
@@ -22,6 +22,7 @@ import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
@@ -67,14 +68,18 @@ public class ShowcaseImpl extends Composite implements Showcase {
   @UiField ScrollPanel eventContainer;
   @UiField FlowPanel eventPanel;
 
+  private HandlerRegistration initSuccessHandlerRegistration;
+
   public ShowcaseImpl() {
     DockLayoutPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
 
-    FacebookGWTAPI.get().addFBInitSuccessHandler(new FBInitSuccessHandler() {
+    initSuccessHandlerRegistration = FacebookGWTAPI.get().addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         handleFacebookInitialized(event);
+
+        initSuccessHandlerRegistration.removeHandler();
       }
     });
   }
@@ -153,7 +158,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
     addApiEventMessage(title, event.getApiResponse());
   }
 
-  private void addApiEventMessage(final String title, final EnhancedJavaScriptObject apiObject) {
+  private void addApiEventMessage(final String title, final EnhancedJSObject apiObject) {
     if (Log.isLoggable(Level.FINE)) {
       Log.fine(title + ": " + apiObject.getJSONString());
     }

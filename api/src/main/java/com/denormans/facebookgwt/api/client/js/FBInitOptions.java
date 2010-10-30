@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.js;
 
-public class FBInitOptions extends EnhancedJavaScriptObject {
+public class FBInitOptions extends FBOptions {
   /**
    * Create an empty init options, to be filled in.
    *
@@ -67,47 +67,53 @@ public class FBInitOptions extends EnhancedJavaScriptObject {
     return this.appId;
   }-*/;
 
-  public final native void setApplicationID(final String applicationID) /*-{
+  public final native FBInitOptions setApplicationID(final String applicationID) /*-{
     this.appId = applicationID;
+    return this;
   }-*/;
 
   public final native boolean getEnableCookieSupport() /*-{
     return this.cookie;
   }-*/;
 
-  public final native void setEnableCookieSupport(final boolean enableCookieSupport) /*-{
+  public final native FBInitOptions setEnableCookieSupport(final boolean enableCookieSupport) /*-{
     this.cookie = enableCookieSupport;
+    return this;
   }-*/;
 
   public final native boolean getEnableLogging() /*-{
     return this.logging;
   }-*/;
 
-  public final native void setEnableLogging(final boolean enableLogging) /*-{
+  public final native FBInitOptions setEnableLogging(final boolean enableLogging) /*-{
     this.logging = enableLogging;
+    return this;
   }-*/;
 
   public final native FBSession getSession() /*-{
     return this.session;
   }-*/;
 
-  public final native void setSession(final FBSession session) /*-{
+  public final native FBInitOptions setSession(final FBSession session) /*-{
     this.session = session;
+    return this;
   }-*/;
 
   public final native boolean getFetchStatus() /*-{
     return this.status;
   }-*/;
 
-  public final native void setFetchStatus(final boolean fetchStatus) /*-{
+  public final native FBInitOptions setFetchStatus(final boolean fetchStatus) /*-{
     this.status = fetchStatus;
+    return this;
   }-*/;
 
   public final native boolean getParseXFBMLTags() /*-{
     return this.xfbml;
   }-*/;
 
-  public final native void setParseXFBMLTags(final boolean parseXFBMLTags) /*-{
+  public final native FBInitOptions setParseXFBMLTags(final boolean parseXFBMLTags) /*-{
     this.xfbml = parseXFBMLTags;
+    return this;
   }-*/;
 }

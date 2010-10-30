@@ -39,7 +39,8 @@ import com.denormans.facebookgwt.api.client.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.js.FBJSException;
 import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.js.FBSession;
-import com.denormans.facebookgwt.api.client.js.JavaScriptError;
+import com.denormans.gwtutil.client.js.JSError;
+import com.denormans.gwtutil.client.js.JSFunction;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -312,7 +313,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
   }
 
   @SuppressWarnings ( { "UnusedDeclaration", "ThrowableResultOfMethodCallIgnored" })
-  private static void raiseException(final JavaScriptError error) {
+  private static void raiseException(final JSError error) {
     GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
     if (uncaughtExceptionHandler == null) {
       throw new FBJSException(error);
@@ -321,7 +322,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     uncaughtExceptionHandler.onUncaughtException(createException(error));
   }
 
-  private static FBJSException createException(final JavaScriptError error) {
+  private static FBJSException createException(final JSError error) {
     FBJSException fbjsException = new FBJSException(error);
     fbjsException.fillInStackTrace();
     return fbjsException;
@@ -488,8 +489,4 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     return sInstance;
   }
 
-  private static class JSFunction extends JavaScriptObject {
-    protected JSFunction() {
-    }
-  }
 }

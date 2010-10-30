@@ -16,46 +16,15 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.facebookgwt.api.client.events.edge;
 
-import com.google.gwt.core.client.JsArrayString;
+import com.denormans.facebookgwt.api.client.events.FBEventHandler;
 
-import java.util.List;
-
-public class JavaScriptError extends EnhancedJavaScriptObject {
-  protected JavaScriptError() {
-  }
-
-  public final String getDetailMessage() {
-    String detailMessage = getMessage();
-
-    String filename = getFileName();
-    int lineNumber = getLineNumber();
-
-    if (filename != null && filename.length() > 0) {
-      return detailMessage + " (" + filename + ", line " + lineNumber + ")";
-    } else {
-      return detailMessage;
-    }
-  }
-
-  public final native String getMessage() /*-{
-    return this.message || "";
-  }-*/;
-
-  public final native String getFileName() /*-{
-    return this.fileName || "";
-  }-*/;
-
-  public final native int getLineNumber() /*-{
-    return this.lineNumber || 0;
-  }-*/;
-
-  public final List<String> getStack() {
-    return convertJSArrayStringToList(getStackJS());
-  }
-
-  private final native JsArrayString getStackJS() /*-{
-    return this.stack || [];
-  }-*/;
+public interface FBEdgeCreateHandler extends FBEventHandler {
+  /**
+   * Called when {@link FBEdgeCreateEvent} is fired.
+   *
+   * @param event the {@link FBEdgeCreateEvent} that was fired
+   */
+  void onFBEdgeCreate(FBEdgeCreateEvent event);
 }

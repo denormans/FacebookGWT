@@ -18,9 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.events.stub;
 
-import com.denormans.facebookgwt.api.client.events.auth.FBAuthHandler;
+import com.denormans.facebookgwt.api.client.events.FBEventHandler;
 
-public interface FBStubHandler extends FBAuthHandler {
+public interface FBStubHandler extends FBEventHandler {
   /**
    * Called when {@link FBStubEvent} is fired.
    *

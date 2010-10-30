@@ -20,7 +20,7 @@ package com.denormans.facebookgwt.api.client.js;
 
 import java.util.Date;
 
-public class FBSession extends EnhancedJavaScriptObject {
+public class FBSession extends FBJSObject {
   protected FBSession() {
   }
 

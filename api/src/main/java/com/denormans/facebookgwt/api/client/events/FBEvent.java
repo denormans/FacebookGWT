@@ -18,11 +18,11 @@
 
 package com.denormans.facebookgwt.api.client.events;
 
-import com.denormans.facebookgwt.api.client.js.EnhancedJavaScriptObject;
+import com.denormans.facebookgwt.api.client.js.FBEventResponse;
 
 import com.google.gwt.event.shared.GwtEvent;
 
-public abstract class FBEvent<H extends FBEventHandler, R extends EnhancedJavaScriptObject> extends GwtEvent<H> {
+public abstract class FBEvent<H extends FBEventHandler, R extends FBEventResponse> extends GwtEvent<H> {
   private R apiResponse;
 
   protected FBEvent(final R apiResponse) {

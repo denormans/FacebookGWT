@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class FBLoginOptions extends EnhancedJavaScriptObject {
+public class FBLoginOptions extends FBOptions {
   public static FBLoginOptions create() {
     return FBLoginOptions.createObject().cast();
   }
@@ -60,21 +60,25 @@ public class FBLoginOptions extends EnhancedJavaScriptObject {
     return this.perms || "";
   }-*/;
 
-  public final void setPermissions(final FBPermission... permissions) {
+  public final FBLoginOptions setPermissions(final FBPermission... permissions) {
     setPermissions(Arrays.asList(permissions));
+    return this;
   }
 
-  public final void setPermissions(final Collection<FBPermission> permissions) {
+  public final FBLoginOptions setPermissions(final Collection<FBPermission> permissions) {
     setApiPermissions(FBPermission.toApiValues(permissions));
+    return this;
   }
 
-  public final void setApiPermissions(final String... permissions) {
+  public final FBLoginOptions setApiPermissions(final String... permissions) {
     setApiPermissions(Arrays.asList(permissions));
+    return this;
   }
 
-  public final void setApiPermissions(final Collection<String> permissions) {
+  public final FBLoginOptions setApiPermissions(final Collection<String> permissions) {
     String permissionsText = FBPermission.joinApiValues(permissions);
     setPermissionsJS(permissionsText);
+    return this;
   }
 
   private native void setPermissionsJS(final String permissions) /*-{

@@ -16,24 +16,24 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.stub;
+package com.denormans.facebookgwt.api.client.events.xfbml;
 
 import com.denormans.facebookgwt.api.client.events.FBEvent;
-import com.denormans.facebookgwt.api.client.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.js.XFBMLRenderEventResponse;
 
-public class FBStubEvent extends FBEvent<FBStubHandler, FBEventResponse> {
-  private static Type<FBStubHandler> sType;
+public class XFBMLRenderEvent extends FBEvent<XFBMLRenderHandler, XFBMLRenderEventResponse> {
+  private static Type<XFBMLRenderHandler> sType;
 
   /**
-   * Fires a {@link FBStubEvent} on all registered handlers in the handler
+   * Fires a {@link XFBMLRenderEvent} on all registered handlers in the handler
    * manager. If no such handlers exist, this method will do nothing.
    *
    * @param source the source of the handlers
    * @param apiResponse the Facebook JS API response
    */
-  public static void fire(HasFBStubHandler source, final FBEventResponse apiResponse) {
+  public static void fire(HasFBXFBMLRenderHandler source, final XFBMLRenderEventResponse apiResponse) {
     if (sType != null) {
-      FBStubEvent event = new FBStubEvent(apiResponse);
+      XFBMLRenderEvent event = new XFBMLRenderEvent(apiResponse);
       source.fireEvent(event);
     }
   }
@@ -43,25 +43,25 @@ public class FBStubEvent extends FBEvent<FBStubHandler, FBEventResponse> {
    *
    * @return returns the handler type
    */
-  public static Type<FBStubHandler> getType() {
+  public static Type<XFBMLRenderHandler> getType() {
     if (sType == null) {
-      sType = new Type<FBStubHandler>();
+      sType = new Type<XFBMLRenderHandler>();
     }
 
     return sType;
   }
 
-  protected FBStubEvent(final FBEventResponse apiResponse) {
+  protected XFBMLRenderEvent(final XFBMLRenderEventResponse apiResponse) {
     super(apiResponse);
   }
 
   @Override
-  public Type<FBStubHandler> getAssociatedType() {
+  public Type<XFBMLRenderHandler> getAssociatedType() {
     return sType;
   }
 
   @Override
-  protected void dispatch(final FBStubHandler handler) {
-    handler.onFBStub(this);
+  protected void dispatch(final XFBMLRenderHandler handler) {
+    handler.onXFBMLRender(this);
   }
 }

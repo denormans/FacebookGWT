@@ -18,44 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.js;
 
-import com.denormans.facebookgwt.api.shared.FBPermission;
-import com.denormans.facebookgwt.api.shared.FBUserStatus;
-
-import java.util.List;
-
-public class FBAuthEventResponse extends FBEventResponse {
-  protected FBAuthEventResponse() {
+public abstract class FBOptions extends FBJSObject {
+  protected FBOptions() {
   }
 
-  public final FBUserStatus getStatus() {
-    return FBUserStatus.valueFromApiValue(getApiStatus());
-  }
 
-  public final native String getApiStatus() /*-{
-    return this.status;
-  }-*/;
-
-  public final native boolean hasSession() /*-{
-    return this.session != null;
-  }-*/;
-
-  public final boolean isConnected() {
-    return hasSession() && getStatus() == FBUserStatus.Connected;
-  }
-
-  public final native FBSession getSession() /*-{
-    return this.session;
-  }-*/;
-
-  public final List<FBPermission> getPermissions() {
-    return FBPermission.valuesFromApiValues(getApiPermissions());
-  }
-
-  public final List<String> getApiPermissions() {
-    return FBPermission.parseApiValues(getPermissionsJS());
-  }
-
-  private native String getPermissionsJS() /*-{
-    return this.perms || "";
-  }-*/;
 }
