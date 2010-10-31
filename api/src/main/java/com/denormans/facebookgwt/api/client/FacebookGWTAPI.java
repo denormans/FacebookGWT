@@ -74,7 +74,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
   private static final String FacebookScriptServer = "connect.facebook.net";
   private static final String FacebookScriptLocation = "en_US/all.js";
 
-  private static FacebookGWTAPI sInstance;
+  private static final FacebookGWTAPI sInstance = new FacebookGWTAPI();
 
   private CountingEventBus eventBus = new CountingEventBus();
 
@@ -198,7 +198,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
 
           self.@com.denormans.facebookgwt.api.client.FacebookGWTAPI::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/js/FBInitOptions;)(initOptions);
         } catch(e) {
-          @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+          @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         }
       }
     } catch(e) {
@@ -226,7 +226,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     try {
       $wnd.FB.init(initOptions);
     } catch(e) {
-      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 
@@ -241,7 +241,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
       });
     } catch(e) {
-      var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+      var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
       callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
     }
   }-*/;
@@ -250,7 +250,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     try {
       return $wnd.FB.getSession();
     } catch(e) {
-      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 
@@ -267,10 +267,10 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
       }, loginOptions);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+        var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
-        @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+        @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
       }
     }
   }-*/;
@@ -288,10 +288,10 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
       }, loginOptions);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+        var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
-        @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+        @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
       }
     }
   }-*/;
@@ -340,7 +340,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
         try {
           self.@com.denormans.facebookgwt.api.client.FacebookGWTAPI::handleFBEvent(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(eventName, response);
         } catch(e) {
-          @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+          @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         }
       };
 
@@ -348,7 +348,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
 
       return callback;
     } catch(e) {
-      return @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+      return @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 
@@ -361,7 +361,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     try {
       $wnd.FB.Event.unsubscribe(eventName, callback);
     } catch(e) {
-      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/facebookgwt/api/client/js/JavaScriptError;)(e);
+      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 
@@ -482,10 +482,6 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
   }
 
   public static FacebookGWTAPI get() {
-    if (sInstance == null) {
-      sInstance = new FacebookGWTAPI();
-    }
-
     return sInstance;
   }
 

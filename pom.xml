@@ -18,6 +18,7 @@
   </properties>
 
   <modules>
+    <module>gwtutil</module>
     <module>api</module>
     <module>samples</module>
   </modules>

@@ -16,22 +16,37 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared;
+package com.denormans.gwtutil.client.js;
 
-public interface Transformer<V, R> {
-  R transform(final V value);
+import com.denormans.gwtutil.shared.Transformer;
 
-  public static class IdentityTransformer<T> implements Transformer<T, T> {
-    private static IdentityTransformer Instance = new IdentityTransformer();
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
+import com.google.gwt.json.client.JSONObject;
 
-    @SuppressWarnings ( { "unchecked" })
-    public static <T> IdentityTransformer<T> get() {
-      return Instance;
+import java.util.ArrayList;
+import java.util.List;
+
+public class EnhancedJSObject extends JavaScriptObject {
+  protected EnhancedJSObject() {
+  }
+
+  public static List<String> convertJSArrayStringToList(final JsArrayString jsArray) {
+    return convertJSArrayStringToList(jsArray, Transformer.IdentityTransformer.<String>get());
+  }
+
+  public static <T> List<T> convertJSArrayStringToList(final JsArrayString jsArray, final Transformer<String, T> transformer) {
+    int stackSize = jsArray.length();
+    List<T> list = new ArrayList<T>(stackSize);
+    for (int index = 0; index < stackSize; index++) {
+      final String originalValue = jsArray.get(index);
+      T value = transformer.transform(originalValue);
+      list.add(value);
     }
+    return list;
+  }
 
-    @Override
-    public T transform(final T value) {
-      return value;
-    }
+  public final String getJSONString() {
+    return new JSONObject(this).toString();
   }
 }
