@@ -16,51 +16,32 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client;
 
+import com.denormans.facebookgwt.api.client.events.FBEventType;
+import com.denormans.facebookgwt.api.client.events.FBLogEvent;
+import com.denormans.facebookgwt.api.client.events.FBLogHandler;
+import com.denormans.facebookgwt.api.client.events.HasFBLogHandler;
+import com.denormans.facebookgwt.api.client.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBLogEventResponse;
 
-public class FBLogEvent extends FBEvent<FBLogHandler, FBLogEventResponse> {
-  private static Type<FBLogHandler> sType;
+import com.google.gwt.event.shared.HandlerRegistration;
 
-  /**
-   * Fires a {@link FBLogEvent} on all registered handlers in the handler
-   * manager. If no such handlers exist, this method will do nothing.
-   *
-   * @param source the source of the handlers
-   * @param apiResponse the Facebook JS API response
-   */
-  public static void fire(HasFBLogHandler source, final FBLogEventResponse apiResponse) {
-    if (sType != null) {
-      FBLogEvent event = new FBLogEvent(apiResponse);
-      source.fireEvent(event);
+public final class FBCore extends FBIntegration implements HasFBLogHandler {
+  @Override
+  protected void handleFBEvent(final FBEventType eventType, final FBEventResponse apiResponse) {
+    switch (eventType) {
+      case FBLog:
+        FBLogEvent.fire(this, apiResponse.<FBLogEventResponse>cast());
+        break;
+
+      default:
+        super.handleFBEvent(eventType, apiResponse);
     }
   }
 
-  /**
-   * Gets the type associated with this event.
-   *
-   * @return returns the handler type
-   */
-  public static Type<FBLogHandler> getType() {
-    if (sType == null) {
-      sType = new Type<FBLogHandler>();
-    }
-
-    return sType;
-  }
-
-  protected FBLogEvent(final FBLogEventResponse apiResponse) {
-    super(apiResponse);
-  }
-
   @Override
-  public Type<FBLogHandler> getAssociatedType() {
-    return sType;
-  }
-
-  @Override
-  protected void dispatch(final FBLogHandler handler) {
-    handler.onFBStub(this);
+  public HandlerRegistration addFBLogHandler(final FBLogHandler handler) {
+    return addFBEventHandler(handler, FBLogEvent.getType(), FBEventType.FBLog);
   }
 }

@@ -21,12 +21,12 @@ package com.denormans.facebookgwt.api.client.events;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.HasHandlers;
 
-public interface HasFBStubHandler extends HasHandlers {
+public interface HasFBLogHandler extends HasHandlers {
   /**
    * Adds a {@link FBLogEvent} handler.
    *
    * @param handler the handler
    * @return the registration for the event
    */
-  HandlerRegistration addFBStubHandler(FBLogHandler handler);
+  HandlerRegistration addFBLogHandler(FBLogHandler handler);
 }

@@ -2,6 +2,8 @@ package com.denormans.facebookgwt.samples.client.showcase.impl;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.events.FBEvent;
+import com.denormans.facebookgwt.api.client.events.FBLogEvent;
+import com.denormans.facebookgwt.api.client.events.FBLogHandler;
 import com.denormans.facebookgwt.api.client.events.auth.FBLoginEvent;
 import com.denormans.facebookgwt.api.client.events.auth.FBLoginHandler;
 import com.denormans.facebookgwt.api.client.events.auth.FBLogoutEvent;
@@ -87,6 +89,13 @@ public class ShowcaseImpl extends Composite implements Showcase {
   private void handleFacebookInitialized(final FBInitSuccessEvent event) {
     addEventMessage("Facebook loaded");
 
+    FBGWT.Core.addFBLogHandler(new FBLogHandler() {
+      @Override
+      public void onFBStub(final FBLogEvent event) {
+        handleFBLogEvent(event);
+      }
+    });
+
     FBGWT.Auth.addFBLoginHandler(new FBLoginHandler() {
       @Override
       public void onFBLogin(final FBLoginEvent event) {
@@ -136,6 +145,10 @@ public class ShowcaseImpl extends Composite implements Showcase {
         Log.info("Session after login status: " + session.getJSONString());
       }
     });
+  }
+
+  public void handleFBLogEvent(final FBLogEvent event) {
+    addApiEventMessage("Log Event", event);
   }
 
   public void handleLogin(final FBLoginEvent event) {

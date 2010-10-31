@@ -51,7 +51,7 @@ public abstract class FBIntegration implements HasHandlers {
   }
 
   private JSFunction subscribeToEvent(final FBEventType eventType) {
-    Log.fine("Subscribing to event: " + eventType);
+    Log.fine("Subscribing to event: " + eventType + " (" + eventType.getApiValue() + ")");
     return subscribeToEventJS(eventType.getApiValue());
   }
 
@@ -75,7 +75,7 @@ public abstract class FBIntegration implements HasHandlers {
   }-*/;
 
   private void unsubscribeFromEvent(final FBEventType eventType, final JSFunction callback) {
-    Log.fine("Unsubscribing from event: " + eventType);
+    Log.fine("Unsubscribing from event: " + eventType + " (" + eventType.getApiValue() + ")");
     unsubscribeFromEventJS(eventType.getApiValue(), callback);
   }
 
