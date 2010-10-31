@@ -16,11 +16,13 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.facebookgwt.api.client.events;
 
-public class FBCommentsAddEventResponse extends FBEventResponse {
-  protected FBCommentsAddEventResponse() {
-  }
-
-
+public interface FBLogHandler extends FBEventHandler {
+  /**
+   * Called when {@link FBLogEvent} is fired.
+   *
+   * @param event the {@link FBLogEvent} that was fired
+   */
+  void onFBStub(FBLogEvent event);
 }

@@ -16,24 +16,24 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.edge;
+package com.denormans.facebookgwt.api.client.events.ui;
 
 import com.denormans.facebookgwt.api.client.events.FBEvent;
-import com.denormans.facebookgwt.api.client.js.FBEdgeCreateEventResponse;
+import com.denormans.facebookgwt.api.client.js.FBAddCommentEventResponse;
 
-public class FBEdgeCreateEvent extends FBEvent<FBEdgeCreateHandler, FBEdgeCreateEventResponse> {
-  private static Type<FBEdgeCreateHandler> sType;
+public class FBAddCommentEvent extends FBEvent<FBAddCommentHandler, FBAddCommentEventResponse> {
+  private static Type<FBAddCommentHandler> sType;
 
   /**
-   * Fires a {@link FBEdgeCreateEvent} on all registered handlers in the handler
+   * Fires a {@link FBAddCommentEvent} on all registered handlers in the handler
    * manager. If no such handlers exist, this method will do nothing.
    *
    * @param source the source of the handlers
    * @param apiResponse the Facebook JS API response
    */
-  public static void fire(HasFBEdgeCreateHandler source, final FBEdgeCreateEventResponse apiResponse) {
+  public static void fire(HasFBAddCommentHandler source, final FBAddCommentEventResponse apiResponse) {
     if (sType != null) {
-      FBEdgeCreateEvent event = new FBEdgeCreateEvent(apiResponse);
+      FBAddCommentEvent event = new FBAddCommentEvent(apiResponse);
       source.fireEvent(event);
     }
   }
@@ -43,25 +43,25 @@ public class FBEdgeCreateEvent extends FBEvent<FBEdgeCreateHandler, FBEdgeCreate
    *
    * @return returns the handler type
    */
-  public static Type<FBEdgeCreateHandler> getType() {
+  public static Type<FBAddCommentHandler> getType() {
     if (sType == null) {
-      sType = new Type<FBEdgeCreateHandler>();
+      sType = new Type<FBAddCommentHandler>();
     }
 
     return sType;
   }
 
-  protected FBEdgeCreateEvent(final FBEdgeCreateEventResponse apiResponse) {
+  protected FBAddCommentEvent(final FBAddCommentEventResponse apiResponse) {
     super(apiResponse);
   }
 
   @Override
-  public Type<FBEdgeCreateHandler> getAssociatedType() {
+  public Type<FBAddCommentHandler> getAssociatedType() {
     return sType;
   }
 
   @Override
-  protected void dispatch(final FBEdgeCreateHandler handler) {
-    handler.onFBEdgeCreate(this);
+  protected void dispatch(final FBAddCommentHandler handler) {
+    handler.onFBAddComment(this);
   }
 }

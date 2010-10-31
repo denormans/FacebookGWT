@@ -16,15 +16,17 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.xfbml;
+package com.denormans.facebookgwt.api.client.events.ui;
 
-import com.denormans.facebookgwt.api.client.events.FBEventHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
 
-public interface XFBMLRenderHandler extends FBEventHandler {
+public interface HasFBAddCommentHandler extends HasHandlers {
   /**
-   * Called when {@link XFBMLRenderEvent} is fired.
+   * Adds a {@link FBAddCommentEvent} handler.
    *
-   * @param event the {@link XFBMLRenderEvent} that was fired
+   * @param handler the handler
+   * @return the registration for the event
    */
-  void onXFBMLRender(XFBMLRenderEvent event);
+  HandlerRegistration addFBStubHandler(FBAddCommentHandler handler);
 }

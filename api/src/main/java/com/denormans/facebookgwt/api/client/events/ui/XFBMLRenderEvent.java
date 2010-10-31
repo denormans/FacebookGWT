@@ -16,7 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.xfbml;
+package com.denormans.facebookgwt.api.client.events.ui;
 
 import com.denormans.facebookgwt.api.client.events.FBEvent;
 import com.denormans.facebookgwt.api.client.js.XFBMLRenderEventResponse;

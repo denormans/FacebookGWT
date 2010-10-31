@@ -16,17 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.edge;
+package com.denormans.facebookgwt.api.client.js;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+public class FBAddCommentEventResponse extends FBEventResponse {
+  protected FBAddCommentEventResponse() {
+  }
 
-public interface HasFBEdgeCreateHandler extends HasHandlers {
-  /**
-   * Adds a {@link FBEdgeCreateEvent} handler.
-   *
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addFBEdgeCreateHandler(FBEdgeCreateHandler handler);
+
 }
