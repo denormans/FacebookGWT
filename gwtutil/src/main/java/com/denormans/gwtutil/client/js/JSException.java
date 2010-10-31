@@ -16,26 +16,43 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.gwtutil.client.js;
 
-import com.denormans.gwtutil.client.js.JSError;
-import com.denormans.gwtutil.client.js.JSException;
+public class JSException extends RuntimeException {
+  private JSError javaScriptError;
 
-public class FBJSException extends JSException {
-  public FBJSException(final JSError javaScriptError) {
-    super(javaScriptError);
+  public JSException(final JSError javaScriptError) {
+    super();
+    this.javaScriptError = javaScriptError;
   }
 
-  public FBJSException(final String message, final JSError javaScriptError) {
-    super(message, javaScriptError);
+  public JSException(final String message, final JSError javaScriptError) {
+    super(message);
+    this.javaScriptError = javaScriptError;
   }
 
-  public FBJSException(final String message, final Throwable cause, final JSError javaScriptError) {
-    super(message, cause, javaScriptError);
+  public JSException(final Throwable cause, final JSError javaScriptError) {
+    super(cause);
+    this.javaScriptError = javaScriptError;
   }
 
-  public FBJSException(final Throwable cause, final JSError javaScriptError) {
-    super(cause, javaScriptError);
+  public JSException(final String message, final Throwable cause, final JSError javaScriptError) {
+    super(message, cause);
+    this.javaScriptError = javaScriptError;
   }
 
+  public JSError getJavaScriptError() {
+    return javaScriptError;
+  }
+
+  @Override
+  public String getMessage() {
+    String message = super.getMessage();
+    String jsErrorMessage = getJavaScriptError().getDetailMessage();
+    if (message != null && message.length() > 0) {
+      return message + " - " + jsErrorMessage;
+    } else {
+      return jsErrorMessage;
+    }
+  }
 }

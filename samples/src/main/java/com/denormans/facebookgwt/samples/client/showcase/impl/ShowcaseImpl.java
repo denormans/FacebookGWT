@@ -87,38 +87,38 @@ public class ShowcaseImpl extends Composite implements Showcase {
   private void handleFacebookInitialized(final FBInitSuccessEvent event) {
     addEventMessage("Facebook loaded");
 
-    FBGWT.get().addFBLoginHandler(new FBLoginHandler() {
+    FBGWT.Auth.addFBLoginHandler(new FBLoginHandler() {
       @Override
       public void onFBLogin(final FBLoginEvent event) {
         handleLogin(event);
       }
     });
 
-    FBGWT.get().addFBLogoutHandler(new FBLogoutHandler() {
+    FBGWT.Auth.addFBLogoutHandler(new FBLogoutHandler() {
       @Override
       public void onFBLogout(final FBLogoutEvent event) {
         handleLogout(event);
       }
     });
 
-    FBGWT.get().addFBSessionChangeHandler(new FBSessionChangeHandler() {
+    FBGWT.Auth.addFBSessionChangeHandler(new FBSessionChangeHandler() {
       @Override
       public void onFBSessionChange(final FBSessionChangeEvent event) {
         handleSessionChange(event);
       }
     });
 
-    FBGWT.get().addFBStatusChangeHandler(new FBStatusChangeHandler() {
+    FBGWT.Auth.addFBStatusChangeHandler(new FBStatusChangeHandler() {
       @Override
       public void onFBStatusChange(final FBStatusChangeEvent event) {
         handleStatusChange(event);
       }
     });
 
-    FBSession session = FBGWT.get().getSession();
+    FBSession session = FBGWT.Auth.getSession();
     Log.info("Session before login status: " + session.getJSONString());
 
-    FBGWT.get().retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
+    FBGWT.Auth.retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         FacebookGWTSamples.get().handleError("Error retrieving login status", caught);
@@ -132,7 +132,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
         updateConnectionButtons(result.isConnected());
 
-        FBSession session = FBGWT.get().getSession();
+        FBSession session = FBGWT.Auth.getSession();
         Log.info("Session after login status: " + session.getJSONString());
       }
     });
@@ -194,7 +194,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiHandler ("loginButton")
   protected void handleLoginButtonClick(final ClickEvent event) {
-    FBGWT.get().login(new AsyncCallback<FBAuthEventResponse>() {
+    FBGWT.Auth.login(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         FacebookGWTSamples.get().handleError("Error logging in", caught);
@@ -213,7 +213,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiHandler ("logoutButton")
   protected void handleLogoutButtonClick(final ClickEvent event) {
-    FBGWT.get().logout(new AsyncCallback<FBAuthEventResponse>() {
+    FBGWT.Auth.logout(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         FacebookGWTSamples.get().handleError("Error logging out", caught);

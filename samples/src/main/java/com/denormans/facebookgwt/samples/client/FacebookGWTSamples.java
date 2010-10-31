@@ -78,7 +78,7 @@ public class FacebookGWTSamples implements EntryPoint {
       }
     });
 
-    FBGWT.get().initialize(FBInitOptions.create(SamplesFacebookApplicationID, true));
+    FBGWT.Init.initialize(FBInitOptions.create(SamplesFacebookApplicationID, true));
 
     Log.info("FacebookGWTSamples Module loaded");
   }

@@ -99,6 +99,11 @@ public final class FBInitialization implements HasFBInitHandlers  {
     }
 
     if (initializationState == FBInitialization.InitializationState.Initialized) {
+      if (initOptions != null) {
+        executeFBInit(initOptions);
+        Log.fine("Facebook reinitialized");
+      }
+
       fireInitSuccess();
       return;
     }
