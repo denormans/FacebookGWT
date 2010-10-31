@@ -1,6 +1,6 @@
 package com.denormans.facebookgwt.samples.client.showcase.impl;
 
-import com.denormans.facebookgwt.api.client.FacebookGWTAPI;
+import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.events.FBEvent;
 import com.denormans.facebookgwt.api.client.events.auth.FBLoginEvent;
 import com.denormans.facebookgwt.api.client.events.auth.FBLoginHandler;
@@ -74,7 +74,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
     DockLayoutPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
 
-    initSuccessHandlerRegistration = FacebookGWTAPI.get().addFBInitSuccessHandler(new FBInitSuccessHandler() {
+    initSuccessHandlerRegistration = FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         handleFacebookInitialized(event);
@@ -87,38 +87,38 @@ public class ShowcaseImpl extends Composite implements Showcase {
   private void handleFacebookInitialized(final FBInitSuccessEvent event) {
     addEventMessage("Facebook loaded");
 
-    FacebookGWTAPI.get().addFBLoginHandler(new FBLoginHandler() {
+    FBGWT.get().addFBLoginHandler(new FBLoginHandler() {
       @Override
       public void onFBLogin(final FBLoginEvent event) {
         handleLogin(event);
       }
     });
 
-    FacebookGWTAPI.get().addFBLogoutHandler(new FBLogoutHandler() {
+    FBGWT.get().addFBLogoutHandler(new FBLogoutHandler() {
       @Override
       public void onFBLogout(final FBLogoutEvent event) {
         handleLogout(event);
       }
     });
 
-    FacebookGWTAPI.get().addFBSessionChangeHandler(new FBSessionChangeHandler() {
+    FBGWT.get().addFBSessionChangeHandler(new FBSessionChangeHandler() {
       @Override
       public void onFBSessionChange(final FBSessionChangeEvent event) {
         handleSessionChange(event);
       }
     });
 
-    FacebookGWTAPI.get().addFBStatusChangeHandler(new FBStatusChangeHandler() {
+    FBGWT.get().addFBStatusChangeHandler(new FBStatusChangeHandler() {
       @Override
       public void onFBStatusChange(final FBStatusChangeEvent event) {
         handleStatusChange(event);
       }
     });
 
-    FBSession session = FacebookGWTAPI.get().getSession();
+    FBSession session = FBGWT.get().getSession();
     Log.info("Session before login status: " + session.getJSONString());
 
-    FacebookGWTAPI.get().retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
+    FBGWT.get().retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         FacebookGWTSamples.get().handleError("Error retrieving login status", caught);
@@ -132,7 +132,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
         updateConnectionButtons(result.isConnected());
 
-        FBSession session = FacebookGWTAPI.get().getSession();
+        FBSession session = FBGWT.get().getSession();
         Log.info("Session after login status: " + session.getJSONString());
       }
     });
@@ -194,7 +194,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiHandler ("loginButton")
   protected void handleLoginButtonClick(final ClickEvent event) {
-    FacebookGWTAPI.get().login(new AsyncCallback<FBAuthEventResponse>() {
+    FBGWT.get().login(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         FacebookGWTSamples.get().handleError("Error logging in", caught);
@@ -213,7 +213,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiHandler ("logoutButton")
   protected void handleLogoutButtonClick(final ClickEvent event) {
-    FacebookGWTAPI.get().logout(new AsyncCallback<FBAuthEventResponse>() {
+    FBGWT.get().logout(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         FacebookGWTSamples.get().handleError("Error logging out", caught);

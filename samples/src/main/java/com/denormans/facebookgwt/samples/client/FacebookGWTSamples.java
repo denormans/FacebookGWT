@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.samples.client;
 
-import com.denormans.facebookgwt.api.client.FacebookGWTAPI;
+import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.events.init.FBInitFailureEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitFailureHandler;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
@@ -64,21 +64,21 @@ public class FacebookGWTSamples implements EntryPoint {
     RootPanel.get("FBGWTLoadingTextID").setVisible(false);
     RootLayoutPanel.get().add(showcase);
 
-    FacebookGWTAPI.get().addFBInitFailureHandler(new FBInitFailureHandler() {
+    FBGWT.Init.addFBInitFailureHandler(new FBInitFailureHandler() {
       @Override
       public void onFBInitFailure(final FBInitFailureEvent event) {
         handleError("Facebook failed to load");
       }
     });
 
-    FacebookGWTAPI.get().addFBInitSuccessHandler(new FBInitSuccessHandler() {
+    FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         Log.info("Facebook loaded");
       }
     });
 
-    FacebookGWTAPI.get().initialize(FBInitOptions.create(SamplesFacebookApplicationID, true));
+    FBGWT.get().initialize(FBInitOptions.create(SamplesFacebookApplicationID, true));
 
     Log.info("FacebookGWTSamples Module loaded");
   }

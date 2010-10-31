@@ -18,8 +18,8 @@
 
 package com.denormans.facebookgwt.api.client;
 
-import com.denormans.facebookgwt.api.client.events.FBEventType;
 import com.denormans.facebookgwt.api.client.events.FBEventHandler;
+import com.denormans.facebookgwt.api.client.events.FBEventType;
 import com.denormans.facebookgwt.api.client.events.auth.FBLoginEvent;
 import com.denormans.facebookgwt.api.client.events.auth.FBLoginHandler;
 import com.denormans.facebookgwt.api.client.events.auth.FBLogoutEvent;
@@ -29,12 +29,8 @@ import com.denormans.facebookgwt.api.client.events.auth.FBSessionChangeHandler;
 import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeEvent;
 import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.events.auth.HasFBAuthHandlers;
-import com.denormans.facebookgwt.api.client.events.init.FBInitFailureEvent;
-import com.denormans.facebookgwt.api.client.events.init.FBInitFailureHandler;
-import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
-import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.events.init.HasFBInitHandlers;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
+import com.denormans.facebookgwt.api.client.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.js.FBJSException;
 import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
@@ -43,192 +39,35 @@ import com.denormans.gwtutil.client.js.JSError;
 import com.denormans.gwtutil.client.js.JSFunction;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.BodyElement;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.ScriptElement;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.DeferredCommand;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandlers {
-  public static final Logger Log = Logger.getLogger(FacebookGWTAPI.class.getName());
+public final class FBGWT implements HasFBAuthHandlers {
+  public static final Logger Log = Logger.getLogger(FBGWT.class.getName());
 
-  public enum InitializationState { Uninitialized, LoadingScript, ScriptLoaded, Initialized }
+  private static final FBGWT sInstance = new FBGWT();
 
-  public static final int InitializationTimeout = 10;
-
-  public static final String FacebookRootElementID = "fb-root";
-  public static final String FacebookScriptElementID = "fb-script-all";
-  private static final String FacebookScriptServer = "connect.facebook.net";
-  private static final String FacebookScriptLocation = "en_US/all.js";
-
-  private static final FacebookGWTAPI sInstance = new FacebookGWTAPI();
+  public static final FBInitialization Init = new FBInitialization();
 
   private CountingEventBus eventBus = new CountingEventBus();
 
-  private InitializationState initializationState = InitializationState.Uninitialized;
-  private Timer initializationTimer;
-
   private Map<FBEventType, JSFunction> callbackFunctionsByEvent = new HashMap<FBEventType, JSFunction>();
 
-  /**
-   * Determines whether or not Facebook has been initialized with this API.
-   *
-   * @return whether or not Facebook has been initialized.
-   */
-  public boolean isInitialized() {
-    return initializationState == InitializationState.Initialized;
-  }
-
-  /**
-   * Returns the current initialization state.  If {@link #initialize} call hasn't been called yet, the state is {@link InitializationState#Uninitialized}.
-   *
-   * @return the initialization state.
-   */
-  public InitializationState getInitializationState() {
-    return initializationState;
-  }
-
-  /**
-   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered to be called when Facebook is initialized.
-   *
-   * Uses the default initialization timeout.
-   *
-   * @param initOptions initialization options
-   */
   public void initialize(final FBInitOptions initOptions) {
-    initialize(initOptions, InitializationTimeout);
+    Init.initialize(initOptions);
   }
 
-  /**
-   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered to be called when Facebook is initialized.
-   * <p>
-   * Calling this method will eventually fire all registered init events, even if already initialized.
-   *
-   * @param initOptions initialization options
-   * @param initializationTimeout The timeout (in seconds) before an init failure event is fired.
-   */
-  public synchronized void initialize(final FBInitOptions initOptions, final int initializationTimeout) {
-    if (initializationState == InitializationState.LoadingScript || initializationState == InitializationState.ScriptLoaded) {
-      return;
-    }
-
-    if (initializationState == InitializationState.Initialized) {
-      fireInitSuccess();
-      return;
-    }
-
-    initializationState = InitializationState.LoadingScript;
-    Log.fine("Initializing Facebook...");
-
-    setupFBAsyncInitCallback(initOptions);
-
-    if (hasFacebookScriptElement()) {
-      // found the script block, so assume we're initialized
-      initializationState = InitializationState.Initialized;
-      fireInitSuccess();
-      return;
-    }
-
-    Document doc = Document.get();
-    Element fbRootElement = doc.getElementById(FacebookRootElementID);
-    if (fbRootElement == null) {
-      fbRootElement = DOM.createDiv();
-      fbRootElement.setId(FacebookRootElementID);
-      BodyElement bodyElement = doc.getBody();
-      bodyElement.appendChild(fbRootElement);
-    }
-
-    ScriptElement script = doc.createScriptElement();
-    script.setType("text/javascript");
-    script.setId(FacebookScriptElementID);
-    script.setSrc(Window.Location.getProtocol() + "//" + FacebookScriptServer + "/" + FacebookScriptLocation);
-    // facebook seems to think this async is necessary
-    script.setPropertyBoolean("async", true);
-
-    if (initializationTimeout > 0) {
-      if (initializationTimer == null) {
-        initializationTimer = new Timer() {
-          @Override
-          public void run() {
-            fireInitFailure();
-          }
-        };
-      }
-      initializationTimer.cancel();
-      initializationTimer.schedule(initializationTimeout * 1000);
-    }
-
-    fbRootElement.appendChild(script);
+  public void initialize(final FBInitOptions initOptions, final int initializationTimeout) {
+    Init.initialize(initOptions, initializationTimeout);
   }
-
-  private boolean hasFacebookScriptElement() {
-    Document doc = Document.get();
-    if (doc.getElementById(FacebookScriptElementID) != null) {
-      return true;
-    }
-
-    // enhance: check other script elements for facebook API access (?)
-
-    return false;
-  }
-
-  private native void setupFBAsyncInitCallback(final FBInitOptions initOptions) /*-{
-    try {
-      var self = this;
-      var oldFBAsyncInit = $wnd.fbAsyncInit;
-      $wnd.fbAsyncInit = function() {
-        try {
-          // call the old one first
-          if (oldFBAsyncInit) {
-            oldFBAsyncInit();
-          }
-
-          self.@com.denormans.facebookgwt.api.client.FacebookGWTAPI::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/js/FBInitOptions;)(initOptions);
-        } catch(e) {
-          @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
-        }
-      }
-    } catch(e) {
-    }
-  }-*/;
-
-  @SuppressWarnings ({ "UnusedDeclaration" })
-  private void handleFBAsyncInit(final FBInitOptions initOptions) {
-    initializationState = InitializationState.ScriptLoaded;
-
-    initializationTimer.cancel();
-    initializationTimer = null;
-
-    if (initOptions != null) {
-      executeFBInit(initOptions);
-    }
-
-    initializationState = InitializationState.Initialized;
-
-    Log.fine("Facebook initialized");
-    fireInitSuccess();
-  }
-
-  public native void executeFBInit(final FBInitOptions initOptions) /*-{
-    try {
-      $wnd.FB.init(initOptions);
-    } catch(e) {
-      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
-    }
-  }-*/;
 
   /**
    * Retrieves the login status asynchronously via the Facebook JSAPI.
@@ -241,7 +80,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
       });
     } catch(e) {
-      var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+      var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
       callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
     }
   }-*/;
@@ -250,7 +89,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     try {
       return $wnd.FB.getSession();
     } catch(e) {
-      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+      @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 
@@ -267,10 +106,10 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
       }, loginOptions);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
-        @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
       }
     }
   }-*/;
@@ -288,16 +127,16 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
       }, loginOptions);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.api.client.FacebookGWTAPI::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
-        @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
       }
     }
   }-*/;
 
   @SuppressWarnings ( { "ThrowableResultOfMethodCallIgnored" })
-  private static void raiseException(final String message) {
+  public static void raiseException(final String message) {
     GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
     if (uncaughtExceptionHandler == null) {
       throw new FBGWTException(message);
@@ -306,14 +145,14 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     uncaughtExceptionHandler.onUncaughtException(createException(message));
   }
 
-  private static FBGWTException createException(final String message) {
+  public static FBGWTException createException(final String message) {
     FBGWTException fbgwtException = new FBGWTException(message);
     fbgwtException.fillInStackTrace();
     return fbgwtException;
   }
 
   @SuppressWarnings ( { "UnusedDeclaration", "ThrowableResultOfMethodCallIgnored" })
-  private static void raiseException(final JSError error) {
+  public static void raiseException(final JSError error) {
     GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
     if (uncaughtExceptionHandler == null) {
       throw new FBJSException(error);
@@ -322,7 +161,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     uncaughtExceptionHandler.onUncaughtException(createException(error));
   }
 
-  private static FBJSException createException(final JSError error) {
+  public static FBJSException createException(final JSError error) {
     FBJSException fbjsException = new FBJSException(error);
     fbjsException.fillInStackTrace();
     return fbjsException;
@@ -338,9 +177,9 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
       var self = this;
       var callback = function(response) {
         try {
-          self.@com.denormans.facebookgwt.api.client.FacebookGWTAPI::handleFBEvent(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(eventName, response);
+          self.@com.denormans.facebookgwt.api.client.FBGWT::handleFBEvent(Ljava/lang/String;Lcom/denormans/facebookgwt/api/client/js/FBEventResponse;)(eventName, response);
         } catch(e) {
-          @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+          @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         }
       };
 
@@ -348,7 +187,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
 
       return callback;
     } catch(e) {
-      return @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+      return @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 
@@ -361,12 +200,12 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     try {
       $wnd.FB.Event.unsubscribe(eventName, callback);
     } catch(e) {
-      @com.denormans.facebookgwt.api.client.FacebookGWTAPI::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+      @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 
   @SuppressWarnings ({ "UnusedDeclaration" })
-  private void handleFBEvent(final String eventName, final JavaScriptObject apiResponse) {
+  private void handleFBEvent(final String eventName, final FBEventResponse apiResponse) {
     FBEventType eventType = FBEventType.valueFromApiValue(eventName);
     if (eventType == null) {
       Log.warning("Unknown event: " + eventName);
@@ -395,14 +234,6 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     }
   }
 
-  protected void fireInitSuccess() {
-    FBInitSuccessEvent.fire(this);
-  }
-
-  protected void fireInitFailure() {
-    FBInitFailureEvent.fire(this);
-  }
-
   protected void fireLogin(final FBAuthEventResponse apiResponse) {
     FBLoginEvent.fire(this, apiResponse);
   }
@@ -417,16 +248,6 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
 
   protected void fireStatusChange(final FBAuthEventResponse apiResponse) {
     FBStatusChangeEvent.fire(this, apiResponse);
-  }
-
-  @Override
-  public HandlerRegistration addFBInitSuccessHandler(final FBInitSuccessHandler handler) {
-    return eventBus.addHandler(FBInitSuccessEvent.getType(), handler);
-  }
-
-  @Override
-  public HandlerRegistration addFBInitFailureHandler(final FBInitFailureHandler handler) {
-    return eventBus.addHandler(FBInitFailureEvent.getType(), handler);
   }
 
   @Override
@@ -481,7 +302,7 @@ public final class FacebookGWTAPI implements HasFBInitHandlers, HasFBAuthHandler
     eventBus.fireEvent(event);
   }
 
-  public static FacebookGWTAPI get() {
+  public static FBGWT get() {
     return sInstance;
   }
 
