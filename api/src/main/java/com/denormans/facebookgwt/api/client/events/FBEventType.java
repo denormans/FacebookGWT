@@ -29,7 +29,7 @@ public enum FBEventType {
   XFBMLRender("xfbml.render"),
   EdgeCreate("edge.create"),
   CommentsAdd("comments.add"),
-  FBLog("fb.log");
+  Log("fb.log");
 
   private static final Map<String, FBEventType> sEventByApiValue = createEventByApiValueMap();
 

@@ -28,5 +28,5 @@ public interface HasFBAddCommentHandler extends HasHandlers {
    * @param handler the handler
    * @return the registration for the event
    */
-  HandlerRegistration addFBStubHandler(FBAddCommentHandler handler);
+  HandlerRegistration addFBAddCommentHandler(FBAddCommentHandler handler);
 }

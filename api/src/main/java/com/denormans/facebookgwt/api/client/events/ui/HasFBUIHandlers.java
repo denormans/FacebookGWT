@@ -16,32 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client;
+package com.denormans.facebookgwt.api.client.events.ui;
 
-import com.denormans.facebookgwt.api.client.events.FBEventType;
-import com.denormans.facebookgwt.api.client.events.FBLogEvent;
-import com.denormans.facebookgwt.api.client.events.FBLogHandler;
-import com.denormans.facebookgwt.api.client.events.HasFBLogHandler;
-import com.denormans.facebookgwt.api.client.js.FBEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBLogEventResponse;
-
-import com.google.gwt.event.shared.HandlerRegistration;
-
-public final class FBCore extends FBIntegration implements HasFBLogHandler {
-  @Override
-  protected void handleFBEvent(final FBEventType eventType, final FBEventResponse apiResponse) {
-    switch (eventType) {
-      case Log:
-        FBLogEvent.fire(this, apiResponse.<FBLogEventResponse>cast());
-        break;
-
-      default:
-        super.handleFBEvent(eventType, apiResponse);
-    }
-  }
-
-  @Override
-  public HandlerRegistration addFBLogHandler(final FBLogHandler handler) {
-    return addFBEventHandler(handler, FBLogEvent.getType(), FBEventType.Log);
-  }
+public interface HasFBUIHandlers extends HasFBAddCommentHandler, HasFBEdgeCreateHandler, HasXFBMLRenderHandler {
 }

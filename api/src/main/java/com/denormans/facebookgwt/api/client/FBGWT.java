@@ -31,6 +31,7 @@ public final class FBGWT {
   public static final FBCore Core = new FBCore();
   public static final FBInitialization Init = new FBInitialization();
   public static final FBAuthentication Auth = new FBAuthentication();
+  public static final FBUserInterface UI = new FBUserInterface();
 
   @SuppressWarnings ( { "ThrowableResultOfMethodCallIgnored" })
   public static void raiseException(final String message) {

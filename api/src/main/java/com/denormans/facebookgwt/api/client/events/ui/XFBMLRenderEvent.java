@@ -31,7 +31,7 @@ public class XFBMLRenderEvent extends FBEvent<XFBMLRenderHandler, XFBMLRenderEve
    * @param source the source of the handlers
    * @param apiResponse the Facebook JS API response
    */
-  public static void fire(HasFBXFBMLRenderHandler source, final XFBMLRenderEventResponse apiResponse) {
+  public static void fire(HasXFBMLRenderHandler source, final XFBMLRenderEventResponse apiResponse) {
     if (sType != null) {
       XFBMLRenderEvent event = new XFBMLRenderEvent(apiResponse);
       source.fireEvent(event);

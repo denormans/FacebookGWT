@@ -14,6 +14,12 @@ import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeEvent;
 import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.events.ui.FBAddCommentEvent;
+import com.denormans.facebookgwt.api.client.events.ui.FBAddCommentHandler;
+import com.denormans.facebookgwt.api.client.events.ui.FBEdgeCreateEvent;
+import com.denormans.facebookgwt.api.client.events.ui.FBEdgeCreateHandler;
+import com.denormans.facebookgwt.api.client.events.ui.XFBMLRenderEvent;
+import com.denormans.facebookgwt.api.client.events.ui.XFBMLRenderHandler;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
@@ -124,6 +130,27 @@ public class ShowcaseImpl extends Composite implements Showcase {
       }
     });
 
+    FBGWT.UI.addFBAddCommentHandler(new FBAddCommentHandler() {
+      @Override
+      public void onFBAddComment(final FBAddCommentEvent event) {
+        handleAddComment(event);
+      }
+    });
+
+    FBGWT.UI.addFBEdgeCreateHandler(new FBEdgeCreateHandler() {
+      @Override
+      public void onFBEdgeCreate(final FBEdgeCreateEvent event) {
+        handleEdgeCreate(event);
+      }
+    });
+
+    FBGWT.UI.addXFBMLRenderHandler(new XFBMLRenderHandler() {
+      @Override
+      public void onXFBMLRender(final XFBMLRenderEvent event) {
+        handleXFBMLRender(event);
+      }
+    });
+
     FBSession session = FBGWT.Auth.getSession();
     Log.info("Session before login status: " + session.getJSONString());
 
@@ -165,6 +192,18 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   private void handleStatusChange(final FBStatusChangeEvent event) {
     addApiEventMessage("Status Change Event", event);
+  }
+
+  private void handleAddComment(final FBAddCommentEvent event) {
+    addApiEventMessage("Add Comment Event", event);
+  }
+
+  private void handleEdgeCreate(final FBEdgeCreateEvent event) {
+    addApiEventMessage("Edge Create Event", event);
+  }
+
+  private void handleXFBMLRender(final XFBMLRenderEvent event) {
+    addApiEventMessage("XFBML Render Event", event);
   }
 
   private void addApiEventMessage(final String title, final FBEvent<?, ?> event) {

@@ -21,7 +21,7 @@ package com.denormans.facebookgwt.api.client.events.ui;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.HasHandlers;
 
-public interface HasFBXFBMLRenderHandler extends HasHandlers {
+public interface HasXFBMLRenderHandler extends HasHandlers {
   /**
    * Adds a {@link XFBMLRenderEvent} handler.
    *
