@@ -7,10 +7,28 @@
     <g:center>
       <g:SplitLayoutPanel>
         <g:center>
-          <g:FlowPanel styleName="FBGWTMainContent">
-            <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
-            <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
-          </g:FlowPanel>
+          <g:HTMLPanel styleName="FBGWTMainContent">
+            <div>
+              <h3>Initialization</h3>
+              <g:Button ui:field="initButton">Init</g:Button>
+<!--
+              <g:DisclosurePanel>
+                <g:header>Options</g:header>
+                <g:FlowPanel></g:FlowPanel>
+              </g:DisclosurePanel>
+-->
+            </div>
+            <div>
+              <h3>Event Handlers</h3>
+              <g:Button ui:field="resetEventHandlersButton" enabled="false">Reset</g:Button>
+              <g:Button ui:field="removeEventHandlersButton" enabled="false">Remove</g:Button>
+            </div>
+            <div>
+              <h3>Authentication</h3>
+              <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
+              <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
+            </div>
+          </g:HTMLPanel>
         </g:center>
         <g:south size="150">
           <g:ScrollPanel ui:field="eventContainer" styleName="FBGWTEventContainer">

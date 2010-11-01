@@ -23,7 +23,6 @@ import com.denormans.facebookgwt.api.client.events.init.FBInitFailureEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitFailureHandler;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.js.FBInitOptions;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 import com.denormans.facebookgwt.samples.client.showcase.impl.ShowcaseImpl;
 
@@ -39,7 +38,7 @@ import java.util.logging.Logger;
 public class FacebookGWTSamples implements EntryPoint {
   private static final Logger Log = Logger.getLogger(FacebookGWTSamples.class.getName());
 
-  private static final String SamplesFacebookApplicationID = "160704113964450";
+  public static final String SamplesFacebookApplicationID = "160704113964450";
 
   private static FacebookGWTSamples sInstance;
 
@@ -77,8 +76,6 @@ public class FacebookGWTSamples implements EntryPoint {
         Log.info("Facebook loaded");
       }
     });
-
-    FBGWT.Init.initialize(FBInitOptions.create(SamplesFacebookApplicationID, true));
 
     Log.info("FacebookGWTSamples Module loaded");
   }

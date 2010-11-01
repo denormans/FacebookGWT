@@ -20,13 +20,14 @@ import com.denormans.facebookgwt.api.client.events.ui.FBEdgeCreateEvent;
 import com.denormans.facebookgwt.api.client.events.ui.FBEdgeCreateHandler;
 import com.denormans.facebookgwt.api.client.events.ui.XFBMLRenderEvent;
 import com.denormans.facebookgwt.api.client.events.ui.XFBMLRenderHandler;
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
 import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
+import com.denormans.facebookgwt.api.client.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.js.FBSession;
 import com.denormans.facebookgwt.api.shared.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
+import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -45,6 +46,8 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ScrollPanel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -71,12 +74,16 @@ public class ShowcaseImpl extends Composite implements Showcase {
   interface ShowcaseUIBinder extends UiBinder<DockLayoutPanel, ShowcaseImpl> {}
   private static ShowcaseUIBinder sUIBinder = GWT.create(ShowcaseUIBinder.class);
 
+  @UiField Button initButton;
+  @UiField Button resetEventHandlersButton;
+  @UiField Button removeEventHandlersButton;
   @UiField Button loginButton;
   @UiField Button logoutButton;
   @UiField ScrollPanel eventContainer;
   @UiField FlowPanel eventPanel;
 
   private HandlerRegistration initSuccessHandlerRegistration;
+  private List<HandlerRegistration> eventHandlerRegistrations = new ArrayList<HandlerRegistration>();
 
   public ShowcaseImpl() {
     DockLayoutPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -95,61 +102,8 @@ public class ShowcaseImpl extends Composite implements Showcase {
   private void handleFacebookInitialized(final FBInitSuccessEvent event) {
     addEventMessage("Facebook loaded");
 
-    FBGWT.Core.addFBLogHandler(new FBLogHandler() {
-      @Override
-      public void onFBStub(final FBLogEvent event) {
-        handleFBLogEvent(event);
-      }
-    });
-
-    FBGWT.Auth.addFBLoginHandler(new FBLoginHandler() {
-      @Override
-      public void onFBLogin(final FBLoginEvent event) {
-        handleLogin(event);
-      }
-    });
-
-    FBGWT.Auth.addFBLogoutHandler(new FBLogoutHandler() {
-      @Override
-      public void onFBLogout(final FBLogoutEvent event) {
-        handleLogout(event);
-      }
-    });
-
-    FBGWT.Auth.addFBSessionChangeHandler(new FBSessionChangeHandler() {
-      @Override
-      public void onFBSessionChange(final FBSessionChangeEvent event) {
-        handleSessionChange(event);
-      }
-    });
-
-    FBGWT.Auth.addFBStatusChangeHandler(new FBStatusChangeHandler() {
-      @Override
-      public void onFBStatusChange(final FBStatusChangeEvent event) {
-        handleStatusChange(event);
-      }
-    });
-
-    FBGWT.UI.addFBAddCommentHandler(new FBAddCommentHandler() {
-      @Override
-      public void onFBAddComment(final FBAddCommentEvent event) {
-        handleAddComment(event);
-      }
-    });
-
-    FBGWT.UI.addFBEdgeCreateHandler(new FBEdgeCreateHandler() {
-      @Override
-      public void onFBEdgeCreate(final FBEdgeCreateEvent event) {
-        handleEdgeCreate(event);
-      }
-    });
-
-    FBGWT.UI.addXFBMLRenderHandler(new XFBMLRenderHandler() {
-      @Override
-      public void onXFBMLRender(final XFBMLRenderEvent event) {
-        handleXFBMLRender(event);
-      }
-    });
+    resetEventHandlers();
+    updateButtonsOnInitialization();
 
     FBSession session = FBGWT.Auth.getSession();
     Log.info("Session before login status: " + session.getJSONString());
@@ -172,6 +126,79 @@ public class ShowcaseImpl extends Composite implements Showcase {
         Log.info("Session after login status: " + session.getJSONString());
       }
     });
+  }
+
+  private void updateButtonsOnInitialization() {
+    boolean isInitialized = FBGWT.Init.isInitialized();
+    resetEventHandlersButton.setEnabled(isInitialized);
+    removeEventHandlersButton.setEnabled(isInitialized);
+  }
+
+  private void removeEventHandlers() {
+    for (final HandlerRegistration handlerRegistration : eventHandlerRegistrations) {
+      handlerRegistration.removeHandler();
+    }
+    eventHandlerRegistrations.clear();
+  }
+
+  private void resetEventHandlers() {
+    removeEventHandlers();
+
+    eventHandlerRegistrations.add(FBGWT.Core.addFBLogHandler(new FBLogHandler() {
+      @Override
+      public void onFBStub(final FBLogEvent event) {
+        handleFBLogEvent(event);
+      }
+    }));
+
+    eventHandlerRegistrations.add(FBGWT.Auth.addFBLoginHandler(new FBLoginHandler() {
+      @Override
+      public void onFBLogin(final FBLoginEvent event) {
+        handleLogin(event);
+      }
+    }));
+
+    eventHandlerRegistrations.add(FBGWT.Auth.addFBLogoutHandler(new FBLogoutHandler() {
+      @Override
+      public void onFBLogout(final FBLogoutEvent event) {
+        handleLogout(event);
+      }
+    }));
+
+    eventHandlerRegistrations.add(FBGWT.Auth.addFBSessionChangeHandler(new FBSessionChangeHandler() {
+      @Override
+      public void onFBSessionChange(final FBSessionChangeEvent event) {
+        handleSessionChange(event);
+      }
+    }));
+
+    eventHandlerRegistrations.add(FBGWT.Auth.addFBStatusChangeHandler(new FBStatusChangeHandler() {
+      @Override
+      public void onFBStatusChange(final FBStatusChangeEvent event) {
+        handleStatusChange(event);
+      }
+    }));
+
+    eventHandlerRegistrations.add(FBGWT.UI.addFBAddCommentHandler(new FBAddCommentHandler() {
+      @Override
+      public void onFBAddComment(final FBAddCommentEvent event) {
+        handleAddComment(event);
+      }
+    }));
+
+    eventHandlerRegistrations.add(FBGWT.UI.addFBEdgeCreateHandler(new FBEdgeCreateHandler() {
+      @Override
+      public void onFBEdgeCreate(final FBEdgeCreateEvent event) {
+        handleEdgeCreate(event);
+      }
+    }));
+
+    eventHandlerRegistrations.add(FBGWT.UI.addXFBMLRenderHandler(new XFBMLRenderHandler() {
+      @Override
+      public void onXFBMLRender(final XFBMLRenderEvent event) {
+        handleXFBMLRender(event);
+      }
+    }));
   }
 
   public void handleFBLogEvent(final FBLogEvent event) {
@@ -240,8 +267,23 @@ public class ShowcaseImpl extends Composite implements Showcase {
   }
 
   private void updateConnectionButtons(final boolean isConnected) {
-    loginButton.setEnabled(true);
-    logoutButton.setEnabled(isConnected);
+    loginButton.setEnabled(FBGWT.Init.isInitialized());
+    logoutButton.setEnabled(FBGWT.Init.isInitialized() && isConnected);
+  }
+
+  @UiHandler ("initButton")
+  public void handleInitButtonClick(final ClickEvent event) {
+    FBGWT.Init.initialize(FBInitOptions.create(FacebookGWTSamples.SamplesFacebookApplicationID, true));
+  }
+
+  @UiHandler ("resetEventHandlersButton")
+  public void handleResetEventHandlersClick(final ClickEvent event) {
+    resetEventHandlers();
+  }
+
+  @UiHandler ("removeEventHandlersButton")
+  public void handleRemoveEventHandlersClick(final ClickEvent event) {
+    removeEventHandlers();
   }
 
   @UiHandler ("loginButton")

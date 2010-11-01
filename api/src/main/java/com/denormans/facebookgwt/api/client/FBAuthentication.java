@@ -88,7 +88,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
         if (callback != null) {
           callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
         }
-      }, loginOptions);
+      });
     } catch(e) {
       if (callback != null) {
         var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
