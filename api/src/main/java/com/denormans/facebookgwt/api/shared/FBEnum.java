@@ -16,13 +16,38 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.facebookgwt.api.shared;
 
-public class FBEdgeCreateEventResponse extends FBSimpleEventResponse<String> {
-  protected FBEdgeCreateEventResponse() {
-  }
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-  public final String getURL() {
-    return getSimpleValue();
+public interface FBEnum {
+  public String getApiValue();
+
+  public static class Util {
+
+    public static List<String> toApiValues(final Collection<? extends FBEnum> enumValues) {
+      List<String> apiValues = new ArrayList<String>(enumValues.size());
+      for (final FBEnum enumValue : enumValues) {
+        apiValues.add(enumValue.getApiValue());
+      }
+      return apiValues;
+    }
+
+    public static String joinApiValues(final Collection<String> apiValues) {
+      StringBuilder builder = new StringBuilder();
+      boolean isFirst = true;
+      for (final String apiValue : apiValues) {
+        if (!isFirst) {
+          builder.append(",");
+        } else {
+          isFirst = false;
+        }
+        builder.append(apiValue);
+      }
+
+      return builder.toString();
+    }
   }
 }

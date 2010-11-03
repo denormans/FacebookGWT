@@ -26,14 +26,13 @@ import com.google.gwt.json.client.JSONValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum FBPermission {
+public enum FBPermission implements FBEnum {
   // Publishing Permissions
   PublishStream("publish_stream"),
   CreateEvent("create_event"),
@@ -164,29 +163,7 @@ public enum FBPermission {
     return permissions.getAllApiPermissions();
   }
 
-  public static List<String> toApiValues(final Collection<FBPermission> permissions) {
-    List<String> apiPermissions = new ArrayList<String>(permissions.size());
-    for (final FBPermission permission : permissions) {
-      apiPermissions.add(permission.getApiValue());
-    }
-    return apiPermissions;
-  }
-
-  public static String joinApiValues(final Collection<String> permissions) {
-    StringBuilder builder = new StringBuilder();
-    boolean isFirst = true;
-    for (final String permission : permissions) {
-      if (!isFirst) {
-        builder.append(",");
-      } else {
-        isFirst = false;
-      }
-      builder.append(permission);
-    }
-
-    return builder.toString();
-  }
-
+  @Override
   public String getApiValue() {
     return apiValue;
   }

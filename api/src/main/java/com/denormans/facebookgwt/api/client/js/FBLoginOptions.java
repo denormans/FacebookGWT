@@ -18,6 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.js;
 
+import com.denormans.facebookgwt.api.shared.FBEnum;
 import com.denormans.facebookgwt.api.shared.FBPermission;
 
 import java.util.Arrays;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class FBLoginOptions extends FBOptions {
   public static FBLoginOptions create() {
-    return FBLoginOptions.createObject().cast();
+    return createEnhancedObject();
   }
 
   public static FBLoginOptions create(final Collection<FBPermission> permissions) {
@@ -66,7 +67,7 @@ public class FBLoginOptions extends FBOptions {
   }
 
   public final FBLoginOptions setPermissions(final Collection<FBPermission> permissions) {
-    setApiPermissions(FBPermission.toApiValues(permissions));
+    setApiPermissions(FBEnum.Util.toApiValues(permissions));
     return this;
   }
 
@@ -76,7 +77,7 @@ public class FBLoginOptions extends FBOptions {
   }
 
   public final FBLoginOptions setApiPermissions(final Collection<String> permissions) {
-    String permissionsText = FBPermission.joinApiValues(permissions);
+    String permissionsText = FBEnum.Util.joinApiValues(permissions);
     setPermissionsJS(permissionsText);
     return this;
   }

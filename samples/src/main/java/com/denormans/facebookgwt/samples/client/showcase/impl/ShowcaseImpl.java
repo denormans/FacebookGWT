@@ -24,6 +24,7 @@ import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.js.FBSession;
+import com.denormans.facebookgwt.api.client.ui.Like;
 import com.denormans.facebookgwt.api.shared.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
@@ -81,6 +82,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
   @UiField Button logoutButton;
   @UiField ScrollPanel eventContainer;
   @UiField FlowPanel eventPanel;
+  @UiField Like fbLike;
 
   private HandlerRegistration initSuccessHandlerRegistration;
   private List<HandlerRegistration> eventHandlerRegistrations = new ArrayList<HandlerRegistration>();

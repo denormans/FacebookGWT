@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnhancedJSObject extends JavaScriptObject {
+  public static <T extends EnhancedJSObject> T createEnhancedObject() {
+    return createObject().<T>cast();
+  }
+
   protected EnhancedJSObject() {
   }
 

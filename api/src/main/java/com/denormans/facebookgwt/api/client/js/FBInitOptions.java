@@ -25,7 +25,7 @@ public class FBInitOptions extends FBOptions {
    * @return the empty init options
    */
   public static FBInitOptions create() {
-    return createObject().cast();
+    return createEnhancedObject();
   }
 
   /**

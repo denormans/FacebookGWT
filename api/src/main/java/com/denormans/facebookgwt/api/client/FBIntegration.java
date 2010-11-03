@@ -21,6 +21,7 @@ package com.denormans.facebookgwt.api.client;
 import com.denormans.facebookgwt.api.client.events.FBEventHandler;
 import com.denormans.facebookgwt.api.client.events.FBEventType;
 import com.denormans.facebookgwt.api.client.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.js.FBSimpleEventResponse;
 import com.denormans.gwtutil.client.js.JSFunction;
 
 import com.google.gwt.event.shared.EventBus;
@@ -60,7 +61,13 @@ public abstract class FBIntegration implements HasHandlers {
       var self = this;
       var callback = function(response) {
         try {
-          self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Lcom/denormans/facebookgwt/api/client/js/FBEventResponse;)(eventName, response);
+          if (response === null || response === undefined || typeof(response) === "object") {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Lcom/denormans/facebookgwt/api/client/js/FBEventResponse;)(eventName, response);
+          } else if(typeof(response) === "number") {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;I)(eventName, response);
+          } else {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Ljava/lang/String;)(eventName, String(response));
+          }
         } catch(e) {
           @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         }
@@ -88,6 +95,17 @@ public abstract class FBIntegration implements HasHandlers {
   }-*/;
 
   @SuppressWarnings ({ "UnusedDeclaration" })
+  private void handleFBEvent(final String eventName, final String apiSimpleResponse) {
+    FBSimpleEventResponse<String> apiResponse = FBSimpleEventResponse.<String, FBSimpleEventResponse<String>>createSimpleEventResponse(apiSimpleResponse);
+    handleFBEvent(eventName, apiResponse);
+  }
+
+  @SuppressWarnings ({ "UnusedDeclaration" })
+  private void handleFBEvent(final String eventName, final int apiSimpleResponse) {
+    FBSimpleEventResponse<Integer> apiResponse = FBSimpleEventResponse.<Integer, FBSimpleEventResponse<Integer>>createSimpleEventResponse(apiSimpleResponse);
+    handleFBEvent(eventName, apiResponse);
+  }
+
   private void handleFBEvent(final String eventName, final FBEventResponse apiResponse) {
     FBEventType eventType = FBEventType.valueFromApiValue(eventName);
     if (eventType == null) {
