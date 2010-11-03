@@ -18,9 +18,11 @@
 
 package com.denormans.facebookgwt.api.client.js;
 
-public class FBLogEventResponse extends FBEventResponse {
+public class FBLogEventResponse extends FBSimpleEventResponse<String> {
   protected FBLogEventResponse() {
   }
 
-
+  public final String getMessage() {
+    return getSimpleValue();
+  }
 }

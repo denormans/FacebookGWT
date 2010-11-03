@@ -32,8 +32,36 @@ import com.denormans.facebookgwt.api.client.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.js.XFBMLRenderEventResponse;
 
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.ui.IsWidget;
+
 
 public final class FBUserInterface extends FBIntegration implements HasFBUIHandlers {
+  /**
+   * Parse all XFBML elements in the current page.
+   */
+  public void parseXFBML() {
+    parseXFBML((Element)null);
+  }
+
+  /**
+   * Parse XFBML elements within the given widget.
+   *
+   * @param widget The widget to parse within
+   */
+  public void parseXFBML(final IsWidget widget) {
+    parseXFBML(widget != null ? widget.asWidget().getElement() : null);
+  }
+
+  /**
+   * Parse XFBML elements within the given element.
+   * 
+   * @param element The element to parse within, or <tt>null</tt> to parse the entire document
+   */
+  public native void parseXFBML(final Element element) /*-{
+    $wnd.FB.XFBML.parse(element);
+  }-*/;
+
   @Override
   protected void handleFBEvent(final FBEventType eventType, final FBEventResponse apiResponse) {
     switch (eventType) {

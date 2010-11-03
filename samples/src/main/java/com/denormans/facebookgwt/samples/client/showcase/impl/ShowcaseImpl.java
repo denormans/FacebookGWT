@@ -80,9 +80,11 @@ public class ShowcaseImpl extends Composite implements Showcase {
   @UiField Button removeEventHandlersButton;
   @UiField Button loginButton;
   @UiField Button logoutButton;
+  @UiField Button parseXFBMLButton;
+  @UiField Like fbLike;
+
   @UiField ScrollPanel eventContainer;
   @UiField FlowPanel eventPanel;
-  @UiField Like fbLike;
 
   private HandlerRegistration initSuccessHandlerRegistration;
   private List<HandlerRegistration> eventHandlerRegistrations = new ArrayList<HandlerRegistration>();
@@ -134,6 +136,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
     boolean isInitialized = FBGWT.Init.isInitialized();
     resetEventHandlersButton.setEnabled(isInitialized);
     removeEventHandlersButton.setEnabled(isInitialized);
+    parseXFBMLButton.setEnabled(isInitialized);
   }
 
   private void removeEventHandlers() {
@@ -275,7 +278,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiHandler ("initButton")
   public void handleInitButtonClick(final ClickEvent event) {
-    FBGWT.Init.initialize(FBInitOptions.create(FacebookGWTSamples.SamplesFacebookApplicationID, true));
+    FBGWT.Init.initialize(FBInitOptions.create(FacebookGWTSamples.SamplesFacebookApplicationID, false));
   }
 
   @UiHandler ("resetEventHandlersButton")
@@ -322,5 +325,10 @@ public class ShowcaseImpl extends Composite implements Showcase {
         updateConnectionButtons(result.isConnected());
       }
     });
+  }
+
+  @UiHandler ("parseXFBMLButton")
+  public void handleParseXFBMLClick(final ClickEvent event) {
+    FBGWT.UI.parseXFBML();
   }
 }
