@@ -9,7 +9,7 @@
       <g:SplitLayoutPanel>
         <g:center>
           <g:HTMLPanel styleName="FBGWTMainContent">
-            <div>
+            <div ui:field="initializationSection">
               <h3>Initialization</h3>
               <g:Button ui:field="initButton">Init</g:Button>
 <!--
@@ -19,17 +19,17 @@
               </g:DisclosurePanel>
 -->
             </div>
-            <div>
+            <div ui:field="eventHandlersSection">
               <h3>Event Handlers</h3>
               <g:Button ui:field="resetEventHandlersButton" enabled="false">Reset</g:Button>
               <g:Button ui:field="removeEventHandlersButton" enabled="false">Remove</g:Button>
             </div>
-            <div>
+            <div ui:field="authenticationSection">
               <h3>Authentication</h3>
               <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
               <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
             </div>
-            <div>
+            <div ui:field="widgetsSection">
               <h3>Widgets</h3>
               <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
               <fb:Like ui:field="fbLike" href="http://denormans.github.com/FacebookGWT/Samples"/>

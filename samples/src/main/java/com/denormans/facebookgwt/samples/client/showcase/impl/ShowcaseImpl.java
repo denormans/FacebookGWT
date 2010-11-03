@@ -31,6 +31,7 @@ import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
@@ -75,11 +76,18 @@ public class ShowcaseImpl extends Composite implements Showcase {
   interface ShowcaseUIBinder extends UiBinder<DockLayoutPanel, ShowcaseImpl> {}
   private static ShowcaseUIBinder sUIBinder = GWT.create(ShowcaseUIBinder.class);
 
+  @UiField DivElement initializationSection;
   @UiField Button initButton;
+
+  @UiField DivElement eventHandlersSection;
   @UiField Button resetEventHandlersButton;
   @UiField Button removeEventHandlersButton;
+
+  @UiField DivElement authenticationSection;
   @UiField Button loginButton;
   @UiField Button logoutButton;
+
+  @UiField DivElement widgetsSection;
   @UiField Button parseXFBMLButton;
   @UiField Like fbLike;
 
@@ -329,6 +337,6 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiHandler ("parseXFBMLButton")
   public void handleParseXFBMLClick(final ClickEvent event) {
-    FBGWT.UI.parseXFBML();
+    FBGWT.UI.parseXFBML(widgetsSection);
   }
 }
