@@ -16,26 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.facebookgwt.api.client.common.events;
 
-import com.denormans.gwtutil.client.js.JSError;
-import com.denormans.gwtutil.client.js.JSException;
+import com.google.gwt.event.shared.EventHandler;
 
-public class FBJSException extends JSException {
-  public FBJSException(final JSError javaScriptError) {
-    super(javaScriptError);
-  }
-
-  public FBJSException(final String message, final JSError javaScriptError) {
-    super(message, javaScriptError);
-  }
-
-  public FBJSException(final String message, final Throwable cause, final JSError javaScriptError) {
-    super(message, cause, javaScriptError);
-  }
-
-  public FBJSException(final Throwable cause, final JSError javaScriptError) {
-    super(cause, javaScriptError);
-  }
-
+public interface FBEventHandler extends EventHandler {
 }

@@ -16,9 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.common.js;
 
-import com.google.gwt.event.shared.EventHandler;
+public abstract class FBEventResponse extends FBJSObject {
+  protected FBEventResponse() {
+  }
 
-public interface FBEventHandler extends EventHandler {
+
 }

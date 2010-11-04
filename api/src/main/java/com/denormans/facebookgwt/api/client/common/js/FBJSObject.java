@@ -16,25 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.common.js;
 
-import com.denormans.facebookgwt.api.client.js.FBEventResponse;
+import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
-import com.google.gwt.event.shared.GwtEvent;
-
-public abstract class FBEvent<H extends FBEventHandler, R extends FBEventResponse> extends GwtEvent<H> {
-  private R apiResponse;
-
-  protected FBEvent(final R apiResponse) {
-    this.apiResponse = apiResponse;
-  }
-
-  public R getApiResponse() {
-    return apiResponse;
-  }
-
-  @Override
-  public String toString() {
-    return super.toString() + "[apiResponse=" + apiResponse.getJSONString() + "]" + "";
+public abstract class FBJSObject extends EnhancedJSObject {
+  protected FBJSObject() {
   }
 }

@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.ui.js;
 
-import com.denormans.facebookgwt.api.client.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 
 public class FBAddCommentEventResponse extends FBEventResponse {
   protected FBAddCommentEventResponse() {

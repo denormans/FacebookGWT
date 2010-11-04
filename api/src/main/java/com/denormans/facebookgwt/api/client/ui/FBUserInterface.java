@@ -19,7 +19,7 @@
 package com.denormans.facebookgwt.api.client.ui;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
-import com.denormans.facebookgwt.api.client.events.FBEventType;
+import com.denormans.facebookgwt.api.client.common.events.FBEventType;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
 import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
@@ -29,7 +29,7 @@ import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
 import com.denormans.facebookgwt.api.client.ui.js.FBAddCommentEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBUICallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBUIParameters;
 import com.denormans.facebookgwt.api.client.ui.js.XFBMLRenderEventResponse;

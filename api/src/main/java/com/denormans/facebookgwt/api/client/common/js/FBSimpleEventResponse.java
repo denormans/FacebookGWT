@@ -16,11 +16,25 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.facebookgwt.api.client.common.js;
 
-public class XFBMLRenderEventResponse extends FBEventResponse {
-  protected XFBMLRenderEventResponse() {
+import com.denormans.gwtutil.client.js.EnhancedJSObject;
+
+public abstract class FBSimpleEventResponse<T> extends FBEventResponse {
+  public static <T, E extends FBSimpleEventResponse<T>> E createSimpleEventResponse(final T value) {
+    E simpleEventResponse = EnhancedJSObject.<E>createEnhancedObject();
+    simpleEventResponse.setSimpleValue(value);
+    return simpleEventResponse;
   }
 
+  protected FBSimpleEventResponse() {
+  }
 
+  private native void setSimpleValue(final T value) /*-{
+    this._simpleValue = value;
+  }-*/;
+
+  protected final native T getSimpleValue() /*-{
+    return this._simpleValue;
+  }-*/;
 }

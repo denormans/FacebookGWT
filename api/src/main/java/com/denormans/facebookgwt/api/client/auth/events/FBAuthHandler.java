@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.auth.events;
 
-import com.denormans.facebookgwt.api.client.events.FBEventHandler;
+import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
 
 public interface FBAuthHandler extends FBEventHandler {
 }

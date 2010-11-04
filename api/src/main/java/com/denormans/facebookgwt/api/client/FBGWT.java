@@ -21,7 +21,7 @@ package com.denormans.facebookgwt.api.client;
 import com.denormans.facebookgwt.api.client.auth.FBAuthentication;
 import com.denormans.facebookgwt.api.client.core.FBCore;
 import com.denormans.facebookgwt.api.client.init.FBInitialization;
-import com.denormans.facebookgwt.api.client.js.FBJSException;
+import com.denormans.facebookgwt.api.client.common.js.FBJSException;
 import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
 import com.denormans.gwtutil.client.js.JSError;
 

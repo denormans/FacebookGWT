@@ -19,7 +19,7 @@
 package com.denormans.facebookgwt.api.client.init.js;
 
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
-import com.denormans.facebookgwt.api.client.js.FBOptions;
+import com.denormans.facebookgwt.api.client.common.js.FBOptions;
 
 public class FBInitOptions extends FBOptions {
   /**

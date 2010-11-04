@@ -16,17 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.stub;
+package com.denormans.facebookgwt.api.client.common.js;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+public abstract class FBOptions extends FBJSObject {
+  protected FBOptions() {
+  }
 
-public interface HasFBStubHandler extends HasHandlers {
-  /**
-   * Adds a {@link FBStubEvent} handler.
-   *
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addFBStubHandler(FBStubHandler handler);
+
 }

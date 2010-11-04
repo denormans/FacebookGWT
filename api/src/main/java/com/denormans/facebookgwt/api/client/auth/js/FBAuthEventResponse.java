@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.auth.js;
 
-import com.denormans.facebookgwt.api.client.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 import com.denormans.facebookgwt.api.shared.auth.FBUserStatus;
 

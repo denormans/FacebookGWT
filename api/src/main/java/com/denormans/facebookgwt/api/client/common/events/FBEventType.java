@@ -16,15 +16,47 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.common.events;
 
-import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
+import java.util.HashMap;
+import java.util.Map;
 
-public interface FBLogHandler extends FBEventHandler {
-  /**
-   * Called when {@link FBLogEvent} is fired.
-   *
-   * @param event the {@link FBLogEvent} that was fired
-   */
-  void onFBStub(FBLogEvent event);
+public enum FBEventType {
+  AuthLogin("auth.login"),
+  AuthLogout("auth.logout"),
+  AuthSessionChange("auth.sessionChange"),
+  AuthStatusChange("auth.statusChange"),
+  XFBMLRender("xfbml.render"),
+  EdgeCreate("edge.create"),
+  CommentsAdd("comments.add"),
+  Log("fb.log");
+
+  private static final Map<String, FBEventType> sEventByApiValue = createEventByApiValueMap();
+
+  private static Map<String, FBEventType> createEventByApiValueMap() {
+    HashMap<String, FBEventType> events = new HashMap<String, FBEventType>();
+
+    for (final FBEventType eventType : values()) {
+      events.put(eventType.getApiValue(), eventType);
+    }
+
+    return events;
+  }
+
+  private String apiValue;
+
+  FBEventType(final String apiValue) {
+    this.apiValue = apiValue;
+  }
+
+  public String getApiValue() {
+    return apiValue;
+  }
+
+  public static FBEventType valueFromApiValue(final String apiValue) {
+    if (apiValue == null) {
+      return null;
+    }
+    return sEventByApiValue.get(apiValue);
+  }
 }

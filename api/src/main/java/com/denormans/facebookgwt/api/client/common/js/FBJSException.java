@@ -16,11 +16,26 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.js;
+package com.denormans.facebookgwt.api.client.common.js;
 
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+import com.denormans.gwtutil.client.js.JSError;
+import com.denormans.gwtutil.client.js.JSException;
 
-public abstract class FBJSObject extends EnhancedJSObject {
-  protected FBJSObject() {
+public class FBJSException extends JSException {
+  public FBJSException(final JSError javaScriptError) {
+    super(javaScriptError);
   }
+
+  public FBJSException(final String message, final JSError javaScriptError) {
+    super(message, javaScriptError);
+  }
+
+  public FBJSException(final String message, final Throwable cause, final JSError javaScriptError) {
+    super(message, cause, javaScriptError);
+  }
+
+  public FBJSException(final Throwable cause, final JSError javaScriptError) {
+    super(cause, javaScriptError);
+  }
+
 }

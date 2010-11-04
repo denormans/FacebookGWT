@@ -16,19 +16,25 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.common.events;
 
-import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
+import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+import com.google.gwt.event.shared.GwtEvent;
 
-public interface HasFBLogHandler extends HasHandlers {
-  /**
-   * Adds a {@link FBLogEvent} handler.
-   *
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addFBLogHandler(FBLogHandler handler);
+public abstract class FBEvent<H extends FBEventHandler, R extends FBEventResponse> extends GwtEvent<H> {
+  private R apiResponse;
+
+  protected FBEvent(final R apiResponse) {
+    this.apiResponse = apiResponse;
+  }
+
+  public R getApiResponse() {
+    return apiResponse;
+  }
+
+  @Override
+  public String toString() {
+    return super.toString() + "[apiResponse=" + apiResponse.getJSONString() + "]" + "";
+  }
 }

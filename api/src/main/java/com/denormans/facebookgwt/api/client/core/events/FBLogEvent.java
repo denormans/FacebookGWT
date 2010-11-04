@@ -18,10 +18,10 @@
 
 package com.denormans.facebookgwt.api.client.core.events;
 
+import com.denormans.facebookgwt.api.client.common.events.FBLogHandler;
 import com.denormans.facebookgwt.api.client.core.js.FBLogEventResponse;
-import com.denormans.facebookgwt.api.client.events.FBEvent;
-import com.denormans.facebookgwt.api.client.events.FBLogHandler;
-import com.denormans.facebookgwt.api.client.events.HasFBLogHandler;
+import com.denormans.facebookgwt.api.client.common.events.FBEvent;
+import com.denormans.facebookgwt.api.client.common.events.HasFBLogHandler;
 
 public class FBLogEvent extends FBEvent<FBLogHandler, FBLogEventResponse> {
   private static Type<FBLogHandler> sType;

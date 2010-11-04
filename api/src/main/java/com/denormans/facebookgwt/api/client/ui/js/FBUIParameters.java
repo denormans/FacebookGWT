@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.ui.js;
 
-import com.denormans.facebookgwt.api.client.js.FBJSObject;
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 
 public abstract class FBUIParameters extends FBJSObject {
   protected FBUIParameters() {

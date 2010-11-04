@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.ui.js;
 
-import com.denormans.facebookgwt.api.client.js.FBSimpleEventResponse;
+import com.denormans.facebookgwt.api.client.common.js.FBSimpleEventResponse;
 
 public class FBEdgeCreateEventResponse extends FBSimpleEventResponse<String> {
   protected FBEdgeCreateEventResponse() {

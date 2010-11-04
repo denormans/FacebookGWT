@@ -18,10 +18,12 @@
 
 package com.denormans.facebookgwt.api.client.init.events;
 
+import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
+
 import com.google.gwt.event.shared.EventHandler;
 
 /**
- * Doesn't extends {@link com.denormans.facebookgwt.api.client.events.FBEventHandler} because it's not a normal Facebook event
+ * Doesn't extends {@link FBEventHandler} because it's not a normal Facebook event
  */
 public interface FBInitHandler extends EventHandler {
 }

@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.core.js;
 
-import com.denormans.facebookgwt.api.client.js.FBSimpleEventResponse;
+import com.denormans.facebookgwt.api.client.common.js.FBSimpleEventResponse;
 
 public class FBLogEventResponse extends FBSimpleEventResponse<String> {
   protected FBLogEventResponse() {

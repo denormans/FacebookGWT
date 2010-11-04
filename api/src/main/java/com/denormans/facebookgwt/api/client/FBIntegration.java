@@ -18,10 +18,10 @@
 
 package com.denormans.facebookgwt.api.client;
 
-import com.denormans.facebookgwt.api.client.events.FBEventHandler;
-import com.denormans.facebookgwt.api.client.events.FBEventType;
-import com.denormans.facebookgwt.api.client.js.FBEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBSimpleEventResponse;
+import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
+import com.denormans.facebookgwt.api.client.common.events.FBEventType;
+import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.common.js.FBSimpleEventResponse;
 import com.denormans.gwtutil.client.js.JSFunction;
 
 import com.google.gwt.event.shared.EventBus;

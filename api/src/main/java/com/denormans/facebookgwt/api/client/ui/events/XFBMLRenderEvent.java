@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.ui.events;
 
-import com.denormans.facebookgwt.api.client.events.FBEvent;
+import com.denormans.facebookgwt.api.client.common.events.FBEvent;
 import com.denormans.facebookgwt.api.client.ui.js.XFBMLRenderEventResponse;
 
 public class XFBMLRenderEvent extends FBEvent<XFBMLRenderHandler, XFBMLRenderEventResponse> {
