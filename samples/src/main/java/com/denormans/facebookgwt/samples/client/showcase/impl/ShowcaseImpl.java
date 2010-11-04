@@ -1,6 +1,8 @@
 package com.denormans.facebookgwt.samples.client.showcase.impl;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBLoginHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBLogoutEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBLogoutHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
@@ -9,15 +11,15 @@ import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
+import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
+import com.denormans.facebookgwt.api.client.common.events.FBLogHandler;
 import com.denormans.facebookgwt.api.client.common.js.Attachment;
 import com.denormans.facebookgwt.api.client.common.js.Link;
 import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
-import com.denormans.facebookgwt.api.client.common.events.FBLogHandler;
-import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
-import com.denormans.facebookgwt.api.client.auth.events.FBLoginHandler;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
@@ -25,8 +27,6 @@ import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateHandler;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
-import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
-import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
@@ -36,7 +36,6 @@ import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
@@ -51,6 +50,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 
 import java.util.ArrayList;
@@ -81,18 +81,15 @@ public class ShowcaseImpl extends Composite implements Showcase {
   interface ShowcaseUIBinder extends UiBinder<DockLayoutPanel, ShowcaseImpl> {}
   private static ShowcaseUIBinder sUIBinder = GWT.create(ShowcaseUIBinder.class);
 
-  @UiField DivElement initializationSection;
   @UiField Button initButton;
 
-  @UiField DivElement eventHandlersSection;
   @UiField Button resetEventHandlersButton;
   @UiField Button removeEventHandlersButton;
 
-  @UiField DivElement authenticationSection;
   @UiField Button loginButton;
   @UiField Button logoutButton;
 
-  @UiField DivElement widgetsSection;
+  @UiField HTMLPanel widgets;
   @UiField Button parseXFBMLButton;
   @UiField Button streamPublishButton;
   @UiField Like fbLike;
@@ -345,7 +342,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiHandler ("parseXFBMLButton")
   public void handleParseXFBMLClick(final ClickEvent event) {
-    FBGWT.UI.parseXFBML(widgetsSection);
+    FBGWT.UI.parseXFBML(widgets);
   }
 
   @UiHandler ("streamPublishButton")

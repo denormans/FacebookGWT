@@ -8,36 +8,50 @@
     <g:center>
       <g:SplitLayoutPanel>
         <g:center>
-          <g:HTMLPanel styleName="FBGWTMainContent">
-            <div ui:field="initializationSection">
-              <h3>Initialization</h3>
-              <g:Button ui:field="initButton">Init</g:Button>
-<!--
-              <g:DisclosurePanel>
-                <g:header>Options</g:header>
-                <g:FlowPanel></g:FlowPanel>
-              </g:DisclosurePanel>
--->
-            </div>
-            <div ui:field="eventHandlersSection">
-              <h3>Event Handlers</h3>
-              <g:Button ui:field="resetEventHandlersButton" enabled="false">Reset</g:Button>
-              <g:Button ui:field="removeEventHandlersButton" enabled="false">Remove</g:Button>
-            </div>
-            <div ui:field="authenticationSection">
-              <h3>Authentication</h3>
-              <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
-              <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
-            </div>
-            <div ui:field="widgetsSection">
-              <h3>Widgets</h3>
-              <div>
-                <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
-                <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
-              </div>
-              <fb:Like ui:field="fbLike" href="http://denormans.github.com/FacebookGWT/Samples"/>
-            </div>
-          </g:HTMLPanel>
+          <g:TabLayoutPanel barHeight="32">
+            <g:tab>
+              <g:header>Initialization</g:header>
+
+              <g:HTMLPanel>
+                <g:Button ui:field="initButton">Init</g:Button>
+              </g:HTMLPanel>
+
+
+              <!--
+                            <g:DisclosurePanel>
+                              <g:header>Options</g:header>
+                              <g:FlowPanel></g:FlowPanel>
+                            </g:DisclosurePanel>
+              -->
+            </g:tab>
+            <g:tab>
+              <g:header>Event Handlers</g:header>
+
+              <g:HTMLPanel>
+                <g:Button ui:field="resetEventHandlersButton" enabled="false">Reset</g:Button>
+                <g:Button ui:field="removeEventHandlersButton" enabled="false">Remove</g:Button>
+              </g:HTMLPanel>
+            </g:tab>
+            <g:tab>
+              <g:header>Authentication</g:header>
+
+              <g:HTMLPanel>
+                <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
+                <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
+              </g:HTMLPanel>
+            </g:tab>
+            <g:tab>
+              <g:header>Widgets</g:header>
+
+              <g:HTMLPanel ui:field="widgets">
+                <div>
+                  <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
+                  <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
+                </div>
+                <fb:Like ui:field="fbLike" href="http://denormans.github.com/FacebookGWT/Samples"/>
+              </g:HTMLPanel>
+            </g:tab>
+          </g:TabLayoutPanel>
         </g:center>
         <g:south size="150">
           <g:ScrollPanel ui:field="eventContainer" styleName="FBGWTEventContainer">
