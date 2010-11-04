@@ -20,7 +20,7 @@ package com.denormans.facebookgwt.api.client.auth.js;
 
 import com.denormans.facebookgwt.api.client.js.FBOptions;
 import com.denormans.facebookgwt.api.shared.FBEnum;
-import com.denormans.facebookgwt.api.shared.FBPermission;
+import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 
 import java.util.Arrays;
 import java.util.Collection;

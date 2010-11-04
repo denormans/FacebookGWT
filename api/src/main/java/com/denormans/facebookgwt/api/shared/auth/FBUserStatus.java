@@ -16,7 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared;
+package com.denormans.facebookgwt.api.shared.auth;
 
 import java.util.HashMap;
 import java.util.Map;

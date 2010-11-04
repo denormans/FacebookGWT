@@ -25,7 +25,7 @@ import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
 import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
-import com.denormans.facebookgwt.api.shared.FBPermission;
+import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;

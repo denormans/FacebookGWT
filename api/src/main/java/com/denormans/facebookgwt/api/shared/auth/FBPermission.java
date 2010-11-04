@@ -16,9 +16,10 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared;
+package com.denormans.facebookgwt.api.shared.auth;
 
 import com.denormans.facebookgwt.api.client.auth.js.FBPermissions;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
