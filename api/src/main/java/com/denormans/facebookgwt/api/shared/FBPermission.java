@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.shared;
 
-import com.denormans.facebookgwt.api.client.js.FBPermissions;
+import com.denormans.facebookgwt.api.client.auth.js.FBPermissions;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;

@@ -1,30 +1,30 @@
 package com.denormans.facebookgwt.samples.client.showcase.impl;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.auth.events.FBLogoutEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBLogoutHandler;
+import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
+import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeHandler;
+import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
+import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
+import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
 import com.denormans.facebookgwt.api.client.events.FBEvent;
-import com.denormans.facebookgwt.api.client.events.FBLogEvent;
 import com.denormans.facebookgwt.api.client.events.FBLogHandler;
-import com.denormans.facebookgwt.api.client.events.auth.FBLoginEvent;
-import com.denormans.facebookgwt.api.client.events.auth.FBLoginHandler;
-import com.denormans.facebookgwt.api.client.events.auth.FBLogoutEvent;
-import com.denormans.facebookgwt.api.client.events.auth.FBLogoutHandler;
-import com.denormans.facebookgwt.api.client.events.auth.FBSessionChangeEvent;
-import com.denormans.facebookgwt.api.client.events.auth.FBSessionChangeHandler;
-import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeEvent;
-import com.denormans.facebookgwt.api.client.events.auth.FBStatusChangeHandler;
-import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
-import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.events.ui.FBAddCommentEvent;
-import com.denormans.facebookgwt.api.client.events.ui.FBAddCommentHandler;
-import com.denormans.facebookgwt.api.client.events.ui.FBEdgeCreateEvent;
-import com.denormans.facebookgwt.api.client.events.ui.FBEdgeCreateHandler;
-import com.denormans.facebookgwt.api.client.events.ui.XFBMLRenderEvent;
-import com.denormans.facebookgwt.api.client.events.ui.XFBMLRenderHandler;
-import com.denormans.facebookgwt.api.client.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.js.FBInitOptions;
-import com.denormans.facebookgwt.api.client.js.FBLoginOptions;
-import com.denormans.facebookgwt.api.client.js.FBSession;
-import com.denormans.facebookgwt.api.client.ui.Like;
+import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBLoginHandler;
+import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
+import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
+import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
+import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
+import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateHandler;
+import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
+import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
+import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
+import com.denormans.facebookgwt.api.client.auth.js.FBSession;
+import com.denormans.facebookgwt.api.client.ui.widgets.Like;
 import com.denormans.facebookgwt.api.shared.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
@@ -89,7 +89,8 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiField DivElement widgetsSection;
   @UiField Button parseXFBMLButton;
-  @UiField Like fbLike;
+  @UiField
+  Like fbLike;
 
   @UiField ScrollPanel eventContainer;
   @UiField FlowPanel eventPanel;

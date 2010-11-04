@@ -16,19 +16,45 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.auth.js;
 
-import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
+import com.denormans.facebookgwt.api.client.js.FBJSObject;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+import java.util.Date;
 
-public interface HasFBLogHandler extends HasHandlers {
-  /**
-   * Adds a {@link FBLogEvent} handler.
-   *
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addFBLogHandler(FBLogHandler handler);
+public class FBSession extends FBJSObject {
+  protected FBSession() {
+  }
+
+  public final native String getSessionKey() /*-{
+    return this.session_key;
+  }-*/;
+
+  public final native String getUserID() /*-{
+    return this.uid;
+  }-*/;
+
+  public final Date getExpirationDate() {
+    return new Date(getExpirationInSeconds() * 1000);
+  }
+
+  public final native int getExpirationInSeconds() /*-{
+    return this.expires || 0;
+  }-*/;
+
+  public final native String getSecret() /*-{
+    return this.secret;
+  }-*/;
+
+  public final native String getBaseDomain() /*-{
+    return this.base_domain;
+  }-*/;
+
+  public final native String getAccessToken() /*-{
+    return this.access_token;
+  }-*/;
+
+  public final native String getSignature() /*-{
+    return this.sig;
+  }-*/;
 }

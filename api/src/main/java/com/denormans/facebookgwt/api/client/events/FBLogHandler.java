@@ -18,6 +18,8 @@
 
 package com.denormans.facebookgwt.api.client.events;
 
+import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
+
 public interface FBLogHandler extends FBEventHandler {
   /**
    * Called when {@link FBLogEvent} is fired.

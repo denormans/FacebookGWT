@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui">
+             xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui.widgets">
   <g:DockLayoutPanel>
     <g:north size="32">
       <g:HTML styleName="FBGWTHeader">Showcase</g:HTML>

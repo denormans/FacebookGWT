@@ -77,7 +77,7 @@ public abstract class FBIntegration implements HasHandlers {
 
       return callback;
     } catch(e) {
-      return @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+      return @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 
@@ -90,7 +90,7 @@ public abstract class FBIntegration implements HasHandlers {
     try {
       $wnd.FB.Event.unsubscribe(eventName, callback);
     } catch(e) {
-      @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+      @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
     }
   }-*/;
 

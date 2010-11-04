@@ -19,10 +19,10 @@
 package com.denormans.facebookgwt.samples.client;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.events.init.FBInitFailureEvent;
-import com.denormans.facebookgwt.api.client.events.init.FBInitFailureHandler;
-import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessEvent;
-import com.denormans.facebookgwt.api.client.events.init.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.init.events.FBInitFailureEvent;
+import com.denormans.facebookgwt.api.client.init.events.FBInitFailureHandler;
+import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
+import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 import com.denormans.facebookgwt.samples.client.showcase.impl.ShowcaseImpl;
 

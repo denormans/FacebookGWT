@@ -16,19 +16,13 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.ui.js;
 
-import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
+import com.denormans.facebookgwt.api.client.js.FBEventResponse;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+public class FBAddCommentEventResponse extends FBEventResponse {
+  protected FBAddCommentEventResponse() {
+  }
 
-public interface HasFBLogHandler extends HasHandlers {
-  /**
-   * Adds a {@link FBLogEvent} handler.
-   *
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addFBLogHandler(FBLogHandler handler);
+
 }

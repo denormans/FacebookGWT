@@ -16,19 +16,49 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events;
+package com.denormans.facebookgwt.api.client.init.events;
 
-import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
+import com.google.gwt.event.shared.GwtEvent;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+public class FBInitFailureEvent extends GwtEvent<FBInitFailureHandler> {
+  private static Type<FBInitFailureHandler> sType;
 
-public interface HasFBLogHandler extends HasHandlers {
   /**
-   * Adds a {@link FBLogEvent} handler.
+   * Fires a {@link FBInitFailureEvent} on all registered handlers in the handler
+   * manager. If no such handlers exist, this method will do nothing.
    *
-   * @param handler the handler
-   * @return the registration for the event
+   * @param source the source of the handlers
    */
-  HandlerRegistration addFBLogHandler(FBLogHandler handler);
+  public static void fire(HasFBInitFailureHandler source) {
+    if (sType != null) {
+      FBInitFailureEvent event = new FBInitFailureEvent();
+      source.fireEvent(event);
+    }
+  }
+
+  /**
+   * Gets the type associated with this event.
+   *
+   * @return returns the handler type
+   */
+  public static Type<FBInitFailureHandler> getType() {
+    if (sType == null) {
+      sType = new Type<FBInitFailureHandler>();
+    }
+
+    return sType;
+  }
+
+  protected FBInitFailureEvent() {
+  }
+
+  @Override
+  public Type<FBInitFailureHandler> getAssociatedType() {
+    return sType;
+  }
+
+  @Override
+  protected void dispatch(final FBInitFailureHandler handler) {
+    handler.onFBInitFailure(this);
+  }
 }

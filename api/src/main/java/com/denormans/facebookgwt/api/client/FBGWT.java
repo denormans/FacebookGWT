@@ -18,7 +18,11 @@
 
 package com.denormans.facebookgwt.api.client;
 
+import com.denormans.facebookgwt.api.client.auth.FBAuthentication;
+import com.denormans.facebookgwt.api.client.core.FBCore;
+import com.denormans.facebookgwt.api.client.init.FBInitialization;
 import com.denormans.facebookgwt.api.client.js.FBJSException;
+import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
 import com.denormans.gwtutil.client.js.JSError;
 
 import com.google.gwt.core.client.GWT;
@@ -37,10 +41,15 @@ public final class FBGWT {
   public static void raiseException(final String message) {
     GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
     if (uncaughtExceptionHandler == null) {
-      throw new FBGWTException(message);
+      throwException(message);
+      return;
     }
 
     uncaughtExceptionHandler.onUncaughtException(createException(message));
+  }
+
+  public static void throwException(final String message) {
+    throw new FBGWTException(message);
   }
 
   public static FBGWTException createException(final String message) {
@@ -53,10 +62,15 @@ public final class FBGWT {
   public static void raiseException(final JSError error) {
     GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
     if (uncaughtExceptionHandler == null) {
-      throw new FBJSException(error);
+      throwException(error);
+      return;
     }
 
     uncaughtExceptionHandler.onUncaughtException(createException(error));
+  }
+
+  public static void throwException(final JSError error) {
+    throw new FBJSException(error);
   }
 
   public static FBJSException createException(final JSError error) {
