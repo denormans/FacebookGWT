@@ -174,7 +174,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
             oldFBAsyncInit();
           }
 
-          self.@com.denormans.facebookgwt.api.client.init.FBInitialization::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/js/FBInitOptions;)(initOptions);
+          self.@com.denormans.facebookgwt.api.client.init.FBInitialization::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/init/js/FBInitOptions;)(initOptions);
         } catch(e) {
           @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
         }

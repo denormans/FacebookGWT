@@ -62,7 +62,7 @@ public abstract class FBIntegration implements HasHandlers {
       var callback = function(response) {
         try {
           if (response === null || response === undefined || typeof(response) === "object") {
-            self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Lcom/denormans/facebookgwt/api/client/js/FBEventResponse;)(eventName, response);
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Lcom/denormans/facebookgwt/api/client/common/js/FBEventResponse;)(eventName, response);
           } else if(typeof(response) === "number") {
             self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;I)(eventName, response);
           } else {

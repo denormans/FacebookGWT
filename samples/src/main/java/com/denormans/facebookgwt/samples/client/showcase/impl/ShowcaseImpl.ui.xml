@@ -31,7 +31,10 @@
             </div>
             <div ui:field="widgetsSection">
               <h3>Widgets</h3>
-              <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
+              <div>
+                <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
+                <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
+              </div>
               <fb:Like ui:field="fbLike" href="http://denormans.github.com/FacebookGWT/Samples"/>
             </div>
           </g:HTMLPanel>

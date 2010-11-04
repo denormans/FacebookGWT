@@ -30,8 +30,9 @@ import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
 import com.denormans.facebookgwt.api.client.ui.js.FBAddCommentEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
 import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
-import com.denormans.facebookgwt.api.client.ui.js.FBUICallbackResponse;
-import com.denormans.facebookgwt.api.client.ui.js.FBUIParameters;
+import com.denormans.facebookgwt.api.client.ui.js.FBUIActionOptions;
+import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.js.XFBMLRenderEventResponse;
 import com.denormans.facebookgwt.api.shared.FBEnum;
 
@@ -71,20 +72,25 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
     }
   }-*/;
 
-  public native void startUI(final String method, final DisplayFormat displayFormat, final FBUIParameters parameters, final AsyncCallback<? extends FBUICallbackResponse> callback) /*-{
+  public void publishToStream(final StreamPublishOptions publishOptions, final DisplayFormat displayFormat, final AsyncCallback<StreamPublishCallbackResponse> callback) {
+    executeAction("stream.publish", displayFormat, publishOptions, callback);
+  }
+
+  public native void executeAction(final String method, final DisplayFormat displayFormat, final FBUIActionOptions actionOptions, final AsyncCallback<? extends FBEventResponse> callback) /*-{
     try {
-      var params = {};
-      params.prototype = parameters;
-      params.method = method;
+      actionOptions.method = method;
       if (displayFormat != null) {
-        params.display = displayFormat.@com.denormans.facebookgwt.api.client.ui.FBUserInterface.DisplayFormat::getApiValue()();
+        actionOptions.display = displayFormat.@com.denormans.facebookgwt.api.client.ui.FBUserInterface.DisplayFormat::getApiValue()();
       }
 
-      $wnd.FB.ui(params, function(response) {
-        if (callback != null) {
+      var cb;
+      if (callback != null) {
+        cb = function(response) {
           callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
-        }
-      });
+        };
+      }
+
+      $wnd.FB.ui(actionOptions, cb);
     } catch(e) {
       if (callback != null) {
         var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);

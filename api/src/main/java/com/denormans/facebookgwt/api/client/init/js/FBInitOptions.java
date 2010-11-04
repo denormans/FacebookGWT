@@ -27,7 +27,7 @@ public class FBInitOptions extends FBOptions {
    *
    * @return the empty init options
    */
-  public static FBInitOptions create() {
+  public static FBInitOptions createInitOptions() {
     return createEnhancedObject();
   }
 
@@ -38,12 +38,8 @@ public class FBInitOptions extends FBOptions {
    *
    * @return the init options
    */
-  public static FBInitOptions create(final String applicationID) {
-    FBInitOptions initOptions = create();
-
-    initOptions.setApplicationID(applicationID);
-
-    return initOptions;
+  public static FBInitOptions createInitOptions(final String applicationID) {
+    return createInitOptions().setApplicationID(applicationID);
   }
 
   /**
@@ -54,13 +50,8 @@ public class FBInitOptions extends FBOptions {
    *
    * @return the init options
    */
-  public static FBInitOptions create(final String applicationID, final boolean parseXFBMLTags) {
-    FBInitOptions initOptions = create();
-
-    initOptions.setApplicationID(applicationID);
-    initOptions.setParseXFBMLTags(parseXFBMLTags);
-
-    return initOptions;
+  public static FBInitOptions createInitOptions(final String applicationID, final boolean parseXFBMLTags) {
+    return createInitOptions(applicationID).setParseXFBMLTags(parseXFBMLTags);
   }
 
   protected FBInitOptions() {

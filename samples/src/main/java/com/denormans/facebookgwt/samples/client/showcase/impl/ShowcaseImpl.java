@@ -10,12 +10,15 @@ import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
+import com.denormans.facebookgwt.api.client.common.js.Attachment;
+import com.denormans.facebookgwt.api.client.common.js.Link;
 import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
 import com.denormans.facebookgwt.api.client.common.events.FBLogHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBLoginHandler;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
 import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
@@ -24,6 +27,8 @@ import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
 import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
+import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
@@ -89,8 +94,8 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
   @UiField DivElement widgetsSection;
   @UiField Button parseXFBMLButton;
-  @UiField
-  Like fbLike;
+  @UiField Button streamPublishButton;
+  @UiField Like fbLike;
 
   @UiField ScrollPanel eventContainer;
   @UiField FlowPanel eventPanel;
@@ -145,7 +150,9 @@ public class ShowcaseImpl extends Composite implements Showcase {
     boolean isInitialized = FBGWT.Init.isInitialized();
     resetEventHandlersButton.setEnabled(isInitialized);
     removeEventHandlersButton.setEnabled(isInitialized);
+    loginButton.setEnabled(isInitialized);
     parseXFBMLButton.setEnabled(isInitialized);
+    streamPublishButton.setEnabled(isInitialized);
   }
 
   private void removeEventHandlers() {
@@ -281,13 +288,13 @@ public class ShowcaseImpl extends Composite implements Showcase {
   }
 
   private void updateConnectionButtons(final boolean isConnected) {
-    loginButton.setEnabled(FBGWT.Init.isInitialized());
-    logoutButton.setEnabled(FBGWT.Init.isInitialized() && isConnected);
+    boolean isInitialized = FBGWT.Init.isInitialized();
+    logoutButton.setEnabled(isInitialized && isConnected);
   }
 
   @UiHandler ("initButton")
   public void handleInitButtonClick(final ClickEvent event) {
-    FBGWT.Init.initialize(FBInitOptions.create(FacebookGWTSamples.SamplesFacebookApplicationID, false));
+    FBGWT.Init.initialize(FBInitOptions.createInitOptions(FacebookGWTSamples.SamplesFacebookApplicationID, false));
   }
 
   @UiHandler ("resetEventHandlersButton")
@@ -316,7 +323,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
 
         updateConnectionButtons(result.isConnected());
       }
-    }, FBLoginOptions.create(FBPermission.Email, FBPermission.UserPhotoVideoTags));
+    }, FBLoginOptions.createLoginOptions(FBPermission.Email, FBPermission.UserPhotoVideoTags));
   }
 
   @UiHandler ("logoutButton")
@@ -339,5 +346,29 @@ public class ShowcaseImpl extends Composite implements Showcase {
   @UiHandler ("parseXFBMLButton")
   public void handleParseXFBMLClick(final ClickEvent event) {
     FBGWT.UI.parseXFBML(widgetsSection);
+  }
+
+  @UiHandler ("streamPublishButton")
+  public void handleStreamPublishClick(final ClickEvent event) {
+    StreamPublishOptions streamPublishOptions =
+        StreamPublishOptions.createStreamPublishOptions()
+            .setMessage("Learning about FacebookGWT")
+            .setAttachment(Attachment.createAttachment().setName("FacebookGWT").setCaption("Facebook API for GWT").setDescription("Facebook GWT is a Java API of the Facebook JavaScript API for use with Google Web Toolkit.").setHref("http://denormans.github.com/FacebookGWT/"))
+            .setActionLinks(Link.createLink("Code", "https://github.com/denormans/FacebookGWT"), Link.createLink("Issues", "https://github.com/denormans/FacebookGWT/issues"))
+            .setUserMessagePrompt("Share your thoughts about FacebookGWT");
+
+    Log.info("Stream publish options: " + streamPublishOptions.getJSONString());
+
+    FBGWT.UI.publishToStream(streamPublishOptions, FBUserInterface.DisplayFormat.Dialog, new AsyncCallback<StreamPublishCallbackResponse>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        FacebookGWTSamples.get().handleError("Error publishing to stream", caught);
+      }
+
+      @Override
+      public void onSuccess(final StreamPublishCallbackResponse result) {
+        addApiEventMessage("Stream Publish result", result);
+      }
+    });
   }
 }

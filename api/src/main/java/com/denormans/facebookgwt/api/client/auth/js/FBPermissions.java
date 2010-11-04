@@ -51,7 +51,7 @@ public class FBPermissions extends FBJSObject {
   }
 
   public final List<String> getExtendedApiPermissions() {
-    return convertJSArrayStringToList(getExtendedApiPermissionsJS());
+    return convertJsArrayStringToList(getExtendedApiPermissionsJS());
   }
 
   private native JsArrayString getExtendedApiPermissionsJS() /*-{
@@ -63,7 +63,7 @@ public class FBPermissions extends FBJSObject {
   }
 
   public final List<String> getUserApiPermissions() {
-    return convertJSArrayStringToList(getUserApiPermissionsJS());
+    return convertJsArrayStringToList(getUserApiPermissionsJS());
   }
 
   private native JsArrayString getUserApiPermissionsJS() /*-{
@@ -75,7 +75,7 @@ public class FBPermissions extends FBJSObject {
   }
 
   public final List<String> getFriendApiPermissions() {
-    return convertJSArrayStringToList(getFriendApiPermissionsJS());
+    return convertJsArrayStringToList(getFriendApiPermissionsJS());
   }
 
   private native JsArrayString getFriendApiPermissionsJS() /*-{

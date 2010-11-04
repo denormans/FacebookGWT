@@ -47,6 +47,7 @@
       <releases><enabled>false</enabled></releases>
     </repository>
 
+<!--
     <repository>
       <id>sonatype-central-repository</id>
       <name>Sonatype Repository</name>
@@ -60,6 +61,7 @@
       <url>https://oss.sonatype.org/content/repositories/google-snapshots</url>
       <snapshots><enabled>true</enabled></snapshots>
     </repository>
+-->
   </repositories>
 
   <build>

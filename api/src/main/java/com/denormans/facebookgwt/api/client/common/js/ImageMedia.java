@@ -16,13 +16,35 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.ui.js;
+package com.denormans.facebookgwt.api.client.common.js;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-
-public abstract class FBUIParameters extends FBJSObject {
-  protected FBUIParameters() {
+public class ImageMedia extends Media {
+  public static ImageMedia createImageMedia() {
+    return createMedia("image");
   }
 
+  public static Media createImageMedia(final String href, final String src) {
+    return createImageMedia().setHref(href).setSrc(src);
+  }
 
+  protected ImageMedia() {
+  }
+
+  public final native String getHref() /*-{
+    return this.href;
+  }-*/;
+
+  public final native ImageMedia setHref(final String href) /*-{
+    this.href = href;
+    return this;
+  }-*/;
+
+  public final native String getSrc() /*-{
+    return this.src;
+  }-*/;
+
+  public final native ImageMedia setSrc(final String src) /*-{
+    this.src = src;
+    return this;
+  }-*/;
 }

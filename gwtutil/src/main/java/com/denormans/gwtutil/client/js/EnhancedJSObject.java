@@ -21,6 +21,7 @@ package com.denormans.gwtutil.client.js;
 import com.denormans.gwtutil.shared.Transformer;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.json.client.JSONObject;
 
@@ -35,16 +36,52 @@ public class EnhancedJSObject extends JavaScriptObject {
   protected EnhancedJSObject() {
   }
 
-  public static List<String> convertJSArrayStringToList(final JsArrayString jsArray) {
-    return convertJSArrayStringToList(jsArray, Transformer.IdentityTransformer.<String>get());
+  public static JsArrayString convertListToJsArrayString(final List<String> list) {
+    return convertListToJsArrayString(list, Transformer.IdentityTransformer.<String>get());
   }
 
-  public static <T> List<T> convertJSArrayStringToList(final JsArrayString jsArray, final Transformer<String, T> transformer) {
+  public static <T> JsArrayString convertListToJsArrayString(final List<T> list, final Transformer<T, String> transformer) {
+    JsArrayString array = createArray().cast();
+
+    int index = 0;
+    for (final T originalValue : list) {
+      array.set(index++, transformer.transform(originalValue));
+    }
+
+    return array;
+  }
+
+  public static List<String> convertJsArrayStringToList(final JsArrayString jsArray) {
+    return convertJsArrayStringToList(jsArray, Transformer.IdentityTransformer.<String>get());
+  }
+
+  public static <T> List<T> convertJsArrayStringToList(final JsArrayString jsArray, final Transformer<String, T> transformer) {
     int stackSize = jsArray.length();
     List<T> list = new ArrayList<T>(stackSize);
     for (int index = 0; index < stackSize; index++) {
       final String originalValue = jsArray.get(index);
       T value = transformer.transform(originalValue);
+      list.add(value);
+    }
+    return list;
+  }
+
+  public static <T extends JavaScriptObject> JsArray<T> convertListToJsArray(final List<? extends T> list) {
+    JsArray<T> array = createArray().cast();
+
+    int index = 0;
+    for (final T value : list) {
+      array.set(index++, value);
+    }
+
+    return array;
+  }
+
+  public static <T extends JavaScriptObject> List<T> convertJsArrayToList(final JsArray<? extends T> jsArray) {
+    int stackSize = jsArray.length();
+    List<T> list = new ArrayList<T>(stackSize);
+    for (int index = 0; index < stackSize; index++) {
+      final T value = jsArray.get(index);
       list.add(value);
     }
     return list;

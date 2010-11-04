@@ -27,24 +27,16 @@ import java.util.Collection;
 import java.util.List;
 
 public class FBLoginOptions extends FBOptions {
-  public static FBLoginOptions create() {
+  public static FBLoginOptions createLoginOptions() {
     return createEnhancedObject();
   }
 
-  public static FBLoginOptions create(final Collection<FBPermission> permissions) {
-    FBLoginOptions loginOptions = create();
-
-    loginOptions.setPermissions(permissions);
-
-    return loginOptions;
+  public static FBLoginOptions createLoginOptions(final Collection<FBPermission> permissions) {
+    return createLoginOptions().setPermissions(permissions);
   }
 
-  public static FBLoginOptions create(final FBPermission... permissions) {
-    FBLoginOptions loginOptions = create();
-
-    loginOptions.setPermissions(permissions);
-
-    return loginOptions;
+  public static FBLoginOptions createLoginOptions(final FBPermission... permissions) {
+    return createLoginOptions().setPermissions(permissions);
   }
 
   protected FBLoginOptions() {

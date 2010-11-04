@@ -16,46 +16,21 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.gwtutil.client.js;
+package com.denormans.facebookgwt.api.client.common.js;
 
-import com.google.gwt.core.client.JsArrayString;
+import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
-import java.util.List;
-
-public class JSError extends EnhancedJSObject {
-  protected JSError() {
+public abstract class Media extends FBJSObject {
+  protected static <T extends Media> T createMedia(final String type) {
+    T media = EnhancedJSObject.<T>createEnhancedObject();
+    media.setType(type);
+    return media;
   }
 
-  public final String getDetailMessage() {
-    String detailMessage = getMessage();
-
-    String filename = getFileName();
-    int lineNumber = getLineNumber();
-
-    if (filename != null && filename.length() > 0) {
-      return detailMessage + " (" + filename + ", line " + lineNumber + ")";
-    } else {
-      return detailMessage;
-    }
+  protected Media() {
   }
 
-  public final native String getMessage() /*-{
-    return this.message || "";
-  }-*/;
-
-  public final native String getFileName() /*-{
-    return this.fileName || "";
-  }-*/;
-
-  public final native int getLineNumber() /*-{
-    return this.lineNumber || 0;
-  }-*/;
-
-  public final List<String> getStack() {
-    return convertJsArrayStringToList(getStackJS());
-  }
-
-  private final native JsArrayString getStackJS() /*-{
-    return this.stack || [];
+  protected final native void setType(final String type) /*-{
+    this.type = type;
   }-*/;
 }

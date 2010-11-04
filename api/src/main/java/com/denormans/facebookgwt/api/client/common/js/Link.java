@@ -16,13 +16,35 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.ui.js;
+package com.denormans.facebookgwt.api.client.common.js;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-
-public abstract class FBUICallbackResponse extends FBJSObject {
-  protected FBUICallbackResponse() {
+public class Link extends FBJSObject {
+  public static Link createLink() {
+    return createEnhancedObject();
   }
 
+  public static Link createLink(final String text, final String href) {
+    return createLink().setText(text).setHref(href);
+  }
 
+  protected Link() {
+  }
+
+  public final native String getText() /*-{
+    return this.text;
+  }-*/;
+
+  public final native Link setText(final String text) /*-{
+    this.text = text;
+    return this;
+  }-*/;
+
+  public final native String getHref() /*-{
+    return this.href;
+  }-*/;
+
+  public final native Link setHref(final String href) /*-{
+    this.href = href;
+    return this;
+  }-*/;
 }
