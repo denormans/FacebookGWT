@@ -17,12 +17,12 @@
               </g:HTMLPanel>
 
 
-              <!--
-                            <g:DisclosurePanel>
-                              <g:header>Options</g:header>
-                              <g:FlowPanel></g:FlowPanel>
-                            </g:DisclosurePanel>
-              -->
+<!--
+              <g:DisclosurePanel>
+                <g:header>Options</g:header>
+                <g:FlowPanel></g:FlowPanel>
+              </g:DisclosurePanel>
+-->
             </g:tab>
             <g:tab>
               <g:header>Event Handlers</g:header>
