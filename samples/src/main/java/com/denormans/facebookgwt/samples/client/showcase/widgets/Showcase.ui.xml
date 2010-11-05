@@ -1,6 +1,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui.widgets">
+             xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui.widgets"
+             xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:DockLayoutPanel>
     <g:north size="32">
       <g:HTML styleName="FBGWTHeader">Showcase</g:HTML>
@@ -12,17 +13,7 @@
             <g:tab>
               <g:header>Initialization</g:header>
 
-              <g:HTMLPanel>
-                <g:Button ui:field="initButton">Init</g:Button>
-              </g:HTMLPanel>
-
-
-<!--
-              <g:DisclosurePanel>
-                <g:header>Options</g:header>
-                <g:FlowPanel></g:FlowPanel>
-              </g:DisclosurePanel>
--->
+              <sc:InitializationWidget ui:field="initWidget"/>
             </g:tab>
             <g:tab>
               <g:header>Event Handlers</g:header>

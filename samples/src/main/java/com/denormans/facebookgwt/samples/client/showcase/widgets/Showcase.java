@@ -1,4 +1,22 @@
-package com.denormans.facebookgwt.samples.client.showcase.impl;
+/*
+ * Copyright (C) 2010 deNormans
+ * http://www.denormans.com/
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
+ * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
+ * agreement you entered into with deNormans.
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ * DENORMANS OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
@@ -19,7 +37,6 @@ import com.denormans.facebookgwt.api.client.common.js.Link;
 import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
 import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
@@ -32,7 +49,6 @@ import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
-import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.core.client.GWT;
@@ -58,30 +74,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
- * Copyright (C) 2010 deNormans
- * http://www.denormans.com/
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
- * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
- * agreement you entered into with deNormans.
- *
- * THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- * DENORMANS OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-public class ShowcaseImpl extends Composite implements Showcase {
-  private static final Logger Log = Logger.getLogger(ShowcaseImpl.class.getName());
+public class Showcase extends Composite {
+  private static final Logger Log = Logger.getLogger(Showcase.class.getName());
 
-  interface ShowcaseUIBinder extends UiBinder<DockLayoutPanel, ShowcaseImpl> {}
+  interface ShowcaseUIBinder extends UiBinder<DockLayoutPanel, Showcase> {}
   private static ShowcaseUIBinder sUIBinder = GWT.create(ShowcaseUIBinder.class);
 
-  @UiField Button initButton;
+  @UiField InitializationWidget initWidget;
 
   @UiField Button resetEventHandlersButton;
   @UiField Button removeEventHandlersButton;
@@ -100,7 +99,7 @@ public class ShowcaseImpl extends Composite implements Showcase {
   private HandlerRegistration initSuccessHandlerRegistration;
   private List<HandlerRegistration> eventHandlerRegistrations = new ArrayList<HandlerRegistration>();
 
-  public ShowcaseImpl() {
+  public Showcase() {
     DockLayoutPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
 
@@ -287,11 +286,6 @@ public class ShowcaseImpl extends Composite implements Showcase {
   private void updateConnectionButtons(final boolean isConnected) {
     boolean isInitialized = FBGWT.Init.isInitialized();
     logoutButton.setEnabled(isInitialized && isConnected);
-  }
-
-  @UiHandler ("initButton")
-  public void handleInitButtonClick(final ClickEvent event) {
-    FBGWT.Init.initialize(FBInitOptions.createInitOptions(FacebookGWTSamples.SamplesFacebookApplicationID, false));
   }
 
   @UiHandler ("resetEventHandlersButton")

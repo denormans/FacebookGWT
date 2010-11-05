@@ -21,3 +21,11 @@ body {
 .FBGWTTitle { font-size: 12px; font-weight: bold; color: #333; display: block; }
 
 .FBGWTEvent { display: block; }
+
+.FBGWTEditor { margin: 6px 0; border: 1px solid #999; }
+
+.FBGWTEditor .FBGWTHeader { background-color: #ddd; font-size: 14px; font-weight: bold; height: 24px; padding: 3px; border-bottom: 1px solid #222; }
+
+.FBGWTEditor .FBGWTContent { padding: 6px; }
+
+.FBGWTEditor .gwt-Label { }

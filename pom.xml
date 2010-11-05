@@ -14,7 +14,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <gwt.version>2.1-SNAPSHOT</gwt.version>
+    <gwt.version>2.1</gwt.version>
   </properties>
 
   <modules>
@@ -39,6 +39,7 @@
   </dependencyManagement>
 
   <repositories>
+<!--
     <repository>
       <id>nexus-codehaus-repository</id>
       <name>Codehaus Snapshot Repository</name>
@@ -47,7 +48,6 @@
       <releases><enabled>false</enabled></releases>
     </repository>
 
-<!--
     <repository>
       <id>sonatype-central-repository</id>
       <name>Sonatype Repository</name>

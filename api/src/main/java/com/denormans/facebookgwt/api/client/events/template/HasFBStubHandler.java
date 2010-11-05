@@ -16,9 +16,17 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.samples.client.showcase;
+package com.denormans.facebookgwt.api.client.events.template;
 
-import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
 
-public interface Showcase extends IsWidget {
+public interface HasFBStubHandler extends HasHandlers {
+  /**
+   * Adds a {@link FBStubEvent} handler.
+   *
+   * @param handler the handler
+   * @return the registration for the event
+   */
+  HandlerRegistration addFBStubHandler(FBStubHandler handler);
 }

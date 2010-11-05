@@ -23,8 +23,7 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitFailureEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitFailureHandler;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.samples.client.showcase.Showcase;
-import com.denormans.facebookgwt.samples.client.showcase.impl.ShowcaseImpl;
+import com.denormans.facebookgwt.samples.client.showcase.widgets.Showcase;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -58,7 +57,7 @@ public class FacebookGWTSamples implements EntryPoint {
       }
     });
 
-    showcase = new ShowcaseImpl();
+    showcase = new Showcase();
 
     RootPanel.get("FBGWTLoadingTextID").setVisible(false);
     RootLayoutPanel.get().add(showcase);

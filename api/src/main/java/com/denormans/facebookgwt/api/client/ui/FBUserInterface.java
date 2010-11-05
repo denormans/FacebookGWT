@@ -20,6 +20,7 @@ package com.denormans.facebookgwt.api.client.ui;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
 import com.denormans.facebookgwt.api.client.common.events.FBEventType;
+import com.denormans.facebookgwt.api.client.common.js.Attachment;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
 import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
