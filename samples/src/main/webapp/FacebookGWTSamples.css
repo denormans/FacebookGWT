@@ -10,6 +10,9 @@ body {
 
 .FBGWTHeader { font-size: 16px; font-weight: bold; color: #888; border-bottom: 1px solid #999; padding: 3px; }
 
+.FBGWTHeader a { text-decoration: none; }
+.FBGWTHeader a:hover { text-decoration: underline; }
+
 .FBGWTMainContent { padding: 6px; }
 
 .FBGWTEventContainer { border-top: 1px solid #999; }

@@ -4,7 +4,9 @@
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:DockLayoutPanel>
     <g:north size="32">
-      <g:HTML styleName="FBGWTHeader">Showcase</g:HTML>
+      <g:HTMLPanel>
+        <div class="FBGWTHeader"><a href="http://denormans.github.com/FacebookGWT/">FacebookGWT</a> - Showcase</div>
+      </g:HTMLPanel>
     </g:north>
     <g:center>
       <g:SplitLayoutPanel>
