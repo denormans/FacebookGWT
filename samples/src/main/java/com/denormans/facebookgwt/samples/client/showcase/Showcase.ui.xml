@@ -4,8 +4,8 @@
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:DockLayoutPanel>
     <g:north size="32">
-      <g:HTMLPanel>
-        <div class="FBGWTHeader"><a href="http://denormans.github.com/FacebookGWT/">FacebookGWT</a> - Showcase</div>
+      <g:HTMLPanel styleName="FBGWTHeader">
+        <a href="http://denormans.github.com/FacebookGWT/">FacebookGWT</a> - Showcase
       </g:HTMLPanel>
     </g:north>
     <g:center>
@@ -15,14 +15,17 @@
             <g:tab>
               <g:header>Initialization</g:header>
 
-              <sc:InitializationWidget ui:field="initWidget"/>
-            </g:tab>
-            <g:tab>
-              <g:header>Event Handlers</g:header>
-
               <g:HTMLPanel>
-                <g:Button ui:field="resetEventHandlersButton" enabled="false">Reset</g:Button>
-                <g:Button ui:field="removeEventHandlersButton" enabled="false">Remove</g:Button>
+                <div class="FBGWTSection">
+                  <sc:InitializationWidget ui:field="initWidget" styleName="FBGWTContent"/>
+                </div>
+
+
+                <div class="FBGWTSection">
+                  <div class="FBGWTHeader">Events</div>
+                  <sc:EventsWidget ui:field="eventsWidget" styleName="FBGWTContent"/>
+                </div>
+
               </g:HTMLPanel>
             </g:tab>
             <g:tab>

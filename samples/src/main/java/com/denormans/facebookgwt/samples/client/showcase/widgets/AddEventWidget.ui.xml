@@ -1,0 +1,21 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <g:HTMLPanel styleName="FBGWTEditor">
+    <div class="FBGWTHeader">Add Event:</div>
+    <div class="FBGWTContent">
+      <div class="FBGWTField">
+        <g:Label>Event</g:Label>
+        <g:ListBox ui:field="eventTypesListBox" visibleItemCount="1"/>
+        <g:HTML ui:field="eventTypesError" styleName="FBGWTErrorMessage" visible="false"/>
+      </div>
+
+      <div class="FBGWTField">
+        <g:Label>Message</g:Label>
+        <g:TextBox ui:field="eventMessageTextBox"/>
+        <g:HTML ui:field="eventMessageError" styleName="FBGWTErrorMessage" visible="false"/>
+      </div>
+
+      <g:Button ui:field="addEventHandlerButton" enabled="false">Add Event</g:Button>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder>

@@ -4,13 +4,18 @@
     <div class="FBGWTHeader">Options:</div>
 
     <div class="FBGWTContent">
-      <g:Label>Application ID</g:Label>
-      <g:TextBox ui:field="applicationIDEditor"/>
+      <div class="FBGWTField">
+        <g:Label>Application ID</g:Label>
+        <g:TextBox ui:field="applicationIDEditor"/>
+      </div>
 
-      <g:CheckBox ui:field="enableCookieSupportEditor">Enable Cookie Support</g:CheckBox>
-      <g:CheckBox ui:field="enableLoggingEditor">Enable Logging</g:CheckBox>
-      <g:CheckBox ui:field="fetchStatusEditor">Fetch Status</g:CheckBox>
-      <g:CheckBox ui:field="parseXFBMLTagsEditor">Parse XFBML Tags</g:CheckBox>
+      <div class="FBGWTField">
+        <g:Label>Behavior</g:Label>
+        <g:CheckBox ui:field="enableCookieSupportEditor">Enable Cookie Support</g:CheckBox>
+        <g:CheckBox ui:field="enableLoggingEditor">Enable Logging</g:CheckBox>
+        <g:CheckBox ui:field="fetchStatusEditor">Fetch Status</g:CheckBox>
+        <g:CheckBox ui:field="parseXFBMLTagsEditor">Parse XFBML Tags</g:CheckBox>
+      </div>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

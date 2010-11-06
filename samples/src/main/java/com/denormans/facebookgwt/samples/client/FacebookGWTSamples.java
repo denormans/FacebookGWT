@@ -23,7 +23,7 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitFailureEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitFailureHandler;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.samples.client.showcase.widgets.Showcase;
+import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

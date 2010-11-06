@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -19,8 +19,9 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
-import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
+import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
+import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
+import com.denormans.gwtutil.shared.events.ValueAddEvent;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -31,33 +32,33 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class InitializationWidget extends Composite {
-  interface InitializationWidgetUIBinder extends UiBinder<HTMLPanel, InitializationWidget> {}
-  private static InitializationWidgetUIBinder sUIBinder = GWT.create(InitializationWidgetUIBinder.class);
+public class EventsWidget extends Composite {
+  interface EventsWidgetUIBinder extends UiBinder<HTMLPanel, EventsWidget> {}
+  private static EventsWidgetUIBinder sUIBinder = GWT.create(EventsWidgetUIBinder.class);
 
-//  interface FBInitOptionsEditorDriver extends SimpleBeanEditorDriver<FBInitOptions, FBInitOptionsEditor> {}
-//  static FBInitOptionsEditorDriver sFBInitOptionsEditorDriver = GWT.create(FBInitOptionsEditorDriver.class);
+  @UiField Button resetEventHandlersButton;
+  @UiField AddEventWidget addEventWidget;
 
-  @UiField Button initButton;
-  @UiField FBInitOptionsEditor initOptionsEditor;
-
-  public InitializationWidget() {
+  public EventsWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
 
-    FBInitOptions initOptions = FBInitOptions.createInitOptions(FacebookGWTSamples.SamplesFacebookApplicationID).
-        setEnableCookieSupport(false).
-        setEnableLogging(true).
-        setFetchStatus(true).
-        setParseXFBMLTags(false);
-
-    initOptionsEditor.setInitOptions(initOptions);
+    FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
+      @Override
+      public void onFBInitSuccess(final FBInitSuccessEvent event) {
+        resetEventHandlersButton.setEnabled(FBGWT.Init.isInitialized());
+        addEventWidget.setEnabled(FBGWT.Init.isInitialized());
+      }
+    });
   }
 
-  @UiHandler ("initButton")
-  public void handleInitButtonClick(final ClickEvent event) {
-    initOptionsEditor.flush();
-    FBInitOptions initOptions = initOptionsEditor.getInitOptions();
-    FBGWT.Init.initialize(initOptions);
+  @UiHandler ("resetEventHandlersButton")
+  public void handleResetEventHandlersClick(final ClickEvent event) {
+
+  }
+
+  @UiHandler ("addEventWidget")
+  public void handleAddEventValueAdd(final ValueAddEvent<EventDescriptor> event) {
+
   }
 }

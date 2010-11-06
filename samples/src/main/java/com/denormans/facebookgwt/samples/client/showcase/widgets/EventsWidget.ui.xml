@@ -2,7 +2,7 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:HTMLPanel>
-    <sc:FBInitOptionsEditor ui:field="initOptionsEditor"/>
-    <g:Button ui:field="initButton">Init</g:Button>
+    <g:Button ui:field="resetEventHandlersButton" enabled="false">Reset All Events</g:Button>
+    <sc:AddEventWidget ui:field="addEventWidget" enabled="false"/>
   </g:HTMLPanel>
 </ui:UiBinder>

@@ -16,7 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.samples.client.showcase.widgets;
+package com.denormans.facebookgwt.samples.client.showcase;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
@@ -49,6 +49,8 @@ import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
+import com.denormans.facebookgwt.samples.client.showcase.widgets.EventsWidget;
+import com.denormans.facebookgwt.samples.client.showcase.widgets.InitializationWidget;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.core.client.GWT;
@@ -80,10 +82,9 @@ public class Showcase extends Composite {
   interface ShowcaseUIBinder extends UiBinder<DockLayoutPanel, Showcase> {}
   private static ShowcaseUIBinder sUIBinder = GWT.create(ShowcaseUIBinder.class);
 
-  @UiField InitializationWidget initWidget;
-
-  @UiField Button resetEventHandlersButton;
-  @UiField Button removeEventHandlersButton;
+  @UiField
+  InitializationWidget initWidget;
+  @UiField EventsWidget eventsWidget;
 
   @UiField Button loginButton;
   @UiField Button logoutButton;
@@ -143,12 +144,9 @@ public class Showcase extends Composite {
   }
 
   private void updateButtonsOnInitialization() {
-    boolean isInitialized = FBGWT.Init.isInitialized();
-    resetEventHandlersButton.setEnabled(isInitialized);
-    removeEventHandlersButton.setEnabled(isInitialized);
-    loginButton.setEnabled(isInitialized);
-    parseXFBMLButton.setEnabled(isInitialized);
-    streamPublishButton.setEnabled(isInitialized);
+    loginButton.setEnabled(FBGWT.Init.isInitialized());
+    parseXFBMLButton.setEnabled(FBGWT.Init.isInitialized());
+    streamPublishButton.setEnabled(FBGWT.Init.isInitialized());
   }
 
   private void removeEventHandlers() {
@@ -286,16 +284,6 @@ public class Showcase extends Composite {
   private void updateConnectionButtons(final boolean isConnected) {
     boolean isInitialized = FBGWT.Init.isInitialized();
     logoutButton.setEnabled(isInitialized && isConnected);
-  }
-
-  @UiHandler ("resetEventHandlersButton")
-  public void handleResetEventHandlersClick(final ClickEvent event) {
-    resetEventHandlers();
-  }
-
-  @UiHandler ("removeEventHandlersButton")
-  public void handleRemoveEventHandlersClick(final ClickEvent event) {
-    removeEventHandlers();
   }
 
   @UiHandler ("loginButton")
