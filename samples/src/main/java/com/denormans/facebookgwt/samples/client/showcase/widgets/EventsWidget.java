@@ -19,25 +19,36 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.common.events.FBEventType;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.gwtutil.shared.events.ValueAddEvent;
+import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
+import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class EventsWidget extends Composite {
+  private ValueRemoveHandler<EventDescriptor> eventDescriptorRemoveHandler;
+
   interface EventsWidgetUIBinder extends UiBinder<HTMLPanel, EventsWidget> {}
   private static EventsWidgetUIBinder sUIBinder = GWT.create(EventsWidgetUIBinder.class);
 
-  @UiField Button resetEventHandlersButton;
   @UiField AddEventWidget addEventWidget;
+  @UiField FlowPanel eventsPanel;
 
   public EventsWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -46,19 +57,37 @@ public class EventsWidget extends Composite {
     FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
-        resetEventHandlersButton.setEnabled(FBGWT.Init.isInitialized());
         addEventWidget.setEnabled(FBGWT.Init.isInitialized());
+
+        for (final FBEventType eventType : FBEventType.values()) {
+          addEvent(new EventDescriptor(eventType));
+        }
       }
     });
+
+    eventDescriptorRemoveHandler = new ValueRemoveHandler<EventDescriptor>() {
+      @Override
+      public void onValueRemove(final ValueRemoveEvent<EventDescriptor> eventDescriptorValueRemoveEvent) {
+        removeEvent((EventWidget) eventDescriptorValueRemoveEvent.getSource());
+      }
+    };
   }
 
-  @UiHandler ("resetEventHandlersButton")
-  public void handleResetEventHandlersClick(final ClickEvent event) {
+  private void addEvent(final EventDescriptor eventDescriptor) {
+    EventWidget eventWidget = new EventWidget();
+    eventWidget.setEventDescriptor(eventDescriptor);
 
+    eventWidget.addValueRemoveHandler(eventDescriptorRemoveHandler);
+
+    eventsPanel.add(eventWidget);
+  }
+
+  private void removeEvent(final EventWidget eventWidget) {
+    eventsPanel.remove(eventWidget);
   }
 
   @UiHandler ("addEventWidget")
   public void handleAddEventValueAdd(final ValueAddEvent<EventDescriptor> event) {
-
+    addEvent(event.getValue());
   }
 }

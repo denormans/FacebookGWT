@@ -24,6 +24,7 @@ import com.denormans.gwtutil.shared.events.ValueAddEvent;
 import com.denormans.gwtutil.shared.events.ValueAddHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -80,25 +81,13 @@ public class AddEventWidget extends Composite implements HasValueAddHandlers<Eve
   public void handleAddEventHandlerClick(final ClickEvent event) {
     FBEventType fbEventType = getSelectedEventType();
 
-    boolean hasError = false;
     if (fbEventType == null) {
       eventTypesError .setText("Please choose an event type.");
       eventTypesError.setVisible(true);
-      hasError = true;
-    }
-
-    String message = eventMessageTextBox.getText();
-    if (message.length() == 0) {
-      eventMessageError.setText("Please enter an event message.");
-      eventMessageError.setVisible(true);
-      hasError = true;
-    }
-
-    if (hasError) {
       return;
     }
 
-    ValueAddEvent.fire(this, new EventDescriptor(fbEventType, message));
+    ValueAddEvent.fire(this, new EventDescriptor(fbEventType, eventMessageTextBox.getText()));
 
     eventTypesListBox.setSelectedIndex(0);
     eventMessageTextBox.setText("");
@@ -113,16 +102,11 @@ public class AddEventWidget extends Composite implements HasValueAddHandlers<Eve
     return fbEventType;
   }
 
-//  @UiHandler ("eventTypesListBox")
-//  public void handleEventTypesListBoxValueChange(final ValueChangeEvent<String> event) {
-//    eventTypesError.setVisible(false);
-//
-//    FBEventType eventType = getSelectedEventType();
-//    if (eventType != null && eventMessageTextBox.getText().length() == 0) {
-//      eventMessageTextBox.setText(eventType.name() + " event");
-//      eventMessageError.setVisible(false);
-//    }
-//  }
+  @UiHandler ("eventTypesListBox")
+  public void handleEventTypesListBoxChange(final ChangeEvent event) {
+    eventTypesError.setVisible(false);
+    eventMessageError.setVisible(false);
+  }
 
   @UiHandler ("eventMessageTextBox")
   public void handleEventMessageTextBoxValueChange(final ValueChangeEvent<String> event) {

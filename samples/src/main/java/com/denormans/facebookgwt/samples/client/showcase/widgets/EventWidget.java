@@ -18,17 +18,188 @@
 
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
+import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBLoginHandler;
+import com.denormans.facebookgwt.api.client.auth.events.FBLogoutEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBLogoutHandler;
+import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
+import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeHandler;
+import com.denormans.facebookgwt.api.client.common.events.FBEvent;
+import com.denormans.facebookgwt.api.client.common.events.FBLogHandler;
+import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
+import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
+import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
+import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
+import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateHandler;
+import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
+import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
+import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
+import com.denormans.gwtutil.shared.events.HasValueRemoveHandlers;
+import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
+import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class EventWidget extends Composite {
+public class EventWidget extends Composite implements HasValueRemoveHandlers<EventDescriptor> {
   interface EventWidgetUIBinder extends UiBinder<HTMLPanel, EventWidget> {}
   private static EventWidgetUIBinder sUIBinder = GWT.create(EventWidgetUIBinder.class);
+
+  @UiField HTML eventTypeHTML;
+  @UiField HTML eventMessageHTML;
+  @UiField CheckBox eventEnabledCheckBox;
+  @UiField Button removeEventButton;
+
+  private EventDescriptor eventDescriptor;
+
+  private HandlerRegistration eventHandlerRegistration;
 
   public EventWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
+  }
+
+  public EventDescriptor getEventDescriptor() {
+    return eventDescriptor;
+  }
+
+  public void setEventDescriptor(final EventDescriptor eventDescriptor) {
+    this.eventDescriptor = eventDescriptor;
+
+    eventEnabledCheckBox.setValue(true);
+    eventEnabledCheckBox.setEnabled(eventDescriptor != null);
+    removeEventButton.setEnabled(eventDescriptor != null);
+
+    if (eventDescriptor != null) {
+      eventTypeHTML.setText(eventDescriptor.getEventType().name());
+      eventMessageHTML.setText(eventDescriptor.getMessage());
+
+      createFBEventHandler();
+    }
+  }
+
+  private void createFBEventHandler() {
+    if (eventDescriptor != null) {
+      switch (eventDescriptor.getEventType()) {
+        case AuthLogin:
+          eventHandlerRegistration = FBGWT.Auth.addFBLoginHandler(new FBLoginHandler() {
+            @Override
+            public void onFBLogin(final FBLoginEvent event) {
+              handleEvent(event, eventDescriptor);
+            }
+          });
+          break;
+
+        case AuthLogout:
+          eventHandlerRegistration = FBGWT.Auth.addFBLogoutHandler(new FBLogoutHandler() {
+            @Override
+            public void onFBLogout(final FBLogoutEvent event) {
+              handleEvent(event, eventDescriptor);
+            }
+          });
+          break;
+
+        case AuthSessionChange:
+          eventHandlerRegistration = FBGWT.Auth.addFBSessionChangeHandler(new FBSessionChangeHandler() {
+            @Override
+            public void onFBSessionChange(final FBSessionChangeEvent event) {
+              handleEvent(event, eventDescriptor);
+            }
+          });
+          break;
+
+        case AuthStatusChange:
+          eventHandlerRegistration = FBGWT.Auth.addFBStatusChangeHandler(new FBStatusChangeHandler() {
+            @Override
+            public void onFBStatusChange(final FBStatusChangeEvent event) {
+              handleEvent(event, eventDescriptor);
+            }
+          });
+          break;
+
+        case CommentsAdd:
+          eventHandlerRegistration = FBGWT.UI.addFBAddCommentHandler(new FBAddCommentHandler() {
+            @Override
+            public void onFBAddComment(final FBAddCommentEvent event) {
+              handleEvent(event, eventDescriptor);
+            }
+          });
+          break;
+
+        case EdgeCreate:
+          eventHandlerRegistration = FBGWT.UI.addFBEdgeCreateHandler(new FBEdgeCreateHandler() {
+            @Override
+            public void onFBEdgeCreate(final FBEdgeCreateEvent event) {
+              handleEvent(event, eventDescriptor);
+            }
+          });
+          break;
+
+        case Log:
+          eventHandlerRegistration = FBGWT.Core.addFBLogHandler(new FBLogHandler() {
+            @Override
+            public void onFBStub(final FBLogEvent event) {
+              handleEvent(event, eventDescriptor);
+            }
+          });
+          break;
+
+        case XFBMLRender:
+          eventHandlerRegistration = FBGWT.UI.addXFBMLRenderHandler(new XFBMLRenderHandler() {
+            @Override
+            public void onXFBMLRender(final XFBMLRenderEvent event) {
+              handleEvent(event, eventDescriptor);
+            }
+          });
+          break;
+
+        default:
+          FacebookGWTSamples.get().handleError("Unknown event type: " + eventDescriptor.getEventType());
+      }
+    }
+  }
+
+  private void handleEvent(final FBEvent<?, ?> event, final EventDescriptor eventDescriptor) {
+    FacebookGWTSamples.get().getShowcase().addApiEventMessage(eventDescriptor.getMessage(), event);
+  }
+
+  @UiHandler ("eventEnabledCheckBox")
+  public void handleEventEnabledCheckboxValueChange(final ValueChangeEvent<Boolean> event) {
+    if (event.getValue()) {
+      if (eventHandlerRegistration == null) {
+        createFBEventHandler();
+      }
+    } else {
+      if (eventHandlerRegistration != null) {
+        eventHandlerRegistration.removeHandler();
+      }
+    }
+  }
+
+  @UiHandler ("removeEventButton")
+  public void handleRemoveEventButtonClick(final ClickEvent event) {
+    ValueRemoveEvent.fire(this, eventDescriptor);
+
+    if (eventHandlerRegistration != null) {
+      eventHandlerRegistration.removeHandler();
+    }
+  }
+
+  @Override
+  public HandlerRegistration addValueRemoveHandler(final ValueRemoveHandler<EventDescriptor> eventDescriptorValueRemoveHandler) {
+    return addHandler(eventDescriptorValueRemoveHandler, ValueRemoveEvent.getType());
   }
 }

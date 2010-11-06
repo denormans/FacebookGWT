@@ -38,8 +38,8 @@ public class InitializationWidget extends Composite {
 //  interface FBInitOptionsEditorDriver extends SimpleBeanEditorDriver<FBInitOptions, FBInitOptionsEditor> {}
 //  static FBInitOptionsEditorDriver sFBInitOptionsEditorDriver = GWT.create(FBInitOptionsEditorDriver.class);
 
-  @UiField Button initButton;
   @UiField FBInitOptionsEditor initOptionsEditor;
+  @UiField Button initButton;
 
   public InitializationWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);

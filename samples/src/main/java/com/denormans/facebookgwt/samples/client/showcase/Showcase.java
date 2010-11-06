@@ -68,7 +68,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 
 import java.util.ArrayList;
@@ -89,7 +88,7 @@ public class Showcase extends Composite {
   @UiField Button loginButton;
   @UiField Button logoutButton;
 
-  @UiField HTMLPanel widgets;
+  @UiField ScrollPanel widgets;
   @UiField Button parseXFBMLButton;
   @UiField Button streamPublishButton;
   @UiField Like fbLike;
@@ -248,7 +247,7 @@ public class Showcase extends Composite {
     addApiEventMessage("XFBML Render Event", event);
   }
 
-  private void addApiEventMessage(final String title, final FBEvent<?, ?> event) {
+  public void addApiEventMessage(final String title, final FBEvent<?, ?> event) {
     addApiEventMessage(title, event.getApiResponse());
   }
 

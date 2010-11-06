@@ -43,6 +43,10 @@ public class FacebookGWTSamples implements EntryPoint {
 
   private Showcase showcase;
 
+  public Showcase getShowcase() {
+    return showcase;
+  }
+
   public void onModuleLoad() {
     if (sInstance != null) {
       return;

@@ -24,9 +24,18 @@ public class EventDescriptor {
   private FBEventType eventType;
   private String message;
 
+  public EventDescriptor(final FBEventType eventType) {
+    this(eventType, null);
+  }
+
   public EventDescriptor(final FBEventType eventType, final String message) {
     this.eventType = eventType;
-    this.message = message;
+
+    if (message != null && message.length() > 0) {
+      this.message = message;
+    } else {
+      this.message = eventType.name() + " event";
+    }
   }
 
   public FBEventType getEventType() {

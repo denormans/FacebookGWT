@@ -15,37 +15,46 @@
             <g:tab>
               <g:header>Initialization</g:header>
 
-              <g:HTMLPanel>
-                <div class="FBGWTSection">
-                  <sc:InitializationWidget ui:field="initWidget" styleName="FBGWTContent"/>
-                </div>
+              <g:ScrollPanel>
+                <g:HTMLPanel>
+                  <div class="FBGWTSection">
+                    <div class="FBGWTHeader">Initialize</div>
+                    <sc:InitializationWidget ui:field="initWidget" styleName="FBGWTContent"/>
+                  </div>
 
 
-                <div class="FBGWTSection">
-                  <div class="FBGWTHeader">Events</div>
-                  <sc:EventsWidget ui:field="eventsWidget" styleName="FBGWTContent"/>
-                </div>
+                  <div class="FBGWTSection">
+                    <div class="FBGWTHeader">Events</div>
+                    <sc:EventsWidget ui:field="eventsWidget" styleName="FBGWTContent"/>
+                  </div>
+                </g:HTMLPanel>
 
-              </g:HTMLPanel>
+              </g:ScrollPanel>
             </g:tab>
             <g:tab>
               <g:header>Authentication</g:header>
 
-              <g:HTMLPanel>
-                <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
-                <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
-              </g:HTMLPanel>
+              <g:ScrollPanel>
+                <g:HTMLPanel>
+                  <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
+                  <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
+                </g:HTMLPanel>
+
+              </g:ScrollPanel>
             </g:tab>
             <g:tab>
               <g:header>Widgets</g:header>
 
-              <g:HTMLPanel ui:field="widgets">
-                <div>
-                  <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
-                  <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
-                </div>
-                <fb:Like ui:field="fbLike" href="http://denormans.github.com/FacebookGWT/Samples"/>
-              </g:HTMLPanel>
+              <g:ScrollPanel ui:field="widgets">
+                <g:HTMLPanel>
+                  <div>
+                    <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
+                    <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
+                  </div>
+                  <fb:Like ui:field="fbLike" href="http://denormans.github.com/FacebookGWT/Samples"/>
+                </g:HTMLPanel>
+
+              </g:ScrollPanel>
             </g:tab>
           </g:TabLayoutPanel>
         </g:center>
