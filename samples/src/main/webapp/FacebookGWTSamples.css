@@ -32,3 +32,5 @@ body {
 .FBGWTEditor .FBGWTContent { padding: 6px; }
 
 .FBGWTEditor .gwt-Label { }
+
+.FBGWTEditor .gwt-CheckBox { display: block; margin: 2px 0; }
