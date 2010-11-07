@@ -19,31 +19,15 @@
 package com.denormans.facebookgwt.samples.client.showcase;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
-import com.denormans.facebookgwt.api.client.auth.events.FBLoginHandler;
-import com.denormans.facebookgwt.api.client.auth.events.FBLogoutEvent;
-import com.denormans.facebookgwt.api.client.auth.events.FBLogoutHandler;
-import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
-import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
-import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeEvent;
-import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
-import com.denormans.facebookgwt.api.client.common.events.FBLogHandler;
 import com.denormans.facebookgwt.api.client.common.js.Attachment;
 import com.denormans.facebookgwt.api.client.common.js.Link;
-import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
-import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
-import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
-import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
-import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateHandler;
-import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
-import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
@@ -116,7 +100,6 @@ public class Showcase extends Composite {
   private void handleFacebookInitialized(final FBInitSuccessEvent event) {
     addEventMessage("Facebook loaded");
 
-    resetEventHandlers();
     updateButtonsOnInitialization();
 
     FBSession session = FBGWT.Auth.getSession();
@@ -153,98 +136,6 @@ public class Showcase extends Composite {
       handlerRegistration.removeHandler();
     }
     eventHandlerRegistrations.clear();
-  }
-
-  private void resetEventHandlers() {
-    removeEventHandlers();
-
-    eventHandlerRegistrations.add(FBGWT.Core.addFBLogHandler(new FBLogHandler() {
-      @Override
-      public void onFBStub(final FBLogEvent event) {
-        handleFBLogEvent(event);
-      }
-    }));
-
-    eventHandlerRegistrations.add(FBGWT.Auth.addFBLoginHandler(new FBLoginHandler() {
-      @Override
-      public void onFBLogin(final FBLoginEvent event) {
-        handleLogin(event);
-      }
-    }));
-
-    eventHandlerRegistrations.add(FBGWT.Auth.addFBLogoutHandler(new FBLogoutHandler() {
-      @Override
-      public void onFBLogout(final FBLogoutEvent event) {
-        handleLogout(event);
-      }
-    }));
-
-    eventHandlerRegistrations.add(FBGWT.Auth.addFBSessionChangeHandler(new FBSessionChangeHandler() {
-      @Override
-      public void onFBSessionChange(final FBSessionChangeEvent event) {
-        handleSessionChange(event);
-      }
-    }));
-
-    eventHandlerRegistrations.add(FBGWT.Auth.addFBStatusChangeHandler(new FBStatusChangeHandler() {
-      @Override
-      public void onFBStatusChange(final FBStatusChangeEvent event) {
-        handleStatusChange(event);
-      }
-    }));
-
-    eventHandlerRegistrations.add(FBGWT.UI.addFBAddCommentHandler(new FBAddCommentHandler() {
-      @Override
-      public void onFBAddComment(final FBAddCommentEvent event) {
-        handleAddComment(event);
-      }
-    }));
-
-    eventHandlerRegistrations.add(FBGWT.UI.addFBEdgeCreateHandler(new FBEdgeCreateHandler() {
-      @Override
-      public void onFBEdgeCreate(final FBEdgeCreateEvent event) {
-        handleEdgeCreate(event);
-      }
-    }));
-
-    eventHandlerRegistrations.add(FBGWT.UI.addXFBMLRenderHandler(new XFBMLRenderHandler() {
-      @Override
-      public void onXFBMLRender(final XFBMLRenderEvent event) {
-        handleXFBMLRender(event);
-      }
-    }));
-  }
-
-  public void handleFBLogEvent(final FBLogEvent event) {
-    addApiEventMessage("Log Event", event);
-  }
-
-  public void handleLogin(final FBLoginEvent event) {
-    addApiEventMessage("Login Event", event);
-  }
-
-  public void handleLogout(final FBLogoutEvent event) {
-    addApiEventMessage("Logout Event", event);
-  }
-
-  private void handleSessionChange(final FBSessionChangeEvent event) {
-    addApiEventMessage("Session Change Event", event);
-  }
-
-  private void handleStatusChange(final FBStatusChangeEvent event) {
-    addApiEventMessage("Status Change Event", event);
-  }
-
-  private void handleAddComment(final FBAddCommentEvent event) {
-    addApiEventMessage("Add Comment Event", event);
-  }
-
-  private void handleEdgeCreate(final FBEdgeCreateEvent event) {
-    addApiEventMessage("Edge Create Event", event);
-  }
-
-  private void handleXFBMLRender(final XFBMLRenderEvent event) {
-    addApiEventMessage("XFBML Render Event", event);
   }
 
   public void addApiEventMessage(final String title, final FBEvent<?, ?> event) {

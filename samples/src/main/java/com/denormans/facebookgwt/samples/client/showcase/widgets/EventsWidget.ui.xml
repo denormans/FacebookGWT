@@ -3,6 +3,6 @@
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:HTMLPanel>
     <sc:AddEventWidget ui:field="addEventWidget" enabled="false"/>
-    <g:FlowPanel ui:field="eventsPanel"/>
+    <g:FlowPanel ui:field="eventsPanel" styleName="FBGWTEventWidgets"/>
   </g:HTMLPanel>
 </ui:UiBinder>

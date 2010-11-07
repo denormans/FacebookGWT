@@ -42,6 +42,7 @@ import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
 import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -58,8 +59,8 @@ public class EventWidget extends Composite implements HasValueRemoveHandlers<Eve
   interface EventWidgetUIBinder extends UiBinder<HTMLPanel, EventWidget> {}
   private static EventWidgetUIBinder sUIBinder = GWT.create(EventWidgetUIBinder.class);
 
-  @UiField HTML eventTypeHTML;
-  @UiField HTML eventMessageHTML;
+  @UiField SpanElement eventTypeSpan;
+  @UiField SpanElement eventMessageSpan;
   @UiField CheckBox eventEnabledCheckBox;
   @UiField Button removeEventButton;
 
@@ -84,8 +85,8 @@ public class EventWidget extends Composite implements HasValueRemoveHandlers<Eve
     removeEventButton.setEnabled(eventDescriptor != null);
 
     if (eventDescriptor != null) {
-      eventTypeHTML.setText(eventDescriptor.getEventType().name());
-      eventMessageHTML.setText(eventDescriptor.getMessage());
+      eventTypeSpan.setInnerText(eventDescriptor.getEventType().name());
+      eventMessageSpan.setInnerText(eventDescriptor.getMessage());
 
       createFBEventHandler();
     }
@@ -172,6 +173,13 @@ public class EventWidget extends Composite implements HasValueRemoveHandlers<Eve
     }
   }
 
+  private void removeFBEventHandler() {
+    if (eventHandlerRegistration != null) {
+      eventHandlerRegistration.removeHandler();
+      eventHandlerRegistration = null;
+    }
+  }
+
   private void handleEvent(final FBEvent<?, ?> event, final EventDescriptor eventDescriptor) {
     FacebookGWTSamples.get().getShowcase().addApiEventMessage(eventDescriptor.getMessage(), event);
   }
@@ -183,9 +191,7 @@ public class EventWidget extends Composite implements HasValueRemoveHandlers<Eve
         createFBEventHandler();
       }
     } else {
-      if (eventHandlerRegistration != null) {
-        eventHandlerRegistration.removeHandler();
-      }
+      removeFBEventHandler();
     }
   }
 
@@ -193,9 +199,7 @@ public class EventWidget extends Composite implements HasValueRemoveHandlers<Eve
   public void handleRemoveEventButtonClick(final ClickEvent event) {
     ValueRemoveEvent.fire(this, eventDescriptor);
 
-    if (eventHandlerRegistration != null) {
-      eventHandlerRegistration.removeHandler();
-    }
+    removeFBEventHandler();
   }
 
   @Override

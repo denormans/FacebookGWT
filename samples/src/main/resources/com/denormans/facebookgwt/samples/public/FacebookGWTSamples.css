@@ -1,0 +1,50 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: Tahoma, Verdana, Arial, sans-serif;
+  font-size: small;
+  margin: 8px;
+}
+
+#FBGWTLoadingTextID { font-size: 8px; font-style: italic; color: #888; }
+
+.FBGWTHeader { font-size: 16px; font-weight: bold; color: #888; border-bottom: 1px solid #9ab; padding: 4px; }
+
+.FBGWTHeader a { text-decoration: none; }
+.FBGWTHeader a:hover { text-decoration: underline; }
+
+.FBGWTMainContent { padding: 6px; }
+
+.gwt-TabLayoutPanel .gwt-TabLayoutPanelTab { color: #235; }
+
+.FBGWTSection { margin: 6px 0; border: 1px solid #8ac; }
+
+.FBGWTSection .FBGWTHeader { font-size: 14px; font-weight: bold; color: #456; height: 21px; background-color: #ace; }
+
+.FBGWTSection .FBGWTContent { padding: 6px; }
+
+.FBGWTEventContainer { border-top: 1px solid #999; }
+
+.FBGWTEventMessage { padding: 6px; }
+
+.FBGWTEventMessage:nth-child(even) { background-color: #def; }
+
+.FBGWTTitle { font-size: 12px; font-weight: bold; color: #333; display: block; }
+
+.FBGWTEvent { display: block; }
+
+.FBGWTEditor { margin: 6px 0; border: 1px solid #9bf; }
+
+.FBGWTEditor .FBGWTHeader { font-size: 13px; font-weight: bold; color: #567; height: 20px; padding: 3px; background-color: #def; }
+
+.FBGWTEditor .FBGWTContent { padding: 6px; }
+
+.FBGWTEditor .gwt-Label, .FBGWTEditor .FBGWTLabel { font-weight: bold; }
+
+/*.FBGWTEditor .gwt-CheckBox { display: block; margin: 2px 0; }*/
+
+.FBGWTField { margin: 3px 0; }
+
+.FBGWTErrorMessage { font-size: 10px; font-style: italic; color: #900; }
+
+.FBGWTEventWidget { padding: 6px; }
