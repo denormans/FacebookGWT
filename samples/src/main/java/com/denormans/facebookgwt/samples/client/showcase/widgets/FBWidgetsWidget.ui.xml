@@ -2,7 +2,7 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui.widgets">
   <g:HTMLPanel>
-    <div>
+    <div class="FBGWTField">
       <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
       <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
     </div>
