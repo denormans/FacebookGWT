@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
-  <g:HTMLPanel styleName="FBGWTEditor" addStyleNames="FBGWTEventWidget">
+  <g:HTMLPanel styleName="FBGWTEventWidget">
     <g:Button ui:field="removeEventButton" enabled="false">X</g:Button>
     <span ui:field="eventTypeSpan" class="FBGWTLabel"/>: "<span ui:field="eventMessageSpan"/>"
     <g:CheckBox ui:field="eventEnabledCheckBox" enabled="false">(Enabled)</g:CheckBox>

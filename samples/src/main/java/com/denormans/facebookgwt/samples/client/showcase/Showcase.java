@@ -19,9 +19,6 @@
 package com.denormans.facebookgwt.samples.client.showcase;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
-import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
 import com.denormans.facebookgwt.api.client.common.js.Attachment;
 import com.denormans.facebookgwt.api.client.common.js.Link;
@@ -31,8 +28,8 @@ import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
-import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
+import com.denormans.facebookgwt.samples.client.showcase.widgets.AuthenticationWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.EventsWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.InitializationWidget;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
@@ -67,8 +64,7 @@ public class Showcase extends Composite {
   InitializationWidget initWidget;
   @UiField EventsWidget eventsWidget;
 
-  @UiField Button loginButton;
-  @UiField Button logoutButton;
+  @UiField AuthenticationWidget authWidget;
 
   @UiField ScrollPanel widgets;
   @UiField Button parseXFBMLButton;
@@ -98,32 +94,9 @@ public class Showcase extends Composite {
     addEventMessage("Facebook loaded");
 
     updateButtonsOnInitialization();
-
-    FBSession session = FBGWT.Auth.getSession();
-    Log.info("Session before login status: " + session.getJSONString());
-
-    FBGWT.Auth.retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
-      @Override
-      public void onFailure(final Throwable caught) {
-        FacebookGWTSamples.get().handleError("Error retrieving login status", caught);
-      }
-
-      @Override
-      public void onSuccess(final FBAuthEventResponse result) {
-        addApiEventMessage("Retrieve Login Status result", result);
-
-        Log.info("Permissions: " + result.getPermissions());
-
-        updateConnectionButtons(result.isConnected());
-
-        FBSession session = FBGWT.Auth.getSession();
-        Log.info("Session after login status: " + session.getJSONString());
-      }
-    });
   }
 
   private void updateButtonsOnInitialization() {
-    loginButton.setEnabled(FBGWT.Init.isInitialized());
     parseXFBMLButton.setEnabled(FBGWT.Init.isInitialized());
     streamPublishButton.setEnabled(FBGWT.Init.isInitialized());
   }
@@ -132,7 +105,7 @@ public class Showcase extends Composite {
     addApiEventMessage(title, event.getApiResponse());
   }
 
-  private void addApiEventMessage(final String title, final EnhancedJSObject apiObject) {
+  public void addApiEventMessage(final String title, final EnhancedJSObject apiObject) {
     if (Log.isLoggable(Level.FINE)) {
       Log.fine(title + ": " + apiObject.getJSONString());
     }
@@ -159,47 +132,6 @@ public class Showcase extends Composite {
     html.setStyleName("FBGWTEventMessage");
     eventPanel.add(html);
     eventContainer.scrollToBottom();
-  }
-
-  private void updateConnectionButtons(final boolean isConnected) {
-    boolean isInitialized = FBGWT.Init.isInitialized();
-    logoutButton.setEnabled(isInitialized && isConnected);
-  }
-
-  @UiHandler ("loginButton")
-  protected void handleLoginButtonClick(final ClickEvent event) {
-    FBGWT.Auth.login(new AsyncCallback<FBAuthEventResponse>() {
-      @Override
-      public void onFailure(final Throwable caught) {
-        FacebookGWTSamples.get().handleError("Error logging in", caught);
-      }
-
-      @Override
-      public void onSuccess(final FBAuthEventResponse result) {
-        addApiEventMessage("Login result", result);
-
-        Log.info("Permissions: " + result.getPermissions());
-
-        updateConnectionButtons(result.isConnected());
-      }
-    }, FBLoginOptions.createLoginOptions(FBPermission.Email, FBPermission.UserPhotoVideoTags));
-  }
-
-  @UiHandler ("logoutButton")
-  protected void handleLogoutButtonClick(final ClickEvent event) {
-    FBGWT.Auth.logout(new AsyncCallback<FBAuthEventResponse>() {
-      @Override
-      public void onFailure(final Throwable caught) {
-        FacebookGWTSamples.get().handleError("Error logging out", caught);
-      }
-
-      @Override
-      public void onSuccess(final FBAuthEventResponse result) {
-        addApiEventMessage("Logout result", result);
-
-        updateConnectionButtons(result.isConnected());
-      }
-    });
   }
 
   @UiHandler ("parseXFBMLButton")

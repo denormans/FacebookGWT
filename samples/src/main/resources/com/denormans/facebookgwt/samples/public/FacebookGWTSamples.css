@@ -47,4 +47,6 @@ body {
 
 .FBGWTErrorMessage { font-size: 10px; font-style: italic; color: #900; }
 
-.FBGWTEventWidget { padding: 6px; }
+.FBGWTEventWidgets { border: 1px solid #9bf; height: 194px; }
+
+.FBGWTEventWidget { padding: 6px; border-bottom: 1px solid #9bf; }

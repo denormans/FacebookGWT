@@ -55,7 +55,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class EventWidget extends Composite implements HasValueRemoveHandlers<EventDescriptor> {
+public class EventWidget extends ShowcaseWidget implements HasValueRemoveHandlers<EventDescriptor> {
   interface EventWidgetUIBinder extends UiBinder<HTMLPanel, EventWidget> {}
   private static EventWidgetUIBinder sUIBinder = GWT.create(EventWidgetUIBinder.class);
 
@@ -181,7 +181,7 @@ public class EventWidget extends Composite implements HasValueRemoveHandlers<Eve
   }
 
   private void handleEvent(final FBEvent<?, ?> event, final EventDescriptor eventDescriptor) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(eventDescriptor.getMessage(), event);
+    addApiEventMessage(eventDescriptor.getMessage(), event);
   }
 
   @UiHandler ("eventEnabledCheckBox")

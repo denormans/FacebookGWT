@@ -36,10 +36,11 @@
 
               <g:ScrollPanel>
                 <g:HTMLPanel>
-                  <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
-                  <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
+                  <div class="FBGWTSection">
+                    <div class="FBGWTHeader">Authentication</div>
+                    <sc:AuthenticationWidget ui:field="authWidget" styleName="FBGWTContent"/>
+                  </div>
                 </g:HTMLPanel>
-
               </g:ScrollPanel>
             </g:tab>
             <g:tab>

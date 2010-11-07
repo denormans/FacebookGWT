@@ -28,10 +28,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class InitializationWidget extends Composite {
+public class InitializationWidget extends ShowcaseWidget {
   interface InitializationWidgetUIBinder extends UiBinder<HTMLPanel, InitializationWidget> {}
   private static InitializationWidgetUIBinder sUIBinder = GWT.create(InitializationWidgetUIBinder.class);
 
