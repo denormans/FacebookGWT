@@ -39,7 +39,7 @@ body {
 
 .FBGWTEditor .FBGWTContent { padding: 6px; }
 
-.FBGWTEditor .gwt-Label, .FBGWTEditor .FBGWTLabel { font-weight: bold; }
+.FBGWTEditor .gwt-Label, .FBGWTLabel { font-weight: bold; }
 
 /*.FBGWTEditor .gwt-CheckBox { display: block; margin: 2px 0; }*/
 
@@ -47,6 +47,10 @@ body {
 
 .FBGWTErrorMessage { font-size: 10px; font-style: italic; color: #900; }
 
-.FBGWTEventWidgets { border: 1px solid #9bf; height: 194px; }
+.FBGWTWidgetContainer { border: 1px solid #9bf; }
 
-.FBGWTEventWidget { padding: 6px; border-bottom: 1px solid #9bf; }
+.FBGWTWidget { padding: 6px; border-bottom: 1px solid #9bf; }
+
+.FBGWTWidget:last-child { border-bottom: none; }
+
+.FBGWTCode { font-family: Monaco, Courier, monospace; }

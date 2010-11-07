@@ -55,8 +55,7 @@ public class InitializationWidget extends ShowcaseWidget {
 
   @UiHandler ("initButton")
   public void handleInitButtonClick(final ClickEvent event) {
-    initOptionsEditor.flush();
-    FBInitOptions initOptions = initOptionsEditor.getInitOptions();
+    FBInitOptions initOptions = initOptionsEditor.flush();
     FBGWT.Init.initialize(initOptions);
   }
 }

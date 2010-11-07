@@ -49,13 +49,12 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class EventWidget extends ShowcaseWidget implements HasValueRemoveHandlers<EventDescriptor> {
+public class EventWidget extends ShowcaseWidget implements TakesValue<EventDescriptor>, HasValueRemoveHandlers<EventDescriptor> {
   interface EventWidgetUIBinder extends UiBinder<HTMLPanel, EventWidget> {}
   private static EventWidgetUIBinder sUIBinder = GWT.create(EventWidgetUIBinder.class);
 
@@ -73,11 +72,11 @@ public class EventWidget extends ShowcaseWidget implements HasValueRemoveHandler
     initWidget(rootElement);
   }
 
-  public EventDescriptor getEventDescriptor() {
+  public EventDescriptor getValue() {
     return eventDescriptor;
   }
 
-  public void setEventDescriptor(final EventDescriptor eventDescriptor) {
+  public void setValue(final EventDescriptor eventDescriptor) {
     this.eventDescriptor = eventDescriptor;
 
     eventEnabledCheckBox.setValue(true);

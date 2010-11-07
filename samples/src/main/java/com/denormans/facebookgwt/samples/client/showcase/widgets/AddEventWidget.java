@@ -66,7 +66,7 @@ public class AddEventWidget extends Composite implements HasValueAddHandlers<Eve
 
   @Override
   public boolean isEnabled() {
-    return false;
+    return addEventHandlerButton.isEnabled();
   }
 
   @Override
@@ -74,13 +74,11 @@ public class AddEventWidget extends Composite implements HasValueAddHandlers<Eve
     eventTypesListBox.setEnabled(enabled);
     eventMessageTextBox.setEnabled(enabled);
     addEventHandlerButton.setEnabled(enabled);
-
   }
 
   @UiHandler ("addEventHandlerButton")
   public void handleAddEventHandlerClick(final ClickEvent event) {
     FBEventType fbEventType = getSelectedEventType();
-
     if (fbEventType == null) {
       eventTypesError .setText("Please choose an event type.");
       eventTypesError.setVisible(true);

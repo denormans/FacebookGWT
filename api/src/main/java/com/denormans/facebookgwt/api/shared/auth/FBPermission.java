@@ -43,7 +43,7 @@ public enum FBPermission implements FBEnum {
 
   // Data Permissions
   Email("email"),
-  ContactEmail("contact_email"),
+  ContactEmail("contact_email", false),
   ReadFriendlists("read_friendlists"),
   ReadInsights("read_insights"),
   ReadMailbox("read_mailbox"),
@@ -123,9 +123,15 @@ public enum FBPermission implements FBEnum {
   }
 
   private String apiValue;
+  private boolean isRequestable;
 
   FBPermission(final String apiValue) {
+    this(apiValue, true);
+  }
+
+  FBPermission(final String apiValue, final boolean isRequestable) {
     this.apiValue = apiValue;
+    this.isRequestable = isRequestable;
   }
 
   public static List<FBPermission> valuesFromApiValues(final List<String> permissionApiValues) {
@@ -167,5 +173,9 @@ public enum FBPermission implements FBEnum {
   @Override
   public String getApiValue() {
     return apiValue;
+  }
+
+  public boolean isRequestable() {
+    return isRequestable;
   }
 }

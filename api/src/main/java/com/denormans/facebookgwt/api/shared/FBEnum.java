@@ -28,6 +28,9 @@ public interface FBEnum {
   public static class Util {
 
     public static List<String> toApiValues(final Collection<? extends FBEnum> enumValues) {
+      if (enumValues == null) {
+        return null;
+      }
       List<String> apiValues = new ArrayList<String>(enumValues.size());
       for (final FBEnum enumValue : enumValues) {
         apiValues.add(enumValue.getApiValue());
@@ -36,6 +39,10 @@ public interface FBEnum {
     }
 
     public static String joinApiValues(final Collection<String> apiValues) {
+      if (apiValues == null) {
+        return "";
+      }
+
       StringBuilder builder = new StringBuilder();
       boolean isFirst = true;
       for (final String apiValue : apiValues) {

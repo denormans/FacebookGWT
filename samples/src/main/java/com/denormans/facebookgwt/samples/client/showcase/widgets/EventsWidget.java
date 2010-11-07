@@ -27,28 +27,23 @@ import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
 import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.gwt.user.client.ui.ScrollPanel;
 
 public class EventsWidget extends Composite {
-  private ValueRemoveHandler<EventDescriptor> eventDescriptorRemoveHandler;
-
   interface EventsWidgetUIBinder extends UiBinder<HTMLPanel, EventsWidget> {}
   private static EventsWidgetUIBinder sUIBinder = GWT.create(EventsWidgetUIBinder.class);
 
   @UiField AddEventWidget addEventWidget;
-  @UiField FlowPanel eventsPanel;
+  @UiField ScrollPanel eventWidgets;
+  @UiField FlowPanel eventWidgetsPanel;
+
+  private ValueRemoveHandler<EventDescriptor> eventDescriptorRemoveHandler;
 
   public EventsWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -59,7 +54,7 @@ public class EventsWidget extends Composite {
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         addEventWidget.setEnabled(FBGWT.Init.isInitialized());
 
-        if (eventsPanel.getWidgetCount() == 0) {
+        if (eventWidgetsPanel.getWidgetCount() == 0) {
           for (final FBEventType eventType : FBEventType.values()) {
             addEvent(new EventDescriptor(eventType));
           }
@@ -77,15 +72,27 @@ public class EventsWidget extends Composite {
 
   private void addEvent(final EventDescriptor eventDescriptor) {
     EventWidget eventWidget = new EventWidget();
-    eventWidget.setEventDescriptor(eventDescriptor);
+    eventWidget.setValue(eventDescriptor);
 
     eventWidget.addValueRemoveHandler(eventDescriptorRemoveHandler);
 
-    eventsPanel.add(eventWidget);
+    eventWidgetsPanel.add(eventWidget);
+    resizeEventWidgets();
   }
 
   private void removeEvent(final EventWidget eventWidget) {
-    eventsPanel.remove(eventWidget);
+    eventWidgetsPanel.remove(eventWidget);
+
+    resizeEventWidgets();
+  }
+
+  private void resizeEventWidgets() {
+    int numWidgetsToShow = Math.min(eventWidgetsPanel.getWidgetCount(), 5);
+    if (numWidgetsToShow > 0) {
+      eventWidgets.setHeight((numWidgetsToShow * 39 - 1) + "px");
+      eventWidgets.scrollToBottom();
+    }
+    eventWidgets.setVisible(numWidgetsToShow > 0);
   }
 
   @UiHandler ("addEventWidget")

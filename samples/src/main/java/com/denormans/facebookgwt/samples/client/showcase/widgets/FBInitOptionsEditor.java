@@ -63,11 +63,15 @@ public class FBInitOptionsEditor extends Composite implements Editor<FBInitOptio
     parseXFBMLTagsEditor.setValue(initOptions.getParseXFBMLTags());
   }
 
-  public void flush() {
+  public FBInitOptions flush() {
+    // todo: replace with editor logic once GWT supports primitives (booleans in this case)
+
     initOptions.setApplicationID(applicationIDEditor.getText());
     initOptions.setEnableCookieSupport(enableCookieSupportEditor.getValue());
     initOptions.setEnableLogging(enableLoggingEditor.getValue());
     initOptions.setFetchStatus(fetchStatusEditor.getValue());
     initOptions.setParseXFBMLTags(parseXFBMLTagsEditor.getValue());
+
+    return initOptions;
   }
 }

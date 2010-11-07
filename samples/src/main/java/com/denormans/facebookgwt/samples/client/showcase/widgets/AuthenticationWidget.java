@@ -24,10 +24,11 @@ import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -35,6 +36,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.UIObject;
 
 import java.util.logging.Logger;
 
@@ -44,8 +46,19 @@ public class AuthenticationWidget extends ShowcaseWidget {
   interface AuthenticationWidgetUIBinder extends UiBinder<HTMLPanel, AuthenticationWidget> {}
   private static AuthenticationWidgetUIBinder sUIBinder = GWT.create(AuthenticationWidgetUIBinder.class);
 
-  @UiField Button checkStatusButton;
+//  interface FBLoginOptionsEditorDriver extends SimpleBeanEditorDriver<FBLoginOptions, FBLoginOptionsEditor> {}
+//  static FBLoginOptionsEditorDriver sFBLoginOptionsEditorDriver = GWT.create(FBLoginOptionsEditorDriver.class);
+
   @UiField Button getSessionButton;
+  @UiField DivElement sessionContainer;
+  @UiField SpanElement sessionDetails;
+
+  @UiField Button checkStatusButton;
+  @UiField DivElement statusContainer;
+  @UiField SpanElement statusDetails;
+
+  @UiField FBLoginOptionsEditor loginOptionsEditor;
+
   @UiField Button loginButton;
   @UiField Button logoutButton;
 
@@ -56,16 +69,30 @@ public class AuthenticationWidget extends ShowcaseWidget {
     FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
-        checkStatusButton.setEnabled(FBGWT.Init.isInitialized());
         getSessionButton.setEnabled(FBGWT.Init.isInitialized());
+        checkStatusButton.setEnabled(FBGWT.Init.isInitialized());
+        loginOptionsEditor.setEnabled(FBGWT.Init.isInitialized());
         loginButton.setEnabled(FBGWT.Init.isInitialized());
       }
     });
+
+//    sFBLoginOptionsEditorDriver.initialize(loginOptionsEditor);
+//    sFBLoginOptionsEditorDriver.edit(FBLoginOptions.createLoginOptions());
+
+    loginOptionsEditor.setLoginOptions(FBLoginOptions.createLoginOptions());
   }
 
   private void updateConnectionButtons(final boolean isConnected) {
     boolean isInitialized = FBGWT.Init.isInitialized();
     logoutButton.setEnabled(isInitialized && isConnected);
+  }
+
+  @UiHandler ("getSessionButton")
+  public void handleGetSessionButtonClick(final ClickEvent event) {
+    FBSession session = FBGWT.Auth.getSession();
+    sessionDetails.setInnerText(session.getJSONString());
+    UIObject.setVisible(sessionContainer, true);
+    addApiEventMessage("Get Session result", session);
   }
 
   @UiHandler ("checkStatusButton")
@@ -78,22 +105,21 @@ public class AuthenticationWidget extends ShowcaseWidget {
 
       @Override
       public void onSuccess(final FBAuthEventResponse result) {
-        FacebookGWTSamples.get().getShowcase().addApiEventMessage("Retrieve Login Status result", result);
+        statusDetails.setInnerText(result.getJSONString());
+        UIObject.setVisible(statusContainer, true);
+        addApiEventMessage("Retrieve Login Status result", result);
 
         updateConnectionButtons(result.isConnected());
       }
     });
   }
 
-  @UiHandler ("getSessionButton")
-  public void handleGetSessionButtonClick(final ClickEvent event) {
-    FBSession session = FBGWT.Auth.getSession();
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage("Get Session result", session);
-  }
-
   @UiHandler ("loginButton")
   protected void handleLoginButtonClick(final ClickEvent event) {
-    FBLoginOptions loginOptions = FBLoginOptions.createLoginOptions(FBPermission.Email, FBPermission.UserPhotoVideoTags);
+//    FBLoginOptions loginOptions = sFBLoginOptionsEditorDriver.flush();
+    FBLoginOptions loginOptions = loginOptionsEditor.flush();
+
+    Log.info("Login options: " + loginOptions.getJSONString());
 
     FBGWT.Auth.login(new AsyncCallback<FBAuthEventResponse>() {
       @Override

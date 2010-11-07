@@ -1,0 +1,15 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
+  <g:HTMLPanel styleName="FBGWTEditor">
+    <div class="FBGWTHeader">Permissions:</div>
+
+    <div class="FBGWTContent">
+      <g:ListBox ui:field="permissionsListBox" visibleItemCount="1" enabled="false"/>
+
+      <g:ScrollPanel ui:field="permissionWidgets" styleName="FBGWTWidgetContainer" visible="false">
+        <g:FlowPanel ui:field="permissionWidgetsPanel"/>
+      </g:ScrollPanel>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder>
