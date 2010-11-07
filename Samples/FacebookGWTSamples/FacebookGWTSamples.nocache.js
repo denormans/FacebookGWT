@@ -1,5 +1,5 @@
 function FacebookGWTSamples(){
-  var $intern_0 = '', $intern_34 = '" for "gwt:onLoadErrorFn"', $intern_32 = '" for "gwt:onPropertyErrorFn"', $intern_15 = '"><\/script>', $intern_17 = '#', $intern_59 = '.cache.html', $intern_19 = '/', $intern_52 = '22E92444B3E40653F8FC0343F99C7EC5', $intern_53 = '32F0220021739B8134DF7A6C44E5F13A', $intern_54 = '6CF8501D1AF2D924C611C07535157F38', $intern_58 = ':', $intern_26 = '::', $intern_67 = '<script defer="defer">FacebookGWTSamples.onInjectionDone(\'FacebookGWTSamples\')<\/script>', $intern_14 = '<script id="', $intern_29 = '=', $intern_18 = '?', $intern_55 = 'A35348506BA5FF5FB104451F8298975E', $intern_31 = 'Bad handler "', $intern_56 = 'CCD815D407ADBCC31D76F4ED32F9CDFB', $intern_66 = 'DOMContentLoaded', $intern_57 = 'EE54B148F1DDA02547F3469C86C57BEF', $intern_1 = 'FacebookGWTSamples', $intern_12 = 'FacebookGWTSamples.nocache.js', $intern_25 = 'FacebookGWTSamples::', $intern_16 = 'SCRIPT', $intern_13 = '__gwt_marker_FacebookGWTSamples', $intern_20 = 'base', $intern_10 = 'baseUrl', $intern_4 = 'begin', $intern_3 = 'bootstrap', $intern_22 = 'clear.cache.gif', $intern_28 = 'content', $intern_9 = 'end', $intern_46 = 'gecko', $intern_47 = 'gecko1_8', $intern_5 = 'gwt.codesvr=', $intern_6 = 'gwt.hosted=', $intern_7 = 'gwt.hybrid', $intern_60 = 'gwt/standard/standard.css', $intern_33 = 'gwt:onLoadErrorFn', $intern_30 = 'gwt:onPropertyErrorFn', $intern_27 = 'gwt:property', $intern_65 = 'head', $intern_50 = 'hosted.html?FacebookGWTSamples', $intern_64 = 'href', $intern_45 = 'ie6', $intern_44 = 'ie8', $intern_35 = 'iframe', $intern_21 = 'img', $intern_36 = "javascript:''", $intern_61 = 'link', $intern_49 = 'loadExternalRefs', $intern_23 = 'meta', $intern_38 = 'moduleRequested', $intern_8 = 'moduleStartup', $intern_43 = 'msie', $intern_24 = 'name', $intern_40 = 'opera', $intern_37 = 'position:absolute;width:0;height:0;border:none', $intern_62 = 'rel', $intern_42 = 'safari', $intern_11 = 'script', $intern_51 = 'selectingPermutation', $intern_2 = 'startup', $intern_63 = 'stylesheet', $intern_48 = 'unknown', $intern_39 = 'user.agent', $intern_41 = 'webkit';
+  var $intern_0 = '', $intern_34 = '" for "gwt:onLoadErrorFn"', $intern_32 = '" for "gwt:onPropertyErrorFn"', $intern_15 = '"><\/script>', $intern_17 = '#', $intern_59 = '.cache.html', $intern_19 = '/', $intern_52 = '2382591D0656FB06AE837B8EFE68BE37', $intern_53 = '2D56C4F0FA4BD2A80D67EBA7B0C640EF', $intern_54 = '3B48D7074F9A87BB1C69B8BBB2F28CA0', $intern_55 = '652991DACC1AF28B9CC656D55169A6FA', $intern_58 = ':', $intern_26 = '::', $intern_68 = '<script defer="defer">FacebookGWTSamples.onInjectionDone(\'FacebookGWTSamples\')<\/script>', $intern_14 = '<script id="', $intern_29 = '=', $intern_18 = '?', $intern_56 = 'BF9E4B3770523C315148FAF5EE67227A', $intern_31 = 'Bad handler "', $intern_67 = 'DOMContentLoaded', $intern_57 = 'F49172545945F4A0EE61C1EF788C3D43', $intern_1 = 'FacebookGWTSamples', $intern_66 = 'FacebookGWTSamples.css', $intern_12 = 'FacebookGWTSamples.nocache.js', $intern_25 = 'FacebookGWTSamples::', $intern_16 = 'SCRIPT', $intern_13 = '__gwt_marker_FacebookGWTSamples', $intern_20 = 'base', $intern_10 = 'baseUrl', $intern_4 = 'begin', $intern_3 = 'bootstrap', $intern_22 = 'clear.cache.gif', $intern_28 = 'content', $intern_9 = 'end', $intern_46 = 'gecko', $intern_47 = 'gecko1_8', $intern_5 = 'gwt.codesvr=', $intern_6 = 'gwt.hosted=', $intern_7 = 'gwt.hybrid', $intern_60 = 'gwt/standard/standard.css', $intern_33 = 'gwt:onLoadErrorFn', $intern_30 = 'gwt:onPropertyErrorFn', $intern_27 = 'gwt:property', $intern_65 = 'head', $intern_50 = 'hosted.html?FacebookGWTSamples', $intern_64 = 'href', $intern_45 = 'ie6', $intern_44 = 'ie8', $intern_35 = 'iframe', $intern_21 = 'img', $intern_36 = "javascript:''", $intern_61 = 'link', $intern_49 = 'loadExternalRefs', $intern_23 = 'meta', $intern_38 = 'moduleRequested', $intern_8 = 'moduleStartup', $intern_43 = 'msie', $intern_24 = 'name', $intern_40 = 'opera', $intern_37 = 'position:absolute;width:0;height:0;border:none', $intern_62 = 'rel', $intern_42 = 'safari', $intern_11 = 'script', $intern_51 = 'selectingPermutation', $intern_2 = 'startup', $intern_63 = 'stylesheet', $intern_48 = 'unknown', $intern_39 = 'user.agent', $intern_41 = 'webkit';
   var $wnd = window, $doc = document, $stats = $wnd.__gwtStatsEvent?function(a){
     return $wnd.__gwtStatsEvent(a);
   }
@@ -257,11 +257,11 @@ function FacebookGWTSamples(){
   $stats && $stats({moduleName:$intern_1, sessionId:$sessionId, subSystem:$intern_2, evtGroup:$intern_3, millis:(new Date).getTime(), type:$intern_51});
   if (!isHostedMode()) {
     try {
-      unflattenKeylistIntoAnswers([$intern_42], $intern_52);
-      unflattenKeylistIntoAnswers([$intern_47], $intern_53);
-      unflattenKeylistIntoAnswers([$intern_40], $intern_54);
-      unflattenKeylistIntoAnswers([$intern_46], $intern_55);
-      unflattenKeylistIntoAnswers([$intern_45], $intern_56);
+      unflattenKeylistIntoAnswers([$intern_47], $intern_52);
+      unflattenKeylistIntoAnswers([$intern_42], $intern_53);
+      unflattenKeylistIntoAnswers([$intern_45], $intern_54);
+      unflattenKeylistIntoAnswers([$intern_40], $intern_55);
+      unflattenKeylistIntoAnswers([$intern_46], $intern_56);
       unflattenKeylistIntoAnswers([$intern_44], $intern_57);
       strongName = answers[computePropValue($intern_39)];
       var idx = strongName.indexOf($intern_58);
@@ -286,9 +286,16 @@ function FacebookGWTSamples(){
         l.setAttribute($intern_64, base + $intern_60);
         $doc.getElementsByTagName($intern_65)[0].appendChild(l);
       }
+      if (!__gwt_stylesLoaded[$intern_66]) {
+        var l = $doc.createElement($intern_61);
+        __gwt_stylesLoaded[$intern_66] = l;
+        l.setAttribute($intern_62, $intern_63);
+        l.setAttribute($intern_64, base + $intern_66);
+        $doc.getElementsByTagName($intern_65)[0].appendChild(l);
+      }
       maybeStartModule();
       if ($doc.removeEventListener) {
-        $doc.removeEventListener($intern_66, onBodyDone, false);
+        $doc.removeEventListener($intern_67, onBodyDone, false);
       }
       if (onBodyDoneTimerId) {
         clearInterval(onBodyDoneTimerId);
@@ -297,7 +304,7 @@ function FacebookGWTSamples(){
   }
 
   if ($doc.addEventListener) {
-    $doc.addEventListener($intern_66, function(){
+    $doc.addEventListener($intern_67, function(){
       maybeInjectFrame();
       onBodyDone();
     }
@@ -312,7 +319,7 @@ function FacebookGWTSamples(){
   , 50);
   $stats && $stats({moduleName:$intern_1, sessionId:$sessionId, subSystem:$intern_2, evtGroup:$intern_3, millis:(new Date).getTime(), type:$intern_9});
   $stats && $stats({moduleName:$intern_1, sessionId:$sessionId, subSystem:$intern_2, evtGroup:$intern_49, millis:(new Date).getTime(), type:$intern_4});
-  $doc.write($intern_67);
+  $doc.write($intern_68);
 }
 
 FacebookGWTSamples();
