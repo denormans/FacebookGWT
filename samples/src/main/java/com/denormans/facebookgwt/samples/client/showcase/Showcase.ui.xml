@@ -4,6 +4,10 @@
   <g:DockLayoutPanel>
     <g:north size="32">
       <g:HTMLPanel styleName="FBGWTHeader">
+        <div class="FBGWTShowcaseCodeLink">
+          <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/Showcase.java" target="FacebookGWTShowcaseSource">Source</a>
+        </div>
+
         <a href="http://denormans.github.com/FacebookGWT/">FacebookGWT</a> - Showcase
       </g:HTMLPanel>
     </g:north>
@@ -17,13 +21,23 @@
               <g:ScrollPanel>
                 <g:HTMLPanel>
                   <div class="FBGWTSection">
-                    <div class="FBGWTHeader">Initialize</div>
+                    <div class="FBGWTHeader">
+                      <div class="FBGWTShowcaseCodeLink">
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/InitializationWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                      </div>
+                      <span>Initialize</span>
+                    </div>
                     <sc:InitializationWidget ui:field="initWidget" styleName="FBGWTContent"/>
                   </div>
 
 
                   <div class="FBGWTSection">
-                    <div class="FBGWTHeader">Events</div>
+                    <div class="FBGWTHeader">
+                      <div class="FBGWTShowcaseCodeLink">
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/EventsWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                      </div>
+                      <span>Events</span>
+                    </div>
                     <sc:EventsWidget ui:field="eventsWidget" styleName="FBGWTContent"/>
                   </div>
                 </g:HTMLPanel>
@@ -36,7 +50,12 @@
               <g:ScrollPanel>
                 <g:HTMLPanel>
                   <div class="FBGWTSection">
-                    <div class="FBGWTHeader">Authentication</div>
+                    <div class="FBGWTHeader">
+                      <div class="FBGWTShowcaseCodeLink">
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/AuthenticationWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                      </div>
+                      <span>Authentication</span>
+                    </div>
                     <sc:AuthenticationWidget ui:field="authWidget" styleName="FBGWTContent"/>
                   </div>
                 </g:HTMLPanel>
@@ -48,7 +67,12 @@
               <g:ScrollPanel>
                 <g:HTMLPanel>
                   <div class="FBGWTSection">
-                    <div class="FBGWTHeader">Facebook Social Widgets</div>
+                    <div class="FBGWTHeader">
+                      <div class="FBGWTShowcaseCodeLink">
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/FBWidgetsWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                      </div>
+                      <span>Facebook Social Widgets</span>
+                    </div>
                     <sc:FBWidgetsWidget ui:field="fbWidgetsWidget" styleName="FBGWTContent"/>
                   </div>
                 </g:HTMLPanel>

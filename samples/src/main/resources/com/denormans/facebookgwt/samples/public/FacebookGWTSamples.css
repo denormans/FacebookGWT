@@ -54,3 +54,7 @@ body {
 .FBGWTWidget:last-child { border-bottom: none; }
 
 .FBGWTCode { font-family: Monaco, Courier, monospace; }
+
+.FBGWTShowcaseCodeLink { float: right; }
+
+.FBGWTShowcaseCodeLink a { font-size: 10px; font-weight: normal; font-style: italic; margin-right: 10px; }
