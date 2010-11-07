@@ -59,8 +59,10 @@ public class EventsWidget extends Composite {
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         addEventWidget.setEnabled(FBGWT.Init.isInitialized());
 
-        for (final FBEventType eventType : FBEventType.values()) {
-          addEvent(new EventDescriptor(eventType));
+        if (eventsPanel.getWidgetCount() == 0) {
+          for (final FBEventType eventType : FBEventType.values()) {
+            addEvent(new EventDescriptor(eventType));
+          }
         }
       }
     });

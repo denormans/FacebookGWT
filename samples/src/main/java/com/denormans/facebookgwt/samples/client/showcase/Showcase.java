@@ -54,8 +54,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.ScrollPanel;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -81,7 +79,6 @@ public class Showcase extends Composite {
   @UiField FlowPanel eventPanel;
 
   private HandlerRegistration initSuccessHandlerRegistration;
-  private List<HandlerRegistration> eventHandlerRegistrations = new ArrayList<HandlerRegistration>();
 
   public Showcase() {
     DockLayoutPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -129,13 +126,6 @@ public class Showcase extends Composite {
     loginButton.setEnabled(FBGWT.Init.isInitialized());
     parseXFBMLButton.setEnabled(FBGWT.Init.isInitialized());
     streamPublishButton.setEnabled(FBGWT.Init.isInitialized());
-  }
-
-  private void removeEventHandlers() {
-    for (final HandlerRegistration handlerRegistration : eventHandlerRegistrations) {
-      handlerRegistration.removeHandler();
-    }
-    eventHandlerRegistrations.clear();
   }
 
   public void addApiEventMessage(final String title, final FBEvent<?, ?> event) {
