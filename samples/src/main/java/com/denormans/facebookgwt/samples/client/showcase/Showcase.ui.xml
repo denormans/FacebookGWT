@@ -1,6 +1,5 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui.widgets"
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:DockLayoutPanel>
     <g:north size="32">
@@ -46,22 +45,20 @@
             <g:tab>
               <g:header>Widgets</g:header>
 
-              <g:ScrollPanel ui:field="widgets">
+              <g:ScrollPanel>
                 <g:HTMLPanel>
-                  <div>
-                    <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
-                    <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
+                  <div class="FBGWTSection">
+                    <div class="FBGWTHeader">Facebook Social Widgets</div>
+                    <sc:FBWidgetsWidget ui:field="fbWidgetsWidget" styleName="FBGWTContent"/>
                   </div>
-                  <fb:Like ui:field="fbLike" href="http://denormans.github.com/FacebookGWT/Samples"/>
                 </g:HTMLPanel>
-
               </g:ScrollPanel>
             </g:tab>
           </g:TabLayoutPanel>
         </g:center>
         <g:south size="150">
           <g:ScrollPanel ui:field="eventContainer" styleName="FBGWTEventContainer">
-            <g:FlowPanel ui:field="eventPanel"></g:FlowPanel>
+            <g:FlowPanel ui:field="eventPanel"/>
           </g:ScrollPanel>
         </g:south>
       </g:SplitLayoutPanel>
