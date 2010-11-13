@@ -103,13 +103,6 @@ public interface FBEnum {
     }
 
     /**
-     * Get a value from the given map of FB enums by API values.
-     */
-    public static <T extends FBEnum> T valueFromApiValue(final Map<String, ? extends T> fbEnumValuesByApiValue, final String apiValue) {
-      return valueFromApiValue(fbEnumValuesByApiValue, apiValue, null);
-    }
-
-    /**
      * Get a value from the given map of FB enums by API values, using the optional enum creator to create a non-null API value that doesn't have a corresponding enum value.
      */
     public static <T extends FBEnum> T valueFromApiValue(final Map<String, ? extends T> fbEnumValuesByApiValue, final String apiValue, final FBEnumCreator<? extends T> fbEnumCreator) {
@@ -128,13 +121,6 @@ public interface FBEnum {
 
       // Unknown non-null API value
       return fbEnumCreator.create(apiValue);
-    }
-
-    /**
-     * Converts the values from the API values.
-     */
-    public static <T extends FBEnum> List<T> valuesFromApiValues(final Map<String, ? extends T> fbEnumValuesByApiValue, final List<String> apiValues) {
-      return valuesFromApiValues(fbEnumValuesByApiValue, apiValues, null);
     }
 
     /**
