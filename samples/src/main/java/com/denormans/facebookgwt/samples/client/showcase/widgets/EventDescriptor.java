@@ -18,17 +18,17 @@
 
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
-import com.denormans.facebookgwt.api.client.common.events.FBEventType;
+import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 
 public class EventDescriptor {
-  private FBEventType eventType;
+  private FBEventTypes eventType;
   private String message;
 
-  public EventDescriptor(final FBEventType eventType) {
+  public EventDescriptor(final FBEventTypes eventType) {
     this(eventType, null);
   }
 
-  public EventDescriptor(final FBEventType eventType, final String message) {
+  public EventDescriptor(final FBEventTypes eventType, final String message) {
     this.eventType = eventType;
 
     if (message != null && message.length() > 0) {
@@ -38,7 +38,7 @@ public class EventDescriptor {
     }
   }
 
-  public FBEventType getEventType() {
+  public FBEventTypes getEventType() {
     return eventType;
   }
 

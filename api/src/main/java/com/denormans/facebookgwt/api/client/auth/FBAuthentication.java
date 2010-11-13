@@ -24,7 +24,6 @@ import com.denormans.facebookgwt.api.client.auth.events.FBLogoutEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.common.events.FBEventType;
 import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBLogoutHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeEvent;
@@ -33,6 +32,7 @@ import com.denormans.facebookgwt.api.client.auth.events.HasFBAuthHandlers;
 import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
+import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -101,7 +101,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
   }-*/;
 
   @Override
-  protected void handleFBEvent(final FBEventType eventType, final FBEventResponse apiResponse) {
+  protected void handleFBEvent(final FBEventTypes eventType, final FBEventResponse apiResponse) {
     switch (eventType) {
       case AuthLogin:
         fireLogin(apiResponse.<FBAuthEventResponse>cast());
@@ -142,22 +142,22 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
 
   @Override
   public HandlerRegistration addFBLoginHandler(final FBLoginHandler handler) {
-    return addFBEventHandler(handler, FBLoginEvent.getType(), FBEventType.AuthLogin);
+    return addFBEventHandler(handler, FBLoginEvent.getType(), FBEventTypes.AuthLogin);
   }
 
   @Override
   public HandlerRegistration addFBLogoutHandler(final FBLogoutHandler handler) {
-    return addFBEventHandler(handler, FBLogoutEvent.getType(), FBEventType.AuthLogout);
+    return addFBEventHandler(handler, FBLogoutEvent.getType(), FBEventTypes.AuthLogout);
   }
 
   @Override
   public HandlerRegistration addFBSessionChangeHandler(final FBSessionChangeHandler handler) {
-    return addFBEventHandler(handler, FBSessionChangeEvent.getType(), FBEventType.AuthSessionChange);
+    return addFBEventHandler(handler, FBSessionChangeEvent.getType(), FBEventTypes.AuthSessionChange);
   }
 
   @Override
   public HandlerRegistration addFBStatusChangeHandler(final FBStatusChangeHandler handler) {
-    return addFBEventHandler(handler, FBStatusChangeEvent.getType(), FBEventType.AuthStatusChange);
+    return addFBEventHandler(handler, FBStatusChangeEvent.getType(), FBEventTypes.AuthStatusChange);
   }
 
 }

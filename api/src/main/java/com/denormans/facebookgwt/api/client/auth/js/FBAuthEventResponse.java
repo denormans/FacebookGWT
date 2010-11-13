@@ -19,8 +19,8 @@
 package com.denormans.facebookgwt.api.client.auth.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
-import com.denormans.facebookgwt.api.shared.auth.FBPermission;
-import com.denormans.facebookgwt.api.shared.auth.FBUserStatus;
+import com.denormans.facebookgwt.api.shared.auth.*;
+import com.denormans.facebookgwt.api.shared.auth.FBPermissions;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class FBAuthEventResponse extends FBEventResponse {
   }
 
   public final FBUserStatus getStatus() {
-    return FBUserStatus.valueFromApiValue(getApiStatus());
+    return FBUserStatuses.valueFromApiValue(getApiStatus());
   }
 
   public final native String getApiStatus() /*-{
@@ -41,7 +41,7 @@ public class FBAuthEventResponse extends FBEventResponse {
   }-*/;
 
   public final boolean isConnected() {
-    return hasSession() && getStatus() == FBUserStatus.Connected;
+    return hasSession() && getStatus() == FBUserStatuses.Connected;
   }
 
   public final native FBSession getSession() /*-{
@@ -49,11 +49,7 @@ public class FBAuthEventResponse extends FBEventResponse {
   }-*/;
 
   public final List<FBPermission> getPermissions() {
-    return FBPermission.valuesFromApiValues(getApiPermissions());
-  }
-
-  public final List<String> getApiPermissions() {
-    return FBPermission.parseApiValues(getPermissionsJS());
+    return FBPermissions.parseApiValues(getPermissionsJS());
   }
 
   private native String getPermissionsJS() /*-{

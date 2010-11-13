@@ -18,40 +18,7 @@
 
 package com.denormans.facebookgwt.api.shared.auth;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-public enum FBUserStatus {
-  Connected("connected"),
-  NotConnected("notConnected"),
-  Unknown("unknown");
-
-  private static final Map<String, FBUserStatus> sStatusByApiValue = createStatusByApiValueMap();
-
-  private static Map<String, FBUserStatus> createStatusByApiValueMap() {
-    HashMap<String, FBUserStatus> statuses = new HashMap<String, FBUserStatus>();
-
-    for (final FBUserStatus status : values()) {
-      statuses.put(status.getApiValue(), status);
-    }
-
-    return statuses;
-  }
-
-  private String apiValue;
-
-  FBUserStatus(final String apiValue) {
-    this.apiValue = apiValue;
-  }
-
-  public String getApiValue() {
-    return apiValue;
-  }
-
-  public static FBUserStatus valueFromApiValue(final String apiValue) {
-    if (apiValue == null) {
-      return null;
-    }
-    return sStatusByApiValue.get(apiValue);
-  }
+public interface FBUserStatus extends FBEnum {
 }

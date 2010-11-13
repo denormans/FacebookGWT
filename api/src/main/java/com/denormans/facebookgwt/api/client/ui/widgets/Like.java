@@ -18,7 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.ui.widgets;
 
-import com.denormans.facebookgwt.api.shared.FBEnum;
+import com.denormans.facebookgwt.api.shared.ui.widgets.LikeAction;
+import com.denormans.facebookgwt.api.shared.ui.widgets.ColorScheme;
+import com.denormans.facebookgwt.api.shared.ui.widgets.LikeLayout;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -26,8 +28,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 
 public class Like extends Widget {
-  private Layout layout;
-  private Action action;
+  private LikeLayout layout;
+  private LikeAction action;
   private ColorScheme colorScheme;
 
   public Like() {
@@ -49,11 +51,11 @@ public class Like extends Widget {
     getElement().setAttribute("href", href);
   }
 
-  public Layout getLayout() {
+  public LikeLayout getLayout() {
     return layout;
   }
 
-  public void setLayout(final Layout layout) {
+  public void setLayout(final LikeLayout layout) {
     this.layout = layout;
     getElement().setAttribute("layout", layout.getApiValue());
   }
@@ -75,11 +77,11 @@ public class Like extends Widget {
     getElement().setAttribute("width", Integer.toString(width));
   }
 
-  public Action getAction() {
+  public LikeAction getAction() {
     return action;
   }
 
-  public void setAction(final Action action) {
+  public void setAction(final LikeAction action) {
     this.action = action;
     getElement().setAttribute("action", action.getApiValue());
   }
@@ -109,49 +111,4 @@ public class Like extends Widget {
     getElement().setAttribute("ref", ref);
   }
 
-  public enum Layout implements FBEnum {
-    Standard("standard"),
-    ButtonCount("button_count"),
-    BoxCount("box_count");
-
-    private String apiValue;
-
-    Layout(final String apiValue) {
-      this.apiValue = apiValue;
-    }
-
-    public String getApiValue() {
-      return apiValue;
-    }
-  }
-
-  public enum Action implements FBEnum {
-    Like("like"),
-    Recommend("recommend");
-
-    private String apiValue;
-
-    Action(final String apiValue) {
-      this.apiValue = apiValue;
-    }
-
-    public String getApiValue() {
-      return apiValue;
-    }
-  }
-
-  public enum ColorScheme implements FBEnum {
-    Light("light"),
-    Dark("dark");
-
-    private String apiValue;
-
-    ColorScheme(final String apiValue) {
-      this.apiValue = apiValue;
-    }
-
-    public String getApiValue() {
-      return apiValue;
-    }
-  }
 }

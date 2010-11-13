@@ -19,6 +19,7 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
+import com.denormans.facebookgwt.api.shared.auth.FBPermissions;
 import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
 import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
 
@@ -59,9 +60,9 @@ public class FBPermissionListEditor extends Composite implements LeafValueEditor
     initWidget(rootElement);
 
     permissionsListBox.addItem("Select a permission to add...", "");
-    for (final FBPermission permission : FBPermission.values()) {
+    for (final FBPermissions permission : FBPermissions.values()) {
       if (permission.isRequestable()) {
-        permissionsListBox.addItem(permission.name());
+        permissionsListBox.addItem(permission.name(), permission.getApiValue());
       }
     }
     permissionsListBox.setSelectedIndex(0);
@@ -179,9 +180,9 @@ public class FBPermissionListEditor extends Composite implements LeafValueEditor
 
   private FBPermission getSelectedPermission() {
     FBPermission fbPermission = null;
-    String permissionName = permissionsListBox.getValue(permissionsListBox.getSelectedIndex());
-    if (permissionName.length() > 0) {
-      fbPermission = FBPermission.valueOf(permissionName);
+    String permissionApiValue = permissionsListBox.getValue(permissionsListBox.getSelectedIndex());
+    if (permissionApiValue.length() > 0) {
+      fbPermission = FBPermissions.valueFromApiValue(permissionApiValue);
     }
     return fbPermission;
   }

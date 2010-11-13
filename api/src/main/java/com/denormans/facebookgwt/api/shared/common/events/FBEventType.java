@@ -16,19 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.common.events;
+package com.denormans.facebookgwt.api.shared.common.events;
 
-import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
-
-public interface HasFBLogHandler extends HasHandlers {
-  /**
-   * Adds a {@link FBLogEvent} handler.
-   *
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addFBLogHandler(FBLogHandler handler);
+public interface FBEventType extends FBEnum {
 }

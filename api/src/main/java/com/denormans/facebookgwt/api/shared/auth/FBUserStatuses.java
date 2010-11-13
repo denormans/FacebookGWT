@@ -20,6 +20,26 @@ package com.denormans.facebookgwt.api.shared.auth;
 
 import com.denormans.facebookgwt.api.shared.FBEnum;
 
-public interface FBPermission extends FBEnum {
-  boolean isRequestable();
+import java.util.Map;
+
+public enum FBUserStatuses implements FBUserStatus {
+  Connected("connected"),
+  NotConnected("notConnected"),
+  Unknown("unknown");
+
+  private static final Map<String, FBUserStatuses> sStatusByApiValue = FBEnum.Util.createFBEnumByApiValueMap(FBUserStatuses.class);
+
+  private String apiValue;
+
+  FBUserStatuses(final String apiValue) {
+    this.apiValue = apiValue;
+  }
+
+  public String getApiValue() {
+    return apiValue;
+  }
+
+  public static FBUserStatus valueFromApiValue(final String apiValue) {
+    return FBEnum.Util.valueFromApiValue(sStatusByApiValue, apiValue);
+  }
 }

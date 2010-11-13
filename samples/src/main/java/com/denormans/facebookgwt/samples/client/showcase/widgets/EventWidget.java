@@ -28,7 +28,7 @@ import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
-import com.denormans.facebookgwt.api.client.common.events.FBLogHandler;
+import com.denormans.facebookgwt.api.client.core.events.FBLogHandler;
 import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
@@ -151,7 +151,7 @@ public class EventWidget extends ShowcaseWidget implements TakesValue<EventDescr
         case Log:
           eventHandlerRegistration = FBGWT.Core.addFBLogHandler(new FBLogHandler() {
             @Override
-            public void onFBStub(final FBLogEvent event) {
+            public void onFBLog(final FBLogEvent event) {
               handleEvent(event, eventDescriptor);
             }
           });

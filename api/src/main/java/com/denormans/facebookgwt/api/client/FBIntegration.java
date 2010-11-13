@@ -19,9 +19,10 @@
 package com.denormans.facebookgwt.api.client;
 
 import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
-import com.denormans.facebookgwt.api.client.common.events.FBEventType;
+import com.denormans.facebookgwt.api.shared.common.events.FBEventType;
 import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.common.js.FBSimpleEventResponse;
+import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 import com.denormans.gwtutil.client.js.JSFunction;
 
 import com.google.gwt.event.shared.EventBus;
@@ -107,17 +108,25 @@ public abstract class FBIntegration implements HasHandlers {
   }
 
   private void handleFBEvent(final String eventName, final FBEventResponse apiResponse) {
-    FBEventType eventType = FBEventType.valueFromApiValue(eventName);
+    FBEventType eventType = FBEventTypes.valueFromApiValue(eventName);
     if (eventType == null) {
       Log.warning("Unknown event: " + eventName);
       return;
     }
 
-    handleFBEvent(eventType, apiResponse);
+    if (eventType instanceof FBEventTypes) {
+      handleFBEvent((FBEventTypes)eventType, apiResponse);
+    } else {
+      handleFBEvent(eventType, apiResponse);
+    }
   }
 
   protected void handleFBEvent(final FBEventType eventType, final FBEventResponse apiResponse) {
-    Log.warning("Unknown event " + eventType + " with response: " + apiResponse.getJSONString());
+    Log.warning("Unhandled event " + eventType + " with response: " + apiResponse.getJSONString());
+  }
+
+  protected void handleFBEvent(final FBEventTypes eventType, final FBEventResponse apiResponse) {
+    Log.warning("Unhandled event " + eventType + " with response: " + apiResponse.getJSONString());
   }
 
   protected <H extends FBEventHandler> HandlerRegistration addFBEventHandler(final H handler, final GwtEvent.Type<H> eventType, final FBEventType fbEventType) {

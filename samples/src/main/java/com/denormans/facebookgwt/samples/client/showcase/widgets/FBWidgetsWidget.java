@@ -23,10 +23,10 @@ import com.denormans.facebookgwt.api.client.common.js.Attachment;
 import com.denormans.facebookgwt.api.client.common.js.Link;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
+import com.denormans.facebookgwt.api.shared.ui.DisplayFormats;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 
 import com.google.gwt.core.client.GWT;
@@ -79,7 +79,7 @@ public class FBWidgetsWidget extends ShowcaseWidget {
 
     Log.info("Stream publish options: " + streamPublishOptions.getJSONString());
 
-    FBGWT.UI.publishToStream(streamPublishOptions, FBUserInterface.DisplayFormat.Dialog, new AsyncCallback<StreamPublishCallbackResponse>() {
+    FBGWT.UI.publishToStream(streamPublishOptions, DisplayFormats.Dialog, new AsyncCallback<StreamPublishCallbackResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         FacebookGWTSamples.get().handleError("Error publishing to stream", caught);

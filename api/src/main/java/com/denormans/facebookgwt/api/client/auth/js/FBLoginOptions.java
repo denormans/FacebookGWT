@@ -20,7 +20,8 @@ package com.denormans.facebookgwt.api.client.auth.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBOptions;
 import com.denormans.facebookgwt.api.shared.FBEnum;
-import com.denormans.facebookgwt.api.shared.auth.FBPermission;
+import com.denormans.facebookgwt.api.shared.auth.*;
+import com.denormans.facebookgwt.api.shared.auth.FBPermissions;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,11 +44,7 @@ public class FBLoginOptions extends FBOptions {
   }
 
   public final List<FBPermission> getPermissions() {
-    return FBPermission.valuesFromApiValues(getApiPermissions());
-  }
-
-  public final List<String> getApiPermissions() {
-    return FBPermission.parseApiValues(getPermissionsJS());
+    return FBPermissions.parseApiValues(getPermissionsJS());
   }
 
   private native String getPermissionsJS() /*-{
@@ -64,15 +61,8 @@ public class FBLoginOptions extends FBOptions {
     return this;
   }
 
-  public final FBLoginOptions setApiPermissions(final String... permissions) {
-    setApiPermissions(Arrays.asList(permissions));
-    return this;
-  }
-
-  public final FBLoginOptions setApiPermissions(final Collection<String> permissions) {
-    String permissionsText = FBEnum.Util.joinApiValues(permissions);
-    setPermissionsJS(permissionsText);
-    return this;
+  private void setApiPermissions(final Collection<String> permissions) {
+    setPermissionsJS(FBEnum.Util.joinApiValues(permissions));
   }
 
   private native void setPermissionsJS(final String permissions) /*-{

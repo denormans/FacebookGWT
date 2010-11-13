@@ -19,8 +19,7 @@
 package com.denormans.facebookgwt.api.client.ui;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
-import com.denormans.facebookgwt.api.client.common.events.FBEventType;
-import com.denormans.facebookgwt.api.client.common.js.Attachment;
+import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
 import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
@@ -30,12 +29,12 @@ import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
 import com.denormans.facebookgwt.api.client.ui.js.FBAddCommentEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
-import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBUIActionOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.js.XFBMLRenderEventResponse;
-import com.denormans.facebookgwt.api.shared.FBEnum;
+import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
+import com.denormans.facebookgwt.api.shared.ui.DisplayFormat;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -81,7 +80,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
     try {
       actionOptions.method = method;
       if (displayFormat != null) {
-        actionOptions.display = displayFormat.@com.denormans.facebookgwt.api.client.ui.FBUserInterface.DisplayFormat::getApiValue()();
+        actionOptions.display = displayFormat.@com.denormans.facebookgwt.api.shared.ui.DisplayFormats::getApiValue()();
       }
 
       var cb;
@@ -103,7 +102,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
   }-*/;
 
   @Override
-  protected void handleFBEvent(final FBEventType eventType, final FBEventResponse apiResponse) {
+  protected void handleFBEvent(final FBEventTypes eventType, final FBEventResponse apiResponse) {
     switch (eventType) {
       case CommentsAdd:
         FBAddCommentEvent.fire(this, apiResponse.<FBAddCommentEventResponse>cast());
@@ -124,32 +123,17 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
 
   @Override
   public HandlerRegistration addFBAddCommentHandler(final FBAddCommentHandler handler) {
-    return addFBEventHandler(handler, FBAddCommentEvent.getType(), FBEventType.CommentsAdd);
+    return addFBEventHandler(handler, FBAddCommentEvent.getType(), FBEventTypes.CommentsAdd);
   }
 
   @Override
   public HandlerRegistration addFBEdgeCreateHandler(final FBEdgeCreateHandler handler) {
-    return addFBEventHandler(handler, FBEdgeCreateEvent.getType(), FBEventType.EdgeCreate);
+    return addFBEventHandler(handler, FBEdgeCreateEvent.getType(), FBEventTypes.EdgeCreate);
   }
 
   @Override
   public HandlerRegistration addXFBMLRenderHandler(final XFBMLRenderHandler handler) {
-    return addFBEventHandler(handler, XFBMLRenderEvent.getType(), FBEventType.XFBMLRender);
+    return addFBEventHandler(handler, XFBMLRenderEvent.getType(), FBEventTypes.XFBMLRender);
   }
 
-  public enum DisplayFormat implements FBEnum {
-    Popup("popup"),
-    Dialog("dialog"),
-    Hidden("hidden");
-
-    private String apiValue;
-
-    DisplayFormat(final String apiValue) {
-      this.apiValue = apiValue;
-    }
-
-    public String getApiValue() {
-      return apiValue;
-    }
-  }
 }

@@ -16,47 +16,19 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.common.events;
+package com.denormans.facebookgwt.api.shared.ui.widgets;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public enum FBEventType {
-  AuthLogin("auth.login"),
-  AuthLogout("auth.logout"),
-  AuthSessionChange("auth.sessionChange"),
-  AuthStatusChange("auth.statusChange"),
-  XFBMLRender("xfbml.render"),
-  EdgeCreate("edge.create"),
-  CommentsAdd("comments.add"),
-  Log("fb.log");
-
-  private static final Map<String, FBEventType> sEventByApiValue = createEventByApiValueMap();
-
-  private static Map<String, FBEventType> createEventByApiValueMap() {
-    HashMap<String, FBEventType> events = new HashMap<String, FBEventType>();
-
-    for (final FBEventType eventType : values()) {
-      events.put(eventType.getApiValue(), eventType);
-    }
-
-    return events;
-  }
+public enum LikeActions implements LikeAction {
+  Like("like"),
+  Recommend("recommend");
 
   private String apiValue;
 
-  FBEventType(final String apiValue) {
+  private LikeActions(final String apiValue) {
     this.apiValue = apiValue;
   }
 
   public String getApiValue() {
     return apiValue;
-  }
-
-  public static FBEventType valueFromApiValue(final String apiValue) {
-    if (apiValue == null) {
-      return null;
-    }
-    return sEventByApiValue.get(apiValue);
   }
 }

@@ -56,7 +56,7 @@ public class PermissionWidget extends Composite implements TakesValue<FBPermissi
   public void setValue(final FBPermission permission) {
     this.permission = permission;
 
-    permissionSpan.setInnerText(permission.name());
+    permissionSpan.setInnerText(permission.getApiValue());
     removePermissionButton.setEnabled(true);
   }
 

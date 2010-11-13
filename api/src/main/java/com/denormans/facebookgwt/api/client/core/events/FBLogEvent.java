@@ -18,10 +18,8 @@
 
 package com.denormans.facebookgwt.api.client.core.events;
 
-import com.denormans.facebookgwt.api.client.common.events.FBLogHandler;
 import com.denormans.facebookgwt.api.client.core.js.FBLogEventResponse;
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
-import com.denormans.facebookgwt.api.client.common.events.HasFBLogHandler;
 
 public class FBLogEvent extends FBEvent<FBLogHandler, FBLogEventResponse> {
   private static Type<FBLogHandler> sType;
@@ -64,6 +62,6 @@ public class FBLogEvent extends FBEvent<FBLogHandler, FBLogEventResponse> {
 
   @Override
   protected void dispatch(final FBLogHandler handler) {
-    handler.onFBStub(this);
+    handler.onFBLog(this);
   }
 }

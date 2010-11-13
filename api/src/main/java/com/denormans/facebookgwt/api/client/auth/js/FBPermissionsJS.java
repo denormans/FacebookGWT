@@ -20,14 +20,15 @@ package com.denormans.facebookgwt.api.client.auth.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
+import com.denormans.facebookgwt.api.shared.auth.FBPermissions;
 
 import com.google.gwt.core.client.JsArrayString;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FBPermissions extends FBJSObject {
-  protected FBPermissions() {
+public class FBPermissionsJS extends FBJSObject {
+  protected FBPermissionsJS() {
   }
 
   public final List<FBPermission> getAllPermissions() {
@@ -38,20 +39,8 @@ public class FBPermissions extends FBJSObject {
     return allPermissions;
   }
 
-  public final List<String> getAllApiPermissions() {
-    List<String> allPermissions = new ArrayList<String>();
-    allPermissions.addAll(getExtendedApiPermissions());
-    allPermissions.addAll(getUserApiPermissions());
-    allPermissions.addAll(getFriendApiPermissions());
-    return allPermissions;
-  }
-
   public final List<FBPermission> getExtendedPermissions() {
-    return FBPermission.valuesFromApiValues(getExtendedApiPermissions());
-  }
-
-  public final List<String> getExtendedApiPermissions() {
-    return convertJsArrayStringToList(getExtendedApiPermissionsJS());
+    return FBPermissions.valuesFromApiValues(convertJsArrayStringToList(getExtendedApiPermissionsJS()));
   }
 
   private native JsArrayString getExtendedApiPermissionsJS() /*-{
@@ -59,11 +48,7 @@ public class FBPermissions extends FBJSObject {
   }-*/;
 
   public final List<FBPermission> getUserPermissions() {
-    return FBPermission.valuesFromApiValues(getUserApiPermissions());
-  }
-
-  public final List<String> getUserApiPermissions() {
-    return convertJsArrayStringToList(getUserApiPermissionsJS());
+    return FBPermissions.valuesFromApiValues(convertJsArrayStringToList(getUserApiPermissionsJS()));
   }
 
   private native JsArrayString getUserApiPermissionsJS() /*-{
@@ -71,11 +56,7 @@ public class FBPermissions extends FBJSObject {
   }-*/;
 
   public final List<FBPermission> getFriendPermissions() {
-    return FBPermission.valuesFromApiValues(getFriendApiPermissions());
-  }
-
-  public final List<String> getFriendApiPermissions() {
-    return convertJsArrayStringToList(getFriendApiPermissionsJS());
+    return FBPermissions.valuesFromApiValues(convertJsArrayStringToList(getFriendApiPermissionsJS()));
   }
 
   private native JsArrayString getFriendApiPermissionsJS() /*-{

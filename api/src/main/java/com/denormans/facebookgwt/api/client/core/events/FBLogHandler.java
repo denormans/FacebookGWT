@@ -16,10 +16,16 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared.auth;
+package com.denormans.facebookgwt.api.client.core.events;
 
-import com.denormans.facebookgwt.api.shared.FBEnum;
+import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
+import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
 
-public interface FBPermission extends FBEnum {
-  boolean isRequestable();
+public interface FBLogHandler extends FBEventHandler {
+  /**
+   * Called when {@link FBLogEvent} is fired.
+   *
+   * @param event the {@link FBLogEvent} that was fired
+   */
+  void onFBLog(FBLogEvent event);
 }

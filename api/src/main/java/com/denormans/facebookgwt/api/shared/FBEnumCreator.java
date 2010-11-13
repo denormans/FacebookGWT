@@ -16,10 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared.auth;
+package com.denormans.facebookgwt.api.shared;
 
-import com.denormans.facebookgwt.api.shared.FBEnum;
-
-public interface FBPermission extends FBEnum {
-  boolean isRequestable();
+public interface FBEnumCreator<T extends FBEnum> {
+  /**
+   * Creates a generic FB enum based on the api value.
+   */
+  T create(final String apiValue);
 }

@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
-import com.denormans.facebookgwt.api.client.common.events.FBEventType;
+import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 import com.denormans.gwtutil.shared.events.HasValueAddHandlers;
 import com.denormans.gwtutil.shared.events.ValueAddEvent;
 import com.denormans.gwtutil.shared.events.ValueAddHandler;
@@ -28,9 +28,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.text.shared.AbstractRenderer;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -58,7 +56,7 @@ public class AddEventWidget extends Composite implements HasValueAddHandlers<Eve
     initWidget(rootElement);
 
     eventTypesListBox.addItem("Please select a type...", "");
-    for (final FBEventType eventType : FBEventType.values()) {
+    for (final FBEventTypes eventType : FBEventTypes.values()) {
       eventTypesListBox.addItem(eventType.name());
     }
     eventTypesListBox.setSelectedIndex(0);
@@ -78,7 +76,7 @@ public class AddEventWidget extends Composite implements HasValueAddHandlers<Eve
 
   @UiHandler ("addEventHandlerButton")
   public void handleAddEventHandlerClick(final ClickEvent event) {
-    FBEventType fbEventType = getSelectedEventType();
+    FBEventTypes fbEventType = getSelectedEventType();
     if (fbEventType == null) {
       eventTypesError .setText("Please choose an event type.");
       eventTypesError.setVisible(true);
@@ -91,11 +89,11 @@ public class AddEventWidget extends Composite implements HasValueAddHandlers<Eve
     eventMessageTextBox.setText("");
   }
 
-  private FBEventType getSelectedEventType() {
-    FBEventType fbEventType = null;
+  private FBEventTypes getSelectedEventType() {
+    FBEventTypes fbEventType = null;
     String eventTypeName = eventTypesListBox.getValue(eventTypesListBox.getSelectedIndex());
     if (eventTypeName.length() > 0) {
-      fbEventType = FBEventType.valueOf(eventTypeName);
+      fbEventType = FBEventTypes.valueOf(eventTypeName);
     }
     return fbEventType;
   }

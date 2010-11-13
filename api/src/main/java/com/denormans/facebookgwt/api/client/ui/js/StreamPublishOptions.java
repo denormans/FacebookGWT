@@ -60,12 +60,13 @@ public class StreamPublishOptions extends FBUIActionOptions {
     return convertJsArrayToList(getActionLinksJS());
   }
 
-  public final native JsArray<Link> getActionLinksJS() /*-{
+  private native JsArray<Link> getActionLinksJS() /*-{
     return this.action_links;
   }-*/;
 
   public final StreamPublishOptions setActionLinks(final Link... actionLinks) {
-    return setActionLinksJS(convertListToJsArray(Arrays.asList(actionLinks)));
+    setActionLinksJS(convertListToJsArray(Arrays.asList(actionLinks)));
+    return this;
   }
 
   public final StreamPublishOptions setActionLinks(final List<Link> actionLinks) {
@@ -73,9 +74,8 @@ public class StreamPublishOptions extends FBUIActionOptions {
     return this;
   }
 
-  public final native StreamPublishOptions setActionLinksJS(final JsArray<Link> actionLinks) /*-{
+  private native void setActionLinksJS(final JsArray<Link> actionLinks) /*-{
     this.action_links = actionLinks;
-    return this;
   }-*/;
 
   public final native String getUserMessagePrompt() /*-{

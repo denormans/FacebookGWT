@@ -16,10 +16,20 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared.auth;
+package com.denormans.facebookgwt.api.shared.ui;
 
-import com.denormans.facebookgwt.api.shared.FBEnum;
+public enum DisplayFormats implements DisplayFormat {
+  Popup("popup"),
+  Dialog("dialog"),
+  Hidden("hidden");
 
-public interface FBPermission extends FBEnum {
-  boolean isRequestable();
+  private String apiValue;
+
+  private DisplayFormats(final String apiValue) {
+    this.apiValue = apiValue;
+  }
+
+  public String getApiValue() {
+    return apiValue;
+  }
 }

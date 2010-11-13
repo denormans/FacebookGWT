@@ -19,9 +19,9 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.common.events.FBEventType;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 import com.denormans.gwtutil.shared.events.ValueAddEvent;
 import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
 import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
@@ -55,7 +55,7 @@ public class EventsWidget extends Composite {
         addEventWidget.setEnabled(FBGWT.Init.isInitialized());
 
         if (eventWidgetsPanel.getWidgetCount() == 0) {
-          for (final FBEventType eventType : FBEventType.values()) {
+          for (final FBEventTypes eventType : FBEventTypes.values()) {
             addEvent(new EventDescriptor(eventType));
           }
         }

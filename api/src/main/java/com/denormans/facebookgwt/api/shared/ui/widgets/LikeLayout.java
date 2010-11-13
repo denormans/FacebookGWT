@@ -16,10 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared.auth;
+package com.denormans.facebookgwt.api.shared.ui.widgets;
 
 import com.denormans.facebookgwt.api.shared.FBEnum;
 
-public interface FBPermission extends FBEnum {
-  boolean isRequestable();
+public interface LikeLayout extends FBEnum {
 }

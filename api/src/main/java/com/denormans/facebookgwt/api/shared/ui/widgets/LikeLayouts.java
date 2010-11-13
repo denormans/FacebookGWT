@@ -16,10 +16,20 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared.auth;
+package com.denormans.facebookgwt.api.shared.ui.widgets;
 
-import com.denormans.facebookgwt.api.shared.FBEnum;
+public enum LikeLayouts implements LikeLayout {
+  Standard("standard"),
+  ButtonCount("button_count"),
+  BoxCount("box_count");
 
-public interface FBPermission extends FBEnum {
-  boolean isRequestable();
+  private String apiValue;
+
+  private LikeLayouts(final String apiValue) {
+    this.apiValue = apiValue;
+  }
+
+  public String getApiValue() {
+    return apiValue;
+  }
 }

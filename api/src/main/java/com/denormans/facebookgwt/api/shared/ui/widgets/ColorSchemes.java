@@ -16,10 +16,19 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared.auth;
+package com.denormans.facebookgwt.api.shared.ui.widgets;
 
-import com.denormans.facebookgwt.api.shared.FBEnum;
+public enum ColorSchemes implements ColorScheme {
+  Light("light"),
+  Dark("dark");
 
-public interface FBPermission extends FBEnum {
-  boolean isRequestable();
+  private String apiValue;
+
+  private ColorSchemes(final String apiValue) {
+    this.apiValue = apiValue;
+  }
+
+  public String getApiValue() {
+    return apiValue;
+  }
 }

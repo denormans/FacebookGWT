@@ -19,14 +19,20 @@
 package com.denormans.facebookgwt.api.shared;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface FBEnum {
   public String getApiValue();
 
   public static class Util {
-
+    /**
+     * Returns a list of API values from the given collection of enum values.
+     */
     public static List<String> toApiValues(final Collection<? extends FBEnum> enumValues) {
       if (enumValues == null) {
         return null;
@@ -38,7 +44,31 @@ public interface FBEnum {
       return apiValues;
     }
 
-    public static String joinApiValues(final Collection<String> apiValues) {
+    /**
+     * Splits the given comma-separated string into a list of strings.
+     */
+    public static List<String> splitApiValues(final String apiValues) {
+      return splitApiValues(apiValues, ",");
+    }
+
+    /**
+     * Splits the given string into a list of strings with the given token.
+     */
+    public static List<String> splitApiValues(final String apiValues, final String token) {
+      return Arrays.asList(apiValues.split(token));
+    }
+
+    /**
+     * Join the given API values with a comma (,).
+     */
+    public static String joinApiValues(final Iterable<String> apiValues) {
+      return joinApiValues(apiValues, ",");
+    }
+
+    /**
+     * Join the given API values with the given token.
+     */
+    public static String joinApiValues(final Iterable<String> apiValues, final String token) {
       if (apiValues == null) {
         return "";
       }
@@ -47,7 +77,7 @@ public interface FBEnum {
       boolean isFirst = true;
       for (final String apiValue : apiValues) {
         if (!isFirst) {
-          builder.append(",");
+          builder.append(token);
         } else {
           isFirst = false;
         }
@@ -56,5 +86,72 @@ public interface FBEnum {
 
       return builder.toString();
     }
+
+    /**
+     * Create a map of API values to FB enums.
+     */
+    @SuppressWarnings ( { "unchecked" })
+    public static <T extends Enum & FBEnum> Map<String, T> createFBEnumByApiValueMap(final Class<T> fbEnumClass) {
+      HashMap<String, T> fbEnumValues = new HashMap<String, T>();
+
+      for (final Object e : EnumSet.allOf(fbEnumClass)) {
+        T fbEnum = (T)e;
+        fbEnumValues.put(fbEnum.getApiValue(), fbEnum);
+      }
+
+      return fbEnumValues;
+    }
+
+    /**
+     * Get a value from the given map of FB enums by API values.
+     */
+    public static <T extends FBEnum> T valueFromApiValue(final Map<String, ? extends T> fbEnumValuesByApiValue, final String apiValue) {
+      return valueFromApiValue(fbEnumValuesByApiValue, apiValue, null);
+    }
+
+    /**
+     * Get a value from the given map of FB enums by API values, using the optional enum creator to create a non-null API value that doesn't have a corresponding enum value.
+     */
+    public static <T extends FBEnum> T valueFromApiValue(final Map<String, ? extends T> fbEnumValuesByApiValue, final String apiValue, final FBEnumCreator<? extends T> fbEnumCreator) {
+      if (apiValue == null) {
+        return null;
+      }
+
+      T fbEnum = fbEnumValuesByApiValue.get(apiValue);
+      if (fbEnum != null) {
+        return fbEnum;
+      }
+
+      if (fbEnumCreator == null) {
+        return null;
+      }
+
+      // Unknown non-null API value
+      return fbEnumCreator.create(apiValue);
+    }
+
+    /**
+     * Converts the values from the API values.
+     */
+    public static <T extends FBEnum> List<T> valuesFromApiValues(final Map<String, ? extends T> fbEnumValuesByApiValue, final List<String> apiValues) {
+      return valuesFromApiValues(fbEnumValuesByApiValue, apiValues, null);
+    }
+
+    /**
+     * Converts the values from the API values, using the optional enum creator to create any non-null API values that don't have corresponding enum values.
+     */
+    public static <T extends FBEnum> List<T> valuesFromApiValues(final Map<String, ? extends T> fbEnumValuesByApiValue, final List<String> apiValues, final FBEnumCreator<? extends T> fbEnumCreator) {
+      List<T> permissions = new ArrayList<T>(apiValues.size());
+
+      for (final String apiValue : apiValues) {
+        T fbEnum = valueFromApiValue(fbEnumValuesByApiValue, apiValue, fbEnumCreator);
+        if (fbEnum != null) {
+          permissions.add(fbEnum);
+        }
+      }
+
+      return permissions;
+    }
   }
+
 }
