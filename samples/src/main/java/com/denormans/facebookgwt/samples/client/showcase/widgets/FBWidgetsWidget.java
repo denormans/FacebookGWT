@@ -24,6 +24,8 @@ import com.denormans.facebookgwt.api.client.common.js.Link;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.ui.js.BookmarkApplicationCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.js.FriendAddCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.js.FriendAddOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamShareCallbackResponse;
@@ -39,6 +41,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.TextBox;
 
 import java.util.logging.Logger;
 
@@ -49,8 +52,15 @@ public class FBWidgetsWidget extends ShowcaseWidget {
   private static FBWidgetsWidgetUIBinder sUIBinder = GWT.create(FBWidgetsWidgetUIBinder.class);
 
   @UiField Button bookmarkButton;
+
   @UiField Button streamPublishButton;
+  @UiField TextBox streamPublishMessageTextBox;
+
   @UiField Button streamShareButton;
+  @UiField TextBox streamShareLinkTextBox;
+
+  @UiField Button friendAddButton;
+  @UiField TextBox friendAddIDTextBox;
 
   @UiField Button parseXFBMLButton;
   @UiField Like fbLike;
@@ -64,7 +74,11 @@ public class FBWidgetsWidget extends ShowcaseWidget {
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         bookmarkButton.setEnabled(FBGWT.Init.isInitialized());
         streamPublishButton.setEnabled(FBGWT.Init.isInitialized());
+        streamPublishMessageTextBox.setEnabled(FBGWT.Init.isInitialized());
         streamShareButton.setEnabled(FBGWT.Init.isInitialized());
+        streamShareLinkTextBox.setEnabled(FBGWT.Init.isInitialized());
+        friendAddButton.setEnabled(FBGWT.Init.isInitialized());
+        friendAddIDTextBox.setEnabled(FBGWT.Init.isInitialized());
         parseXFBMLButton.setEnabled(FBGWT.Init.isInitialized());
       }
     });
@@ -89,7 +103,7 @@ public class FBWidgetsWidget extends ShowcaseWidget {
   public void handleStreamPublishButtonClick(final ClickEvent event) {
     StreamPublishOptions streamPublishOptions =
         StreamPublishOptions.createStreamPublishOptions()
-            .setMessage("Learning about FacebookGWT")
+            .setMessage(streamPublishMessageTextBox.getText())
             .setAttachment(Attachment.createAttachment().setName("FacebookGWT").setCaption("Facebook API for GWT").setDescription("Facebook GWT is a Java API of the Facebook JavaScript API for use with Google Web Toolkit.").setHref("http://denormans.github.com/FacebookGWT/"))
             .setActionLinks(Link.createLink("Code", "https://github.com/denormans/FacebookGWT"), Link.createLink("Issues", "https://github.com/denormans/FacebookGWT/issues"))
             .setUserMessagePrompt("Share your thoughts about FacebookGWT");
@@ -112,7 +126,7 @@ public class FBWidgetsWidget extends ShowcaseWidget {
   @UiHandler ("streamShareButton")
   public void handleStreamShareButtonClick(final ClickEvent event) {
     StreamShareOptions streamShareOptions =
-        StreamShareOptions.createStreamShareOptions("http://denormans.github.com/FacebookGWT");
+        StreamShareOptions.createStreamShareOptions(streamShareLinkTextBox.getText());
 
     Log.info("Stream share options: " + streamShareOptions.getJSONString());
 
@@ -125,6 +139,25 @@ public class FBWidgetsWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final StreamShareCallbackResponse result) {
         addApiEventMessage("Stream Share result (isShared=" + result.isShared() + ")", result);
+      }
+    });
+  }
+
+  @UiHandler ("friendAddButton")
+  public void handleFriendAddButtonClick(final ClickEvent event) {
+    FriendAddOptions friendAddOptions = FriendAddOptions.createFriendAddOptions(friendAddIDTextBox.getText());
+
+    Log.info("Friend add options: " + friendAddOptions.getJSONString());
+
+    FBGWT.UI.addFriend(DisplayFormats.Dialog, friendAddOptions, new AsyncCallback<FriendAddCallbackResponse>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error adding friend", caught);
+      }
+
+      @Override
+      public void onSuccess(final FriendAddCallbackResponse result) {
+        addApiEventMessage("Add friend result (isAdded=" + result.isAdded() + ")", result);
       }
     });
   }

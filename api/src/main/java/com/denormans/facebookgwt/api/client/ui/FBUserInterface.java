@@ -31,6 +31,8 @@ import com.denormans.facebookgwt.api.client.ui.js.BookmarkApplicationCallbackRes
 import com.denormans.facebookgwt.api.client.ui.js.FBAddCommentEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBUIMethodOptions;
+import com.denormans.facebookgwt.api.client.ui.js.FriendAddCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.js.FriendAddOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamShareCallbackResponse;
@@ -107,6 +109,17 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    */
   public void shareLinkToStream(final DisplayFormat displayFormat, final StreamShareOptions shareOptions, final AsyncCallback<StreamShareCallbackResponse> callback) {
     executeUIMethod(UIMethods.StreamShare, displayFormat, shareOptions, callback);
+  }
+
+  /**
+   * Open a dialog to add a friend.
+   *
+   * @param displayFormat The display format of the dialog.
+   * @param friendAddOptions The friend options
+   * @param callback Called when the method is complete
+   */
+  public void addFriend(final DisplayFormat displayFormat, final FriendAddOptions friendAddOptions, final AsyncCallback<FriendAddCallbackResponse> callback) {
+    executeUIMethod(UIMethods.FriendsAdd, displayFormat, friendAddOptions, callback);
   }
 
   /**

@@ -18,24 +18,24 @@
 
 package com.denormans.facebookgwt.api.client.ui.js;
 
-public class StreamShareOptions extends FBUIMethodOptions {
-  public static StreamShareOptions createStreamShareOptions() {
+public class FriendAddOptions extends FBUIMethodOptions {
+  public static FriendAddOptions createFriendAddOptions() {
     return createEnhancedObject();
   }
 
-  public static StreamShareOptions createStreamShareOptions(final String url) {
-    return createStreamShareOptions().setURL(url);
+  public static FriendAddOptions createFriendAddOptions(final String id) {
+    return createFriendAddOptions().setFriendID(id);
   }
 
-  protected StreamShareOptions() {
+  protected FriendAddOptions() {
   }
 
-  public final native String getURL() /*-{
-    return this.u;
+  public final native String getFriendID() /*-{
+    return this.id;
   }-*/;
 
-  public final native StreamShareOptions setURL(final String url) /*-{
-    this.u = url;
+  public final native FriendAddOptions setFriendID(final String id) /*-{
+    this.id = id;
     return this;
   }-*/;
 

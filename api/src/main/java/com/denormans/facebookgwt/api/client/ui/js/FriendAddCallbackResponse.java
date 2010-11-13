@@ -18,25 +18,13 @@
 
 package com.denormans.facebookgwt.api.client.ui.js;
 
-public class StreamShareOptions extends FBUIMethodOptions {
-  public static StreamShareOptions createStreamShareOptions() {
-    return createEnhancedObject();
+import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
+
+public class FriendAddCallbackResponse extends FBEventResponse {
+  protected FriendAddCallbackResponse() {
   }
 
-  public static StreamShareOptions createStreamShareOptions(final String url) {
-    return createStreamShareOptions().setURL(url);
-  }
-
-  protected StreamShareOptions() {
-  }
-
-  public final native String getURL() /*-{
-    return this.u;
+  public final native boolean isAdded() /*-{
+    return this.action;
   }-*/;
-
-  public final native StreamShareOptions setURL(final String url) /*-{
-    this.u = url;
-    return this;
-  }-*/;
-
 }

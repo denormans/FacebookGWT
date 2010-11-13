@@ -3,9 +3,25 @@
              xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui.widgets">
   <g:HTMLPanel>
     <div class="FBGWTField">
-      <g:Button ui:field="bookmarkButton" enabled="false">Bookmark Application</g:Button>
-      <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
-      <g:Button ui:field="streamShareButton" enabled="false">Share Link to Stream</g:Button>
+      <div>
+        <g:Button ui:field="bookmarkButton" enabled="false">Bookmark Application</g:Button>
+      </div>
+
+      <div>
+        <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
+        <g:TextBox ui:field="streamPublishMessageTextBox" enabled="false">Learning about FacebookGWT</g:TextBox>
+      </div>
+
+      <div>
+        <g:Button ui:field="streamShareButton" enabled="false">Share Link to Stream</g:Button>
+        <g:TextBox ui:field="streamShareLinkTextBox" enabled="false">http://denormans.github.com/FacebookGWT</g:TextBox>
+      </div>
+
+      <div>
+        <g:Button ui:field="friendAddButton" enabled="false">Add Friend</g:Button>
+        <g:TextBox ui:field="friendAddIDTextBox" enabled="false"/>
+      </div>
+
     </div>
 
     <div>

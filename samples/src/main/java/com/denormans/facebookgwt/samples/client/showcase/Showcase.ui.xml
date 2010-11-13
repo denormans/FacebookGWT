@@ -30,7 +30,6 @@
                     <sc:InitializationWidget ui:field="initWidget" styleName="FBGWTContent"/>
                   </div>
 
-
                   <div class="FBGWTSection">
                     <div class="FBGWTHeader">
                       <div class="FBGWTShowcaseCodeLink">
