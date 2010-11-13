@@ -54,6 +54,11 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
     }
   }-*/;
 
+  /**
+   * Gets the session synchronously.
+   *
+   * @return The Facebook session
+   */
   public native FBSession getSession() /*-{
     try {
       return $wnd.FB.getSession();
@@ -62,11 +67,22 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
     }
   }-*/;
 
+  /**
+   * Login to facebook
+   *
+   * @param callback Called after login
+   */
   public void login(final AsyncCallback<FBAuthEventResponse> callback) {
-    login(callback, null);
+    login(null, callback);
   }
 
-  public native void login(final AsyncCallback<FBAuthEventResponse> callback, final FBLoginOptions loginOptions) /*-{
+  /**
+   * Login to facebook with options.
+   *
+   * @param loginOptions Any options (e.g. permissions) to be used during login
+   * @param callback Called after login
+   */
+  public native void login(final FBLoginOptions loginOptions, final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       $wnd.FB.login(function(response) {
         if (callback != null) {
@@ -83,6 +99,11 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
     }
   }-*/;
 
+  /**
+   * Logout of Facebook.
+   *
+   * @param callback Called after logout
+   */
   public native void logout(final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       $wnd.FB.logout(function(response) {

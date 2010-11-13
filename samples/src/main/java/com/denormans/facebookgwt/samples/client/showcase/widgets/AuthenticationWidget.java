@@ -120,7 +120,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
 
     Log.info("Login options: " + loginOptions.getJSONString());
 
-    FBGWT.Auth.login(new AsyncCallback<FBAuthEventResponse>() {
+    FBGWT.Auth.login(loginOptions, new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error logging in", caught);
@@ -134,7 +134,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
 
         updateConnectionButtons(result.isConnected());
       }
-    }, loginOptions);
+    });
   }
 
   @UiHandler ("logoutButton")

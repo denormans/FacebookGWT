@@ -3,8 +3,9 @@
              xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui.widgets">
   <g:HTMLPanel>
     <div class="FBGWTField">
-      <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
       <g:Button ui:field="bookmarkButton" enabled="false">Bookmark Application</g:Button>
+      <g:Button ui:field="streamPublishButton" enabled="false">Publish to Stream</g:Button>
+      <g:Button ui:field="streamShareButton" enabled="false">Share Link to Stream</g:Button>
     </div>
 
     <div>

@@ -16,35 +16,32 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.common.js;
+package com.denormans.facebookgwt.api.client.ui.js;
 
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
-
-public abstract class FBSimpleEventResponse<T> extends FBEventResponse {
-  protected FBSimpleEventResponse() {
+public class StreamShareOptions extends FBUIMethodOptions {
+  public static StreamShareOptions createStreamShareOptions() {
+    return createEnhancedObject();
   }
 
-  private native void setSimpleValue(final T value) /*-{
-    this._simpleValue = value;
+  public static StreamShareOptions createStreamShareOptions(final String url) {
+    return createStreamShareOptions().setURL(url);
+  }
+
+  protected StreamShareOptions() {
+  }
+
+  public final native StreamShareOptions setMessage(final String message) /*-{
+    this.comment = message;
+    return this;
   }-*/;
 
-  protected final native T getSimpleValue() /*-{
-    return this._simpleValue;
+  public final native String getURL() /*-{
+    return this.u;
   }-*/;
 
-  private native void setSimpleValue(final double value) /*-{
-    this._simpleValue = value;
+  public final native StreamShareOptions setURL(final String url) /*-{
+    this.u = url;
+    return this;
   }-*/;
 
-  protected final native double getSimpleDoublValue() /*-{
-    return this._simpleValue;
-  }-*/;
-
-  private native void setSimpleValue(final boolean value) /*-{
-    this._simpleValue = value;
-  }-*/;
-
-  protected final native boolean getSimpleBooleanValue() /*-{
-    return this._simpleValue;
-  }-*/;
 }

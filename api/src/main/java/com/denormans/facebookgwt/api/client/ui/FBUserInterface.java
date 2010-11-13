@@ -33,6 +33,8 @@ import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBUIMethodOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
+import com.denormans.facebookgwt.api.client.ui.js.StreamShareCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.js.StreamShareOptions;
 import com.denormans.facebookgwt.api.client.ui.js.XFBMLRenderEventResponse;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 import com.denormans.facebookgwt.api.shared.ui.DisplayFormat;
@@ -76,17 +78,6 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
   }-*/;
 
   /**
-   * Open a dialog to allow the user to publish a message to their stream.
-   *
-   * @param displayFormat The display format of the dialog
-   * @param publishOptions What to publish
-   * @param callback Called when the method is complete
-   */
-  public void publishToStream(final DisplayFormat displayFormat, final StreamPublishOptions publishOptions, final AsyncCallback<StreamPublishCallbackResponse> callback) {
-    executeUIMethod(UIMethods.PublishToStream, displayFormat, publishOptions, callback);
-  }
-
-  /**
    * Open a dialog to allow the user to bookmark the application.
    *
    * @param displayFormat The display format of the dialog
@@ -94,6 +85,28 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    */
   public void bookmarkApplication(final DisplayFormat displayFormat, final AsyncCallback<BookmarkApplicationCallbackResponse> callback) {
     executeUIMethod(UIMethods.AddBookmark, displayFormat, null, callback);
+  }
+
+  /**
+   * Open a dialog to allow the user to publish a message to their stream.
+   *
+   * @param displayFormat The display format of the dialog
+   * @param publishOptions What to publish
+   * @param callback Called when the method is complete
+   */
+  public void publishToStream(final DisplayFormat displayFormat, final StreamPublishOptions publishOptions, final AsyncCallback<StreamPublishCallbackResponse> callback) {
+    executeUIMethod(UIMethods.StreamPublish, displayFormat, publishOptions, callback);
+  }
+
+  /**
+   * Open a dialog to share a link.
+   *
+   * @param displayFormat The display format of the dialog.
+   * @param shareOptions What to share
+   * @param callback Called when the method is complete
+   */
+  public void shareLinkToStream(final DisplayFormat displayFormat, final StreamShareOptions shareOptions, final AsyncCallback<StreamShareCallbackResponse> callback) {
+    executeUIMethod(UIMethods.StreamShare, displayFormat, shareOptions, callback);
   }
 
   /**
@@ -116,7 +129,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
 
       methodOptions.method = method;
       if (displayFormat != null) {
-        methodOptions.display = displayFormat.@com.denormans.facebookgwt.api.shared.ui.DisplayFormats::getApiValue()();
+        methodOptions.display = displayFormat.@com.denormans.facebookgwt.api.shared.ui.DisplayFormat::getApiValue()();
       } else {
         methodOptions.display = null;
       }
@@ -124,7 +137,19 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
       var cb;
       if (callback != null) {
         cb = function(response) {
-          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+          var responseObj;
+          if (response === null || response === undefined || typeof(response) === "object") {
+            responseObj = response;
+          } else {
+            var value;
+            if(typeof(response) === "number" || typeof(response) === "boolean") {
+              value = response;
+            } else {
+              value = String(response);
+            }
+            responseObj = { _simpleValue: value };
+          }
+          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(responseObj);
         };
       }
 

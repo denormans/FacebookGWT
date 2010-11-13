@@ -26,6 +26,8 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.ui.js.BookmarkApplicationCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
+import com.denormans.facebookgwt.api.client.ui.js.StreamShareCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.js.StreamShareOptions;
 import com.denormans.facebookgwt.api.client.ui.widgets.Like;
 import com.denormans.facebookgwt.api.shared.ui.DisplayFormats;
 
@@ -46,8 +48,9 @@ public class FBWidgetsWidget extends ShowcaseWidget {
   interface FBWidgetsWidgetUIBinder extends UiBinder<HTMLPanel, FBWidgetsWidget> {}
   private static FBWidgetsWidgetUIBinder sUIBinder = GWT.create(FBWidgetsWidgetUIBinder.class);
 
-  @UiField Button streamPublishButton;
   @UiField Button bookmarkButton;
+  @UiField Button streamPublishButton;
+  @UiField Button streamShareButton;
 
   @UiField Button parseXFBMLButton;
   @UiField Like fbLike;
@@ -59,9 +62,25 @@ public class FBWidgetsWidget extends ShowcaseWidget {
     FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
-        streamPublishButton.setEnabled(FBGWT.Init.isInitialized());
         bookmarkButton.setEnabled(FBGWT.Init.isInitialized());
+        streamPublishButton.setEnabled(FBGWT.Init.isInitialized());
+        streamShareButton.setEnabled(FBGWT.Init.isInitialized());
         parseXFBMLButton.setEnabled(FBGWT.Init.isInitialized());
+      }
+    });
+  }
+
+  @UiHandler ("bookmarkButton")
+  public void handleBookmarkButtonClick(final ClickEvent event) {
+    FBGWT.UI.bookmarkApplication(DisplayFormats.Dialog, new AsyncCallback<BookmarkApplicationCallbackResponse>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error bookmarking application", caught);
+      }
+
+      @Override
+      public void onSuccess(final BookmarkApplicationCallbackResponse result) {
+        addApiEventMessage("Bookmark Application result (isBookmarked=" + result.isBookmarked() + ")", result);
       }
     });
   }
@@ -90,17 +109,22 @@ public class FBWidgetsWidget extends ShowcaseWidget {
     });
   }
 
-  @UiHandler ("bookmarkButton")
-  public void handleBookmarkButtonClick(final ClickEvent event) {
-    FBGWT.UI.bookmarkApplication(DisplayFormats.Dialog, new AsyncCallback<BookmarkApplicationCallbackResponse>() {
+  @UiHandler ("streamShareButton")
+  public void handleStreamShareButtonClick(final ClickEvent event) {
+    StreamShareOptions streamShareOptions =
+        StreamShareOptions.createStreamShareOptions("http://denormans.github.com/FacebookGWT");
+
+    Log.info("Stream share options: " + streamShareOptions.getJSONString());
+
+    FBGWT.UI.shareLinkToStream(DisplayFormats.Dialog, streamShareOptions, new AsyncCallback<StreamShareCallbackResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
-        handleError("Error bookmarking application", caught);
+        handleError("Error sharing link to stream", caught);
       }
 
       @Override
-      public void onSuccess(final BookmarkApplicationCallbackResponse result) {
-        addApiEventMessage("Bookmark Application result (isBookmarked=" + result.isBookmarked() + ")", result);
+      public void onSuccess(final StreamShareCallbackResponse result) {
+        addApiEventMessage("Stream Share result (isShared=" + result.isShared() + ")", result);
       }
     });
   }

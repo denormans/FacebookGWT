@@ -19,8 +19,22 @@
 package com.denormans.facebookgwt.api.shared.ui;
 
 public enum UIMethods implements UIMethod {
-  PublishToStream("stream.publish"),
-  AddBookmark("bookmark.add");
+  AuthLogin("auth.login"),
+  AuthLoginToFacebook("auth.logintofacebook"),
+  AuthLogout("auth.logout"),
+  AuthStatus("auth.status"),
+
+  AddBookmark("bookmark.add"),
+  FBMLDialog("fbml.dialog"),
+  FriendsAdd("friends.add"),
+  GamesCreateMatch("games.creatematch"),
+  PayPrompt("pay.prompt"),
+  PermissionsRequest("permissions.request"),
+  profileAddTab("profile.addtab"),
+
+  StreamPublish("stream.publish"),
+  StreamShare("stream.share")
+  ;
 
   private String apiValue;
 
