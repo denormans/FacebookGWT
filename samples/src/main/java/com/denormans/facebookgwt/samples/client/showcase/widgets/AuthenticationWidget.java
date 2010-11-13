@@ -24,7 +24,6 @@ import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
@@ -100,7 +99,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
     FBGWT.Auth.retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
-        FacebookGWTSamples.get().handleError("Error retrieving login status", caught);
+        handleError("Error retrieving login status", caught);
       }
 
       @Override
@@ -124,7 +123,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
     FBGWT.Auth.login(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
-        FacebookGWTSamples.get().handleError("Error logging in", caught);
+        handleError("Error logging in", caught);
       }
 
       @Override
@@ -143,7 +142,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
     FBGWT.Auth.logout(new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
-        FacebookGWTSamples.get().handleError("Error logging out", caught);
+        handleError("Error logging out", caught);
       }
 
       @Override

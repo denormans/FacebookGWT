@@ -26,7 +26,7 @@ import com.google.gwt.core.client.JsArray;
 import java.util.Arrays;
 import java.util.List;
 
-public class StreamPublishOptions extends FBUIActionOptions {
+public class StreamPublishOptions extends FBUIMethodOptions {
   public static StreamPublishOptions createStreamPublishOptions() {
     return createEnhancedObject();
   }

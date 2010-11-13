@@ -20,8 +20,8 @@ package com.denormans.facebookgwt.api.client.ui.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBOptions;
 
-public abstract class FBUIActionOptions extends FBOptions {
-  protected FBUIActionOptions() {
+public abstract class FBUIMethodOptions extends FBOptions {
+  protected FBUIMethodOptions() {
   }
 
 

@@ -16,28 +16,20 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.samples.client.showcase.widgets;
+package com.denormans.facebookgwt.api.shared.ui;
 
-import com.denormans.facebookgwt.api.client.common.events.FBEvent;
-import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+public enum UIMethods implements UIMethod {
+  PublishToStream("stream.publish"),
+  AddBookmark("bookmark.add");
 
-import com.google.gwt.user.client.ui.Composite;
+  private String apiValue;
 
-public abstract class ShowcaseWidget extends Composite {
-  protected void addApiEventMessage(final String message, final FBEvent<?, ?> event) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, event);
+  private UIMethods(final String apiValue) {
+    this.apiValue = apiValue;
   }
 
-  protected void addApiEventMessage(final String message, final EnhancedJSObject jsObject) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, jsObject);
-  }
-
-  protected void handleError(final String message) {
-    FacebookGWTSamples.get().handleError(message);
-  }
-
-  protected void handleError(final String message, final Throwable error) {
-    FacebookGWTSamples.get().handleError(message, error);
+  @Override
+  public String getApiValue() {
+    return apiValue;
   }
 }

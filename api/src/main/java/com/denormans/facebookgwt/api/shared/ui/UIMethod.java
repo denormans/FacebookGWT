@@ -16,28 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.samples.client.showcase.widgets;
+package com.denormans.facebookgwt.api.shared.ui;
 
-import com.denormans.facebookgwt.api.client.common.events.FBEvent;
-import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-import com.google.gwt.user.client.ui.Composite;
-
-public abstract class ShowcaseWidget extends Composite {
-  protected void addApiEventMessage(final String message, final FBEvent<?, ?> event) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, event);
-  }
-
-  protected void addApiEventMessage(final String message, final EnhancedJSObject jsObject) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, jsObject);
-  }
-
-  protected void handleError(final String message) {
-    FacebookGWTSamples.get().handleError(message);
-  }
-
-  protected void handleError(final String message, final Throwable error) {
-    FacebookGWTSamples.get().handleError(message, error);
-  }
+public interface UIMethod extends FBEnum {
 }

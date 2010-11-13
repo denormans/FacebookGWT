@@ -27,14 +27,17 @@ import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateHandler;
 import com.denormans.facebookgwt.api.client.ui.events.HasFBUIHandlers;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
+import com.denormans.facebookgwt.api.client.ui.js.BookmarkApplicationCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBAddCommentEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
-import com.denormans.facebookgwt.api.client.ui.js.FBUIActionOptions;
+import com.denormans.facebookgwt.api.client.ui.js.FBUIMethodOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.js.XFBMLRenderEventResponse;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 import com.denormans.facebookgwt.api.shared.ui.DisplayFormat;
+import com.denormans.facebookgwt.api.shared.ui.UIMethod;
+import com.denormans.facebookgwt.api.shared.ui.UIMethods;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -72,15 +75,50 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
     }
   }-*/;
 
-  public void publishToStream(final StreamPublishOptions publishOptions, final DisplayFormat displayFormat, final AsyncCallback<StreamPublishCallbackResponse> callback) {
-    executeAction("stream.publish", displayFormat, publishOptions, callback);
+  /**
+   * Open a dialog to allow the user to publish a message to their stream.
+   *
+   * @param displayFormat The display format of the dialog
+   * @param publishOptions What to publish
+   * @param callback Called when the method is complete
+   */
+  public void publishToStream(final DisplayFormat displayFormat, final StreamPublishOptions publishOptions, final AsyncCallback<StreamPublishCallbackResponse> callback) {
+    executeUIMethod(UIMethods.PublishToStream, displayFormat, publishOptions, callback);
   }
 
-  public native void executeAction(final String method, final DisplayFormat displayFormat, final FBUIActionOptions actionOptions, final AsyncCallback<? extends FBEventResponse> callback) /*-{
+  /**
+   * Open a dialog to allow the user to bookmark the application.
+   *
+   * @param displayFormat The display format of the dialog
+   * @param callback Called when the method is complete
+   */
+  public void bookmarkApplication(final DisplayFormat displayFormat, final AsyncCallback<BookmarkApplicationCallbackResponse> callback) {
+    executeUIMethod(UIMethods.AddBookmark, displayFormat, null, callback);
+  }
+
+  /**
+   * Executes a UI method.
+   *
+   * @param method The method to execute
+   * @param displayFormat The display format of the dialog
+   * @param methodOptions The method options
+   * @param callback Called when the method is complete
+   */
+  public void executeUIMethod(final UIMethod method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<? extends FBEventResponse> callback) {
+    executeUIMethodJS(method.getApiValue(), displayFormat, methodOptions, callback);
+  }
+
+  private native void executeUIMethodJS(final String method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<? extends FBEventResponse> callback) /*-{
     try {
-      actionOptions.method = method;
+      if (methodOptions == null) {
+        methodOptions = {};
+      }
+
+      methodOptions.method = method;
       if (displayFormat != null) {
-        actionOptions.display = displayFormat.@com.denormans.facebookgwt.api.shared.ui.DisplayFormats::getApiValue()();
+        methodOptions.display = displayFormat.@com.denormans.facebookgwt.api.shared.ui.DisplayFormats::getApiValue()();
+      } else {
+        methodOptions.display = null;
       }
 
       var cb;
@@ -90,7 +128,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
         };
       }
 
-      $wnd.FB.ui(actionOptions, cb);
+      $wnd.FB.ui(methodOptions, cb);
     } catch(e) {
       if (callback != null) {
         var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);

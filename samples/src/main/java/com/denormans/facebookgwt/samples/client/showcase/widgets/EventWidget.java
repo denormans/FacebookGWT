@@ -167,7 +167,7 @@ public class EventWidget extends ShowcaseWidget implements TakesValue<EventDescr
           break;
 
         default:
-          FacebookGWTSamples.get().handleError("Unknown event type: " + eventDescriptor.getEventType());
+          handleError("Unknown event type: " + eventDescriptor.getEventType());
       }
     }
   }
