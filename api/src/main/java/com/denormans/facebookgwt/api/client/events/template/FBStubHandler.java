@@ -18,15 +18,13 @@
 
 package com.denormans.facebookgwt.api.client.events.template;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
 
-public interface HasFBStubHandler extends HasHandlers {
+public interface FBStubHandler extends FBEventHandler {
   /**
-   * Adds a {@link FBStubEvent} handler.
+   * Called when {@link FBStubEvent} is fired.
    *
-   * @param handler the handler
-   * @return the registration for the event
+   * @param event the {@link FBStubEvent} that was fired
    */
-  HandlerRegistration addFBStubHandler(FBStubHandler handler);
+  void onFBStub(FBStubEvent event);
 }
