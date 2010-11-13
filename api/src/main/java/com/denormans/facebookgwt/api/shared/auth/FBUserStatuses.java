@@ -19,6 +19,7 @@
 package com.denormans.facebookgwt.api.shared.auth;
 
 import com.denormans.facebookgwt.api.shared.FBEnum;
+import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public enum FBUserStatuses implements FBUserStatus {
   Unknown("unknown");
 
   private static final Map<String, FBUserStatuses> sStatusByApiValue = FBEnum.Util.createFBEnumByApiValueMap(FBUserStatuses.class);
+  private static final FBUserStatusCreator sStatusCreator = new FBUserStatusCreator();
 
   private String apiValue;
 
@@ -40,6 +42,18 @@ public enum FBUserStatuses implements FBUserStatus {
   }
 
   public static FBUserStatus valueFromApiValue(final String apiValue) {
-    return FBEnum.Util.valueFromApiValue(sStatusByApiValue, apiValue);
+    return FBEnum.Util.valueFromApiValue(sStatusByApiValue, apiValue, sStatusCreator);
+  }
+
+  private static class FBUserStatusCreator implements FBEnumCreator<FBUserStatus> {
+    @Override
+    public FBUserStatus create(final String apiValue) {
+      return new FBUserStatus() {
+        @Override
+        public String getApiValue() {
+          return apiValue;
+        }
+      };
+    }
   }
 }
