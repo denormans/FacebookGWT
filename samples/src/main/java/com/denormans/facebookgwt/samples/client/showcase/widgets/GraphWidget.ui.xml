@@ -3,8 +3,8 @@
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:HTMLPanel>
     <div class="FBGWTField">
-      <g:Button ui:field="linkStatsButton" enabled="false">Get Link Stats</g:Button>
-      <sc:FBObjectDisplay ui:field="linkStatsDisplay" label="Link Stats" visible="false"/>
+      <g:Button ui:field="retrieveCurrentUserButton" enabled="false">Get Current User</g:Button>
+      <sc:FBObjectDisplay ui:field="retrieveCurrentUserDisplay" label="Current User" visible="false"/>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

@@ -54,13 +54,11 @@ public class AuthenticationWidget extends ShowcaseWidget {
 //  static FBLoginOptionsEditorDriver sFBLoginOptionsEditorDriver = GWT.create(FBLoginOptionsEditorDriver.class);
 
   @UiField Button getSessionButton;
-  @UiField DivElement sessionContainer;
-  @UiField SpanElement sessionDetails;
+  @UiField FBObjectDisplay<FBSession> sessionDisplay;
+  @UiField FBObjectDisplay<FBAuthEventResponse> statusDisplay;
 
   @UiField Button checkStatusButton;
   @UiField CheckBox checkStatusForceReloadCheckbox;
-  @UiField DivElement statusContainer;
-  @UiField SpanElement statusDetails;
 
   @UiField FBLoginOptionsEditor loginOptionsEditor;
 
@@ -126,8 +124,8 @@ public class AuthenticationWidget extends ShowcaseWidget {
   @UiHandler ("getSessionButton")
   public void handleGetSessionButtonClick(final ClickEvent event) {
     FBSession session = FBGWT.Auth.getSession();
-    sessionDetails.setInnerText(session.toJSONString());
-    UIObject.setVisible(sessionContainer, true);
+    sessionDisplay.setValue(session);
+    sessionDisplay.setVisible(true);
     addApiEventMessage("Get Session result", session);
   }
 
@@ -141,8 +139,8 @@ public class AuthenticationWidget extends ShowcaseWidget {
 
       @Override
       public void onSuccess(final FBAuthEventResponse result) {
-        statusDetails.setInnerText(result.toJSONString());
-        UIObject.setVisible(statusContainer, true);
+        statusDisplay.setValue(result);
+        statusDisplay.setVisible(true);
         addApiEventMessage("Retrieve Login Status result", result);
 
         updateConnectionButtons(result.isConnected());

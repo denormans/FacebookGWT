@@ -101,6 +101,24 @@
             </g:tab>
 
             <g:tab>
+              <g:header>Graph</g:header>
+
+              <g:ScrollPanel>
+                <g:HTMLPanel>
+                  <div class="FBGWTSection">
+                    <div class="FBGWTHeader">
+                      <div class="FBGWTShowcaseCodeLink">
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/GraphWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                      </div>
+                      <span>Graph API</span>
+                    </div>
+                    <sc:GraphWidget ui:field="graphWidget" styleName="FBGWTContent"/>
+                  </div>
+                </g:HTMLPanel>
+              </g:ScrollPanel>
+            </g:tab>
+
+            <g:tab>
               <g:header>Legacy</g:header>
 
               <g:ScrollPanel>

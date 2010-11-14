@@ -20,12 +20,24 @@ package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.client.graph.js.FBUser;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethod;
+import com.denormans.facebookgwt.api.shared.common.HTTPMethods;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionType;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class FBGraph extends FBIntegration {
+  public static final String CurrentUserID = "me";
+
+  public void retrieveCurrentUser(final AsyncCallback<FBUser> callback) {
+    retrieveUser(CurrentUserID, callback);
+  }
+
+  public void retrieveUser(final String userID, final AsyncCallback<FBUser> callback) {
+    executeGraphCall(userID, null, HTTPMethods.Get, null, callback);
+  }
+
   /**
    * Executes a Graph REST API method.
    *

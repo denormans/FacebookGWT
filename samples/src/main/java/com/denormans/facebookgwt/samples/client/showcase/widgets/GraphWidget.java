@@ -19,17 +19,12 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.graph.js.FBUser;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.legacy.js.FBLegacyMethodOptions;
-import com.denormans.facebookgwt.api.shared.legacy.LegacyMethods;
-import com.denormans.gwtutil.client.js.GenericJSObject;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -37,42 +32,38 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
-public class LegacyWidget extends ShowcaseWidget {
-  interface LegacyWidgetUIBinder extends UiBinder<HTMLPanel, LegacyWidget> {}
+public class GraphWidget extends ShowcaseWidget {
+  interface GraphWidgetUIBinder extends UiBinder<HTMLPanel, GraphWidget> {}
+  private static GraphWidgetUIBinder sUIBinder = GWT.create(GraphWidgetUIBinder.class);
 
-  private static LegacyWidgetUIBinder sUIBinder = GWT.create(LegacyWidgetUIBinder.class);
+  @UiField Button retrieveCurrentUserButton;
+  @UiField FBObjectDisplay<FBUser> retrieveCurrentUserDisplay;
 
-  @UiField Button linkStatsButton;
-  @UiField FBObjectDisplay<String> linkStatsDisplay;
-
-  public LegacyWidget() {
+  public GraphWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
 
     FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
-        linkStatsButton.setEnabled(true); 
+        retrieveCurrentUserButton.setEnabled(FBGWT.Init.isInitialized());
       }
     });
   }
 
-  @UiHandler ("linkStatsButton")
-  public void handleLinkStatsButtonClick(final ClickEvent event) {
-    FBLegacyMethodOptions linkStatsOptions = GenericJSObject.createGenericJSObject().setProperty("urls", "facebook.com,developers.facebook.com").cast();
-
-    FBGWT.Legacy.executeLegacyMethod(LegacyMethods.LinksGetStats, linkStatsOptions, new AsyncCallback<JsArray<FBEventResponse>>() {
+  @UiHandler ("retrieveCurrentUserButton")
+  public void handleRetrieveCurrentUserButtonClick(final ClickEvent event) {
+    FBGWT.Graph.retrieveCurrentUser(new AsyncCallback<FBUser>() {
       @Override
       public void onFailure(final Throwable caught) {
-        handleError("Error getting link stats", caught);
+        handleError("Error retrieving current user", caught);
       }
 
       @Override
-      public void onSuccess(final JsArray<FBEventResponse> result) {
-        String description = new JSONArray(result).toString();
-        linkStatsDisplay.setValue(description);
-        linkStatsDisplay.setVisible(true);
-        addApiEventMessage("Links Get Stats result", description);
+      public void onSuccess(final FBUser result) {
+        retrieveCurrentUserDisplay.setValue(result);
+        retrieveCurrentUserDisplay.setVisible(true);
+        addApiEventMessage("Retrieve current user result (firstName=" + result.getFirstName() + ", lastName=" + result.getLastName() + ")", result);
       }
     });
   }

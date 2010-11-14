@@ -4,20 +4,14 @@
   <g:HTMLPanel>
     <div class="FBGWTField">
       <g:Button ui:field="getSessionButton" enabled="false">Get Session</g:Button>
-      <div ui:field="sessionContainer" style="display: none;">
-        <span class="FBGWTLabel">Session:</span>
-        <span ui:field="sessionDetails" class="FBGWTCode"/>
-      </div>
+      <sc:FBObjectDisplay ui:field="sessionDisplay" label="Session" visible="false"/>
     </div>
 
 
     <div class="FBGWTField">
       <g:Button ui:field="checkStatusButton" enabled="false">Check Status</g:Button>
       <g:CheckBox ui:field="checkStatusForceReloadCheckbox" enabled="false">Force reload</g:CheckBox>
-      <div ui:field="statusContainer" style="display: none;">
-        <span class="FBGWTLabel">Status:</span>
-        <span ui:field="statusDetails" class="FBGWTCode"/>
-      </div>
+      <sc:FBObjectDisplay ui:field="statusDisplay" label="Status" visible="false"/>
     </div>
 
     <sc:FBLoginOptionsEditor ui:field="loginOptionsEditor" enabled="false"/>

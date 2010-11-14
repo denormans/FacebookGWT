@@ -1,0 +1,7 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <g:HTMLPanel>
+    <span ui:field="label" class="FBGWTLabel"/>
+    <span ui:field="objectDetails" class="FBGWTCode"/>
+  </g:HTMLPanel>
+</ui:UiBinder>
