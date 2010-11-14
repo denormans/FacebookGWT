@@ -30,10 +30,21 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class FBGraph extends FBIntegration {
   public static final String CurrentUserID = "me";
 
+  /**
+   * Retrieves the current user.
+   *
+   * @param callback Called when the method is complete
+   */
   public void retrieveCurrentUser(final AsyncCallback<FBUser> callback) {
     retrieveUser(CurrentUserID, callback);
   }
 
+  /**
+   * Retrieves the given user.
+   *
+   * @param userID The user ID
+   * @param callback Called when the method is complete
+   */
   public void retrieveUser(final String userID, final AsyncCallback<FBUser> callback) {
     executeGraphCall(userID, null, HTTPMethods.Get, null, callback);
   }
