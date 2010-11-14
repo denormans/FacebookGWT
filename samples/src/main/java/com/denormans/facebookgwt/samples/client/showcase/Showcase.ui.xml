@@ -70,11 +70,21 @@
                   <div class="FBGWTSection">
                     <div class="FBGWTHeader">
                       <div class="FBGWTShowcaseCodeLink">
-                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/FBWidgetsWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/UIMethodsWidget.java" target="FacebookGWTShowcaseSource">Source</a>
                       </div>
-                      <span>Facebook Social Widgets</span>
+                      <span>UI Methods</span>
                     </div>
-                    <sc:FBWidgetsWidget ui:field="fbWidgetsWidget" styleName="FBGWTContent"/>
+                    <sc:UIMethodsWidget ui:field="uiMethodsWidget" styleName="FBGWTContent"/>
+                  </div>
+
+                  <div class="FBGWTSection">
+                    <div class="FBGWTHeader">
+                      <div class="FBGWTShowcaseCodeLink">
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/SocialWidgetsWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                      </div>
+                      <span>Social Widgets</span>
+                    </div>
+                    <sc:SocialWidgetsWidget ui:field="socialWidgetsWidget" styleName="FBGWTContent"/>
                   </div>
                 </g:HTMLPanel>
               </g:ScrollPanel>

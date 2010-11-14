@@ -1,0 +1,13 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:fb="urn:import:com.denormans.facebookgwt.api.client.ui.widgets">
+  <g:HTMLPanel>
+    <div class="FBGWTField">
+      <g:Button ui:field="parseXFBMLButton" enabled="false">Parse XFBML</g:Button>
+    </div>
+
+    <div>
+      <fb:Like ui:field="fbLike" href="http://denormans.github.com/FacebookGWT/Samples"/>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder>

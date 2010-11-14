@@ -30,7 +30,6 @@ import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamShareCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamShareOptions;
-import com.denormans.facebookgwt.api.client.ui.widgets.Like;
 import com.denormans.facebookgwt.api.shared.ui.DisplayFormats;
 
 import com.google.gwt.core.client.GWT;
@@ -45,11 +44,11 @@ import com.google.gwt.user.client.ui.TextBox;
 
 import java.util.logging.Logger;
 
-public class FBWidgetsWidget extends ShowcaseWidget {
-  private static final Logger Log = Logger.getLogger(FBWidgetsWidget.class.getName());
+public class UIMethodsWidget extends ShowcaseWidget {
+  private static final Logger Log = Logger.getLogger(UIMethodsWidget.class.getName());
 
-  interface FBWidgetsWidgetUIBinder extends UiBinder<HTMLPanel, FBWidgetsWidget> {}
-  private static FBWidgetsWidgetUIBinder sUIBinder = GWT.create(FBWidgetsWidgetUIBinder.class);
+  interface UIMethodsWidgetUIBinder extends UiBinder<HTMLPanel, UIMethodsWidget> {}
+  private static UIMethodsWidgetUIBinder sUIBinder = GWT.create(UIMethodsWidgetUIBinder.class);
 
   @UiField Button bookmarkButton;
 
@@ -62,10 +61,7 @@ public class FBWidgetsWidget extends ShowcaseWidget {
   @UiField Button friendAddButton;
   @UiField TextBox friendAddIDTextBox;
 
-  @UiField Button parseXFBMLButton;
-  @UiField Like fbLike;
-
-  public FBWidgetsWidget() {
+  public UIMethodsWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
 
@@ -79,7 +75,6 @@ public class FBWidgetsWidget extends ShowcaseWidget {
         streamShareLinkTextBox.setEnabled(FBGWT.Init.isInitialized());
         friendAddButton.setEnabled(FBGWT.Init.isInitialized());
         friendAddIDTextBox.setEnabled(FBGWT.Init.isInitialized());
-        parseXFBMLButton.setEnabled(FBGWT.Init.isInitialized());
       }
     });
   }
@@ -160,10 +155,5 @@ public class FBWidgetsWidget extends ShowcaseWidget {
         addApiEventMessage("Add friend result (isAdded=" + result.isAdded() + ")", result);
       }
     });
-  }
-
-  @UiHandler ("parseXFBMLButton")
-  public void handleParseXFBMLButtonClick(final ClickEvent event) {
-    FBGWT.UI.parseXFBML(getWidget());
   }
 }
