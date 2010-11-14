@@ -28,6 +28,7 @@ import com.denormans.facebookgwt.api.client.ui.events.HasFBUIHandlers;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
 import com.denormans.facebookgwt.api.client.ui.js.BookmarkApplicationCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.js.CanvasSize;
 import com.denormans.facebookgwt.api.client.ui.js.FBAddCommentEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBUIMethodOptions;
@@ -50,6 +51,8 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 
 public final class FBUserInterface extends FBIntegration implements HasFBUIHandlers {
+  private static final int DefaultResizeInterval = 100;
+
   /**
    * Parse all XFBML elements in the current page.
    */
@@ -73,6 +76,49 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    */
   public native void parseXFBML(final Element element) /*-{
     $wnd.FB.XFBML.parse(element);
+  }-*/;
+
+  /**
+   * Starts the Canvas resize timer, using the default 100ms interval
+   */
+  public void enableCanvasAutoResize() {
+    enableCanvasAutoResize(DefaultResizeInterval);
+  }
+
+  /**
+   * Starts the Canvas resize timer, using the given interval.
+   *
+   * @param interval The interval (in milliseconds) to use
+   */
+  public native void enableCanvasAutoResize(final int interval) /*-{
+    $wnd.FB.Canvas.setAutoResize(interval);
+  }-*/;
+
+  /**
+   * Stops the Canvas resize timer.
+   */
+  public native void disableCanvasAutoResize() /*-{
+    $wnd.FB.Canvas.setAutoResize(false);
+  }-*/;
+
+  /**
+   * Sets the size of the canvas automatically based on the size of the content.
+   */
+  public void setCanvasSize() {
+    setCanvasSize(null);
+  }
+
+  /**
+   * Sets the size of the canvas.
+   *
+   * @param size The canvas size.  If <tt>null</tt>, automatically sets the canvas size based on the size of the content.
+   */
+  public native void setCanvasSize(final CanvasSize size) /*-{
+    if (size != null) {
+      $wnd.FB.Canvas.setSize(size);
+    } else {
+      $wnd.FB.Canvas.setSize();
+    }
   }-*/;
 
   /**
@@ -203,5 +249,4 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
   public HandlerRegistration addXFBMLRenderHandler(final XFBMLRenderHandler handler) {
     return addFBEventHandler(handler, XFBMLRenderEvent.getType(), FBEventTypes.XFBMLRender);
   }
-
 }

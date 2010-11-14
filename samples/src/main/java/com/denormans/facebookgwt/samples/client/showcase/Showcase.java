@@ -23,6 +23,7 @@ import com.denormans.facebookgwt.api.client.common.events.FBEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.AuthenticationWidget;
+import com.denormans.facebookgwt.samples.client.showcase.widgets.CanvasWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.EventsWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.SocialWidgetsWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.InitializationWidget;
@@ -62,8 +63,8 @@ public class Showcase extends Composite {
   @UiField EventsWidget eventsWidget;
   @UiField AuthenticationWidget authWidget;
   @UiField UIMethodsWidget uiMethodsWidget;
-  @UiField
-  SocialWidgetsWidget socialWidgetsWidget;
+  @UiField CanvasWidget canvasWidget;
+  @UiField SocialWidgetsWidget socialWidgetsWidget;
   @UiField LegacyWidget legacyWidget;
 
   @UiField ScrollPanel eventContainer;

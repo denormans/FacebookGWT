@@ -63,7 +63,7 @@
             </g:tab>
 
             <g:tab>
-              <g:header>Widgets</g:header>
+              <g:header>UI</g:header>
 
               <g:ScrollPanel>
                 <g:HTMLPanel>
@@ -75,6 +75,16 @@
                       <span>UI Methods</span>
                     </div>
                     <sc:UIMethodsWidget ui:field="uiMethodsWidget" styleName="FBGWTContent"/>
+                  </div>
+
+                  <div class="FBGWTSection">
+                    <div class="FBGWTHeader">
+                      <div class="FBGWTShowcaseCodeLink">
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/CanvasWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                      </div>
+                      <span>Canvas</span>
+                    </div>
+                    <sc:CanvasWidget ui:field="canvasWidget" styleName="FBGWTContent"/>
                   </div>
 
                   <div class="FBGWTSection">
