@@ -13,6 +13,7 @@
 
     <div class="FBGWTField">
       <g:Button ui:field="checkStatusButton" enabled="false">Check Status</g:Button>
+      <g:CheckBox ui:field="checkStatusForceReloadCheckbox" enabled="false">Force reload</g:CheckBox>
       <div ui:field="statusContainer" style="display: none;">
         <span class="FBGWTLabel">Status:</span>
         <span ui:field="statusDetails" class="FBGWTCode"/>

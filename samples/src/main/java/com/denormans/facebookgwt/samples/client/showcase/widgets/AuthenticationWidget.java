@@ -34,6 +34,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.UIObject;
 
@@ -53,6 +54,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
   @UiField SpanElement sessionDetails;
 
   @UiField Button checkStatusButton;
+  @UiField CheckBox checkStatusForceReloadCheckbox;
   @UiField DivElement statusContainer;
   @UiField SpanElement statusDetails;
 
@@ -70,6 +72,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         getSessionButton.setEnabled(FBGWT.Init.isInitialized());
         checkStatusButton.setEnabled(FBGWT.Init.isInitialized());
+        checkStatusForceReloadCheckbox.setEnabled(FBGWT.Init.isInitialized());
         loginOptionsEditor.setEnabled(FBGWT.Init.isInitialized());
         loginButton.setEnabled(FBGWT.Init.isInitialized());
       }
@@ -96,7 +99,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
 
   @UiHandler ("checkStatusButton")
   public void handleCheckStatusButtonClick(final ClickEvent event) {
-    FBGWT.Auth.retrieveLoginStatus(new AsyncCallback<FBAuthEventResponse>() {
+    FBGWT.Auth.retrieveLoginStatus(checkStatusForceReloadCheckbox.getValue(), new AsyncCallback<FBAuthEventResponse>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving login status", caught);

@@ -40,14 +40,26 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public final class FBAuthentication extends FBIntegration implements HasFBAuthHandlers {
   /**
    * Retrieves the login status asynchronously via the Facebook JSAPI.
+   * <p>
+   * Doesn't force the status to reload
    *
    * @param callback The callback to receive the results
    */
-  public native void retrieveLoginStatus(final AsyncCallback<FBAuthEventResponse> callback) /*-{
+  public void retrieveLoginStatus(final AsyncCallback<FBAuthEventResponse> callback) {
+    retrieveLoginStatus(false, callback);
+  }
+
+  /**
+   * Retrieves the login status asynchronously via the Facebook JSAPI.
+   *
+   * @param forceReload Whether or not to force reloading the login status
+   * @param callback The callback to receive the results
+   */
+  public native void retrieveLoginStatus(final boolean forceReload, final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       $wnd.FB.getLoginStatus(function(response) {
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
-      });
+      }, forceReload);
     } catch(e) {
       var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
       callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
