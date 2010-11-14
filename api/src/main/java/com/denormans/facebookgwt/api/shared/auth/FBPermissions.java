@@ -22,12 +22,6 @@ import com.denormans.facebookgwt.api.client.auth.js.FBPermissionsJS;
 import com.denormans.facebookgwt.api.shared.FBEnum;
 import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
@@ -142,13 +136,11 @@ public enum FBPermissions implements FBPermission {
       return valuesFromApiValues(FBEnum.Util.splitApiValues(permissionApiValues));
     }
 
-    JSONValue jsonValue = JSONParser.parseStrict(permissionApiValues);
-    JSONObject jsonObject = jsonValue.isObject();
-    if (jsonObject == null) {
+    FBPermissionsJS permissions = FBPermissionsJS.fromJSONString(permissionApiValues);
+    if (permissions == null) {
       return Collections.emptyList();
     }
 
-    FBPermissionsJS permissions = jsonObject.getJavaScriptObject().cast();
     return permissions.getAllPermissions();
   }
 

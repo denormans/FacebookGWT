@@ -20,12 +20,10 @@ package com.denormans.facebookgwt.api.client;
 
 import com.denormans.facebookgwt.api.client.auth.FBAuthentication;
 import com.denormans.facebookgwt.api.client.core.FBCore;
+import com.denormans.facebookgwt.api.client.graph.FBGraph;
 import com.denormans.facebookgwt.api.client.init.FBInitialization;
-import com.denormans.facebookgwt.api.client.common.js.FBJSException;
+import com.denormans.facebookgwt.api.client.legacy.FBLegacy;
 import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
-import com.denormans.gwtutil.client.js.JSError;
-
-import com.google.gwt.core.client.GWT;
 
 import java.util.logging.Logger;
 
@@ -35,47 +33,7 @@ public final class FBGWT {
   public static final FBCore Core = new FBCore();
   public static final FBInitialization Init = new FBInitialization();
   public static final FBAuthentication Auth = new FBAuthentication();
+  public static final FBGraph Graph = new FBGraph();
   public static final FBUserInterface UI = new FBUserInterface();
-
-  @SuppressWarnings ( { "ThrowableResultOfMethodCallIgnored" })
-  public static void raiseException(final String message) {
-    GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
-    if (uncaughtExceptionHandler == null) {
-      throwException(message);
-      return;
-    }
-
-    uncaughtExceptionHandler.onUncaughtException(createException(message));
-  }
-
-  public static void throwException(final String message) {
-    throw new FBGWTException(message);
-  }
-
-  public static FBGWTException createException(final String message) {
-    FBGWTException fbgwtException = new FBGWTException(message);
-    fbgwtException.fillInStackTrace();
-    return fbgwtException;
-  }
-
-  @SuppressWarnings ( { "UnusedDeclaration", "ThrowableResultOfMethodCallIgnored" })
-  public static void raiseException(final JSError error) {
-    GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
-    if (uncaughtExceptionHandler == null) {
-      throwException(error);
-      return;
-    }
-
-    uncaughtExceptionHandler.onUncaughtException(createException(error));
-  }
-
-  public static void throwException(final JSError error) {
-    throw new FBJSException(error);
-  }
-
-  public static FBJSException createException(final JSError error) {
-    FBJSException fbjsException = new FBJSException(error);
-    fbjsException.fillInStackTrace();
-    return fbjsException;
-  }
+  public static final FBLegacy Legacy = new FBLegacy();
 }

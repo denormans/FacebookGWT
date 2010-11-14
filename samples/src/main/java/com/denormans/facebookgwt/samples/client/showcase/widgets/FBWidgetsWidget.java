@@ -108,7 +108,7 @@ public class FBWidgetsWidget extends ShowcaseWidget {
             .setActionLinks(Link.createLink("Code", "https://github.com/denormans/FacebookGWT"), Link.createLink("Issues", "https://github.com/denormans/FacebookGWT/issues"))
             .setUserMessagePrompt("Share your thoughts about FacebookGWT");
 
-    Log.info("Stream publish options: " + streamPublishOptions.getJSONString());
+    Log.info("Stream publish options: " + streamPublishOptions.toJSONString());
 
     FBGWT.UI.publishToStream(DisplayFormats.Dialog, streamPublishOptions, new AsyncCallback<StreamPublishCallbackResponse>() {
       @Override
@@ -128,7 +128,7 @@ public class FBWidgetsWidget extends ShowcaseWidget {
     StreamShareOptions streamShareOptions =
         StreamShareOptions.createStreamShareOptions(streamShareLinkTextBox.getText());
 
-    Log.info("Stream share options: " + streamShareOptions.getJSONString());
+    Log.info("Stream share options: " + streamShareOptions.toJSONString());
 
     FBGWT.UI.shareLinkToStream(DisplayFormats.Dialog, streamShareOptions, new AsyncCallback<StreamShareCallbackResponse>() {
       @Override
@@ -147,7 +147,7 @@ public class FBWidgetsWidget extends ShowcaseWidget {
   public void handleFriendAddButtonClick(final ClickEvent event) {
     FriendAddOptions friendAddOptions = FriendAddOptions.createFriendAddOptions(friendAddIDTextBox.getText());
 
-    Log.info("Friend add options: " + friendAddOptions.getJSONString());
+    Log.info("Friend add options: " + friendAddOptions.toJSONString());
 
     FBGWT.UI.addFriend(DisplayFormats.Dialog, friendAddOptions, new AsyncCallback<FriendAddCallbackResponse>() {
       @Override

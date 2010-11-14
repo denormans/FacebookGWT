@@ -26,6 +26,7 @@ import com.denormans.facebookgwt.samples.client.showcase.widgets.AuthenticationW
 import com.denormans.facebookgwt.samples.client.showcase.widgets.EventsWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.FBWidgetsWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.InitializationWidget;
+import com.denormans.facebookgwt.samples.client.showcase.widgets.LegacyWidget;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.core.client.GWT;
@@ -60,6 +61,7 @@ public class Showcase extends Composite {
   @UiField EventsWidget eventsWidget;
   @UiField AuthenticationWidget authWidget;
   @UiField FBWidgetsWidget fbWidgetsWidget;
+  @UiField LegacyWidget legacyWidget;
 
   @UiField ScrollPanel eventContainer;
   @UiField FlowPanel eventPanel;
@@ -86,10 +88,10 @@ public class Showcase extends Composite {
 
   public void addApiEventMessage(final String title, final EnhancedJSObject apiObject) {
     if (Log.isLoggable(Level.FINE)) {
-      Log.fine(title + ": " + apiObject.getJSONString());
+      Log.fine(title + ": " + apiObject.toJSONString());
     }
 
-    addEventMessage(title, apiObject.getJSONString());
+    addEventMessage(title, apiObject.toJSONString());
   }
 
   private void addEventMessage(final String message) {

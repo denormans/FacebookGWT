@@ -126,7 +126,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
   @UiHandler ("getSessionButton")
   public void handleGetSessionButtonClick(final ClickEvent event) {
     FBSession session = FBGWT.Auth.getSession();
-    sessionDetails.setInnerText(session.getJSONString());
+    sessionDetails.setInnerText(session.toJSONString());
     UIObject.setVisible(sessionContainer, true);
     addApiEventMessage("Get Session result", session);
   }
@@ -141,7 +141,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
 
       @Override
       public void onSuccess(final FBAuthEventResponse result) {
-        statusDetails.setInnerText(result.getJSONString());
+        statusDetails.setInnerText(result.toJSONString());
         UIObject.setVisible(statusContainer, true);
         addApiEventMessage("Retrieve Login Status result", result);
 
@@ -155,7 +155,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
 //    FBLoginOptions loginOptions = sFBLoginOptionsEditorDriver.flush();
     FBLoginOptions loginOptions = loginOptionsEditor.flush();
 
-    Log.info("Login options: " + loginOptions.getJSONString());
+    Log.info("Login options: " + loginOptions.toJSONString());
 
     FBGWT.Auth.login(loginOptions, new AsyncCallback<FBAuthEventResponse>() {
       @Override

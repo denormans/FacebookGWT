@@ -61,7 +61,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
       }, forceReload);
     } catch(e) {
-      var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+      var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
       callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
     }
   }-*/;
@@ -72,11 +72,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
    * @return The Facebook session
    */
   public native FBSession getSession() /*-{
-    try {
-      return $wnd.FB.getSession();
-    } catch(e) {
-      @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
-    }
+    return $wnd.FB.getSession();
   }-*/;
 
   /**
@@ -103,10 +99,10 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       }, loginOptions);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
-        @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        throw e;
       }
     }
   }-*/;
@@ -125,10 +121,10 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       });
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
-        @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        throw e;
       }
     }
   }-*/;

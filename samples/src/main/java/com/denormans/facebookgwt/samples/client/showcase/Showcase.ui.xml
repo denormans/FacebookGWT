@@ -43,6 +43,7 @@
 
               </g:ScrollPanel>
             </g:tab>
+
             <g:tab>
               <g:header>Authentication</g:header>
 
@@ -60,6 +61,7 @@
                 </g:HTMLPanel>
               </g:ScrollPanel>
             </g:tab>
+
             <g:tab>
               <g:header>Widgets</g:header>
 
@@ -73,6 +75,24 @@
                       <span>Facebook Social Widgets</span>
                     </div>
                     <sc:FBWidgetsWidget ui:field="fbWidgetsWidget" styleName="FBGWTContent"/>
+                  </div>
+                </g:HTMLPanel>
+              </g:ScrollPanel>
+            </g:tab>
+
+            <g:tab>
+              <g:header>Legacy</g:header>
+
+              <g:ScrollPanel>
+                <g:HTMLPanel>
+                  <div class="FBGWTSection">
+                    <div class="FBGWTHeader">
+                      <div class="FBGWTShowcaseCodeLink">
+                        <a href="https://github.com/denormans/FacebookGWT/blob/master/samples/src/main/java/com/denormans/facebookgwt/samples/client/showcase/widgets/LegacyWidget.java" target="FacebookGWTShowcaseSource">Source</a>
+                      </div>
+                      <span>Legacy API</span>
+                    </div>
+                    <sc:LegacyWidget ui:field="legacyWidget" styleName="FBGWTContent"/>
                   </div>
                 </g:HTMLPanel>
               </g:ScrollPanel>

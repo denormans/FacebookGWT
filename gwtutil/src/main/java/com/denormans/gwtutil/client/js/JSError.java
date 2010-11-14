@@ -18,11 +18,41 @@
 
 package com.denormans.gwtutil.client.js;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptException;
 import com.google.gwt.core.client.JsArrayString;
 
 import java.util.List;
 
 public class JSError extends EnhancedJSObject {
+  /**
+   * Raises an exception, through the uncaught exception handler if set, otherwise by throwing the exception.
+   *
+   * @param jsError The JavaScript error
+   */
+  @SuppressWarnings ( { "ThrowableResultOfMethodCallIgnored" })
+  public static void raiseException(final Object jsError) {
+    GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
+    if (uncaughtExceptionHandler == null) {
+      throw new JavaScriptException(jsError);
+    }
+
+    uncaughtExceptionHandler.onUncaughtException(createException(jsError));
+  }
+
+  /**
+   * Wraps a JavaScript error.  Useful for calling from within JSNI to create an exception for callbacks.
+   *
+   * @param jsError The exception to wrap
+   *
+   * @return The new JavaScriptException
+   */
+  public static JavaScriptException createException(final Object jsError) {
+    JavaScriptException jsException = new JavaScriptException(jsError);
+    jsException.fillInStackTrace();
+    return jsException;
+  }
+
   protected JSError() {
   }
 

@@ -72,11 +72,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    * @param element The element to parse within, or <tt>null</tt> to parse the entire document
    */
   public native void parseXFBML(final Element element) /*-{
-    try {
-      $wnd.FB.XFBML.parse(element);
-    } catch(e) {
-      @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
-    }
+    $wnd.FB.XFBML.parse(element);
   }-*/;
 
   /**
@@ -130,17 +126,13 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    * @param methodOptions The method options
    * @param callback Called when the method is complete
    */
-  public void executeUIMethod(final UIMethod method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<? extends FBEventResponse> callback) {
-    executeUIMethodJS(method.getApiValue(), displayFormat, methodOptions, callback);
-  }
-
-  private native void executeUIMethodJS(final String method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<? extends FBEventResponse> callback) /*-{
+  public native void executeUIMethod(final UIMethod method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<? extends FBEventResponse> callback) /*-{
     try {
       if (methodOptions == null) {
         methodOptions = {};
       }
 
-      methodOptions.method = method;
+      methodOptions.method = method.@com.denormans.facebookgwt.api.shared.ui.UIMethod::getApiValue()();
       if (displayFormat != null) {
         methodOptions.display = displayFormat.@com.denormans.facebookgwt.api.shared.ui.DisplayFormat::getApiValue()();
       } else {
@@ -169,10 +161,10 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
       $wnd.FB.ui(methodOptions, cb);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.api.client.FBGWT::createException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
-        @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+        throw e;
       }
     }
   }-*/;

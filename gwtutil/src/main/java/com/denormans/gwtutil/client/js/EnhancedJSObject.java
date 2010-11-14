@@ -24,6 +24,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,16 @@ import java.util.List;
 public class EnhancedJSObject extends JavaScriptObject {
   public static <T extends EnhancedJSObject> T createEnhancedObject() {
     return createObject().<T>cast();
+  }
+
+  public static <T extends EnhancedJSObject> T fromJSONString(final String json) {
+    JSONValue jsonValue = JSONParser.parseStrict(json);
+    JSONObject jsonObject = jsonValue.isObject();
+    if (jsonObject != null) {
+      return jsonObject.getJavaScriptObject().<T>cast();
+    }
+
+    return null;
   }
 
   protected EnhancedJSObject() {
@@ -87,7 +99,7 @@ public class EnhancedJSObject extends JavaScriptObject {
     return list;
   }
 
-  public final String getJSONString() {
+  public final String toJSONString() {
     return new JSONObject(this).toString();
   }
 }

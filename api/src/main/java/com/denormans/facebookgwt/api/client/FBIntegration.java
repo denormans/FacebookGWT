@@ -57,34 +57,30 @@ public abstract class FBIntegration implements HasHandlers {
   }
 
   private native JSFunction subscribeToEventJS(final String eventName) /*-{
-    try {
-      var self = this;
-      var callback = function(response) {
-        try {
-          var responseObj;
-          if (response === null || response === undefined || typeof(response) === "object") {
-            responseObj = response;
+    var self = this;
+    var callback = function(response) {
+      try {
+        var responseObj;
+        if (response === null || response === undefined || typeof(response) === "object") {
+          responseObj = response;
+        } else {
+          var value;
+          if(typeof(response) === "number" || typeof(response) === "boolean") {
+            value = response;
           } else {
-            var value;
-            if(typeof(response) === "number" || typeof(response) === "boolean") {
-              value = response;
-            } else {
-              value = String(response);
-            }
-            responseObj = { _simpleValue: value };
+            value = String(response);
           }
-          self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Lcom/denormans/facebookgwt/api/client/common/js/FBEventResponse;)(eventName, responseObj);
-        } catch(e) {
-          @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+          responseObj = { _simpleValue: value };
         }
-      };
+        self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Lcom/denormans/facebookgwt/api/client/common/js/FBEventResponse;)(eventName, responseObj);
+      } catch(e) {
+        @com.denormans.gwtutil.client.js.JSError::raiseException(Ljava/lang/Object;)(e);
+      }
+    };
 
-      $wnd.FB.Event.subscribe(eventName, callback);
+    $wnd.FB.Event.subscribe(eventName, callback);
 
-      return callback;
-    } catch(e) {
-      return @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
-    }
+    return callback;
   }-*/;
 
   private void unsubscribeFromEvent(final FBEventType eventType, final JSFunction callback) {
@@ -93,11 +89,7 @@ public abstract class FBIntegration implements HasHandlers {
   }
 
   private native void unsubscribeFromEventJS(final String eventName, final JSFunction callback) /*-{
-    try {
-      $wnd.FB.Event.unsubscribe(eventName, callback);
-    } catch(e) {
-      @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
-    }
+    $wnd.FB.Event.unsubscribe(eventName, callback);
   }-*/;
 
   @SuppressWarnings ({ "UnusedDeclaration" })
@@ -116,11 +108,11 @@ public abstract class FBIntegration implements HasHandlers {
   }
 
   protected void handleFBEvent(final FBEventType eventType, final FBEventResponse apiResponse) {
-    Log.warning("Unhandled event " + eventType + " with response: " + apiResponse.getJSONString());
+    Log.warning("Unhandled event " + eventType + " with response: " + apiResponse.toJSONString());
   }
 
   protected void handleFBEvent(final FBEventTypes eventType, final FBEventResponse apiResponse) {
-    Log.warning("Unhandled event " + eventType + " with response: " + apiResponse.getJSONString());
+    Log.warning("Unhandled event " + eventType + " with response: " + apiResponse.toJSONString());
   }
 
   protected <H extends FBEventHandler> HandlerRegistration addFBEventHandler(final H handler, final GwtEvent.Type<H> eventType, final FBEventType fbEventType) {

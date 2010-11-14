@@ -176,7 +176,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
 
           self.@com.denormans.facebookgwt.api.client.init.FBInitialization::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/init/js/FBInitOptions;)(initOptions);
         } catch(e) {
-          @com.denormans.facebookgwt.api.client.FBGWT::raiseException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
+          @com.denormans.gwtutil.client.js.JSError::raiseException(Ljava/lang/Object;)(e);
         }
       }
     } catch(e) {
@@ -201,11 +201,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
   }
 
   public native void executeFBInit(final FBInitOptions initOptions) /*-{
-    try {
-      $wnd.FB.init(initOptions);
-    } catch(e) {
-      @com.denormans.facebookgwt.api.client.FBGWT::throwException(Lcom/denormans/gwtutil/client/js/JSError;)(e);
-    }
+    $wnd.FB.init(initOptions);
   }-*/;
 
   protected void fireInitSuccess() {
