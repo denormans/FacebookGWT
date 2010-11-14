@@ -19,6 +19,49 @@
 package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.shared.common.HTTPMethod;
+import com.denormans.facebookgwt.api.shared.graph.ConnectionType;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class FBGraph extends FBIntegration {
+  /**
+   * Executes a Graph REST API method.
+   *
+   * @param objectID The object to retrieve from/post to
+   * @param connectionType The type of connections (if any) to retrieve from the object
+   * @param httpMethod The method to execute
+   * @param callOptions The method options
+   * @param callback Called when the method is complete
+   */
+  public native void executeGraphCall(final String objectID, final ConnectionType connectionType, final HTTPMethod httpMethod, final FBGraphCallOptions callOptions, final AsyncCallback<?> callback) /*-{
+    try {
+      var path = "/" + objectID;
+      if (connectionType != null) {
+        path += "/" + connectionType.@com.denormans.facebookgwt.api.shared.graph.ConnectionType::getApiValue()();
+      }
+
+      var method = "get";
+      if (httpMethod != null) {
+        method = httpMethod.@com.denormans.facebookgwt.api.shared.common.HTTPMethod::getApiValue()();
+      }
+
+      var cb;
+      if (callback != null) {
+        cb = function(response) {
+          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+        };
+      }
+
+      $wnd.FB.api(path, method, callOptions, cb);
+    } catch(e) {
+      if (callback != null) {
+        var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
+        callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
+      } else {
+        throw e;
+      }
+    }
+  }-*/;
 }
