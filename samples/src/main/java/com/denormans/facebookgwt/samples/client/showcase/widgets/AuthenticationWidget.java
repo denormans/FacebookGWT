@@ -19,11 +19,14 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
+import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
@@ -38,6 +41,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.UIObject;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class AuthenticationWidget extends ShowcaseWidget {
@@ -75,6 +79,28 @@ public class AuthenticationWidget extends ShowcaseWidget {
         checkStatusForceReloadCheckbox.setEnabled(FBGWT.Init.isInitialized());
         loginOptionsEditor.setEnabled(FBGWT.Init.isInitialized());
         loginButton.setEnabled(FBGWT.Init.isInitialized());
+
+        FBGWT.Auth.addFBSessionChangeHandler(new FBSessionChangeHandler() {
+          @Override
+          public void onFBSessionChange(final FBSessionChangeEvent event) {
+            List<FBPermission> permissions = event.getApiResponse().getPermissions();
+            if (permissions.isEmpty()) {
+              FBGWT.Auth.retrieveLoginStatus(true, new AsyncCallback<FBAuthEventResponse>() {
+                @Override
+                public void onFailure(final Throwable caught) {
+                  handleError("Error retrieving login status", caught);
+                }
+
+                @Override
+                public void onSuccess(final FBAuthEventResponse result) {
+                  updateUserPermissions(result.getPermissions());
+                }
+              });
+            } else {
+              updateUserPermissions(permissions);
+            }
+          }
+        });
       }
     });
 
@@ -82,6 +108,14 @@ public class AuthenticationWidget extends ShowcaseWidget {
 //    sFBLoginOptionsEditorDriver.edit(FBLoginOptions.createLoginOptions());
 
     loginOptionsEditor.setLoginOptions(FBLoginOptions.createLoginOptions());
+  }
+
+  private void updateUserPermissions(List<FBPermission> permissions) {
+    if (permissions != null && !permissions.isEmpty()) {
+      FBLoginOptions loginOptions = loginOptionsEditor.getLoginOptions();
+      loginOptions.setPermissions(permissions);
+      loginOptionsEditor.setLoginOptions(loginOptions);
+    }
   }
 
   private void updateConnectionButtons(final boolean isConnected) {
