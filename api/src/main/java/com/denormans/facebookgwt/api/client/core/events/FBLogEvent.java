@@ -18,10 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.core.events;
 
-import com.denormans.facebookgwt.api.client.core.js.FBLogEventResponse;
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
 
-public class FBLogEvent extends FBEvent<FBLogHandler, FBLogEventResponse> {
+public class FBLogEvent extends FBEvent<FBLogHandler, String> {
   private static Type<FBLogHandler> sType;
 
   /**
@@ -31,7 +30,7 @@ public class FBLogEvent extends FBEvent<FBLogHandler, FBLogEventResponse> {
    * @param source the source of the handlers
    * @param apiResponse the Facebook JS API response
    */
-  public static void fire(HasFBLogHandler source, final FBLogEventResponse apiResponse) {
+  public static void fire(HasFBLogHandler source, final String apiResponse) {
     if (sType != null) {
       FBLogEvent event = new FBLogEvent(apiResponse);
       source.fireEvent(event);
@@ -51,7 +50,7 @@ public class FBLogEvent extends FBEvent<FBLogHandler, FBLogEventResponse> {
     return sType;
   }
 
-  protected FBLogEvent(final FBLogEventResponse apiResponse) {
+  protected FBLogEvent(final String apiResponse) {
     super(apiResponse);
   }
 

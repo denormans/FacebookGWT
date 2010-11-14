@@ -27,9 +27,11 @@ import com.denormans.facebookgwt.api.shared.legacy.LegacyMethods;
 import com.denormans.gwtutil.client.js.GenericJSObject;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -63,17 +65,18 @@ public class LegacyWidget extends ShowcaseWidget {
   public void handleLinkStatsButtonClick(final ClickEvent event) {
     FBLegacyMethodOptions linkStatsOptions = GenericJSObject.createGenericJSObject().setProperty("urls", "facebook.com,developers.facebook.com").cast();
 
-    FBGWT.Legacy.executeLegacyMethod(LegacyMethods.LinksGetStats, linkStatsOptions, new AsyncCallback<FBEventResponse>() {
+    FBGWT.Legacy.executeLegacyMethod(LegacyMethods.LinksGetStats, linkStatsOptions, new AsyncCallback<JsArray<FBEventResponse>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error getting link stats", caught);
       }
 
       @Override
-      public void onSuccess(final FBEventResponse result) {
-        linkStatsDetails.setInnerText(result.toJSONString());
+      public void onSuccess(final JsArray<FBEventResponse> result) {
+        String description = new JSONArray(result).toString();
+        linkStatsDetails.setInnerText(description);
         UIObject.setVisible(linkStatsContainer, true);
-        addApiEventMessage("Links Get Stats result", result);
+        addApiEventMessage("Links Get Stats result", description);
       }
     });
   }

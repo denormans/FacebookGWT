@@ -16,35 +16,15 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.common.js;
+package com.denormans.facebookgwt.api.client.events.template;
 
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
 
-public abstract class FBSimpleEventResponse<T> extends FBEventResponse {
-  protected FBSimpleEventResponse() {
-  }
-
-  private native void setSimpleValue(final T value) /*-{
-    this._simpleValue = value;
-  }-*/;
-
-  protected final native T getSimpleValue() /*-{
-    return this._simpleValue;
-  }-*/;
-
-  private native void setSimpleValue(final double value) /*-{
-    this._simpleValue = value;
-  }-*/;
-
-  protected final native double getSimpleDoublValue() /*-{
-    return this._simpleValue;
-  }-*/;
-
-  private native void setSimpleValue(final boolean value) /*-{
-    this._simpleValue = value;
-  }-*/;
-
-  protected final native boolean getSimpleBooleanValue() /*-{
-    return this._simpleValue;
-  }-*/;
+public interface FBStubHandler extends FBEventHandler {
+  /**
+   * Called when {@link FBStubEvent} is fired.
+   *
+   * @param event the {@link FBStubEvent} that was fired
+   */
+  void onFBStub(FBStubEvent event);
 }

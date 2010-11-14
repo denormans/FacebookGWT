@@ -19,21 +19,21 @@
 package com.denormans.facebookgwt.api.client.auth;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
+import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBLoginHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBLogoutEvent;
+import com.denormans.facebookgwt.api.client.auth.events.FBLogoutHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
-import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
-import com.denormans.facebookgwt.api.client.auth.events.FBLogoutHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.events.HasFBAuthHandlers;
-import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -130,22 +130,22 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
   }-*/;
 
   @Override
-  protected void handleFBEvent(final FBEventTypes eventType, final FBEventResponse apiResponse) {
+  protected void handleFBEvent(final FBEventTypes eventType, final Object apiResponse) {
     switch (eventType) {
       case AuthLogin:
-        fireLogin(apiResponse.<FBAuthEventResponse>cast());
+        fireLogin(((JavaScriptObject) apiResponse).<FBAuthEventResponse>cast());
         break;
 
       case AuthLogout:
-        fireLogout(apiResponse.<FBAuthEventResponse>cast());
+        fireLogout(((JavaScriptObject) apiResponse).<FBAuthEventResponse>cast());
         break;
 
       case AuthSessionChange:
-        fireSessionChange(apiResponse.<FBAuthEventResponse>cast());
+        fireSessionChange(((JavaScriptObject) apiResponse).<FBAuthEventResponse>cast());
         break;
 
       case AuthStatusChange:
-        fireStatusChange(apiResponse.<FBAuthEventResponse>cast());
+        fireStatusChange(((JavaScriptObject) apiResponse).<FBAuthEventResponse>cast());
         break;
 
       default:

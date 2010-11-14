@@ -22,18 +22,16 @@ import com.denormans.facebookgwt.api.client.FBIntegration;
 import com.denormans.facebookgwt.api.client.core.events.FBLogEvent;
 import com.denormans.facebookgwt.api.client.core.events.FBLogHandler;
 import com.denormans.facebookgwt.api.client.core.events.HasFBLogHandler;
-import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
-import com.denormans.facebookgwt.api.client.core.js.FBLogEventResponse;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 
 import com.google.gwt.event.shared.HandlerRegistration;
 
 public final class FBCore extends FBIntegration implements HasFBLogHandler {
   @Override
-  protected void handleFBEvent(final FBEventTypes eventType, final FBEventResponse apiResponse) {
+  protected void handleFBEvent(final FBEventTypes eventType, final Object apiResponse) {
     switch (eventType) {
       case Log:
-        FBLogEvent.fire(this, apiResponse.<FBLogEventResponse>cast());
+        FBLogEvent.fire(this, (String)apiResponse);
         break;
 
       default:

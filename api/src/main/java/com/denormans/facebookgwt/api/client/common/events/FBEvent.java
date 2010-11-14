@@ -18,11 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.common.events;
 
-import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
-
 import com.google.gwt.event.shared.GwtEvent;
 
-public abstract class FBEvent<H extends FBEventHandler, R extends FBEventResponse> extends GwtEvent<H> {
+public abstract class FBEvent<H extends FBEventHandler, R extends Object> extends GwtEvent<H> {
   private R apiResponse;
 
   protected FBEvent(final R apiResponse) {
@@ -35,6 +33,6 @@ public abstract class FBEvent<H extends FBEventHandler, R extends FBEventRespons
 
   @Override
   public String toString() {
-    return super.toString() + "[apiResponse=" + apiResponse.toJSONString() + "]" + "";
+    return super.toString() + "[apiResponse=" + apiResponse + "]" + "";
   }
 }

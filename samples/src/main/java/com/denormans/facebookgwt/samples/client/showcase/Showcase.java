@@ -87,15 +87,24 @@ public class Showcase extends Composite {
   }
 
   public void addApiEventMessage(final String title, final FBEvent<?, ?> event) {
-    addApiEventMessage(title, event.getApiResponse());
+    Object apiResponse = event.getApiResponse();
+    if (apiResponse instanceof EnhancedJSObject) {
+      addApiEventMessage(title, (EnhancedJSObject) apiResponse);
+    } else {
+      addApiEventMessage(title, apiResponse);
+    }
   }
 
   public void addApiEventMessage(final String title, final EnhancedJSObject apiObject) {
+    addApiEventMessage(title, apiObject.toJSONString());
+  }
+
+  public void addApiEventMessage(final String title, final Object apiResponse) {
     if (Log.isLoggable(Level.FINE)) {
-      Log.fine(title + ": " + apiObject.toJSONString());
+      Log.fine(title + ": " + apiResponse);
     }
 
-    addEventMessage(title, apiObject.toJSONString());
+    addEventMessage(title, apiResponse != null ? apiResponse.toString() : "null");
   }
 
   private void addEventMessage(final String message) {

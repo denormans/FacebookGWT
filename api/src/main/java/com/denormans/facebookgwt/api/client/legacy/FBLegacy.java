@@ -33,7 +33,7 @@ public class FBLegacy extends FBIntegration {
    * @param methodOptions The method options
    * @param callback Called when the method is complete
    */
-  public native void executeLegacyMethod(final LegacyMethod method, final FBLegacyMethodOptions methodOptions, final AsyncCallback<? extends FBEventResponse> callback) /*-{
+  public native void executeLegacyMethod(final LegacyMethod method, final FBLegacyMethodOptions methodOptions, final AsyncCallback<?> callback) /*-{
     try {
       if (methodOptions == null) {
         methodOptions = {};
@@ -44,19 +44,7 @@ public class FBLegacy extends FBIntegration {
       var cb;
       if (callback != null) {
         cb = function(response) {
-          var responseObj;
-          if (response === null || response === undefined || typeof(response) === "object") {
-            responseObj = response;
-          } else {
-            var value;
-            if(typeof(response) === "number" || typeof(response) === "boolean") {
-              value = response;
-            } else {
-              value = String(response);
-            }
-            responseObj = { _simpleValue: value };
-          }
-          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(responseObj);
+          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
         };
       }
 

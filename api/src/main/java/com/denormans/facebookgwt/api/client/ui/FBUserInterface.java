@@ -30,13 +30,11 @@ import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
 import com.denormans.facebookgwt.api.client.ui.js.BookmarkApplicationCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.CanvasSize;
 import com.denormans.facebookgwt.api.client.ui.js.FBAddCommentEventResponse;
-import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FBUIMethodOptions;
 import com.denormans.facebookgwt.api.client.ui.js.FriendAddCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FriendAddOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
-import com.denormans.facebookgwt.api.client.ui.js.StreamShareCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamShareOptions;
 import com.denormans.facebookgwt.api.client.ui.js.XFBMLRenderEventResponse;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
@@ -44,6 +42,7 @@ import com.denormans.facebookgwt.api.shared.ui.DisplayFormat;
 import com.denormans.facebookgwt.api.shared.ui.UIMethod;
 import com.denormans.facebookgwt.api.shared.ui.UIMethods;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -149,7 +148,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    * @param shareOptions What to share
    * @param callback Called when the method is complete
    */
-  public void shareLinkToStream(final DisplayFormat displayFormat, final StreamShareOptions shareOptions, final AsyncCallback<StreamShareCallbackResponse> callback) {
+  public void shareLinkToStream(final DisplayFormat displayFormat, final StreamShareOptions shareOptions, final AsyncCallback<Boolean> callback) {
     executeUIMethod(UIMethods.StreamShare, displayFormat, shareOptions, callback);
   }
 
@@ -172,7 +171,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    * @param methodOptions The method options
    * @param callback Called when the method is complete
    */
-  public native void executeUIMethod(final UIMethod method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<? extends FBEventResponse> callback) /*-{
+  public native void executeUIMethod(final UIMethod method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<?> callback) /*-{
     try {
       if (methodOptions == null) {
         methodOptions = {};
@@ -188,19 +187,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
       var cb;
       if (callback != null) {
         cb = function(response) {
-          var responseObj;
-          if (response === null || response === undefined || typeof(response) === "object") {
-            responseObj = response;
-          } else {
-            var value;
-            if(typeof(response) === "number" || typeof(response) === "boolean") {
-              value = response;
-            } else {
-              value = String(response);
-            }
-            responseObj = { _simpleValue: value };
-          }
-          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(responseObj);
+          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
         };
       }
 
@@ -216,18 +203,18 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
   }-*/;
 
   @Override
-  protected void handleFBEvent(final FBEventTypes eventType, final FBEventResponse apiResponse) {
+  protected void handleFBEvent(final FBEventTypes eventType, final Object apiResponse) {
     switch (eventType) {
       case CommentsAdd:
-        FBAddCommentEvent.fire(this, apiResponse.<FBAddCommentEventResponse>cast());
+        FBAddCommentEvent.fire(this, ((JavaScriptObject) apiResponse).<FBAddCommentEventResponse>cast());
         break;
 
       case EdgeCreate:
-        FBEdgeCreateEvent.fire(this, apiResponse.<FBEdgeCreateEventResponse>cast());
+        FBEdgeCreateEvent.fire(this, (String)apiResponse);
         break;
 
       case XFBMLRender:
-        XFBMLRenderEvent.fire(this, apiResponse.<XFBMLRenderEventResponse>cast());
+        XFBMLRenderEvent.fire(this, apiResponse != null ? ((JavaScriptObject)apiResponse).<XFBMLRenderEventResponse>cast() : null);
         break;
 
       default:

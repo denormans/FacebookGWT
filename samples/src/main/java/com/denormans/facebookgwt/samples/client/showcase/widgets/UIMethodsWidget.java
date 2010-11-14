@@ -28,7 +28,6 @@ import com.denormans.facebookgwt.api.client.ui.js.FriendAddCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.FriendAddOptions;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
-import com.denormans.facebookgwt.api.client.ui.js.StreamShareCallbackResponse;
 import com.denormans.facebookgwt.api.client.ui.js.StreamShareOptions;
 import com.denormans.facebookgwt.api.shared.ui.DisplayFormats;
 
@@ -125,15 +124,15 @@ public class UIMethodsWidget extends ShowcaseWidget {
 
     Log.info("Stream share options: " + streamShareOptions.toJSONString());
 
-    FBGWT.UI.shareLinkToStream(DisplayFormats.Dialog, streamShareOptions, new AsyncCallback<StreamShareCallbackResponse>() {
+    FBGWT.UI.shareLinkToStream(DisplayFormats.Dialog, streamShareOptions, new AsyncCallback<Boolean>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error sharing link to stream", caught);
       }
 
       @Override
-      public void onSuccess(final StreamShareCallbackResponse result) {
-        addApiEventMessage("Stream Share result (isShared=" + result.isShared() + ")", result);
+      public void onSuccess(final Boolean result) {
+        addApiEventMessage("Stream Share result", result);
       }
     });
   }

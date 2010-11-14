@@ -29,8 +29,12 @@ public abstract class ShowcaseWidget extends Composite {
     FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, event);
   }
 
-  protected void addApiEventMessage(final String message, final EnhancedJSObject jsObject) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, jsObject);
+  protected void addApiEventMessage(final String message, final EnhancedJSObject apiResponse) {
+    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, apiResponse);
+  }
+
+  protected void addApiEventMessage(final String message, final Object apiResponse) {
+    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, apiResponse);
   }
 
   protected void handleError(final String message) {

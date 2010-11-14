@@ -19,9 +19,9 @@
 package com.denormans.facebookgwt.api.client;
 
 import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
-import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventType;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
+import com.denormans.gwtutil.client.js.EnhancedJSObject;
 import com.denormans.gwtutil.client.js.JSFunction;
 
 import com.google.gwt.core.client.Scheduler;
@@ -60,19 +60,7 @@ public abstract class FBIntegration implements HasHandlers {
     var self = this;
     var callback = function(response) {
       try {
-        var responseObj;
-        if (response === null || response === undefined || typeof(response) === "object") {
-          responseObj = response;
-        } else {
-          var value;
-          if(typeof(response) === "number" || typeof(response) === "boolean") {
-            value = response;
-          } else {
-            value = String(response);
-          }
-          responseObj = { _simpleValue: value };
-        }
-        self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Lcom/denormans/facebookgwt/api/client/common/js/FBEventResponse;)(eventName, responseObj);
+        self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Ljava/lang/Object;)(eventName, response);
       } catch(e) {
         @com.denormans.gwtutil.client.js.JSError::raiseException(Ljava/lang/Object;)(e);
       }
@@ -93,10 +81,10 @@ public abstract class FBIntegration implements HasHandlers {
   }-*/;
 
   @SuppressWarnings ({ "UnusedDeclaration" })
-  private void handleFBEvent(final String eventName, final FBEventResponse apiResponse) {
+  private void handleFBEvent(final String eventName, final Object apiResponse) {
     FBEventType eventType = FBEventTypes.valueFromApiValue(eventName);
     if (eventType == null) {
-      Log.warning("Unknown event: " + eventName);
+      Log.warning("Unknown event: " + eventName + " with response: " + describeAPIResponse(apiResponse));
       return;
     }
 
@@ -107,12 +95,24 @@ public abstract class FBIntegration implements HasHandlers {
     }
   }
 
-  protected void handleFBEvent(final FBEventType eventType, final FBEventResponse apiResponse) {
-    Log.warning("Unhandled event " + eventType + " with response: " + apiResponse.toJSONString());
+  protected void handleFBEvent(final FBEventType eventType, final Object apiResponse) {
+    Log.warning("Unhandled event " + eventType + " with response: " + describeAPIResponse(apiResponse));
   }
 
-  protected void handleFBEvent(final FBEventTypes eventType, final FBEventResponse apiResponse) {
-    Log.warning("Unhandled event " + eventType + " with response: " + apiResponse.toJSONString());
+  protected void handleFBEvent(final FBEventTypes eventType, final Object apiResponse) {
+    handleFBEvent((FBEventType) eventType, apiResponse);
+  }
+
+  private String describeAPIResponse(final Object apiResponse) {
+    if (apiResponse instanceof EnhancedJSObject) {
+      return ((EnhancedJSObject) apiResponse).toJSONString();
+    }
+
+    if (apiResponse != null) {
+      apiResponse.toString();
+    }
+
+    return "null";
   }
 
   protected <H extends FBEventHandler> HandlerRegistration addFBEventHandler(final H handler, final GwtEvent.Type<H> eventType, final FBEventType fbEventType) {

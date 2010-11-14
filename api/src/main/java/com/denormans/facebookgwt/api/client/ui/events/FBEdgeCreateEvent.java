@@ -19,9 +19,8 @@
 package com.denormans.facebookgwt.api.client.ui.events;
 
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
-import com.denormans.facebookgwt.api.client.ui.js.FBEdgeCreateEventResponse;
 
-public class FBEdgeCreateEvent extends FBEvent<FBEdgeCreateHandler, FBEdgeCreateEventResponse> {
+public class FBEdgeCreateEvent extends FBEvent<FBEdgeCreateHandler, String> {
   private static Type<FBEdgeCreateHandler> sType;
 
   /**
@@ -31,7 +30,7 @@ public class FBEdgeCreateEvent extends FBEvent<FBEdgeCreateHandler, FBEdgeCreate
    * @param source the source of the handlers
    * @param apiResponse the Facebook JS API response
    */
-  public static void fire(HasFBEdgeCreateHandler source, final FBEdgeCreateEventResponse apiResponse) {
+  public static void fire(HasFBEdgeCreateHandler source, final String apiResponse) {
     if (sType != null) {
       FBEdgeCreateEvent event = new FBEdgeCreateEvent(apiResponse);
       source.fireEvent(event);
@@ -51,7 +50,7 @@ public class FBEdgeCreateEvent extends FBEvent<FBEdgeCreateHandler, FBEdgeCreate
     return sType;
   }
 
-  protected FBEdgeCreateEvent(final FBEdgeCreateEventResponse apiResponse) {
+  protected FBEdgeCreateEvent(final String apiResponse) {
     super(apiResponse);
   }
 
