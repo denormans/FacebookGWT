@@ -59,6 +59,11 @@ public class FBGraph extends FBIntegration {
         method = httpMethod.@com.denormans.facebookgwt.api.shared.common.HTTPMethod::getApiValue()();
       }
 
+      var params = callOptions;
+      if (params == null) {
+        params = {};
+      }
+
       var cb;
       if (callback != null) {
         cb = function(response) {
@@ -66,7 +71,7 @@ public class FBGraph extends FBIntegration {
         };
       }
 
-      $wnd.FB.api(path, method, callOptions, cb);
+      $wnd.FB.api(path, method, params, cb);
     } catch(e) {
       if (callback != null) {
         var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
