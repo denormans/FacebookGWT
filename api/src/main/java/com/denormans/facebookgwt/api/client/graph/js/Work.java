@@ -25,9 +25,17 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import java.util.Date;
 
 public class Work extends FBJSObject {
-  public static final DateTimeFormat TimePeriodFormat = DateTimeFormat.getFormat("yyyy-MM");
+  private static DateTimeFormat sTimePeriodFormat;
 
   protected Work() {
+  }
+
+  public static DateTimeFormat getTimePeriodFormat() {
+    if (sTimePeriodFormat == null) {
+      sTimePeriodFormat = DateTimeFormat.getFormat("yyyy-MM");
+    }
+
+    return sTimePeriodFormat;
   }
 
   public final native FBGraphObject getEmployer() /*-{
@@ -63,6 +71,6 @@ public class Work extends FBJSObject {
       return null;
     }
 
-    return TimePeriodFormat.parse(dateText);
+    return getTimePeriodFormat().parse(dateText);
   }
 }

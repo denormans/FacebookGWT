@@ -25,9 +25,17 @@ import java.util.Date;
 import java.util.List;
 
 public class FBUser extends FBGraphObject {
-  public static final DateTimeFormat BirthdayFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
+  private static DateTimeFormat sBirthdayFormat;
 
   protected FBUser() {
+  }
+
+  public static DateTimeFormat getBirthdayFormat() {
+    if (sBirthdayFormat == null) {
+      sBirthdayFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
+    }
+
+    return sBirthdayFormat;
   }
 
   public final native String getFirstName() /*-{
@@ -48,7 +56,7 @@ public class FBUser extends FBGraphObject {
 
   public final Date getBirthday() {
     String birthdayText = getBirthdayJS();
-    return birthdayText != null ? BirthdayFormat.parse(birthdayText) : null;
+    return birthdayText != null ? getBirthdayFormat().parse(birthdayText) : null;
   }
 
   private native String getBirthdayJS() /*-{
