@@ -1,3 +1,5 @@
+com.denormans.facebookgwt.api.client.CallbackException, false, false, true, true, com.denormans.facebookgwt.api.client.CallbackException/3592552311, 3592552311
+com.denormans.facebookgwt.api.client.EventHandlerException, false, false, true, true, com.denormans.facebookgwt.api.client.EventHandlerException/2522545571, 2522545571
 com.denormans.facebookgwt.api.client.FBGWTException, false, false, true, true, com.denormans.facebookgwt.api.client.FBGWTException/4008372672, 4008372672
 com.google.gwt.core.client.impl.SerializableThrowable, false, false, true, true, com.google.gwt.core.client.impl.SerializableThrowable/3336179259, 3336179259
 com.google.gwt.http.client.RequestException, false, false, true, true, com.google.gwt.http.client.RequestException/190587325, 190587325
