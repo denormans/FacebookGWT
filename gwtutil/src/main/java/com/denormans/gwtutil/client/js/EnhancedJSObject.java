@@ -36,6 +36,10 @@ public class EnhancedJSObject extends JavaScriptObject {
   }
 
   public static <T extends EnhancedJSObject> T fromJSONString(final String json) {
+    if (json == null) {
+      return null;
+    }
+
     JSONValue jsonValue = JSONParser.parseStrict(json);
     JSONObject jsonObject = jsonValue.isObject();
     if (jsonObject != null) {
@@ -53,6 +57,10 @@ public class EnhancedJSObject extends JavaScriptObject {
   }
 
   public static <T> JsArrayString convertListToJsArrayString(final List<T> list, final Transformer<T, String> transformer) {
+    if (list == null) {
+      return null;
+    }
+
     JsArrayString array = createArray().cast();
 
     int index = 0;
@@ -68,6 +76,10 @@ public class EnhancedJSObject extends JavaScriptObject {
   }
 
   public static <T> List<T> convertJsArrayStringToList(final JsArrayString jsArray, final Transformer<String, T> transformer) {
+    if (jsArray == null) {
+      return null;
+    }
+
     int stackSize = jsArray.length();
     List<T> list = new ArrayList<T>(stackSize);
     for (int index = 0; index < stackSize; index++) {
@@ -79,6 +91,10 @@ public class EnhancedJSObject extends JavaScriptObject {
   }
 
   public static <T extends JavaScriptObject> JsArray<T> convertListToJsArray(final List<? extends T> list) {
+    if (list == null) {
+      return null;
+    }
+
     JsArray<T> array = createArray().cast();
 
     int index = 0;
@@ -90,6 +106,10 @@ public class EnhancedJSObject extends JavaScriptObject {
   }
 
   public static <T extends JavaScriptObject> List<T> convertJsArrayToList(final JsArray<? extends T> jsArray) {
+    if (jsArray == null) {
+      return null;
+    }
+
     int stackSize = jsArray.length();
     List<T> list = new ArrayList<T>(stackSize);
     for (int index = 0; index < stackSize; index++) {
