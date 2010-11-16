@@ -26,12 +26,14 @@ import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -48,6 +50,7 @@ public class FBPermissionListEditor extends Composite implements LeafValueEditor
   private static PermissionsWidgetUIBinder sUIBinder = GWT.create(PermissionsWidgetUIBinder.class);
 
   @UiField ListBox permissionsListBox;
+  @UiField Button addAllPermissionsButton;
   @UiField ScrollPanel permissionWidgets;
   @UiField FlowPanel permissionWidgetsPanel;
 
@@ -108,6 +111,7 @@ public class FBPermissionListEditor extends Composite implements LeafValueEditor
   @Override
   public void setEnabled(final boolean enabled) {
     permissionsListBox.setEnabled(enabled);
+    addAllPermissionsButton.setEnabled(enabled);
   }
 
   private void updatePermissions() {
@@ -134,11 +138,17 @@ public class FBPermissionListEditor extends Composite implements LeafValueEditor
   }
 
   private void addPermission(final FBPermission permission) {
+    if (!permission.isRequestable()) {
+      return;
+    }
+
     if (permissions == null) {
       permissions = new ArrayList<FBPermission>();
     }
 
-    permissions.add(permission);
+    if (!permissions.contains(permission)) {
+      permissions.add(permission);
+    }
 
     ValueChangeEvent.fire(this, permissions);
 
@@ -176,6 +186,13 @@ public class FBPermissionListEditor extends Composite implements LeafValueEditor
     addPermission(fbPermission);
 
     permissionsListBox.setSelectedIndex(0);
+  }
+
+  @UiHandler ("addAllPermissionsButton")
+  public void handleAddAllPermissionsButtonClick(final ClickEvent event) {
+    for (FBPermissions permission : FBPermissions.values()) {
+      addPermission(permission);
+    }
   }
 
   private FBPermission getSelectedPermission() {

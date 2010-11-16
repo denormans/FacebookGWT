@@ -24,6 +24,7 @@ import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 import com.denormans.gwtutil.client.js.JSFunction;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent;
@@ -31,6 +32,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.event.shared.testing.CountingEventBus;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +53,20 @@ public abstract class FBIntegration implements HasHandlers {
     return eventBus;
   }
 
+  @SuppressWarnings ( { "unchecked" })
+  protected void executeCallback(final AsyncCallback callback, final Object result) {
+    try {
+      callback.onSuccess(result);
+    } catch (Throwable t) {
+      GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
+      if (uncaughtExceptionHandler == null) {
+        throw new CallbackException("Error executing callback", t);
+      }
+
+      uncaughtExceptionHandler.onUncaughtException(t);
+    }
+  }
+
   private JSFunction subscribeToEvent(final FBEventType eventType) {
     Log.fine("Subscribing to event: " + eventType + " (" + eventType.getApiValue() + ")");
     return subscribeToEventJS(eventType.getApiValue());
@@ -59,11 +75,7 @@ public abstract class FBIntegration implements HasHandlers {
   private native JSFunction subscribeToEventJS(final String eventName) /*-{
     var self = this;
     var callback = function(response) {
-      try {
-        self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Ljava/lang/Object;)(eventName, response);
-      } catch(e) {
-        @com.denormans.gwtutil.client.js.JSError::raiseException(Ljava/lang/Object;)(e);
-      }
+      self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Ljava/lang/Object;)(eventName, response);
     };
 
     $wnd.FB.Event.subscribe(eventName, callback);
@@ -82,16 +94,25 @@ public abstract class FBIntegration implements HasHandlers {
 
   @SuppressWarnings ({ "UnusedDeclaration" })
   private void handleFBEvent(final String eventName, final Object apiResponse) {
-    FBEventType eventType = FBEventTypes.valueFromApiValue(eventName);
-    if (eventType == null) {
-      Log.warning("Unknown event: " + eventName + " with response: " + describeAPIResponse(apiResponse));
-      return;
-    }
+    try {
+      FBEventType eventType = FBEventTypes.valueFromApiValue(eventName);
+      if (eventType == null) {
+        Log.warning("Unknown event: " + eventName + " with response: " + describeAPIResponse(apiResponse));
+        return;
+      }
 
-    if (eventType instanceof FBEventTypes) {
-      handleFBEvent((FBEventTypes)eventType, apiResponse);
-    } else {
-      handleFBEvent(eventType, apiResponse);
+      if (eventType instanceof FBEventTypes) {
+        handleFBEvent((FBEventTypes)eventType, apiResponse);
+      } else {
+        handleFBEvent(eventType, apiResponse);
+      }
+    } catch (Throwable t) {
+      GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
+      if (uncaughtExceptionHandler == null) {
+        throw new EventHandlerException("Error handling Facebook event", t);
+      }
+
+      uncaughtExceptionHandler.onUncaughtException(t);
     }
   }
 

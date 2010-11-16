@@ -18,13 +18,12 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-
-public abstract class FBGraphObject extends FBJSObject {
-  protected FBGraphObject() {
+public class FBRetrieveUserOptions extends FBGraphCallOptions {
+  public static FBRetrieveUserOptions createRetrieveUserOptions() {
+    return createEnhancedObject();
   }
 
-  public final native String getID() /*-{
-    return this.id;
-  }-*/;
+  protected FBRetrieveUserOptions() {
+  }
+
 }

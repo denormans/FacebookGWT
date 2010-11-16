@@ -20,11 +20,20 @@ package com.denormans.facebookgwt.api.client.graph.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 
-public abstract class FBGraphObject extends FBJSObject {
-  protected FBGraphObject() {
+public class Work extends FBJSObject {
+  protected Work() {
   }
 
-  public final native String getID() /*-{
-    return this.id;
+  public final native String getEmployer() /*-{
+    return this.employer;
   }-*/;
+
+  public final native String getLocation() /*-{
+    return this.location;
+  }-*/;
+
+  public final native String getPosition() /*-{
+    return this.position;
+  }-*/;
+
 }

@@ -18,9 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.ui.js;
 
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 
-public class CanvasSize extends EnhancedJSObject {
+public class CanvasSize extends FBJSObject {
   public static CanvasSize createCanvasSize() {
     return createEnhancedObject();
   }

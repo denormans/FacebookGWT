@@ -16,15 +16,21 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-
-public abstract class FBGraphObject extends FBJSObject {
-  protected FBGraphObject() {
+public class CallbackException extends RuntimeException {
+  public CallbackException() {
   }
 
-  public final native String getID() /*-{
-    return this.id;
-  }-*/;
+  public CallbackException(final String message) {
+    super(message);
+  }
+
+  public CallbackException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
+
+  public CallbackException(final Throwable cause) {
+    super(cause);
+  }
 }

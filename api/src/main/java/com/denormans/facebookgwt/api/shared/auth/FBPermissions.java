@@ -43,7 +43,7 @@ public enum FBPermissions implements FBPermission {
   ReadMailbox("read_mailbox"),
   ReadRequests("read_requests"),
   ReadStream("read_stream"),
-  XMPPLogin("xmpp_Login"),
+  XMPPLogin("xmpp_login"),
   ADSManagement("ads_management"),
 
   UserAboutMe("user_about_me"),

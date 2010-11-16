@@ -57,8 +57,9 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
    */
   public native void retrieveLoginStatus(final boolean forceReload, final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
+      var self = this;
       $wnd.FB.getLoginStatus(function(response) {
-        callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+        self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
       }, forceReload);
     } catch(e) {
       var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
@@ -92,9 +93,10 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
    */
   public native void login(final FBLoginOptions loginOptions, final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
+      var self = this;
       $wnd.FB.login(function(response) {
         if (callback != null) {
-          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+          self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
         }
       }, loginOptions);
     } catch(e) {
@@ -114,9 +116,10 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
    */
   public native void logout(final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
+      var self = this;
       $wnd.FB.logout(function(response) {
         if (callback != null) {
-          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+          self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
         }
       });
     } catch(e) {

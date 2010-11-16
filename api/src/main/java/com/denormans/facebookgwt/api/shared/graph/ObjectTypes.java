@@ -18,39 +18,63 @@
 
 package com.denormans.facebookgwt.api.shared.graph;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
 
 public enum ObjectTypes {
-  Application(ConnectionTypes.Feed, ConnectionTypes.Posts, ConnectionTypes.Picture, ConnectionTypes.Tagged, ConnectionTypes.Links, ConnectionTypes.Photos, ConnectionTypes.PhotoAlbums,
-              ConnectionTypes.Statuses, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Notes, ConnectionTypes.Events, ConnectionTypes.Subscriptions, ConnectionTypes.Insights),
-  CheckIn(),
-  Event(ConnectionTypes.Feed, ConnectionTypes.NoReply, ConnectionTypes.Maybe, ConnectionTypes.Invited, ConnectionTypes.Attending, ConnectionTypes.Declined, ConnectionTypes.Picture),
-  Group(ConnectionTypes.Feed, ConnectionTypes.Members, ConnectionTypes.Picture),
-  Insights(),
-  Link(ConnectionTypes.Comments),
-  Note(ConnectionTypes.Comments, ConnectionTypes.Likes),
-  Page(ConnectionTypes.Feed, ConnectionTypes.Picture, ConnectionTypes.Tagged, ConnectionTypes.Links, ConnectionTypes.Photos, ConnectionTypes.PhotoAlbums, ConnectionTypes.Statuses,
-       ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Notes, ConnectionTypes.Posts, ConnectionTypes.Events, ConnectionTypes.CheckIns),
-  Photo(ConnectionTypes.Comments, ConnectionTypes.Likes),
-  PhotoAlbum(ConnectionTypes.Photos, ConnectionTypes.Comments, ConnectionTypes.Picture),
-  Post(ConnectionTypes.Comments),
-  StatusMessage(ConnectionTypes.Comments),
-  Subscription(),
-  User(ConnectionTypes.Home, ConnectionTypes.Feed, ConnectionTypes.Tagged, ConnectionTypes.Posts, ConnectionTypes.Picture, ConnectionTypes.Friends, ConnectionTypes.Activities,
-       ConnectionTypes.Interests, ConnectionTypes.Music, ConnectionTypes.Books, ConnectionTypes.Movies, ConnectionTypes.Television, ConnectionTypes.Likes, ConnectionTypes.Photos,
-      ConnectionTypes.PhotoAlbums, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Groups, ConnectionTypes.Statuses, ConnectionTypes.Links, ConnectionTypes.Notes, ConnectionTypes.Events,
-      ConnectionTypes.Inbox, ConnectionTypes.Outbox, ConnectionTypes.Updates, ConnectionTypes.Accounts, ConnectionTypes.CheckIns, ConnectionTypes.PlatformRequests),
-  Video(ConnectionTypes.Comments);
+  Application(EnumSet.of(ConnectionTypes.Feed, ConnectionTypes.Posts, ConnectionTypes.Picture, ConnectionTypes.Tagged, ConnectionTypes.Links, ConnectionTypes.Photos, ConnectionTypes.PhotoAlbums,
+                  ConnectionTypes.Statuses, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Notes, ConnectionTypes.Events, ConnectionTypes.Subscriptions, ConnectionTypes.Insights),
+              EnumSet.of(ObjectFields.ID, ObjectFields.Name, ObjectFields.Description, ObjectFields.Category, ObjectFields.Link)),
+  CheckIn(EnumSet.noneOf(ConnectionTypes.class),
+          EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Place, ObjectFields.Message, ObjectFields.Application, ObjectFields.CreatedTime)),
+  Event(EnumSet.of(ConnectionTypes.Feed, ConnectionTypes.NoReply, ConnectionTypes.Maybe, ConnectionTypes.Invited, ConnectionTypes.Attending, ConnectionTypes.Declined, ConnectionTypes.Picture),
+        EnumSet.of(ObjectFields.ID, ObjectFields.Owner, ObjectFields.Name, ObjectFields.Description, ObjectFields.StartTime, ObjectFields.EndTime, ObjectFields.Location, ObjectFields.Venue, ObjectFields.Privacy, ObjectFields.UpdatedTime)),
+  Group(EnumSet.of(ConnectionTypes.Feed, ConnectionTypes.Members, ConnectionTypes.Picture),
+        EnumSet.of(ObjectFields.ID, ObjectFields.Icon, ObjectFields.Owner, ObjectFields.Name, ObjectFields.Description, ObjectFields.Link, ObjectFields.Privacy, ObjectFields.UpdatedTime)),
+  Insights(EnumSet.noneOf(ConnectionTypes.class),
+           EnumSet.of(ObjectFields.ID, ObjectFields.Name, ObjectFields.Period, ObjectFields.Values)),
+  Link(EnumSet.of(ConnectionTypes.Comments),
+       EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Link, ObjectFields.Name, ObjectFields.Caption, ObjectFields.Description, ObjectFields.Icon, ObjectFields.Picture, ObjectFields.Message, ObjectFields.CreatedTime)),
+  Note(EnumSet.of(ConnectionTypes.Comments, ConnectionTypes.Likes),
+       EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Subject, ObjectFields.Message, ObjectFields.CreatedTime, ObjectFields.UpdatedTime, ObjectFields.Icon)),
+  Page(EnumSet.of(ConnectionTypes.Feed, ConnectionTypes.Picture, ConnectionTypes.Tagged, ConnectionTypes.Links, ConnectionTypes.Photos, ConnectionTypes.PhotoAlbums, ConnectionTypes.Statuses,
+           ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Notes, ConnectionTypes.Posts, ConnectionTypes.Events, ConnectionTypes.CheckIns),
+       EnumSet.of(ObjectFields.ID, ObjectFields.Name, ObjectFields.Category, ObjectFields.FanCount)),
+  Photo(EnumSet.of(ConnectionTypes.Comments, ConnectionTypes.Likes),
+        EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Name, ObjectFields.Picture, ObjectFields.Icon, ObjectFields.Source, ObjectFields.Height, ObjectFields.Width, ObjectFields.Link,
+            ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
+  PhotoAlbum(EnumSet.of(ConnectionTypes.Photos, ConnectionTypes.Comments, ConnectionTypes.Picture),
+             EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Name, ObjectFields.Description, ObjectFields.Location, ObjectFields.Link, ObjectFields.Privacy, ObjectFields.Count, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
+  Post(EnumSet.of(ConnectionTypes.Comments),
+       EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.To, ObjectFields.Message, ObjectFields.Picture, ObjectFields.Link, ObjectFields.Name, ObjectFields.Caption, ObjectFields.Description, ObjectFields.Source,
+           ObjectFields.Icon, ObjectFields.Attribution, ObjectFields.Actions, ObjectFields.Privacy, ObjectFields.Likes, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
+  StatusMessage(EnumSet.of(ConnectionTypes.Comments),
+                EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Message, ObjectFields.UpdatedTime)),
+  Subscription(EnumSet.noneOf(ConnectionTypes.class),
+               EnumSet.of(ObjectFields.Object, ObjectFields.Fields, ObjectFields.CallbackURL, ObjectFields.Active)),
+  User(EnumSet.of(ConnectionTypes.Home, ConnectionTypes.Feed, ConnectionTypes.Tagged, ConnectionTypes.Posts, ConnectionTypes.Picture, ConnectionTypes.Friends, ConnectionTypes.Activities,
+           ConnectionTypes.Interests, ConnectionTypes.Music, ConnectionTypes.Books, ConnectionTypes.Movies, ConnectionTypes.Television, ConnectionTypes.Likes, ConnectionTypes.Photos,
+           ConnectionTypes.PhotoAlbums, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Groups, ConnectionTypes.Statuses, ConnectionTypes.Links, ConnectionTypes.Notes, ConnectionTypes.Events,
+           ConnectionTypes.Inbox, ConnectionTypes.Outbox, ConnectionTypes.Updates, ConnectionTypes.Accounts, ConnectionTypes.CheckIns, ConnectionTypes.PlatformRequests),
+       EnumSet.of(ObjectFields.ID, ObjectFields.FirstName, ObjectFields.LastName, ObjectFields.Name, ObjectFields.Link, ObjectFields.About, ObjectFields.Birthday, ObjectFields.Work, ObjectFields.Education, ObjectFields.Email,
+           ObjectFields.Website, ObjectFields.Hometown, ObjectFields.Location, ObjectFields.Bio, ObjectFields.Quotes, ObjectFields.Gender, ObjectFields.InterestedIn, ObjectFields.MeetingFor, ObjectFields.RelationshipStatus,
+           ObjectFields.Religion, ObjectFields.Political, ObjectFields.Verified, ObjectFields.SignificantOther, ObjectFields.Timezone, ObjectFields.ThirdPartyID, ObjectFields.LastUpdated, ObjectFields.Locale)),
+  Video(EnumSet.of(ConnectionTypes.Comments),
+        EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Name, ObjectFields.Picture, ObjectFields.EmbedHTML, ObjectFields.Icon, ObjectFields.Source, ObjectFields.CreatedTime, ObjectFields.UpdatedTime));
 
   private Set<ConnectionTypes> connectionTypes;
+  private Set<ObjectFields> objectFields;
 
-  private ObjectTypes(final ConnectionTypes... connectionTypes) {
-    this.connectionTypes = EnumSet.copyOf(Arrays.asList(connectionTypes));
+  private ObjectTypes(final EnumSet<ConnectionTypes> connectionTypes, final EnumSet<ObjectFields> objectFields) {
+    this.connectionTypes = connectionTypes;
+    this.objectFields = objectFields;
   }
 
   public Set<ConnectionTypes> getConnectionTypes() {
     return connectionTypes;
+  }
+
+  public Set<ObjectFields> getObjectFields() {
+    return objectFields;
   }
 }

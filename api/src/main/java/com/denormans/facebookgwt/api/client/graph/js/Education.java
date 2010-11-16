@@ -16,15 +16,24 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.template;
+package com.denormans.facebookgwt.api.client.graph.js;
 
-import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 
-public interface FBStubHandler extends FBEventHandler {
-  /**
-   * Called when {@link FBStubEvent} is fired.
-   *
-   * @param event the {@link FBStubEvent} that was fired
-   */
-  void onFBStub(FBStubEvent event);
+public class Education extends FBJSObject {
+  protected Education() {
+  }
+
+  public final native String getSchool() /*-{
+    return this.school;
+  }-*/;
+
+  public final native String getYear() /*-{
+    return this.year;
+  }-*/;
+
+  public final native String getType() /*-{
+    return this.type;
+  }-*/;
+
 }

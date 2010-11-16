@@ -53,7 +53,7 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiHandler ("retrieveCurrentUserButton")
   public void handleRetrieveCurrentUserButtonClick(final ClickEvent event) {
-    FBGWT.Graph.retrieveCurrentUser(new AsyncCallback<FBUser>() {
+    FBGWT.Graph.retrieveCurrentUser(null, new AsyncCallback<FBUser>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user", caught);
@@ -61,9 +61,9 @@ public class GraphWidget extends ShowcaseWidget {
 
       @Override
       public void onSuccess(final FBUser result) {
+        addApiEventMessage("Retrieve current user result (firstName=" + result.getFirstName() + ", lastName=" + result.getLastName() + ")", result);
         retrieveCurrentUserDisplay.setValue(result);
         retrieveCurrentUserDisplay.setVisible(true);
-        addApiEventMessage("Retrieve current user result (firstName=" + result.getFirstName() + ", lastName=" + result.getLastName() + ")", result);
       }
     });
   }

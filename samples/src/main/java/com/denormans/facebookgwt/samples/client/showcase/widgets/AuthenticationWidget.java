@@ -29,8 +29,6 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -39,7 +37,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.UIObject;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -124,9 +121,9 @@ public class AuthenticationWidget extends ShowcaseWidget {
   @UiHandler ("getSessionButton")
   public void handleGetSessionButtonClick(final ClickEvent event) {
     FBSession session = FBGWT.Auth.getSession();
+    addApiEventMessage("Get Session result", session);
     sessionDisplay.setValue(session);
     sessionDisplay.setVisible(true);
-    addApiEventMessage("Get Session result", session);
   }
 
   @UiHandler ("checkStatusButton")
@@ -139,9 +136,9 @@ public class AuthenticationWidget extends ShowcaseWidget {
 
       @Override
       public void onSuccess(final FBAuthEventResponse result) {
+        addApiEventMessage("Retrieve Login Status result", result);
         statusDisplay.setValue(result);
         statusDisplay.setVisible(true);
-        addApiEventMessage("Retrieve Login Status result", result);
 
         updateConnectionButtons(result.isConnected());
       }

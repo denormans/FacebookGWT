@@ -18,6 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.init;
 
+import com.denormans.facebookgwt.api.client.EventHandlerException;
 import com.denormans.facebookgwt.api.client.init.events.FBInitFailureEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitFailureHandler;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
@@ -25,6 +26,7 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.init.events.HasFBInitHandlers;
 import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -173,11 +175,11 @@ public final class FBInitialization implements HasFBInitHandlers  {
           if (oldFBAsyncInit) {
             oldFBAsyncInit();
           }
-
-          self.@com.denormans.facebookgwt.api.client.init.FBInitialization::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/init/js/FBInitOptions;)(initOptions);
         } catch(e) {
           @com.denormans.gwtutil.client.js.JSError::raiseException(Ljava/lang/Object;)(e);
         }
+
+        self.@com.denormans.facebookgwt.api.client.init.FBInitialization::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/init/js/FBInitOptions;)(initOptions);
       }
     } catch(e) {
     }
@@ -185,19 +187,28 @@ public final class FBInitialization implements HasFBInitHandlers  {
 
   @SuppressWarnings ({ "UnusedDeclaration" })
   private void handleFBAsyncInit(final FBInitOptions initOptions) {
-    initializationState = FBInitialization.InitializationState.ScriptLoaded;
+    try {
+      initializationState = InitializationState.ScriptLoaded;
 
-    initializationTimer.cancel();
-    initializationTimer = null;
+      initializationTimer.cancel();
+      initializationTimer = null;
 
-    if (initOptions != null) {
-      executeFBInit(initOptions);
+      if (initOptions != null) {
+        executeFBInit(initOptions);
+      }
+
+      initializationState = InitializationState.Initialized;
+
+      Log.fine("Facebook initialized");
+      fireInitSuccess();
+    } catch (Throwable t) {
+      GWT.UncaughtExceptionHandler uncaughtExceptionHandler = GWT.getUncaughtExceptionHandler();
+      if (uncaughtExceptionHandler == null) {
+        throw new EventHandlerException("Error handling Facebook init callback", t);
+      }
+
+      uncaughtExceptionHandler.onUncaughtException(t);
     }
-
-    initializationState = FBInitialization.InitializationState.Initialized;
-
-    Log.fine("Facebook initialized");
-    fireInitSuccess();
   }
 
   public native void executeFBInit(final FBInitOptions initOptions) /*-{

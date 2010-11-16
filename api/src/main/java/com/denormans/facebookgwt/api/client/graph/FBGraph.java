@@ -20,6 +20,7 @@ package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.client.graph.js.FBRetrieveUserOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBUser;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethod;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethods;
@@ -33,20 +34,22 @@ public class FBGraph extends FBIntegration {
   /**
    * Retrieves the current user.
    *
+   * @param options The call options
    * @param callback Called when the method is complete
    */
-  public void retrieveCurrentUser(final AsyncCallback<FBUser> callback) {
-    retrieveUser(CurrentUserID, callback);
+  public void retrieveCurrentUser(final FBRetrieveUserOptions options, final AsyncCallback<FBUser> callback) {
+    retrieveUser(CurrentUserID, options, callback);
   }
 
   /**
    * Retrieves the given user.
    *
    * @param userID The user ID
+   * @param options The call options
    * @param callback Called when the method is complete
    */
-  public void retrieveUser(final String userID, final AsyncCallback<FBUser> callback) {
-    executeGraphCall(userID, null, HTTPMethods.Get, null, callback);
+  public void retrieveUser(final String userID, final FBRetrieveUserOptions options, final AsyncCallback<FBUser> callback) {
+    executeGraphCall(userID, null, HTTPMethods.Get, options, callback);
   }
 
   /**
@@ -54,13 +57,18 @@ public class FBGraph extends FBIntegration {
    *
    * @param objectID The object to retrieve from/post to
    * @param connectionType The type of connections (if any) to retrieve from the object
-   * @param httpMethod The method to execute
-   * @param callOptions The method options
-   * @param callback Called when the method is complete
+   * @param httpMethod The HTTP method to use
+   * @param callOptions The call options
+   * @param callback Called when the call is complete
    */
   public native void executeGraphCall(final String objectID, final ConnectionType connectionType, final HTTPMethod httpMethod, final FBGraphCallOptions callOptions, final AsyncCallback<?> callback) /*-{
     try {
-      var path = "/" + objectID;
+      var path = "/";
+
+      if (objectID != null) {
+        path += objectID;
+      }
+
       if (connectionType != null) {
         path += "/" + connectionType.@com.denormans.facebookgwt.api.shared.graph.ConnectionType::getApiValue()();
       }
@@ -77,8 +85,9 @@ public class FBGraph extends FBIntegration {
 
       var cb;
       if (callback != null) {
+        var self = this;
         cb = function(response) {
-          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+          self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
         };
       }
 

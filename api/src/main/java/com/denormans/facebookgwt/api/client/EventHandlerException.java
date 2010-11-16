@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -16,17 +16,21 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.events.template;
+package com.denormans.facebookgwt.api.client;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+public class EventHandlerException extends RuntimeException {
+  public EventHandlerException() {
+  }
 
-public interface HasFBStubHandler extends HasHandlers {
-  /**
-   * Adds a {@link FBStubEvent} handler.
-   *
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addFBStubHandler(FBStubHandler handler);
+  public EventHandlerException(final String message) {
+    super(message);
+  }
+
+  public EventHandlerException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
+
+  public EventHandlerException(final Throwable cause) {
+    super(cause);
+  }
 }

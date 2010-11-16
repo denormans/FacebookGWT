@@ -18,7 +18,15 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.i18n.client.DateTimeFormat;
+
+import java.util.Date;
+import java.util.List;
+
 public class FBUser extends FBGraphObject {
+  public static final DateTimeFormat BirthdayFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
+
   protected FBUser() {
   }
 
@@ -28,6 +36,47 @@ public class FBUser extends FBGraphObject {
 
   public final native String getLastName() /*-{
     return this.last_name;
+  }-*/;
+
+  public final native String getName() /*-{
+    return this.name;
+  }-*/;
+
+  public final native String getLink() /*-{
+    return this.link;
+  }-*/;
+
+  public final native String getAbout() /*-{
+    return this.about;
+  }-*/;
+
+  public final Date getBirthday() {
+    String birthdayText = getBirthdayJS();
+    return birthdayText != null ? BirthdayFormat.parse(birthdayText) : null;
+  }
+
+  private native String getBirthdayJS() /*-{
+    return this.birthday;
+  }-*/;
+
+  public final List<Work> getWork() {
+    return convertJsArrayToList(getWorkJS());
+  }
+
+  private native JsArray<Work> getWorkJS() /*-{
+    return this.work;
+  }-*/;
+
+  public final List<Education> getEducation() {
+    return convertJsArrayToList(getEducationJS());
+  }
+
+  private native JsArray<Education> getEducationJS() /*-{
+    return this.education;
+  }-*/;
+
+  public final native String getEmail() /*-{
+    return this.email;
   }-*/;
 
 }

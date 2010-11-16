@@ -61,24 +61,28 @@ public class FacebookGWTSamples implements EntryPoint {
       }
     });
 
-    showcase = new Showcase();
+    try {
+      showcase = new Showcase();
 
-    RootPanel.get("FBGWTLoadingTextID").setVisible(false);
-    RootLayoutPanel.get().add(showcase);
+      RootPanel.get("FBGWTLoadingTextID").setVisible(false);
+      RootLayoutPanel.get().add(showcase);
 
-    FBGWT.Init.addFBInitFailureHandler(new FBInitFailureHandler() {
-      @Override
-      public void onFBInitFailure(final FBInitFailureEvent event) {
-        handleError("Facebook failed to load");
-      }
-    });
+      FBGWT.Init.addFBInitFailureHandler(new FBInitFailureHandler() {
+        @Override
+        public void onFBInitFailure(final FBInitFailureEvent event) {
+          handleError("Facebook failed to load");
+        }
+      });
 
-    FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
-      @Override
-      public void onFBInitSuccess(final FBInitSuccessEvent event) {
-        Log.info("Facebook loaded");
-      }
-    });
+      FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
+        @Override
+        public void onFBInitSuccess(final FBInitSuccessEvent event) {
+          Log.info("Facebook loaded");
+        }
+      });
+    } catch (Exception e) {
+      handleError("Error loading module", e);
+    }
 
     Log.info("FacebookGWTSamples Module loaded");
   }

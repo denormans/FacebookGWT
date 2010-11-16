@@ -19,7 +19,6 @@
 package com.denormans.facebookgwt.api.client.ui;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
-import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBAddCommentHandler;
 import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
@@ -186,8 +185,9 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
 
       var cb;
       if (callback != null) {
+        var self = this;
         cb = function(response) {
-          callback.@com.google.gwt.user.client.rpc.AsyncCallback::onSuccess(Ljava/lang/Object;)(response);
+          self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
         };
       }
 

@@ -70,9 +70,9 @@ public class LegacyWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final JsArray<FBEventResponse> result) {
         String description = new JSONArray(result).toString();
+        addApiEventMessage("Links Get Stats result", description);
         linkStatsDisplay.setValue(description);
         linkStatsDisplay.setVisible(true);
-        addApiEventMessage("Links Get Stats result", description);
       }
     });
   }
