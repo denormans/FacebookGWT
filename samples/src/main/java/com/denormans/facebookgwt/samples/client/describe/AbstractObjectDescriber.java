@@ -16,19 +16,24 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.samples.client.describe;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FBGraphObject extends FBJSObject {
-  protected FBGraphObject() {
+public abstract class AbstractObjectDescriber<T> implements ObjectDescriber<T> {
+  @Override
+  public List<ObjectDescription> describeList(final List<T> list) {
+    if (list == null) {
+      return null;
+    }
+
+    List<ObjectDescription> descriptions = new ArrayList<ObjectDescription>();
+
+    for (final T obj : list) {
+      descriptions.add(describe(obj));
+    }
+
+    return descriptions;
   }
-
-  public final native String getID() /*-{
-    return this.id;
-  }-*/;
-
-  public final native String getName() /*-{
-    return this.name;
-  }-*/;
 }

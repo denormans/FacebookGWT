@@ -16,19 +16,27 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.samples.client.describe;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
-public class FBGraphObject extends FBJSObject {
-  protected FBGraphObject() {
+public class ObjectDescription {
+  private Map<String, Object> values = new LinkedHashMap<String, Object>();
+
+  public ObjectDescription addValue(final String name, final Object value) {
+    values.put(name, value);
+    return this;
   }
 
-  public final native String getID() /*-{
-    return this.id;
-  }-*/;
+  public Set<Map.Entry<String, Object>> getValues() {
+    return Collections.unmodifiableSet(values.entrySet());
+  }
 
-  public final native String getName() /*-{
-    return this.name;
-  }-*/;
+  @Override
+  public String toString() {
+    return values.toString();
+  }
 }

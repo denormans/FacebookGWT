@@ -22,6 +22,8 @@ import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.graph.js.FBUser;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
+import com.denormans.facebookgwt.samples.client.FBObjectDescribers;
+import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -37,7 +39,7 @@ public class GraphWidget extends ShowcaseWidget {
   private static GraphWidgetUIBinder sUIBinder = GWT.create(GraphWidgetUIBinder.class);
 
   @UiField Button retrieveCurrentUserButton;
-  @UiField FBObjectDisplay<FBUser> retrieveCurrentUserDisplay;
+  @UiField FBObjectDisplay<ObjectDescription> retrieveCurrentUserDisplay;
 
   public GraphWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -62,7 +64,7 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final FBUser result) {
         addApiEventMessage("Retrieve current user result (firstName=" + result.getFirstName() + ", lastName=" + result.getLastName() + ")", result);
-        retrieveCurrentUserDisplay.setValue(result);
+        retrieveCurrentUserDisplay.setValue(FBObjectDescribers.getFBUserDescriber().describe(result));
         retrieveCurrentUserDisplay.setVisible(true);
       }
     });

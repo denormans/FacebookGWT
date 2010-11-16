@@ -2,6 +2,7 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <g:HTMLPanel>
     <span ui:field="label" class="FBGWTLabel"/>
+    <g:Tree ui:field="objectTree" visible="false"/>
     <span ui:field="objectDetails" class="FBGWTCode"/>
   </g:HTMLPanel>
 </ui:UiBinder>

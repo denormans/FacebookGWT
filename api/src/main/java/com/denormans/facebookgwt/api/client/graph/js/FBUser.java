@@ -38,10 +38,6 @@ public class FBUser extends FBGraphObject {
     return this.last_name;
   }-*/;
 
-  public final native String getName() /*-{
-    return this.name;
-  }-*/;
-
   public final native String getLink() /*-{
     return this.link;
   }-*/;

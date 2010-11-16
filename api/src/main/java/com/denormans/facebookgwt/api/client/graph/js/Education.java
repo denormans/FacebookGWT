@@ -19,20 +19,26 @@
 package com.denormans.facebookgwt.api.client.graph.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+import com.denormans.facebookgwt.api.shared.graph.EducationType;
+import com.denormans.facebookgwt.api.shared.graph.EducationTypes;
 
 public class Education extends FBJSObject {
   protected Education() {
   }
 
-  public final native String getSchool() /*-{
+  public final native FBGraphObject getSchool() /*-{
     return this.school;
   }-*/;
 
-  public final native String getYear() /*-{
+  public final native FBGraphObject getYear() /*-{
     return this.year;
   }-*/;
 
-  public final native String getType() /*-{
+  public final EducationType getType() {
+    return EducationTypes.valueFromApiValue(getTypeJS());
+  }
+
+  private native String getTypeJS() /*-{
     return this.type;
   }-*/;
 

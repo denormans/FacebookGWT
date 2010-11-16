@@ -16,19 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.shared.graph;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-public class FBGraphObject extends FBJSObject {
-  protected FBGraphObject() {
-  }
-
-  public final native String getID() /*-{
-    return this.id;
-  }-*/;
-
-  public final native String getName() /*-{
-    return this.name;
-  }-*/;
+public interface EducationType extends FBEnum {
 }
