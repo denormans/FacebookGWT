@@ -4,7 +4,7 @@ var $gwt_version = "2.1.0";
 var $wnd = parent;
 var $doc = $wnd.document;
 var $moduleName, $moduleBase;
-var $strongName = '9279EE4F110DD483E6C016FD5652BE01';
+var $strongName = '2872A667A811E016631ECA29C594B335';
 var $stats = $wnd.__gwtStatsEvent ? function(a) {return $wnd.__gwtStatsEvent(a);} : null,
 $sessionId = $wnd.__gwtStatsSessionId ? $wnd.__gwtStatsSessionId : null;
 $stats && $stats({moduleName:'FacebookGWTSamples',sessionId:$sessionId,subSystem:'startup',evtGroup:'moduleStartup',millis:(new Date()).getTime(),type:'moduleEvalStart'});
@@ -4226,10 +4226,15 @@ function com_denormans_facebookgwt_samples_client_showcase_widgets_Authenticatio
 }
 
 function com_denormans_facebookgwt_samples_client_showcase_widgets_AuthenticationWidget_$updateUserPermissions__Lcom_denormans_facebookgwt_samples_client_showcase_widgets_AuthenticationWidget_2Ljava_util_List_2V(this$static, permissions){
-  var loginOptions;
+  var loginOptions, permission, permission$iterator, requestablePermissions;
   if (com_google_gwt_lang_Cast_isNotNull__Ljava_lang_Object_2Z(permissions) && !permissions.isEmpty__Z()) {
     loginOptions = com_denormans_facebookgwt_samples_client_showcase_widgets_FBLoginOptionsEditor_$getLoginOptions__Lcom_denormans_facebookgwt_samples_client_showcase_widgets_FBLoginOptionsEditor_2Lcom_denormans_facebookgwt_api_client_auth_js_FBLoginOptions_2(this$static.com_denormans_facebookgwt_samples_client_showcase_widgets_AuthenticationWidget_loginOptionsEditor);
-    com_denormans_facebookgwt_api_client_auth_js_FBLoginOptions_$setPermissions__Lcom_denormans_facebookgwt_api_client_auth_js_FBLoginOptions_2Ljava_util_Collection_2Lcom_denormans_facebookgwt_api_client_auth_js_FBLoginOptions_2(loginOptions, permissions);
+    requestablePermissions = new java_util_ArrayList_ArrayList__IV(permissions.size__I());
+    for (permission$iterator = permissions.iterator__Ljava_util_Iterator_2(); permission$iterator.hasNext__Z();) {
+      permission = com_google_gwt_lang_Cast_dynamicCast__Ljava_lang_Object_2ILjava_lang_Object_2(permission$iterator.next__Ljava_lang_Object_2(), 19);
+      permission.isRequestable__Z() && requestablePermissions.add__Ljava_lang_Object_2Z(permission);
+    }
+    com_denormans_facebookgwt_api_client_auth_js_FBLoginOptions_$setPermissions__Lcom_denormans_facebookgwt_api_client_auth_js_FBLoginOptions_2Ljava_util_Collection_2Lcom_denormans_facebookgwt_api_client_auth_js_FBLoginOptions_2(loginOptions, requestablePermissions);
     com_denormans_facebookgwt_samples_client_showcase_widgets_FBLoginOptionsEditor_$setLoginOptions__Lcom_denormans_facebookgwt_samples_client_showcase_widgets_FBLoginOptionsEditor_2Lcom_denormans_facebookgwt_api_client_auth_js_FBLoginOptions_2V(this$static.com_denormans_facebookgwt_samples_client_showcase_widgets_AuthenticationWidget_loginOptionsEditor, loginOptions);
   }
 }
