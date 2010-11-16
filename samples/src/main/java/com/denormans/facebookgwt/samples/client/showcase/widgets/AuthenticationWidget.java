@@ -38,6 +38,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -108,7 +109,13 @@ public class AuthenticationWidget extends ShowcaseWidget {
   private void updateUserPermissions(List<FBPermission> permissions) {
     if (permissions != null && !permissions.isEmpty()) {
       FBLoginOptions loginOptions = loginOptionsEditor.getLoginOptions();
-      loginOptions.setPermissions(permissions);
+      List<FBPermission> requestablePermissions = new ArrayList<FBPermission>(permissions.size());
+      for (FBPermission permission : permissions) {
+        if (permission.isRequestable()) {
+          requestablePermissions.add(permission);
+        }
+      }
+      loginOptions.setPermissions(requestablePermissions);
       loginOptionsEditor.setLoginOptions(loginOptions);
     }
   }
