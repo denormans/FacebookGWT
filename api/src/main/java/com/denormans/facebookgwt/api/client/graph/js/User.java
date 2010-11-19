@@ -24,10 +24,10 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import java.util.Date;
 import java.util.List;
 
-public class FBUser extends FBGraphObject {
+public class User extends FBGraphObject {
   private static DateTimeFormat sBirthdayFormat;
 
-  protected FBUser() {
+  protected User() {
   }
 
   public static DateTimeFormat getBirthdayFormat() {
@@ -82,5 +82,4 @@ public class FBUser extends FBGraphObject {
   public final native String getEmail() /*-{
     return this.email;
   }-*/;
-
 }

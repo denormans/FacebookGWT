@@ -16,39 +16,23 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.samples.client.describe;
+package com.denormans.facebookgwt.api.client.graph.js;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 
-public class ObjectDescription {
-  private Map<String, Object> values = new LinkedHashMap<String, Object>();
+import com.google.gwt.core.client.JsArray;
 
-  public ObjectDescription addValue(final String name, final Object value) {
-    values.put(name, value);
-    return this;
+import java.util.List;
+
+public class FBGraphDataListResult<T extends FBJSObject> extends FBJSObject {
+  protected FBGraphDataListResult() {
   }
 
-  public ObjectDescription addValues(final Map<String, ?> values) {
-    this.values.putAll(values);
-    return this;
+  public final List<T> getData() {
+    return convertJsArrayToList(getDataJS());
   }
 
-  public ObjectDescription addValues(final ObjectDescription description) {
-    for (Map.Entry<String, Object> entry : description.getValues()) {
-      values.put(entry.getKey(), entry.getValue());
-    }
-    return this;
-  }
-
-  public Set<Map.Entry<String, Object>> getValues() {
-    return Collections.unmodifiableSet(values.entrySet());
-  }
-
-  @Override
-  public String toString() {
-    return values.toString();
-  }
+  private native JsArray<T> getDataJS() /*-{
+    return this.data;
+  }-*/;
 }

@@ -18,12 +18,19 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
-public class FBRetrieveUserOptions extends FBGraphCallOptions {
-  public static FBRetrieveUserOptions createRetrieveUserOptions() {
+public class FBFeedPostOptions extends FBGraphCallOptions {
+  public static FBFeedPostOptions createFeedPostOptions() {
     return createEnhancedObject();
   }
 
-  protected FBRetrieveUserOptions() {
+  protected FBFeedPostOptions() {
   }
 
+  public final native String getMessage() /*-{
+    return this.message;
+  }-*/;
+
+  public final native FBFeedPostOptions setMessage(final String message) /*-{
+    this.message = message;
+  }-*/;
 }

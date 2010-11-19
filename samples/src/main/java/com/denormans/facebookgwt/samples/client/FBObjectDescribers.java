@@ -20,7 +20,8 @@ package com.denormans.facebookgwt.samples.client;
 
 import com.denormans.facebookgwt.api.client.graph.js.Education;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
-import com.denormans.facebookgwt.api.client.graph.js.FBUser;
+import com.denormans.facebookgwt.api.client.graph.js.Post;
+import com.denormans.facebookgwt.api.client.graph.js.User;
 import com.denormans.facebookgwt.api.client.graph.js.Work;
 import com.denormans.facebookgwt.samples.client.describe.AbstractObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
@@ -28,9 +29,10 @@ import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
 
 public class FBObjectDescribers {
   private static ObjectDescriber<FBGraphObject> sGenericGraphObjectDescriber = new FBGraphObjectDescriber<FBGraphObject>();
-  private static ObjectDescriber<FBUser> sFBUserDescriber;
+  private static ObjectDescriber<User> sUserDescriber;
   private static ObjectDescriber<Work> sWorkDescriber;
   private static ObjectDescriber<Education> sEducationDescriber;
+  private static ObjectDescriber<Post> sPostDescriber;
 
   public static ObjectDescriber<FBGraphObject> getGenericGraphObjectDescriber() {
     if (sGenericGraphObjectDescriber == null) {
@@ -40,22 +42,22 @@ public class FBObjectDescribers {
     return sGenericGraphObjectDescriber;
   }
 
-  public static ObjectDescriber<FBUser> getFBUserDescriber() {
-    if (sFBUserDescriber == null) {
-      sFBUserDescriber = new FBGraphObjectDescriber<FBUser>() {
+  public static ObjectDescriber<User> getUserDescriber() {
+    if (sUserDescriber == null) {
+      sUserDescriber = new FBGraphObjectDescriber<User>() {
         @Override
-        public ObjectDescription describe(final FBUser obj) {
+        public ObjectDescription describe(final User obj) {
           if (obj == null) {
             return null;
           }
 
-          return super.describe(obj).addValue("First Name", obj.getFirstName()).addValue("Last Name", obj.getLastName()).addValue("Link", obj.getLink()).
-              addValue("About", obj.getAbout()).addValue("Birthday", obj.getBirthday()).addValue("Work", getWorkDescriber().describeList(obj.getWork())).addValue("Education", getEducationDescriber().describeList(obj.getEducation())).addValue("Email", obj.getEmail());
+          return super.describe(obj).addValue("First Name", obj.getFirstName()).addValue("Last Name", obj.getLastName()).addValue("Link", obj.getLink()). addValue("About", obj.getAbout()).addValue("Birthday", obj.getBirthday()).
+              addValue("Work", getWorkDescriber().describeList(obj.getWork())).addValue("Education", getEducationDescriber().describeList(obj.getEducation())).addValue("Email", obj.getEmail());
         }
       };
     }
 
-    return sFBUserDescriber;
+    return sUserDescriber;
   }
 
   public static ObjectDescriber<Work> getWorkDescriber() {
@@ -93,6 +95,23 @@ public class FBObjectDescribers {
     }
 
     return sEducationDescriber;
+  }
+
+  public static ObjectDescriber<Post> getPostDescriber() {
+    if (sPostDescriber == null) {
+      sPostDescriber = new FBGraphObjectDescriber<Post>() {
+        @Override
+        public ObjectDescription describe(final Post obj) {
+          if (obj == null) {
+            return null;
+          }
+
+          return super.describe(obj);
+        }
+      };
+    }
+
+    return sPostDescriber;
   }
 
   private static class FBGraphObjectDescriber<T extends FBGraphObject> extends AbstractObjectDescriber<T> {

@@ -19,7 +19,9 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.graph.js.FBUser;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
+import com.denormans.facebookgwt.api.client.graph.js.Post;
+import com.denormans.facebookgwt.api.client.graph.js.User;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.samples.client.FBObjectDescribers;
@@ -34,12 +36,17 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
+import java.util.List;
+
 public class GraphWidget extends ShowcaseWidget {
   interface GraphWidgetUIBinder extends UiBinder<HTMLPanel, GraphWidget> {}
   private static GraphWidgetUIBinder sUIBinder = GWT.create(GraphWidgetUIBinder.class);
 
   @UiField Button retrieveCurrentUserButton;
   @UiField FBObjectDisplay<ObjectDescription> retrieveCurrentUserDisplay;
+
+  @UiField Button retrieveCurrentUserHomeFeedButton;
+  @UiField FBObjectDisplay<List<ObjectDescription>> retrieveCurrentUserHomeFeedDisplay;
 
   public GraphWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -49,23 +56,41 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         retrieveCurrentUserButton.setEnabled(FBGWT.Init.isInitialized());
+        retrieveCurrentUserHomeFeedButton.setEnabled(FBGWT.Init.isInitialized());
       }
     });
   }
 
   @UiHandler ("retrieveCurrentUserButton")
   public void handleRetrieveCurrentUserButtonClick(final ClickEvent event) {
-    FBGWT.Graph.retrieveCurrentUser(null, new AsyncCallback<FBUser>() {
+    FBGWT.Graph.retrieveCurrentUser(null, new AsyncCallback<User>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user", caught);
       }
 
       @Override
-      public void onSuccess(final FBUser result) {
+      public void onSuccess(final User result) {
         addApiEventMessage("Retrieve current user result (firstName=" + result.getFirstName() + ", lastName=" + result.getLastName() + ")", result);
-        retrieveCurrentUserDisplay.setValue(FBObjectDescribers.getFBUserDescriber().describe(result));
+        retrieveCurrentUserDisplay.setValue(FBObjectDescribers.getUserDescriber().describe(result));
         retrieveCurrentUserDisplay.setVisible(true);
+      }
+    });
+  }
+
+  @UiHandler ("retrieveCurrentUserHomeFeedButton")
+  public void handleRetrieveCurrentUserHomeFeedButtonClick(final ClickEvent event) {
+    FBGWT.Graph.retrieveCurrentUserHomeFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error retrieving current user home feed", caught);
+      }
+
+      @Override
+      public void onSuccess(final FBGraphDataListResult<Post> result) {
+        addApiEventMessage("Retrieve current user home feed result", result);
+        retrieveCurrentUserHomeFeedDisplay.setValue(FBObjectDescribers.getPostDescriber().describeList(result.getData()));
+        retrieveCurrentUserHomeFeedDisplay.setVisible(true);
       }
     });
   }
