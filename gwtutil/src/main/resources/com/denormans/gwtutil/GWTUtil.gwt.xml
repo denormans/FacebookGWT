@@ -1,21 +1,4 @@
-<!--
-  Copyright (C) 2007 ProbuSoft, Inc.
-  http://www.probusoft.com/
-  All rights reserved.
-
-  This software is the confidential and proprietary information of ProbuSoft, Inc. ("Confidential Information"). You
-  shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
-  agreement you entered into with ProbuSoft, Inc.
-
-  THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
-  PROBUSOFT, INC. OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.1//EN" "http://google-web-toolkit.googlecode.com/svn/releases/2.1/distro-source/core/src/gwt-module.dtd">
 <module>
   <inherits name="com.google.gwt.user.User"/>
   <inherits name="com.google.gwt.logging.Logging"/>
