@@ -19,6 +19,8 @@
 package com.denormans.facebookgwt.api.client;
 
 import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
+import com.denormans.facebookgwt.api.client.core.FBAPIException;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphError;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventType;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
@@ -73,6 +75,12 @@ public abstract class FBIntegration implements HasHandlers {
 
   protected void executeCallback(final AsyncCallback callback, final double result) {
     executeCallback(callback, Double.valueOf(result));
+  }
+
+  protected void executeCallbackError(final AsyncCallback callback, final int errorCode, final String errorMessage) {
+    FBAPIException fbapiException = new FBAPIException(errorMessage, errorCode);
+    fbapiException.fillInStackTrace();
+    callback.onFailure(fbapiException);
   }
 
   private JSFunction subscribeToEvent(final FBEventType eventType) {

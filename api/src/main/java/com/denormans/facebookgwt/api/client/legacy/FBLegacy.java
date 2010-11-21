@@ -49,6 +49,10 @@ public class FBLegacy extends FBIntegration {
           } else if (typeof(response) === "number") {
             self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;D)(callback, response);
           } else {
+            if (response != null && response.error_code) {
+              self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallbackError(Lcom/google/gwt/user/client/rpc/AsyncCallback;ILjava/lang/String;)(callback, response.error_code, response.error_msg);
+              return;
+            }
             self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
           }
         };

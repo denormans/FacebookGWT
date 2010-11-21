@@ -59,6 +59,10 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
     try {
       var self = this;
       $wnd.FB.getLoginStatus(function(response) {
+        if (response != null && response.error_code) {
+          self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallbackError(Lcom/google/gwt/user/client/rpc/AsyncCallback;ILjava/lang/String;)(callback, response.error_code, response.error_msg);
+          return;
+        }
         self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
       }, forceReload);
     } catch(e) {
@@ -96,6 +100,10 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       var self = this;
       $wnd.FB.login(function(response) {
         if (callback != null) {
+          if (response != null && response.error_code) {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallbackError(Lcom/google/gwt/user/client/rpc/AsyncCallback;ILjava/lang/String;)(callback, response.error_code, response.error_msg);
+            return;
+          }
           self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
         }
       }, loginOptions);
@@ -119,6 +127,10 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       var self = this;
       $wnd.FB.logout(function(response) {
         if (callback != null) {
+          if (response != null && response.error_code) {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallbackError(Lcom/google/gwt/user/client/rpc/AsyncCallback;ILjava/lang/String;)(callback, response.error_code, response.error_msg);
+            return;
+          }
           self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
         }
       });

@@ -25,6 +25,6 @@ public class FriendAddCallbackResponse extends FBEventResponse {
   }
 
   public final native boolean isAdded() /*-{
-    return this.action;
+    return this.action == true;
   }-*/;
 }

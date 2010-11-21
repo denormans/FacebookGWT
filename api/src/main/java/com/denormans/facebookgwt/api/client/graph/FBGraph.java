@@ -18,10 +18,12 @@
 
 package com.denormans.facebookgwt.api.client.graph;
 
+import com.denormans.facebookgwt.api.client.FBGWTException;
 import com.denormans.facebookgwt.api.client.FBIntegration;
 import com.denormans.facebookgwt.api.client.graph.js.FBFeedPostOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphError;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.Post;
 import com.denormans.facebookgwt.api.client.graph.js.User;
@@ -217,6 +219,10 @@ public class FBGraph extends FBIntegration {
           } else if (typeof(response) === "number") {
             self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;D)(callback, response);
           } else {
+            if (response != null && response.error) {
+              self.@com.denormans.facebookgwt.api.client.graph.FBGraph::executeCallbackError(Lcom/google/gwt/user/client/rpc/AsyncCallback;Lcom/denormans/facebookgwt/api/client/graph/js/FBGraphError;)(callback, response.error);
+              return;
+            }
             self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
           }
         };
@@ -232,4 +238,16 @@ public class FBGraph extends FBIntegration {
       }
     }
   }-*/;
+
+  protected void executeCallbackError(final AsyncCallback callback, final FBGraphError error) {
+    String message = error.getMessage();
+    String type = error.getType();
+    if (type != null && type.length() > 0) {
+      message += " (" + type + ")";
+    }
+
+    FBGWTException fbgwtException = new FBGWTException(message);
+    fbgwtException.fillInStackTrace();
+    callback.onFailure(fbgwtException);
+  }
 }
