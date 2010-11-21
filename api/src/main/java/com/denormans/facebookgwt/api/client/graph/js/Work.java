@@ -18,24 +18,13 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
+import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-
-import com.google.gwt.i18n.client.DateTimeFormat;
 
 import java.util.Date;
 
 public class Work extends FBJSObject {
-  private static DateTimeFormat sTimePeriodFormat;
-
   protected Work() {
-  }
-
-  public static DateTimeFormat getTimePeriodFormat() {
-    if (sTimePeriodFormat == null) {
-      sTimePeriodFormat = DateTimeFormat.getFormat("yyyy-MM");
-    }
-
-    return sTimePeriodFormat;
   }
 
   public final native FBGraphObject getEmployer() /*-{
@@ -51,7 +40,7 @@ public class Work extends FBJSObject {
   }-*/;
 
   public final Date getStartDate() {
-    return parseTimePeriodDate(getStartDateJS());
+    return FBDateTimeFormats.parseTimePeriodDate(getStartDateJS());
   }
 
   private native String getStartDateJS() /*-{
@@ -59,18 +48,10 @@ public class Work extends FBJSObject {
   }-*/;
 
   public final Date getEndDate() {
-    return parseTimePeriodDate(getEndDateJS());
+    return FBDateTimeFormats.parseTimePeriodDate(getEndDateJS());
   }
 
   private native String getEndDateJS() /*-{
     return this.end_date;
   }-*/;
-
-  private Date parseTimePeriodDate(final String dateText) {
-    if (dateText == null || "0000-00".equals(dateText)) {
-      return null;
-    }
-
-    return getTimePeriodFormat().parse(dateText);
-  }
 }

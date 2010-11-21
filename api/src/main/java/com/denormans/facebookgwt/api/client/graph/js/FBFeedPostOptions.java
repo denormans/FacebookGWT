@@ -32,5 +32,6 @@ public class FBFeedPostOptions extends FBGraphCallOptions {
 
   public final native FBFeedPostOptions setMessage(final String message) /*-{
     this.message = message;
+    return this;
   }-*/;
 }

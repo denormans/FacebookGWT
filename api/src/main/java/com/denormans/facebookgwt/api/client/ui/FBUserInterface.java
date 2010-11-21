@@ -187,7 +187,13 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
       if (callback != null) {
         var self = this;
         cb = function(response) {
-          self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
+          if (typeof(response) === "boolean") {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Z)(callback, response);
+          } else if (typeof(response) === "number") {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;D)(callback, response);
+          } else {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
+          }
         };
       }
 

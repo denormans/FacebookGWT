@@ -19,6 +19,7 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.graph.js.FBFeedPostOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.Post;
 import com.denormans.facebookgwt.api.client.graph.js.User;
@@ -35,10 +36,14 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.TextBox;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class GraphWidget extends ShowcaseWidget {
+  private static final Logger Log = Logger.getLogger(GraphWidget.class.getName());
+
   interface GraphWidgetUIBinder extends UiBinder<HTMLPanel, GraphWidget> {}
   private static GraphWidgetUIBinder sUIBinder = GWT.create(GraphWidgetUIBinder.class);
 
@@ -47,6 +52,13 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiField Button retrieveCurrentUserHomeFeedButton;
   @UiField FBObjectDisplay<List<ObjectDescription>> retrieveCurrentUserHomeFeedDisplay;
+
+  @UiField Button postToCurrentUserWallButton;
+  @UiField TextBox postToCurrentUserWallMessageTextBox;
+
+  @UiField Button deletePostButton;
+  @UiField TextBox deletePostIDTextBox;
+  @UiField FBObjectDisplay<Post> postToCurrentUserWallDisplay;
 
   public GraphWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -57,6 +69,12 @@ public class GraphWidget extends ShowcaseWidget {
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         retrieveCurrentUserButton.setEnabled(FBGWT.Init.isInitialized());
         retrieveCurrentUserHomeFeedButton.setEnabled(FBGWT.Init.isInitialized());
+
+        postToCurrentUserWallButton.setEnabled(FBGWT.Init.isInitialized());
+        postToCurrentUserWallMessageTextBox.setEnabled(FBGWT.Init.isInitialized());
+
+        deletePostButton.setEnabled(FBGWT.Init.isInitialized());
+        deletePostIDTextBox.setEnabled(FBGWT.Init.isInitialized());
       }
     });
   }
@@ -91,6 +109,42 @@ public class GraphWidget extends ShowcaseWidget {
         addApiEventMessage("Retrieve current user home feed result", result);
         retrieveCurrentUserHomeFeedDisplay.setValue(FBObjectDescribers.getPostDescriber().describeList(result.getData()));
         retrieveCurrentUserHomeFeedDisplay.setVisible(true);
+      }
+    });
+  }
+
+  @UiHandler ("postToCurrentUserWallButton")
+  public void handlePostToCurrentUserWallClick(final ClickEvent event) {
+    FBFeedPostOptions postOptions = FBFeedPostOptions.createFeedPostOptions().setMessage(postToCurrentUserWallMessageTextBox.getText());
+
+    Log.info("Post options: " + postOptions.toJSONString());
+
+    FBGWT.Graph.postToCurrentUserWall(postOptions, new AsyncCallback<Post>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error posting to current user wall", caught);
+      }
+
+      @Override
+      public void onSuccess(final Post result) {
+        addApiEventMessage("Post to current user wall result", result);
+        postToCurrentUserWallDisplay.setValue(result);
+        postToCurrentUserWallDisplay.setVisible(true);
+      }
+    });
+  }
+
+  @UiHandler ("deletePostButton")
+  public void handleDeletePostButtonClick(final ClickEvent event) {
+    FBGWT.Graph.deleteItem(deletePostIDTextBox.getText(), null, new AsyncCallback<Boolean>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error deleting post", caught);
+      }
+
+      @Override
+      public void onSuccess(final Boolean result) {
+        addApiEventMessage("Delete post result", result);
       }
     });
   }

@@ -19,9 +19,9 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -63,8 +63,8 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
 
     objectTree.setVisible(false);
 
-    if (value instanceof EnhancedJSObject) {
-      objectDetails.setInnerText(((EnhancedJSObject) value).toJSONString());
+    if (value instanceof JavaScriptObject) {
+      objectDetails.setInnerText(new JSONObject((JavaScriptObject) value).toString());
     } else if (value != null) {
       objectDetails.setInnerText(value.toString());
     } else {
@@ -77,8 +77,10 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
       treeItems = createTreeItems((ObjectDescription) value);
     } else if (value instanceof List) {
       treeItems = createTreeItems((List<Object>) value);
-    } else if (value instanceof EnhancedJSObject) {
-      treeItems = createTreeItems((EnhancedJSObject) value);
+    } else if (value instanceof JSONObject) {
+      treeItems = createTreeItems((JSONObject) value);
+    } else if (value instanceof JavaScriptObject) {
+      treeItems = createTreeItems((JavaScriptObject) value);
     }
 
     if (treeItems != null) {
@@ -98,9 +100,12 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
     return treeItems;
   }
 
-  private List<TreeItem> createTreeItems(final EnhancedJSObject jsObject) {
+  private List<TreeItem> createTreeItems(final JavaScriptObject jsObject) {
+    return createTreeItems(new JSONObject(jsObject));
+  }
+
+  private List<TreeItem> createTreeItems(final JSONObject jsonObject) {
     List<TreeItem> treeItems = new ArrayList<TreeItem>();
-    JSONObject jsonObject = new JSONObject(jsObject);
     for (final String key : jsonObject.keySet()) {
       treeItems.add(createTreeItem(key, jsonObject.get(key)));
     }
@@ -127,8 +132,10 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
       treeItems = createTreeItems((ObjectDescription) value);
     } else if (value instanceof List) {
       treeItems = createTreeItems((List<Object>) value);
-    } else if (value instanceof EnhancedJSObject) {
-      treeItems = createTreeItems((EnhancedJSObject) value);
+    } else if (value instanceof JSONObject) {
+      treeItems = createTreeItems((JSONObject) value);
+    } else if (value instanceof JavaScriptObject) {
+      treeItems = createTreeItems((JavaScriptObject) value);
     } else {
       return new TreeItem(name + ": " + value);
     }

@@ -24,6 +24,7 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.legacy.js.FBLegacyMethodOptions;
 import com.denormans.facebookgwt.api.shared.legacy.LegacyMethods;
+import com.denormans.gwtutil.client.js.EnhancedJSObject;
 import com.denormans.gwtutil.client.js.GenericJSObject;
 
 import com.google.gwt.core.client.GWT;
@@ -37,13 +38,15 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
+import java.util.List;
+
 public class LegacyWidget extends ShowcaseWidget {
   interface LegacyWidgetUIBinder extends UiBinder<HTMLPanel, LegacyWidget> {}
 
   private static LegacyWidgetUIBinder sUIBinder = GWT.create(LegacyWidgetUIBinder.class);
 
   @UiField Button linkStatsButton;
-  @UiField FBObjectDisplay<String> linkStatsDisplay;
+  @UiField FBObjectDisplay<List<FBEventResponse>> linkStatsDisplay;
 
   public LegacyWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -71,7 +74,7 @@ public class LegacyWidget extends ShowcaseWidget {
       public void onSuccess(final JsArray<FBEventResponse> result) {
         String description = new JSONArray(result).toString();
         addApiEventMessage("Links Get Stats result", description);
-        linkStatsDisplay.setValue(description);
+        linkStatsDisplay.setValue(EnhancedJSObject.convertJsArrayToList(result));
         linkStatsDisplay.setVisible(true);
       }
     });

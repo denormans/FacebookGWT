@@ -78,14 +78,24 @@ public class FBGraph extends FBIntegration {
   }
 
   /**
-   * Posts to the user's wall.
+   * Posts the current user's wall feed.
    *
-   * @param userID The user ID
    * @param options The call options
    * @param callback Called when complete
    */
-  public void postToUserWall(final String userID, final FBFeedPostOptions options, final AsyncCallback<Post> callback) {
-    postItem(userID, ConnectionTypes.WallFeed, options, callback);
+  public void postToCurrentUserWall(final FBFeedPostOptions options, final AsyncCallback<Post> callback) {
+    postToItemWall(CurrentUserID, options, callback);
+  }
+
+  /**
+   * Posts to the item's wall feed.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called when complete
+   */
+  public void postToItemWall(final String itemID, final FBFeedPostOptions options, final AsyncCallback<Post> callback) {
+    postItem(itemID, ConnectionTypes.WallFeed, options, callback);
   }
 
   // Generic graph methods
@@ -131,7 +141,7 @@ public class FBGraph extends FBIntegration {
    * @param options The call options
    * @param callback Called when complete
    */
-  public void deleteItem(final String itemID, final FBGraphCallOptions options, final AsyncCallback<?> callback) {
+  public void deleteItem(final String itemID, final FBGraphCallOptions options, final AsyncCallback<Boolean> callback) {
     executeGraphCall(itemID, null, HTTPMethods.Delete, options, callback);
   }
 
@@ -143,7 +153,7 @@ public class FBGraph extends FBIntegration {
    * @param options The call options
    * @param callback Called when complete
    */
-  public void deleteConnection(final String itemID, final ConnectionType connectionType, final FBGraphCallOptions options, final AsyncCallback<?> callback) {
+  public void deleteConnection(final String itemID, final ConnectionType connectionType, final FBGraphCallOptions options, final AsyncCallback<Boolean> callback) {
     executeGraphCall(itemID, connectionType, HTTPMethods.Delete, options, callback);
   }
 
@@ -182,7 +192,13 @@ public class FBGraph extends FBIntegration {
       if (callback != null) {
         var self = this;
         cb = function(response) {
-          self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
+          if (typeof(response) === "boolean") {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Z)(callback, response);
+          } else if (typeof(response) === "number") {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;D)(callback, response);
+          } else {
+            self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
+          }
         };
       }
 

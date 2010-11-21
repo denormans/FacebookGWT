@@ -3,6 +3,9 @@
   <g:HTMLPanel>
     <span ui:field="label" class="FBGWTLabel"/>
     <g:Tree ui:field="objectTree" visible="false"/>
-    <span ui:field="objectDetails" class="FBGWTCode"/>
+    <g:DisclosurePanel>
+      <g:header>Raw</g:header>
+      <g:HTMLPanel><span ui:field="objectDetails" class="FBGWTCode"/></g:HTMLPanel>
+    </g:DisclosurePanel>
   </g:HTMLPanel>
 </ui:UiBinder>

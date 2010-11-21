@@ -67,6 +67,14 @@ public abstract class FBIntegration implements HasHandlers {
     }
   }
 
+  protected void executeCallback(final AsyncCallback callback, final boolean result) {
+    executeCallback(callback, Boolean.valueOf(result));
+  }
+
+  protected void executeCallback(final AsyncCallback callback, final double result) {
+    executeCallback(callback, Double.valueOf(result));
+  }
+
   private JSFunction subscribeToEvent(final FBEventType eventType) {
     Log.fine("Subscribing to event: " + eventType + " (" + eventType.getApiValue() + ")");
     return subscribeToEventJS(eventType.getApiValue());

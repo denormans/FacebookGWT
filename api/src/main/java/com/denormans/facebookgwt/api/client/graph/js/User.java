@@ -18,24 +18,15 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
+import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
+
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.i18n.client.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
 
 public class User extends FBGraphObject {
-  private static DateTimeFormat sBirthdayFormat;
-
   protected User() {
-  }
-
-  public static DateTimeFormat getBirthdayFormat() {
-    if (sBirthdayFormat == null) {
-      sBirthdayFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
-    }
-
-    return sBirthdayFormat;
   }
 
   public final native String getFirstName() /*-{
@@ -56,7 +47,7 @@ public class User extends FBGraphObject {
 
   public final Date getBirthday() {
     String birthdayText = getBirthdayJS();
-    return birthdayText != null ? getBirthdayFormat().parse(birthdayText) : null;
+    return birthdayText != null ? FBDateTimeFormats.sBirthdayFormat.parse(birthdayText) : null;
   }
 
   private native String getBirthdayJS() /*-{
