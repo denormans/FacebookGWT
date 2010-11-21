@@ -25,15 +25,14 @@ import com.denormans.facebookgwt.api.client.init.FBInitialization;
 import com.denormans.facebookgwt.api.client.legacy.FBLegacy;
 import com.denormans.facebookgwt.api.client.ui.FBUserInterface;
 
-import java.util.logging.Logger;
-
 public final class FBGWT {
-  public static final Logger Log = Logger.getLogger(FBGWT.class.getName());
-
   public static final FBCore Core = new FBCore();
   public static final FBInitialization Init = new FBInitialization();
   public static final FBAuthentication Auth = new FBAuthentication();
   public static final FBGraph Graph = new FBGraph();
   public static final FBUserInterface UI = new FBUserInterface();
   public static final FBLegacy Legacy = new FBLegacy();
+
+  private FBGWT() {
+  }
 }

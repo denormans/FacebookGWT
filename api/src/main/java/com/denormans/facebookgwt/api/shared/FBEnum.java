@@ -127,16 +127,16 @@ public interface FBEnum {
      * Converts the values from the API values, using the optional enum creator to create any non-null API values that don't have corresponding enum values.
      */
     public static <T extends FBEnum> List<T> valuesFromApiValues(final Map<String, ? extends T> fbEnumValuesByApiValue, final List<String> apiValues, final FBEnumCreator<? extends T> fbEnumCreator) {
-      List<T> permissions = new ArrayList<T>(apiValues.size());
+      List<T> fbEnums = new ArrayList<T>(apiValues.size());
 
       for (final String apiValue : apiValues) {
         T fbEnum = valueFromApiValue(fbEnumValuesByApiValue, apiValue, fbEnumCreator);
         if (fbEnum != null) {
-          permissions.add(fbEnum);
+          fbEnums.add(fbEnum);
         }
       }
 
-      return permissions;
+      return fbEnums;
     }
   }
 

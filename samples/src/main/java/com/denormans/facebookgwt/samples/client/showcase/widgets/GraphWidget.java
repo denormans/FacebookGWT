@@ -102,7 +102,7 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final User result) {
         addApiEventMessage("Retrieve current user result (firstName=" + result.getFirstName() + ", lastName=" + result.getLastName() + ")", result);
-        retrieveCurrentUserDisplay.setValue(FBObjectDescribers.get().getUserDescriber().describe(result));
+        retrieveCurrentUserDisplay.setValue(FBObjectDescribers.Graph.getUserDescriber().describe(result));
         retrieveCurrentUserDisplay.setVisible(true);
       }
     });
@@ -119,7 +119,7 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final FBGraphDataListResult<Post> result) {
         addApiEventMessage("Retrieve current user home feed result", result);
-        retrieveCurrentUserHomeFeedDisplay.setValue(FBObjectDescribers.get().getPostDescriber().describeList(result.getData()));
+        retrieveCurrentUserHomeFeedDisplay.setValue(FBObjectDescribers.Graph.getPostDescriber().describeList(result.getData()));
         retrieveCurrentUserHomeFeedDisplay.setVisible(true);
       }
     });

@@ -20,6 +20,9 @@ package com.denormans.facebookgwt.api.shared.graph;
 
 import com.denormans.facebookgwt.api.shared.FBEnum;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Gender implements FBEnum {
   Female("female"),
   Male("male");
@@ -28,6 +31,19 @@ public enum Gender implements FBEnum {
 
   private Gender(final String apiValue) {
     this.apiValue = apiValue;
+  }
+
+  public static List<Gender> valuesFromApiValues(final List<String> apiValues) {
+    List<Gender> genders = new ArrayList<Gender>(apiValues.size());
+
+    for (final String apiValue : apiValues) {
+      Gender fbEnum = valueFromApiValue(apiValue);
+      if (fbEnum != null) {
+        genders.add(fbEnum);
+      }
+    }
+
+    return genders;
   }
 
   public static Gender valueFromApiValue(final String apiValue) {
@@ -40,6 +56,10 @@ public enum Gender implements FBEnum {
     }
 
     return null;
+  }
+
+  public static List<Gender> parseApiValues(final String apiValues) {
+    return valuesFromApiValues(Util.splitApiValues(apiValues));
   }
 
   public String getApiValue() {
