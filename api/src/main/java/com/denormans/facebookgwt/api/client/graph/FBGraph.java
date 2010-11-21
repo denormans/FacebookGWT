@@ -98,6 +98,26 @@ public class FBGraph extends FBIntegration {
     postItem(itemID, ConnectionTypes.WallFeed, options, callback);
   }
 
+  /**
+   * Like an item (e.g. post, comment, etc.)
+   *
+   * @param itemID The item ID
+   * @param callback Called when complete
+   */
+  public void likeItem(final String itemID, final AsyncCallback<Boolean> callback) {
+    postItem(itemID, ConnectionTypes.Likes, null, callback);
+  }
+
+  /**
+   * Unlike an item (e.g. post, comment, etc.)
+   *
+   * @param itemID The item ID
+   * @param callback Called when complete
+   */
+  public void unlikeItem(final String itemID, final AsyncCallback<Boolean> callback) {
+    deleteConnection(itemID, ConnectionTypes.Likes, null, callback);
+  }
+
   // Generic graph methods
   /**
    * Retrieves an item by ID.

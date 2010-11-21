@@ -60,6 +60,12 @@ public class GraphWidget extends ShowcaseWidget {
   @UiField TextBox deletePostIDTextBox;
   @UiField FBObjectDisplay<Post> postToCurrentUserWallDisplay;
 
+  @UiField Button likeItemButton;
+  @UiField TextBox likeItemIDTextBox;
+
+  @UiField Button unlikeItemButton;
+  @UiField TextBox unlikeItemIDTextBox;
+
   public GraphWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
@@ -75,6 +81,12 @@ public class GraphWidget extends ShowcaseWidget {
 
         deletePostButton.setEnabled(FBGWT.Init.isInitialized());
         deletePostIDTextBox.setEnabled(FBGWT.Init.isInitialized());
+
+        likeItemButton.setEnabled(FBGWT.Init.isInitialized());
+        likeItemIDTextBox.setEnabled(FBGWT.Init.isInitialized());
+
+        unlikeItemButton.setEnabled(FBGWT.Init.isInitialized());
+        unlikeItemIDTextBox.setEnabled(FBGWT.Init.isInitialized());
       }
     });
   }
@@ -145,6 +157,36 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final Boolean result) {
         addApiEventMessage("Delete post result", result);
+      }
+    });
+  }
+
+  @UiHandler ("likeItemButton")
+  public void handleLikeItemButtonClick(final ClickEvent event) {
+    FBGWT.Graph.likeItem(likeItemIDTextBox.getText(), new AsyncCallback<Boolean>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error liking item", caught);
+      }
+
+      @Override
+      public void onSuccess(final Boolean result) {
+        addApiEventMessage("Like item result", result);
+      }
+    });
+  }
+
+  @UiHandler ("unlikeItemButton")
+  public void handleUnlikeItemButtonClick(final ClickEvent event) {
+    FBGWT.Graph.unlikeItem(unlikeItemIDTextBox.getText(), new AsyncCallback<Boolean>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error unliking item", caught);
+      }
+
+      @Override
+      public void onSuccess(final Boolean result) {
+        addApiEventMessage("Unlike item result", result);
       }
     });
   }

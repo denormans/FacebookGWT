@@ -22,5 +22,15 @@
       <g:Button ui:field="deletePostButton" enabled="false">Delete a Post</g:Button>
       <g:TextBox ui:field="deletePostIDTextBox" enabled="false"/>
     </div>
+
+    <div class="FBGWTField">
+      <g:Button ui:field="likeItemButton" enabled="false">Like an item</g:Button>
+      <g:TextBox ui:field="likeItemIDTextBox" enabled="false"/>
+    </div>
+
+    <div class="FBGWTField">
+      <g:Button ui:field="unlikeItemButton" enabled="false">Unlike an item</g:Button>
+      <g:TextBox ui:field="unlikeItemIDTextBox" enabled="false"/>
+    </div>
   </g:HTMLPanel>
 </ui:UiBinder>
