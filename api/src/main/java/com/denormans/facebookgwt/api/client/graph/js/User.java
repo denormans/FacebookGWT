@@ -19,8 +19,10 @@
 package com.denormans.facebookgwt.api.client.graph.js;
 
 import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
+import com.denormans.facebookgwt.api.shared.graph.Gender;
 
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsArrayString;
 
 import java.util.Date;
 import java.util.List;
@@ -72,5 +74,45 @@ public class User extends FBGraphObject {
 
   public final native String getEmail() /*-{
     return this.email;
+  }-*/;
+
+  public final native String getWebsite() /*-{
+    return this.website;
+  }-*/;
+
+  public final native Location getLocation() /*-{
+    return this.location;
+  }-*/;
+
+  public final native String getBiography() /*-{
+    return this.bio;
+  }-*/;
+
+  public final native String getQuotes() /*-{
+    return this.quotes;
+  }-*/;
+
+  public final Gender getGender() {
+    return Gender.valueFromApiValue(getGenderJS());
+  }
+
+  private native String getGenderJS() /*-{
+    return this.gender;
+  }-*/;
+
+  public final List<String> getInterestedIn() {
+    return convertJsArrayStringToList(getInterestedInJS());
+  }
+
+  private native JsArrayString getInterestedInJS() /*-{
+    return this.interested_in;
+  }-*/;
+
+  public final List<String> getSeeking() {
+    return convertJsArrayStringToList(getSeekingJS());
+  }
+
+  private native JsArrayString getSeekingJS() /*-{
+    return this.meeting_for;
   }-*/;
 }

@@ -27,15 +27,15 @@ public class Work extends FBJSObject {
   protected Work() {
   }
 
-  public final native FBGraphObject getEmployer() /*-{
+  public final native Company getEmployer() /*-{
     return this.employer;
   }-*/;
 
-  public final native FBGraphObject getLocation() /*-{
+  public final native Location getLocation() /*-{
     return this.location;
   }-*/;
 
-  public final native FBGraphObject getPosition() /*-{
+  public final native WorkPosition getPosition() /*-{
     return this.position;
   }-*/;
 

@@ -18,28 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-import com.denormans.facebookgwt.api.shared.graph.EducationType;
-import com.denormans.facebookgwt.api.shared.graph.EducationTypes;
-
-public class Education extends FBJSObject {
-  protected Education() {
+public class WorkPosition extends FBGraphObject {
+  protected WorkPosition() {
   }
-
-  public final native School getSchool() /*-{
-    return this.school;
-  }-*/;
-
-  public final native EducationYear getYear() /*-{
-    return this.year;
-  }-*/;
-
-  public final EducationType getType() {
-    return EducationTypes.valueFromApiValue(getTypeJS());
-  }
-
-  private native String getTypeJS() /*-{
-    return this.type;
-  }-*/;
-
 }
