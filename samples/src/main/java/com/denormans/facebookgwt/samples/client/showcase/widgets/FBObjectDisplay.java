@@ -24,6 +24,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.TakesValue;
@@ -39,6 +41,19 @@ import java.util.Map;
 public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
   interface FBObjectDisplayUIBinder extends UiBinder<HTMLPanel, FBObjectDisplay> {}
   private static FBObjectDisplayUIBinder sUIBinder = GWT.create(FBObjectDisplayUIBinder.class);
+
+  public interface FieldTemplates extends SafeHtmlTemplates {
+    @Template("<span><span class='FBGWTLabel'>{0}</span>{1}</span>")
+    SafeHtml fieldLabelValue(final String label, final String value);
+
+    @Template("<span>{0}</span>")
+    SafeHtml fieldValueOnly(final String value);
+
+    @Template("<span class='FBGWTLabel'>{0}</span>")
+    SafeHtml fieldLabelOnly(final String label);
+  }
+
+  private static FieldTemplates sFieldTemplates = GWT.create(FieldTemplates.class);
 
   @UiField SpanElement label;
   @UiField Tree objectTree;
@@ -124,7 +139,7 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
   @SuppressWarnings ( { "unchecked" })
   private TreeItem createTreeItem(final String name, final Object value) {
     if (value == null) {
-      return new TreeItem(name + ": null");
+      return new TreeItem(sFieldTemplates.fieldLabelValue(name + ": ", "null"));
     }
 
     List<TreeItem> treeItems;
@@ -137,10 +152,10 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
     } else if (value instanceof JavaScriptObject) {
       treeItems = createTreeItems((JavaScriptObject) value);
     } else {
-      return new TreeItem(name + ": " + value);
+      return new TreeItem(sFieldTemplates.fieldLabelValue(name + ": ", value.toString()));
     }
 
-    TreeItem treeItem = new TreeItem(name);
+    TreeItem treeItem = new TreeItem(sFieldTemplates.fieldLabelOnly((name)));
     for (final TreeItem childTreeItem : treeItems) {
       treeItem.addItem(childTreeItem);
     }
