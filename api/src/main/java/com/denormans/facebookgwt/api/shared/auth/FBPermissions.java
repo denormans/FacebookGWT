@@ -167,6 +167,11 @@ public enum FBPermissions implements FBPermission {
         public String getApiValue() {
           return apiValue;
         }
+
+        @Override
+        public String toString() {
+          return apiValue;
+        }
       };
     }
   }

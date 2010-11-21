@@ -25,7 +25,8 @@ import java.util.Map;
 
 public enum EducationTypes implements EducationType {
   College("College"),
-  HighSchool("High School")
+  HighSchool("High School"),
+  GraduateSchool("Graduate School")
   ;
 
   private static final Map<String, EducationTypes> sEducationTypesByApiValue = Util.createFBEnumByApiValueMap(EducationTypes.class);
@@ -60,6 +61,11 @@ public enum EducationTypes implements EducationType {
       return new EducationType() {
         @Override
         public String getApiValue() {
+          return apiValue;
+        }
+
+        @Override
+        public String toString() {
           return apiValue;
         }
       };

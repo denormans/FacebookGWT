@@ -53,6 +53,11 @@ public enum FBUserStatuses implements FBUserStatus {
         public String getApiValue() {
           return apiValue;
         }
+
+        @Override
+        public String toString() {
+          return apiValue;
+        }
       };
     }
   }

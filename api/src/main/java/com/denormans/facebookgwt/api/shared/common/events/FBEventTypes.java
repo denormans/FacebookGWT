@@ -57,6 +57,11 @@ public enum FBEventTypes implements FBEventType {
         public String getApiValue() {
           return apiValue;
         }
+
+        @Override
+        public String toString() {
+          return apiValue;
+        }
       };
     }
   }

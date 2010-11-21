@@ -122,6 +122,11 @@ public enum ObjectFields implements ObjectField {
         public String getApiValue() {
           return apiValue;
         }
+
+        @Override
+        public String toString() {
+          return apiValue;
+        }
       };
     }
   }
