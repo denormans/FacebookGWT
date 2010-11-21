@@ -20,6 +20,8 @@ package com.denormans.facebookgwt.api.client.graph.js;
 
 import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
 import com.denormans.facebookgwt.api.shared.graph.Gender;
+import com.denormans.facebookgwt.api.shared.graph.RelationshipType;
+import com.denormans.facebookgwt.api.shared.graph.RelationshipTypes;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
@@ -100,16 +102,16 @@ public class User extends FBGraphObject {
     return this.gender;
   }-*/;
 
-  public final List<String> getInterestedIn() {
-    return convertJsArrayStringToList(getInterestedInJS());
+  public final List<Gender> getInterestedIn() {
+    return Gender.valuesFromApiValues(convertJsArrayStringToList(getInterestedInJS()));
   }
 
   private native JsArrayString getInterestedInJS() /*-{
     return this.interested_in;
   }-*/;
 
-  public final List<String> getSeeking() {
-    return convertJsArrayStringToList(getSeekingJS());
+  public final List<RelationshipType> getSeeking() {
+    return RelationshipTypes.valuesFromApiValues(convertJsArrayStringToList(getSeekingJS()));
   }
 
   private native JsArrayString getSeekingJS() /*-{
