@@ -23,8 +23,17 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import java.util.Date;
 
 public class FBDateTimeFormats {
-  public static DateTimeFormat BirthdayFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
-  public static DateTimeFormat TimePeriodFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+  public static final DateTimeFormat BirthdayFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
+  public static final DateTimeFormat TimePeriodFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+  public static final DateTimeFormat RFC3339Format = DateTimeFormat.getFormat("yyyy-MM-dd'T'HH:mm:ssZZZ");
+
+  public static final Date parseDateTime(final DateTimeFormat dateTimeFormat, final String dateTimeText) {
+    if (dateTimeText == null) {
+      return null;
+    }
+
+    return dateTimeFormat.parse(dateTimeText);
+  }
 
   public static Date parseTimePeriodDate(final String dateText) {
     if (dateText == null || "0000-00".equals(dateText)) {

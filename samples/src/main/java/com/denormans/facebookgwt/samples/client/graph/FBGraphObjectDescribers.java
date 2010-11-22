@@ -69,7 +69,8 @@ public class FBGraphObjectDescribers {
               addValue("Work", getWorkDescriber().describeList(obj.getWork())).addValue("Education", getEducationDescriber().describeList(obj.getEducation())).addValue("Email", obj.getEmail()).addValue("Website", obj.getWebsite()).
               addValue("Location", getLocationDescriber().describe(obj.getLocation())).addValue("Biography", obj.getBiography()).addValue("Quotes", obj.getQuotes()).addValue("Gender", obj.getGender()).
               addValue("Interested in", obj.getInterestedIn()).addValue("Seeking", obj.getSeeking()).addValue("Religion", obj.getReligion()).addValue("Political Affiliation", obj.getPoliticalAffiliation()).
-              addValue("Verified", obj.isVerified());
+              addValue("Verified", obj.isVerified()).addValue("Significant Other", describe(obj.getSignificantOther())).addValue("Time Zone", obj.getTimeZone().getID()).addValue("Third-Party ID", obj.getThirdPartyID()).
+              addValue("Locale", obj.getLocale()).addValue("Updated Time", obj.getUpdatedTime());
         }
       };
     }

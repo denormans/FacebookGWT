@@ -29,6 +29,7 @@ import com.denormans.facebookgwt.api.shared.graph.Religions;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
+import com.google.gwt.i18n.client.TimeZone;
 
 import java.util.Date;
 import java.util.List;
@@ -54,8 +55,7 @@ public class User extends FBGraphObject {
   }-*/;
 
   public final Date getBirthday() {
-    String birthdayText = getBirthdayJS();
-    return birthdayText != null ? FBDateTimeFormats.BirthdayFormat.parse(birthdayText) : null;
+    return FBDateTimeFormats.parseDateTime(FBDateTimeFormats.BirthdayFormat, getBirthdayJS());
   }
 
   private native String getBirthdayJS() /*-{
@@ -140,5 +140,25 @@ public class User extends FBGraphObject {
 
   public final native boolean isVerified() /*-{
     return this.verified == true;
+  }-*/;
+
+  public final native User getSignificantOther() /*-{
+    return this.significant_other;
+  }-*/;
+
+  public final TimeZone getTimeZone() {
+    return TimeZone.createTimeZone(getTimeZoneInHoursJS() * 60);
+  }
+
+  private native int getTimeZoneInHoursJS() /*-{
+    return this.timezone || 0;
+  }-*/;
+
+  public final native String getThirdPartyID() /*-{
+    return this.third_party_id;
+  }-*/;
+
+  public final native String getLocale() /*-{
+    return this.locale;
   }-*/;
 }
