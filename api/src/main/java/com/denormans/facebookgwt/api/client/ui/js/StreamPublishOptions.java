@@ -18,9 +18,6 @@
 
 package com.denormans.facebookgwt.api.client.ui.js;
 
-import com.denormans.facebookgwt.api.client.common.js.Attachment;
-import com.denormans.facebookgwt.api.client.common.js.Link;
-
 import com.google.gwt.core.client.JsArray;
 
 import java.util.Arrays;

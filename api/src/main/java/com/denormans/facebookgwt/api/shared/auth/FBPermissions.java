@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.shared.auth;
 
-import com.denormans.facebookgwt.api.client.auth.js.FBPermissionsJS;
+import com.denormans.facebookgwt.api.client.auth.js.Permissions;
 import com.denormans.facebookgwt.api.shared.FBEnum;
 import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
@@ -136,7 +136,7 @@ public enum FBPermissions implements FBPermission {
       return valuesFromApiValues(FBEnum.Util.splitApiValues(permissionApiValues));
     }
 
-    FBPermissionsJS permissions = FBPermissionsJS.fromJSONString(permissionApiValues);
+    Permissions permissions = Permissions.fromJSONString(permissionApiValues);
     if (permissions == null) {
       return Collections.emptyList();
     }

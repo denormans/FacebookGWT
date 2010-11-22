@@ -23,14 +23,14 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import java.util.Date;
 
 public class FBDateTimeFormats {
-  public static DateTimeFormat sBirthdayFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
-  public static DateTimeFormat sTimePeriodFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+  public static DateTimeFormat BirthdayFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
+  public static DateTimeFormat TimePeriodFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
 
   public static Date parseTimePeriodDate(final String dateText) {
     if (dateText == null || "0000-00".equals(dateText)) {
       return null;
     }
 
-    return sTimePeriodFormat.parse(dateText + "-01");
+    return TimePeriodFormat.parse(dateText + "-01");
   }
 }

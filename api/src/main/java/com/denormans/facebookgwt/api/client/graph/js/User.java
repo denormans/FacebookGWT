@@ -20,8 +20,12 @@ package com.denormans.facebookgwt.api.client.graph.js;
 
 import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
 import com.denormans.facebookgwt.api.shared.graph.Gender;
+import com.denormans.facebookgwt.api.shared.graph.PoliticalAffiliation;
+import com.denormans.facebookgwt.api.shared.graph.PoliticalAffiliations;
 import com.denormans.facebookgwt.api.shared.graph.RelationshipType;
 import com.denormans.facebookgwt.api.shared.graph.RelationshipTypes;
+import com.denormans.facebookgwt.api.shared.graph.Religion;
+import com.denormans.facebookgwt.api.shared.graph.Religions;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
@@ -51,7 +55,7 @@ public class User extends FBGraphObject {
 
   public final Date getBirthday() {
     String birthdayText = getBirthdayJS();
-    return birthdayText != null ? FBDateTimeFormats.sBirthdayFormat.parse(birthdayText) : null;
+    return birthdayText != null ? FBDateTimeFormats.BirthdayFormat.parse(birthdayText) : null;
   }
 
   private native String getBirthdayJS() /*-{
@@ -116,5 +120,25 @@ public class User extends FBGraphObject {
 
   private native JsArrayString getSeekingJS() /*-{
     return this.meeting_for;
+  }-*/;
+
+  public final Religion getReligion() {
+    return Religions.valueFromApiValue(getReligionJS());
+  }
+
+  private native String getReligionJS() /*-{
+    return this.religion;
+  }-*/;
+
+  public final PoliticalAffiliation getPoliticalAffiliation() {
+    return PoliticalAffiliations.valueFromApiValue(getPoliticalAffiliationJS());
+  }
+
+  private native String getPoliticalAffiliationJS() /*-{
+    return this.political;
+  }-*/;
+
+  public final native boolean isVerified() /*-{
+    return this.verified == true;
   }-*/;
 }

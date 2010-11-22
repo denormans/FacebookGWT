@@ -19,8 +19,8 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.common.js.Attachment;
-import com.denormans.facebookgwt.api.client.common.js.Link;
+import com.denormans.facebookgwt.api.client.ui.js.Attachment;
+import com.denormans.facebookgwt.api.client.ui.js.Link;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.ui.js.BookmarkApplicationCallbackResponse;
