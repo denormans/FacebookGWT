@@ -78,10 +78,18 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
 
     objectTree.setVisible(false);
 
-    if (value instanceof JavaScriptObject) {
-      objectDetails.setInnerText(new JSONObject((JavaScriptObject) value).toString());
-    } else if (value != null) {
-      objectDetails.setInnerText(value.toString());
+    Object obj = value;
+    if (value instanceof ObjectDescription) {
+      obj = ((ObjectDescription<?>) value).getValue();
+      if (obj == null) {
+        obj = value;
+      }
+    }
+
+    if (obj instanceof JavaScriptObject) {
+      objectDetails.setInnerText(new JSONObject((JavaScriptObject) obj).toString());
+    } else if (obj != null) {
+      objectDetails.setInnerText(obj.toString());
     } else {
       objectDetails.setInnerText("");
     }
@@ -107,7 +115,7 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
     }
   }
 
-  private List<TreeItem> createTreeItems(final ObjectDescription objectDescription) {
+  private List<TreeItem> createTreeItems(final ObjectDescription<?> objectDescription) {
     List<TreeItem> treeItems = new ArrayList<TreeItem>();
     for (final Map.Entry<String, Object> entry : objectDescription.getValues()) {
       treeItems.add(createTreeItem(entry.getKey(), entry.getValue()));

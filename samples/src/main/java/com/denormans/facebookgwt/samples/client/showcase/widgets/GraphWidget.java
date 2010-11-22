@@ -21,6 +21,7 @@ package com.denormans.facebookgwt.samples.client.showcase.widgets;
 import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.graph.js.FBFeedPostOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.Post;
 import com.denormans.facebookgwt.api.client.graph.js.User;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
@@ -51,20 +52,27 @@ public class GraphWidget extends ShowcaseWidget {
   @UiField FBObjectDisplay<ObjectDescription> retrieveCurrentUserDisplay;
 
   @UiField Button retrieveCurrentUserHomeFeedButton;
-  @UiField FBObjectDisplay<List<ObjectDescription>> retrieveCurrentUserHomeFeedDisplay;
+  @UiField FBObjectDisplay<List<ObjectDescription<Post>>> retrieveCurrentUserHomeFeedDisplay;
+
+  @UiField Button retrieveCurrentUserWallFeedButton;
+  @UiField FBObjectDisplay<List<ObjectDescription<Post>>> retrieveCurrentUserWallFeedDisplay;
 
   @UiField Button postToCurrentUserWallButton;
   @UiField TextBox postToCurrentUserWallMessageTextBox;
 
   @UiField Button deletePostButton;
   @UiField TextBox deletePostIDTextBox;
-  @UiField FBObjectDisplay<Post> postToCurrentUserWallDisplay;
+  @UiField FBObjectDisplay<ObjectDescription<Post>> postToCurrentUserWallDisplay;
 
   @UiField Button likeItemButton;
   @UiField TextBox likeItemIDTextBox;
 
   @UiField Button unlikeItemButton;
   @UiField TextBox unlikeItemIDTextBox;
+
+  @UiField Button testButton;
+  @UiField TextBox testTextBox;
+  @UiField FBObjectDisplay<Object> testDisplay;
 
   public GraphWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -75,6 +83,7 @@ public class GraphWidget extends ShowcaseWidget {
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         retrieveCurrentUserButton.setEnabled(FBGWT.Init.isInitialized());
         retrieveCurrentUserHomeFeedButton.setEnabled(FBGWT.Init.isInitialized());
+        retrieveCurrentUserWallFeedButton.setEnabled(FBGWT.Init.isInitialized());
 
         postToCurrentUserWallButton.setEnabled(FBGWT.Init.isInitialized());
         postToCurrentUserWallMessageTextBox.setEnabled(FBGWT.Init.isInitialized());
@@ -87,6 +96,9 @@ public class GraphWidget extends ShowcaseWidget {
 
         unlikeItemButton.setEnabled(FBGWT.Init.isInitialized());
         unlikeItemIDTextBox.setEnabled(FBGWT.Init.isInitialized());
+
+        testButton.setEnabled(FBGWT.Init.isInitialized());
+        testTextBox.setEnabled(FBGWT.Init.isInitialized());
       }
     });
   }
@@ -125,6 +137,23 @@ public class GraphWidget extends ShowcaseWidget {
     });
   }
 
+  @UiHandler ("retrieveCurrentUserWallFeedButton")
+  public void handleRetrieveCurrentUserWallFeedButtonClick(final ClickEvent event) {
+    FBGWT.Graph.retrieveCurrentUserWallFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error retrieving current user wall feed", caught);
+      }
+
+      @Override
+      public void onSuccess(final FBGraphDataListResult<Post> result) {
+        addApiEventMessage("Retrieve current user wall feed result", result);
+        retrieveCurrentUserWallFeedDisplay.setValue(FBObjectDescribers.Graph.getPostDescriber().describeList(result.getData()));
+        retrieveCurrentUserWallFeedDisplay.setVisible(true);
+      }
+    });
+  }
+
   @UiHandler ("postToCurrentUserWallButton")
   public void handlePostToCurrentUserWallClick(final ClickEvent event) {
     FBFeedPostOptions postOptions = FBFeedPostOptions.createFeedPostOptions().setMessage(postToCurrentUserWallMessageTextBox.getText());
@@ -140,7 +169,7 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final Post result) {
         addApiEventMessage("Post to current user wall result", result);
-        postToCurrentUserWallDisplay.setValue(result);
+        postToCurrentUserWallDisplay.setValue(FBObjectDescribers.Graph.getPostDescriber().describe(result));
         postToCurrentUserWallDisplay.setVisible(true);
       }
     });
@@ -187,6 +216,25 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final Boolean result) {
         addApiEventMessage("Unlike item result", result);
+      }
+    });
+  }
+
+  @UiHandler ("testButton")
+  public void handleTestButtonClick(final ClickEvent event) {
+    String testValue = testTextBox.getText();
+
+    FBGWT.Graph.retrieveItem(testValue, null, new AsyncCallback<FBGraphObject>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error during test", caught);
+      }
+
+      @Override
+      public void onSuccess(final FBGraphObject result) {
+        addApiEventMessage("Test result", result);
+        testDisplay.setValue(result);
+        testDisplay.setVisible(true);
       }
     });
   }

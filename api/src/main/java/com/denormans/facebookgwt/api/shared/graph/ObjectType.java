@@ -21,7 +21,7 @@ package com.denormans.facebookgwt.api.shared.graph;
 import java.util.EnumSet;
 import java.util.Set;
 
-public enum ObjectTypes {
+public enum ObjectType {
   Application(EnumSet.of(ConnectionTypes.WallFeed, ConnectionTypes.Posts, ConnectionTypes.Picture, ConnectionTypes.Tagged, ConnectionTypes.Links, ConnectionTypes.Photos, ConnectionTypes.PhotoAlbums,
                   ConnectionTypes.Statuses, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Notes, ConnectionTypes.Events, ConnectionTypes.Subscriptions, ConnectionTypes.Insights),
               EnumSet.of(ObjectFields.ID, ObjectFields.Name, ObjectFields.Description, ObjectFields.Category, ObjectFields.Link)),
@@ -60,12 +60,20 @@ public enum ObjectTypes {
            ObjectFields.Website, ObjectFields.Hometown, ObjectFields.Location, ObjectFields.Bio, ObjectFields.Quotes, ObjectFields.Gender, ObjectFields.InterestedIn, ObjectFields.MeetingFor, ObjectFields.RelationshipStatus,
            ObjectFields.Religion, ObjectFields.Political, ObjectFields.Verified, ObjectFields.SignificantOther, ObjectFields.Timezone, ObjectFields.ThirdPartyID, ObjectFields.LastUpdated, ObjectFields.Locale)),
   Video(EnumSet.of(ConnectionTypes.Comments),
-        EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Name, ObjectFields.Picture, ObjectFields.EmbedHTML, ObjectFields.Icon, ObjectFields.Source, ObjectFields.CreatedTime, ObjectFields.UpdatedTime));
+        EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Name, ObjectFields.Picture, ObjectFields.EmbedHTML, ObjectFields.Icon, ObjectFields.Source, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
+
+  // Other types
+  Company(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
+  EducationYear(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
+  Location(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
+  School(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
+  WorkPosition(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
+  ;
 
   private Set<ConnectionTypes> connectionTypes;
   private Set<ObjectFields> objectFields;
 
-  private ObjectTypes(final EnumSet<ConnectionTypes> connectionTypes, final EnumSet<ObjectFields> objectFields) {
+  private ObjectType(final EnumSet<ConnectionTypes> connectionTypes, final EnumSet<ObjectFields> objectFields) {
     this.connectionTypes = connectionTypes;
     this.objectFields = objectFields;
   }

@@ -23,20 +23,40 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ObjectDescription {
+public class ObjectDescription<T> {
   private Map<String, Object> values = new LinkedHashMap<String, Object>();
 
-  public ObjectDescription addValue(final String name, final Object value) {
+  private T value;
+  private ObjectDescriber<T> describer;
+
+  public ObjectDescription(final T value) {
+    this.value = value;
+  }
+
+  public ObjectDescription(final T value, final ObjectDescriber<T> describer) {
+    this.value = value;
+    this.describer = describer;
+  }
+
+  public T getValue() {
+    return value;
+  }
+
+  public ObjectDescriber<T> getDescriber() {
+    return describer;
+  }
+
+  public ObjectDescription<T> addValue(final String name, final Object value) {
     values.put(name, value);
     return this;
   }
 
-  public ObjectDescription addValues(final Map<String, ?> values) {
+  public ObjectDescription<T> addValues(final Map<String, ?> values) {
     this.values.putAll(values);
     return this;
   }
 
-  public ObjectDescription addValues(final ObjectDescription description) {
+  public ObjectDescription<T> addValues(final ObjectDescription<?> description) {
     for (Map.Entry<String, Object> entry : description.getValues()) {
       values.put(entry.getKey(), entry.getValue());
     }

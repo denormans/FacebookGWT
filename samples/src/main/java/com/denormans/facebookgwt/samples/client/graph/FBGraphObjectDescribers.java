@@ -18,6 +18,7 @@
 
 package com.denormans.facebookgwt.samples.client.graph;
 
+import com.denormans.facebookgwt.api.client.graph.js.Company;
 import com.denormans.facebookgwt.api.client.graph.js.Education;
 import com.denormans.facebookgwt.api.client.graph.js.EducationYear;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
@@ -27,97 +28,94 @@ import com.denormans.facebookgwt.api.client.graph.js.School;
 import com.denormans.facebookgwt.api.client.graph.js.User;
 import com.denormans.facebookgwt.api.client.graph.js.Work;
 import com.denormans.facebookgwt.api.client.graph.js.WorkPosition;
+import com.denormans.facebookgwt.api.shared.graph.ObjectType;
 import com.denormans.facebookgwt.samples.client.describe.AbstractObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
 
-public class FBGraphObjectDescribers {
-  private ObjectDescriber<? extends FBGraphObject> genericGraphObjectDescriber;
+import java.util.HashMap;
+import java.util.Map;
 
-  private ObjectDescriber<User> userDescriber;
+public class FBGraphObjectDescribers {
+  private Map<ObjectType, ObjectDescriber<? extends FBGraphObject>> objectDescribers = new HashMap<ObjectType, ObjectDescriber<? extends FBGraphObject>>();
+
   private ObjectDescriber<Work> workDescriber;
   private ObjectDescriber<Education> educationDescriber;
-  private ObjectDescriber<Post> postDescriber;
 
-  public ObjectDescriber<Post> getPostDescriber() {
-    if (postDescriber == null) {
-      postDescriber = new FBGraphObjectDescriber<Post>() {
-        @Override
-        public ObjectDescription describe(final Post obj) {
-          if (obj == null) {
-            return null;
-          }
-
-          return super.describe(obj);
-        }
-      };
-    }
-
-    return postDescriber;
+  public FBGraphObjectDescribers() {
+    registerDescribers();
   }
 
-  public ObjectDescriber<User> getUserDescriber() {
-    if (userDescriber == null) {
-      userDescriber = new FBGraphObjectDescriber<User>() {
-        @Override
-        public ObjectDescription describe(final User obj) {
-          if (obj == null) {
-            return null;
-          }
+  private void registerDescribers() {
+    objectDescribers.put(ObjectType.Post, new FBGraphObjectDescriber<Post>(ObjectType.Post) {
+      @Override
+      public ObjectDescription<Post> describeObject(final Post obj) {
+        return super.describeObject(obj);
+      }
+    });
 
-          return super.describe(obj).addValue("First Name", obj.getFirstName()).addValue("Last Name", obj.getLastName()).addValue("Link", obj.getLink()). addValue("About", obj.getAbout()).addValue("Birthday", obj.getBirthday()).
-              addValue("Work", getWorkDescriber().describeList(obj.getWork())).addValue("Education", getEducationDescriber().describeList(obj.getEducation())).addValue("Email", obj.getEmail()).addValue("Website", obj.getWebsite()).
-              addValue("Location", getLocationDescriber().describe(obj.getLocation())).addValue("Biography", obj.getBiography()).addValue("Quotes", obj.getQuotes()).addValue("Gender", obj.getGender()).
-              addValue("Interested in", obj.getInterestedIn()).addValue("Seeking", obj.getSeeking()).addValue("Religion", obj.getReligion()).addValue("Political Affiliation", obj.getPoliticalAffiliation()).
-              addValue("Verified", obj.isVerified()).addValue("Significant Other", describe(obj.getSignificantOther())).addValue("Time Zone", obj.getTimeZone().getID()).addValue("Third-Party ID", obj.getThirdPartyID()).
-              addValue("Locale", obj.getLocale()).addValue("Updated Time", obj.getUpdatedTime());
-        }
-      };
-    }
+    objectDescribers.put(ObjectType.User, new FBGraphObjectDescriber<User>(ObjectType.User) {
+      @Override
+      public ObjectDescription<User> describeObject(final User obj) {
+        return super.describeObject(obj).addValue("First Name", obj.getFirstName()).addValue("Last Name", obj.getLastName()).addValue("Link", obj.getLink()).addValue("About", obj.getAbout()).addValue("Birthday", obj.getBirthday()).
+            addValue("Work", getWorkDescriber().describeList(obj.getWork())).addValue("Education", getEducationDescriber().describeList(obj.getEducation())).addValue("Email", obj.getEmail()).addValue("Website", obj.getWebsite()).
+            addValue("Location", getLocationDescriber().describe(obj.getLocation())).addValue("Biography", obj.getBiography()).addValue("Quotes", obj.getQuotes()).addValue("Gender", obj.getGender()).
+            addValue("Interested in", obj.getInterestedIn()).addValue("Seeking", obj.getSeeking()).addValue("Religion", obj.getReligion()).addValue("Political Affiliation", obj.getPoliticalAffiliation()).
+            addValue("Verified", obj.isVerified()).addValue("Significant Other", describe(obj.getSignificantOther())).addValue("Time Zone", obj.getTimeZone().getID()).addValue("Third-Party ID", obj.getThirdPartyID()).
+            addValue("Locale", obj.getLocale()).addValue("Updated Time", obj.getUpdatedTime());
+      }
+    });
 
-    return userDescriber;
+    objectDescribers.put(ObjectType.Company, new FBGraphObjectDescriber<Company>(ObjectType.Company));
+    objectDescribers.put(ObjectType.EducationYear, new FBGraphObjectDescriber<EducationYear>(ObjectType.EducationYear));
+    objectDescribers.put(ObjectType.Location, new FBGraphObjectDescriber<Location>(ObjectType.Location));
+    objectDescribers.put(ObjectType.School, new FBGraphObjectDescriber<School>(ObjectType.School));
+    objectDescribers.put(ObjectType.WorkPosition, new FBGraphObjectDescriber<WorkPosition>(ObjectType.WorkPosition));
+  }
+
+  private ObjectDescriber<Company> getCompanyDescriber() {
+    return getObjectDescriber(ObjectType.Company);
   }
 
   private ObjectDescriber<Education> getEducationDescriber() {
     if (educationDescriber == null) {
       educationDescriber = new AbstractObjectDescriber<Education>() {
-          @Override
-          public ObjectDescription describe(final Education obj) {
-            if (obj == null) {
-              return null;
-            }
-
-            return new ObjectDescription().addValue("School", getSchoolDescriber().describe(obj.getSchool())).addValue("Year", getEducationYearDescriber().describe(obj.getYear())).addValue("Type", obj.getType());
-          }
-        };
+        @Override
+        public ObjectDescription<Education> describeObject(final Education obj) {
+          return new ObjectDescription<Education>(obj).addValue("School", getSchoolDescriber().describe(obj.getSchool())).addValue("Year", getEducationYearDescriber().describe(obj.getYear())).addValue("Type", obj.getType());
+        }
+      };
     }
 
     return educationDescriber;
   }
 
   private ObjectDescriber<EducationYear> getEducationYearDescriber() {
-    return getGenericGraphObjectDescriber();
+    return getObjectDescriber(ObjectType.EducationYear);
   }
 
   private ObjectDescriber<Location> getLocationDescriber() {
-    return getGenericGraphObjectDescriber();
+    return getObjectDescriber(ObjectType.Location);
+  }
+
+  public ObjectDescriber<Post> getPostDescriber() {
+    return getObjectDescriber(ObjectType.Post);
   }
 
   private ObjectDescriber<School> getSchoolDescriber() {
-    return getGenericGraphObjectDescriber();
+    return getObjectDescriber(ObjectType.School);
+  }
+
+  public ObjectDescriber<User> getUserDescriber() {
+    return getObjectDescriber(ObjectType.User);
   }
 
   private ObjectDescriber<Work> getWorkDescriber() {
     if (workDescriber == null) {
       workDescriber = new AbstractObjectDescriber<Work>() {
         @Override
-        public ObjectDescription describe(final Work obj) {
-          if (obj == null) {
-            return null;
-          }
-
-          ObjectDescriber<FBGraphObject> genericGraphObjectDescriber = getGenericGraphObjectDescriber();
-          return new ObjectDescription().addValue("Employer", genericGraphObjectDescriber.describe(obj.getEmployer())).addValue("Location", getLocationDescriber().describe(obj.getLocation())).
+        public ObjectDescription<Work> describeObject(final Work obj) {
+          return new ObjectDescription<Work>(obj).addValue("Employer", getCompanyDescriber().describe(obj.getEmployer())).addValue("Location", getLocationDescriber().describe(obj.getLocation())).
               addValue("Position", getWorkPositionDescriber().describe(obj.getPosition())).addValue("Start Date", obj.getStartDate()).addValue("End Date", obj.getEndDate());
         }
       };
@@ -127,26 +125,33 @@ public class FBGraphObjectDescribers {
   }
 
   private ObjectDescriber<WorkPosition> getWorkPositionDescriber() {
-    return getGenericGraphObjectDescriber();
+    return getObjectDescriber(ObjectType.WorkPosition);
   }
 
   @SuppressWarnings ( { "unchecked" })
-  private <T extends FBGraphObject> ObjectDescriber<T> getGenericGraphObjectDescriber() {
-    if (genericGraphObjectDescriber == null) {
-      genericGraphObjectDescriber = new FBGraphObjectDescriber<FBGraphObject>();
-    }
-
-    return (ObjectDescriber<T>) genericGraphObjectDescriber;
+  public <T extends FBGraphObject> ObjectDescriber<T> getObjectDescriber(final ObjectType objectType) {
+    return (ObjectDescriber<T>) objectDescribers.get(objectType);
   }
 
-  private static class FBGraphObjectDescriber<T extends FBGraphObject> extends AbstractObjectDescriber<T> {
-    @Override
-    public ObjectDescription describe(final T obj) {
-      if (obj == null) {
-        return null;
-      }
+  private static class FBGraphObjectDescriber<T extends FBGraphObject> extends AbstractGraphObjectDescriber<T> {
+    private ObjectType objectType;
 
-      return new ObjectDescription().addValue("ID", obj.getID()).addValue("Name", obj.getName());
+    public FBGraphObjectDescriber(final ObjectType objectType) {
+      this.objectType = objectType;
     }
+
+    @Override
+    protected ObjectType getObjectType() {
+      return objectType;
+    }
+  }
+
+  private static abstract class AbstractGraphObjectDescriber<T extends FBGraphObject> extends AbstractObjectDescriber<T> {
+    @Override
+    public ObjectDescription<T> describeObject(final T obj) {
+      return new GraphObjectDescription<T>(obj, this, getObjectType()).addValue("ID", obj.getID()).addValue("Name", obj.getName());
+    }
+
+    protected abstract ObjectType getObjectType();
   }
 }

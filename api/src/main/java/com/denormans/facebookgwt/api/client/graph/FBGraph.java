@@ -26,6 +26,7 @@ import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphError;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.Post;
+import com.denormans.facebookgwt.api.client.graph.js.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.User;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethod;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethods;
@@ -77,6 +78,69 @@ public class FBGraph extends FBIntegration {
    */
   public void retrieveUserHomeFeed(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
     retrieveConnections(userID, ConnectionTypes.HomeFeed, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's wall feed.
+   *
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveCurrentUserWallFeed(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+    retrieveUserWallFeed(CurrentUserID, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's wall feed.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserWallFeed(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+    retrieveConnections(userID, ConnectionTypes.WallFeed, options, callback);
+  }
+
+  /**
+   * Retrieves the posts, photos and videos that the current user is tagged in.
+   *
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveCurrentUserTaggedIn(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Postable>> callback) {
+    retrieveUserTaggedIn(CurrentUserID, options, callback);
+  }
+
+  /**
+   * Retrieves the posts, photos and videos that the given user is tagged in.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserTaggedIn(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Postable>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Tagged, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's posts.
+   *
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveCurrentUserPosts(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+    retrieveUserPosts(CurrentUserID, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's posts.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserPosts(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Posts, options, callback);
   }
 
   /**
@@ -219,7 +283,7 @@ public class FBGraph extends FBIntegration {
           } else if (typeof(response) === "number") {
             self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;D)(callback, response);
           } else {
-            if (response != null && response.error) {
+            if (response != null && response.error != null) {
               self.@com.denormans.facebookgwt.api.client.graph.FBGraph::executeCallbackError(Lcom/google/gwt/user/client/rpc/AsyncCallback;Lcom/denormans/facebookgwt/api/client/graph/js/FBGraphError;)(callback, response.error);
               return;
             }
