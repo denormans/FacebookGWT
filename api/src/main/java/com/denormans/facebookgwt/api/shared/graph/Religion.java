@@ -16,21 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.common.js;
+package com.denormans.facebookgwt.api.shared.graph;
 
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-public abstract class Media extends FBJSObject {
-  protected static <T extends Media> T createMedia(final String type) {
-    T media = EnhancedJSObject.<T>createEnhancedObject();
-    media.setType(type);
-    return media;
-  }
-
-  protected Media() {
-  }
-
-  protected final native void setType(final String type) /*-{
-    this.type = type;
-  }-*/;
+public interface Religion extends FBEnum {
 }

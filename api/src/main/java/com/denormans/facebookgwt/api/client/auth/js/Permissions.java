@@ -27,8 +27,8 @@ import com.google.gwt.core.client.JsArrayString;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FBPermissionsJS extends FBJSObject {
-  protected FBPermissionsJS() {
+public class Permissions extends FBJSObject {
+  protected Permissions() {
   }
 
   public final List<FBPermission> getAllPermissions() {

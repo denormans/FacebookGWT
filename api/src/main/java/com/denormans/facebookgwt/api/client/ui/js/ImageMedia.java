@@ -16,7 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.common.js;
+package com.denormans.facebookgwt.api.client.ui.js;
 
 public class ImageMedia extends Media {
   public static ImageMedia createImageMedia() {

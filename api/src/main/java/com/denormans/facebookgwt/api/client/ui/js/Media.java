@@ -16,35 +16,22 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.common.js;
+package com.denormans.facebookgwt.api.client.ui.js;
 
-public class Link extends FBJSObject {
-  public static Link createLink() {
-    return createEnhancedObject();
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+import com.denormans.gwtutil.client.js.EnhancedJSObject;
+
+public abstract class Media extends FBJSObject {
+  protected static <T extends Media> T createMedia(final String type) {
+    T media = EnhancedJSObject.<T>createEnhancedObject();
+    media.setType(type);
+    return media;
   }
 
-  public static Link createLink(final String text, final String href) {
-    return createLink().setText(text).setHref(href);
+  protected Media() {
   }
 
-  protected Link() {
-  }
-
-  public final native String getText() /*-{
-    return this.text;
-  }-*/;
-
-  public final native Link setText(final String text) /*-{
-    this.text = text;
-    return this;
-  }-*/;
-
-  public final native String getHref() /*-{
-    return this.href;
-  }-*/;
-
-  public final native Link setHref(final String href) /*-{
-    this.href = href;
-    return this;
+  protected final native void setType(final String type) /*-{
+    this.type = type;
   }-*/;
 }

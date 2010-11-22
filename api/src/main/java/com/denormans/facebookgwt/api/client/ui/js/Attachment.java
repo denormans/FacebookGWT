@@ -16,7 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.common.js;
+package com.denormans.facebookgwt.api.client.ui.js;
+
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 
 import com.google.gwt.core.client.JsArray;
 
