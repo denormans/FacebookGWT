@@ -21,6 +21,6 @@ package com.denormans.facebookgwt.samples.client.describe;
 import java.util.List;
 
 public interface ObjectDescriber<T> {
-  public ObjectDescription describe(final T obj);
-  public List<ObjectDescription> describeList(final List<T> list);
+  public ObjectDescription<T> describe(final T obj);
+  public List<ObjectDescription<T>> describeList(final List<T> list);
 }

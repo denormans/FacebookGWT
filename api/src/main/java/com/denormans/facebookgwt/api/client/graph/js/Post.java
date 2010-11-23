@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
-public class Post extends FBGraphObject {
+public class Post extends Postable {
   protected Post() {
   }
 }

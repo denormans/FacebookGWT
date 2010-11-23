@@ -23,15 +23,29 @@ import java.util.List;
 
 public abstract class AbstractObjectDescriber<T> implements ObjectDescriber<T> {
   @Override
-  public List<ObjectDescription> describeList(final List<T> list) {
+  public ObjectDescription<T> describe(final T obj) {
+    if (obj == null) {
+      return null;
+    }
+
+    return describeObject(obj);
+  }
+
+  protected abstract ObjectDescription<T> describeObject(final T obj);
+
+  @Override
+  public List<ObjectDescription<T>> describeList(final List<T> list) {
     if (list == null) {
       return null;
     }
 
-    List<ObjectDescription> descriptions = new ArrayList<ObjectDescription>();
+    List<ObjectDescription<T>> descriptions = new ArrayList<ObjectDescription<T>>();
 
     for (final T obj : list) {
-      descriptions.add(describe(obj));
+      ObjectDescription<T> description = describe(obj);
+      if (description != null) {
+        descriptions.add(description);
+      }
     }
 
     return descriptions;
