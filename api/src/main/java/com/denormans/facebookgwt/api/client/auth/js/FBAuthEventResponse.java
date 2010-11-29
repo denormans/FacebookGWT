@@ -20,7 +20,6 @@ package com.denormans.facebookgwt.api.client.auth.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
 import com.denormans.facebookgwt.api.shared.auth.*;
-import com.denormans.facebookgwt.api.shared.auth.FBPermissions;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class FBAuthEventResponse extends FBEventResponse {
   }-*/;
 
   public final List<FBPermission> getPermissions() {
-    return FBPermissions.parseApiValues(getPermissionsJS());
+    return Permissions.parseApiValues(getPermissionsJS());
   }
 
   private native String getPermissionsJS() /*-{

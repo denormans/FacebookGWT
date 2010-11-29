@@ -21,7 +21,6 @@ package com.denormans.facebookgwt.api.client.auth.js;
 import com.denormans.facebookgwt.api.client.common.js.FBOptions;
 import com.denormans.facebookgwt.api.shared.FBEnum;
 import com.denormans.facebookgwt.api.shared.auth.*;
-import com.denormans.facebookgwt.api.shared.auth.FBPermissions;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,7 +43,7 @@ public class FBLoginOptions extends FBOptions {
   }
 
   public final List<FBPermission> getPermissions() {
-    return FBPermissions.parseApiValues(getPermissionsJS());
+    return Permissions.parseApiValues(getPermissionsJS());
   }
 
   private native String getPermissionsJS() /*-{

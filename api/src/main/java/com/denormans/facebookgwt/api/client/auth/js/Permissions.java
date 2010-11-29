@@ -19,16 +19,35 @@
 package com.denormans.facebookgwt.api.client.auth.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
 import com.denormans.facebookgwt.api.shared.auth.FBPermissions;
 
 import com.google.gwt.core.client.JsArrayString;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Permissions extends FBJSObject {
   protected Permissions() {
+  }
+
+  public static List<FBPermission> parseApiValues(final String permissionApiValues) {
+    if (permissionApiValues == null || permissionApiValues.trim().length() == 0) {
+      return Collections.emptyList();
+    }
+
+    if (permissionApiValues.trim().charAt(0) != '{') {
+      return FBPermissions.valuesFromApiValues(FBEnum.Util.splitApiValues(permissionApiValues));
+    }
+
+    Permissions permissions = fromJSONString(permissionApiValues);
+    if (permissions == null) {
+      return Collections.emptyList();
+    }
+
+    return permissions.getAllPermissions();
   }
 
   public final List<FBPermission> getAllPermissions() {

@@ -18,11 +18,9 @@
 
 package com.denormans.facebookgwt.api.shared.auth;
 
-import com.denormans.facebookgwt.api.client.auth.js.Permissions;
 import com.denormans.facebookgwt.api.shared.FBEnum;
 import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -125,23 +123,6 @@ public enum FBPermissions implements FBPermission {
 
   public static FBPermission valueFromApiValue(final String apiValue) {
     return FBEnum.Util.valueFromApiValue(sPermissionByApiValue, apiValue, sPermissionCreator);
-  }
-
-  public static List<FBPermission> parseApiValues(final String permissionApiValues) {
-    if (permissionApiValues == null || permissionApiValues.trim().length() == 0) {
-      return Collections.emptyList();
-    }
-
-    if (permissionApiValues.trim().charAt(0) != '{') {
-      return valuesFromApiValues(FBEnum.Util.splitApiValues(permissionApiValues));
-    }
-
-    Permissions permissions = Permissions.fromJSONString(permissionApiValues);
-    if (permissions == null) {
-      return Collections.emptyList();
-    }
-
-    return permissions.getAllPermissions();
   }
 
   @Override
