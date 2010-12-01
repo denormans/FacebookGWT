@@ -18,18 +18,23 @@
 
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
+import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
+import com.denormans.facebookgwt.samples.client.showcase.NamedAction;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.TakesValue;
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -38,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
+public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> {
   interface FBObjectDisplayUIBinder extends UiBinder<HTMLPanel, FBObjectDisplay> {}
   private static FBObjectDisplayUIBinder sUIBinder = GWT.create(FBObjectDisplayUIBinder.class);
 
@@ -120,6 +125,15 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
     for (final Map.Entry<String, Object> entry : objectDescription.getValues()) {
       treeItems.add(createTreeItem(entry.getKey(), entry.getValue()));
     }
+
+    List<? extends NamedAction<?, ?>> actions = objectDescription.getActions();
+    if(!actions.isEmpty()) {
+      TreeItem actionsTreeItem = new TreeItem(sFieldTemplates.fieldLabelOnly("Actions"));
+      for (final NamedAction<?, ?> action : actions) {
+        actionsTreeItem.addItem(createTreeItem(objectDescription.getValue(), action));
+      }
+      treeItems.add(actionsTreeItem);
+    }
     return treeItems;
   }
 
@@ -168,7 +182,28 @@ public class FBObjectDisplay<T> extends Composite implements TakesValue<T> {
       treeItem.addItem(childTreeItem);
     }
     return treeItem;
+  }
 
+  @SuppressWarnings({"unchecked"})
+  private TreeItem createTreeItem(final Object obj, final NamedAction action) {
+    Button actionButton = new Button(action.getName());
+    actionButton.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(final ClickEvent event) {
+        action.execute(obj, new AsyncCallback() {
+          @Override
+          public void onFailure(final Throwable caught) {
+            FacebookGWTSamples.get().handleError("Error executing action", caught);
+          }
+
+          @Override
+          public void onSuccess(final Object result) {
+            setValue((T) result);
+          }
+        });
+      }
+    });
+    return new TreeItem(actionButton);
   }
 
   @Override

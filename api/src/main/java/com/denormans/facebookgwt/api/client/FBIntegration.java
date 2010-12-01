@@ -20,7 +20,6 @@ package com.denormans.facebookgwt.api.client;
 
 import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
 import com.denormans.facebookgwt.api.client.core.FBAPIException;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphError;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventType;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
@@ -33,7 +32,6 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.event.shared.HasHandlers;
 import com.google.gwt.event.shared.testing.CountingEventBus;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.HashMap;
@@ -165,7 +163,7 @@ public abstract class FBIntegration implements HasHandlers {
         handlerRegistration.removeHandler();
 
         // defer in case the handler removal has been deferred
-        Scheduler.get().scheduleDeferred(new Command() {
+        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
           @Override
           public void execute() {
             JSFunction callbackFunction = callbackFunctionsByEvent.get(fbEventType);

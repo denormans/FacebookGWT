@@ -16,26 +16,8 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.samples.client.graph;
+package com.denormans.facebookgwt.samples.client.showcase;
 
-import com.denormans.facebookgwt.api.shared.graph.ObjectType;
-import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
-import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
-
-public class GraphObjectDescription<T> extends ObjectDescription<T> {
-  private ObjectType type;
-
-  public GraphObjectDescription(final T value, final ObjectType type) {
-    super(value);
-    this.type = type;
-  }
-
-  public GraphObjectDescription(final T value, final ObjectDescriber<T> describer, final ObjectType type) {
-    super(value, describer);
-    this.type = type;
-  }
-
-  public ObjectType getType() {
-    return type;
-  }
+public interface NamedAction<T, R> extends Action<T, R> {
+  String getName();
 }

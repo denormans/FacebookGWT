@@ -18,13 +18,21 @@
 
 package com.denormans.facebookgwt.samples.client.describe;
 
+import com.denormans.facebookgwt.samples.client.showcase.Action;
+import com.denormans.facebookgwt.samples.client.showcase.NamedAction;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class ObjectDescription<T> {
   private Map<String, Object> values = new LinkedHashMap<String, Object>();
+  private List<NamedAction<? extends T, ?>> actions = new ArrayList<NamedAction<? extends T, ?>>();
 
   private T value;
   private ObjectDescriber<T> describer;
@@ -65,6 +73,29 @@ public class ObjectDescription<T> {
 
   public Set<Map.Entry<String, Object>> getValues() {
     return Collections.unmodifiableSet(values.entrySet());
+  }
+
+  public <V extends T, R> ObjectDescription<T> addAction(final String name, final Action<V, R> action) {
+    return addAction(new NamedAction<V, R>() {
+      @Override
+      public String getName() {
+        return name;
+      }
+
+      @Override
+      public void execute(final V obj, final AsyncCallback<R> callback) {
+        action.execute(obj, callback);
+      }
+    });
+  }
+
+  public ObjectDescription<T> addAction(final NamedAction<? extends T, ?> action) {
+    actions.add(action);
+    return this;
+  }
+
+  public List<NamedAction<? extends T, ?>> getActions() {
+    return Collections.unmodifiableList(actions);
   }
 
   @Override

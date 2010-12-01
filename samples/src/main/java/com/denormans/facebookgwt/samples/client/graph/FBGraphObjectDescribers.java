@@ -18,9 +18,11 @@
 
 package com.denormans.facebookgwt.samples.client.graph;
 
+import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.graph.js.Company;
 import com.denormans.facebookgwt.api.client.graph.js.Education;
 import com.denormans.facebookgwt.api.client.graph.js.EducationYear;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.Location;
 import com.denormans.facebookgwt.api.client.graph.js.Post;
@@ -32,8 +34,12 @@ import com.denormans.facebookgwt.api.shared.graph.ObjectType;
 import com.denormans.facebookgwt.samples.client.describe.AbstractObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
+import com.denormans.facebookgwt.samples.client.showcase.Action;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FBGraphObjectDescribers {
@@ -62,7 +68,55 @@ public class FBGraphObjectDescribers {
             addValue("Location", getLocationDescriber().describe(obj.getLocation())).addValue("Biography", obj.getBiography()).addValue("Quotes", obj.getQuotes()).addValue("Gender", obj.getGender()).
             addValue("Interested in", obj.getInterestedIn()).addValue("Seeking", obj.getSeeking()).addValue("Religion", obj.getReligion()).addValue("Political Affiliation", obj.getPoliticalAffiliation()).
             addValue("Verified", obj.isVerified()).addValue("Significant Other", describe(obj.getSignificantOther())).addValue("Time Zone", obj.getTimeZone().getID()).addValue("Third-Party ID", obj.getThirdPartyID()).
-            addValue("Locale", obj.getLocale()).addValue("Updated Time", obj.getUpdatedTime());
+            addValue("Locale", obj.getLocale()).addValue("Updated Time", obj.getUpdatedTime()).
+            addAction("User Details", new Action<User, ObjectDescription<User>>() {
+              @Override
+              public void execute(final User obj, final AsyncCallback<ObjectDescription<User>> callback) {
+                FBGWT.Graph.retrieveUser(obj.getID(), null, new AsyncCallback<User>() {
+                  @Override
+                  public void onFailure(final Throwable caught) {
+                    callback.onFailure(caught);
+                  }
+
+                  @Override
+                  public void onSuccess(final User result) {
+                    callback.onSuccess(describe(result));
+                  }
+                });
+              }
+            }).
+            addAction("Home Feed", new Action<User, List<ObjectDescription<Post>>>() {
+              @Override
+              public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
+                FBGWT.Graph.retrieveUserHomeFeed(obj.getID(), null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+                  @Override
+                  public void onFailure(final Throwable caught) {
+                    callback.onFailure(caught);
+                  }
+
+                  @Override
+                  public void onSuccess(final FBGraphDataListResult<Post> result) {
+                    callback.onSuccess(getPostDescriber().describeList(result.getData()));
+                  }
+                });
+              }
+            }).
+            addAction("Wall Feed", new Action<User, List<ObjectDescription<Post>>>() {
+              @Override
+              public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
+                FBGWT.Graph.retrieveUserWallFeed(obj.getID(), null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+                  @Override
+                  public void onFailure(final Throwable caught) {
+                    callback.onFailure(caught);
+                  }
+
+                  @Override
+                  public void onSuccess(final FBGraphDataListResult<Post> result) {
+                    callback.onSuccess(getPostDescriber().describeList(result.getData()));
+                  }
+                });
+              }
+            });
       }
     });
 
@@ -78,7 +132,7 @@ public class FBGraphObjectDescribers {
   }
 
   private ObjectDescriber<Education> getEducationDescriber() {
-    if (educationDescriber == null) {
+    if(educationDescriber == null) {
       educationDescriber = new AbstractObjectDescriber<Education>() {
         @Override
         public ObjectDescription<Education> describeObject(final Education obj) {
@@ -111,7 +165,7 @@ public class FBGraphObjectDescribers {
   }
 
   private ObjectDescriber<Work> getWorkDescriber() {
-    if (workDescriber == null) {
+    if(workDescriber == null) {
       workDescriber = new AbstractObjectDescriber<Work>() {
         @Override
         public ObjectDescription<Work> describeObject(final Work obj) {
@@ -128,9 +182,9 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.WorkPosition);
   }
 
-  @SuppressWarnings ( { "unchecked" })
+  @SuppressWarnings({"unchecked"})
   public <T extends FBGraphObject> ObjectDescriber<T> getObjectDescriber(final ObjectType objectType) {
-    return (ObjectDescriber<T>) objectDescribers.get(objectType);
+    return (ObjectDescriber<T>)objectDescribers.get(objectType);
   }
 
   private static class FBGraphObjectDescriber<T extends FBGraphObject> extends AbstractGraphObjectDescriber<T> {
