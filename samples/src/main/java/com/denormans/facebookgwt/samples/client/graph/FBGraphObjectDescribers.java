@@ -19,6 +19,7 @@
 package com.denormans.facebookgwt.samples.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 import com.denormans.facebookgwt.api.client.graph.js.Company;
 import com.denormans.facebookgwt.api.client.graph.js.Education;
 import com.denormans.facebookgwt.api.client.graph.js.EducationYear;
@@ -88,33 +89,13 @@ public class FBGraphObjectDescribers {
             addAction("Home Feed", new Action<User, List<ObjectDescription<Post>>>() {
               @Override
               public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
-                FBGWT.Graph.retrieveUserHomeFeed(obj.getID(), null, new AsyncCallback<FBGraphDataListResult<Post>>() {
-                  @Override
-                  public void onFailure(final Throwable caught) {
-                    callback.onFailure(caught);
-                  }
-
-                  @Override
-                  public void onSuccess(final FBGraphDataListResult<Post> result) {
-                    callback.onSuccess(getPostDescriber().describeList(result.getData()));
-                  }
-                });
+                FBGWT.Graph.retrieveUserHomeFeed(obj.getID(), null, new ListTransformingCallback<Post>(getPostDescriber(), callback));
               }
             }).
             addAction("Wall Feed", new Action<User, List<ObjectDescription<Post>>>() {
               @Override
               public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
-                FBGWT.Graph.retrieveUserWallFeed(obj.getID(), null, new AsyncCallback<FBGraphDataListResult<Post>>() {
-                  @Override
-                  public void onFailure(final Throwable caught) {
-                    callback.onFailure(caught);
-                  }
-
-                  @Override
-                  public void onSuccess(final FBGraphDataListResult<Post> result) {
-                    callback.onSuccess(getPostDescriber().describeList(result.getData()));
-                  }
-                });
+                FBGWT.Graph.retrieveUserWallFeed(obj.getID(), null, new ListTransformingCallback<Post>(getPostDescriber(), callback));
               }
             });
       }
@@ -207,5 +188,25 @@ public class FBGraphObjectDescribers {
     }
 
     protected abstract ObjectType getObjectType();
+  }
+
+  private class ListTransformingCallback<T extends FBJSObject> implements AsyncCallback<FBGraphDataListResult<T>> {
+    private final ObjectDescriber<T> describer;
+    private final AsyncCallback<List<ObjectDescription<T>>> callback;
+
+    private ListTransformingCallback(final ObjectDescriber<T> describer, final AsyncCallback<List<ObjectDescription<T>>> callback) {
+      this.describer = describer;
+      this.callback = callback;
+    }
+
+    @Override
+    public void onFailure(final Throwable caught) {
+      callback.onFailure(caught);
+    }
+
+    @Override
+    public void onSuccess(final FBGraphDataListResult<T> result) {
+      callback.onSuccess(describer.describeList(result.getData()));
+    }
   }
 }
