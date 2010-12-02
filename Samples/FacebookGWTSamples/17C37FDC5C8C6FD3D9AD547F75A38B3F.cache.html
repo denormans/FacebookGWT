@@ -4,7 +4,7 @@ var $gwt_version = "2.1.0";
 var $wnd = parent;
 var $doc = $wnd.document;
 var $moduleName, $moduleBase;
-var $strongName = '4E38F94F100C4AE2A8AA64A0C50FA8AA';
+var $strongName = '17C37FDC5C8C6FD3D9AD547F75A38B3F';
 var $stats = $wnd.__gwtStatsEvent ? function(a) {return $wnd.__gwtStatsEvent(a);} : null,
 $sessionId = $wnd.__gwtStatsSessionId ? $wnd.__gwtStatsSessionId : null;
 $stats && $stats({moduleName:'FacebookGWTSamples',sessionId:$sessionId,subSystem:'startup',evtGroup:'moduleStartup',millis:(new Date()).getTime(),type:'moduleEvalStart'});
@@ -3094,6 +3094,9 @@ function com_denormans_facebookgwt_api_shared_FBEnum$Util_valueFromApiValue__Lja
 
 function com_denormans_facebookgwt_api_shared_FBEnum$Util_valuesFromApiValues__Ljava_util_Map_2Ljava_util_List_2Lcom_denormans_facebookgwt_api_shared_FBEnumCreator_2Ljava_util_List_2(fbEnumValuesByApiValue, apiValues, fbEnumCreator){
   var apiValue, apiValue$iterator, fbEnum, fbEnums;
+  if (com_google_gwt_lang_Cast_isNull__Ljava_lang_Object_2Z(apiValues)) {
+    return java_util_Collections_emptyList__Ljava_util_List_2();
+  }
   fbEnums = new java_util_ArrayList_ArrayList__IV(apiValues.size__I());
   for (apiValue$iterator = apiValues.iterator__Ljava_util_Iterator_2(); apiValue$iterator.hasNext__Z();) {
     apiValue = com_google_gwt_lang_Cast_dynamicCast__Ljava_lang_Object_2ILjava_lang_Object_2(apiValue$iterator.next__Ljava_lang_Object_2(), 1);
@@ -3808,7 +3811,10 @@ function com_denormans_facebookgwt_api_shared_graph_Gender_values___3Lcom_denorm
 function com_denormans_facebookgwt_api_shared_graph_Gender_valuesFromApiValues__Ljava_util_List_2Ljava_util_List_2(apiValues){
   com_denormans_facebookgwt_api_shared_graph_Gender_$clinit__V();
   var apiValue, apiValue$iterator, fbEnum, genders;
-  genders = new java_util_ArrayList_ArrayList__IV(apiValues.size__I());
+  if (com_google_gwt_lang_Cast_isNull__Ljava_lang_Object_2Z(apiValues)) {
+    return java_util_Collections_emptyList__Ljava_util_List_2();
+  }
+  genders = new java_util_ArrayList_ArrayList__V;
   for (apiValue$iterator = apiValues.iterator__Ljava_util_Iterator_2(); apiValue$iterator.hasNext__Z();) {
     apiValue = com_google_gwt_lang_Cast_dynamicCast__Ljava_lang_Object_2ILjava_lang_Object_2(apiValue$iterator.next__Ljava_lang_Object_2(), 1);
     fbEnum = com_denormans_facebookgwt_api_shared_graph_Gender_valueFromApiValue__Ljava_lang_String_2Lcom_denormans_facebookgwt_api_shared_graph_Gender_2(apiValue);
