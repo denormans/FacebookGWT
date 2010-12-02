@@ -71,22 +71,6 @@ public class FBGraphObjectDescribers {
             addValue("Interested in", obj.getInterestedIn()).addValue("Seeking", obj.getSeeking()).addValue("Religion", obj.getReligion()).addValue("Political Affiliation", obj.getPoliticalAffiliation()).
             addValue("Verified", obj.isVerified()).addValue("Significant Other", describe(obj.getSignificantOther())).addValue("Time Zone", obj.getTimeZone().getID()).addValue("Third-Party ID", obj.getThirdPartyID()).
             addValue("Locale", obj.getLocale()).addValue("Updated Time", obj.getUpdatedTime()).
-            addAction("User Details", new Action<User, ObjectDescription<User>>() {
-              @Override
-              public void execute(final User obj, final AsyncCallback<ObjectDescription<User>> callback) {
-                FBGWT.Graph.retrieveUser(obj.getID(), null, new AsyncCallback<User>() {
-                  @Override
-                  public void onFailure(final Throwable caught) {
-                    callback.onFailure(caught);
-                  }
-
-                  @Override
-                  public void onSuccess(final User result) {
-                    callback.onSuccess(describe(result));
-                  }
-                });
-              }
-            }).
             addAction("Home Feed", new Action<User, List<ObjectDescription<Post>>>() {
               @Override
               public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
@@ -99,6 +83,11 @@ public class FBGraphObjectDescribers {
                 FBGWT.Graph.retrieveUserWallFeed(obj.getID(), null, new ListTransformingCallback<Post>(getPostDescriber(), callback));
               }
             });
+      }
+
+      @Override
+      protected void retrieveItem(final String itemID, final AsyncCallback<User> callback) {
+        FBGWT.Graph.retrieveUser(itemID, null, callback);
       }
     });
 
@@ -187,27 +176,11 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
       return super.describeObject(obj).addValue("Picture URL", obj.getPictureURL()).addValue("Page URL", obj.getPageURL()).addValue("Category", obj.getCategory()).addValue("Is Community Page?", obj.isCommunityPage()).
-          addValue("Fan Count", obj.getFanCount()).
-          addAction("Get " + getObjectTypeName(), new Action<T, ObjectDescription<T>>() {
-            @Override
-            public void execute(final T obj, final AsyncCallback<ObjectDescription<T>> callback) {
-              FBGWT.Graph.retrieveItem(obj.getID(), null, new AsyncCallback<T>() {
-                @Override
-                public void onFailure(final Throwable caught) {
-                  callback.onFailure(caught);
-                }
-
-                @Override
-                public void onSuccess(final T result) {
-                  callback.onSuccess(describe(result));
-                }
-              });
-            }
-          });
+          addValue("Fan Count", obj.getFanCount());
     }
   }
 
-  private static class FBGraphObjectDescriber<T extends FBGraphObject> extends AbstractGraphObjectDescriber<T> {
+  private static abstract class FBGraphObjectDescriber<T extends FBGraphObject> extends AbstractGraphObjectDescriber<T> {
     private ObjectType objectType;
 
     public FBGraphObjectDescriber(final ObjectType objectType) {
@@ -228,13 +201,43 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
-      return new GraphObjectDescription<T>(obj, this, getObjectType()).addValue("ID", obj.getID()).addValue("Name", obj.getName());
+      return new GraphObjectDescription<T>(obj, this, getObjectType()).addValue("ID", obj.getID()).addValue("Name", obj.getName()).
+          addAction("Get " + getObjectTypeName(), new Action<T, ObjectDescription<T>>() {
+            @Override
+            public void execute(final T obj, final AsyncCallback<ObjectDescription<T>> callback) {
+              retrieveItem(obj.getID(), new ObjectTransformingCallback<T>(AbstractGraphObjectDescriber.this, callback));
+            }
+          });
     }
 
     protected abstract ObjectType getObjectType();
+
+    protected void retrieveItem(final String itemID, final AsyncCallback<T> callback) {
+      FBGWT.Graph.retrieveItem(itemID, null, callback);
+    }
   }
 
-  private class ListTransformingCallback<T extends FBJSObject> implements AsyncCallback<FBGraphDataListResult<T>> {
+  private static class ObjectTransformingCallback<T extends FBJSObject> implements AsyncCallback<T> {
+    private final ObjectDescriber<T> describer;
+    private final AsyncCallback<ObjectDescription<T>> callback;
+
+    public ObjectTransformingCallback(final ObjectDescriber<T> describer, final AsyncCallback<ObjectDescription<T>> callback) {
+      this.describer = describer;
+      this.callback = callback;
+    }
+
+    @Override
+    public void onFailure(final Throwable caught) {
+      callback.onFailure(caught);
+    }
+
+    @Override
+    public void onSuccess(final T result) {
+      callback.onSuccess(describer.describe(result));
+    }
+  }
+
+  private static class ListTransformingCallback<T extends FBJSObject> implements AsyncCallback<FBGraphDataListResult<T>> {
     private final ObjectDescriber<T> describer;
     private final AsyncCallback<List<ObjectDescription<T>>> callback;
 
