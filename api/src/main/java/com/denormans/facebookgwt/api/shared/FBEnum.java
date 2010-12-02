@@ -21,6 +21,7 @@ package com.denormans.facebookgwt.api.shared;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -127,6 +128,10 @@ public interface FBEnum {
      * Converts the values from the API values, using the optional enum creator to create any non-null API values that don't have corresponding enum values.
      */
     public static <T extends FBEnum> List<T> valuesFromApiValues(final Map<String, ? extends T> fbEnumValuesByApiValue, final List<String> apiValues, final FBEnumCreator<? extends T> fbEnumCreator) {
+      if (apiValues == null) {
+        return Collections.emptyList();
+      }
+
       List<T> fbEnums = new ArrayList<T>(apiValues.size());
 
       for (final String apiValue : apiValues) {
