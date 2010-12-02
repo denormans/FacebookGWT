@@ -37,10 +37,6 @@ public class ObjectDescription<T> {
   private T value;
   private ObjectDescriber<T> describer;
 
-  public ObjectDescription(final T value) {
-    this.value = value;
-  }
-
   public ObjectDescription(final T value, final ObjectDescriber<T> describer) {
     this.value = value;
     this.describer = describer;

@@ -137,6 +137,11 @@
             </g:tab>
           </g:TabLayoutPanel>
         </g:center>
+        <g:east size="300" styleName="FBGWTItemDisplayContainer">
+          <g:ScrollPanel ui:field="itemDisplayContainer">
+            <sc:FBObjectDisplay ui:field="itemDisplay" label="Item Display"/>
+          </g:ScrollPanel>
+        </g:east>
         <g:south size="150">
           <g:ScrollPanel ui:field="eventContainer" styleName="FBGWTEventContainer">
             <g:FlowPanel ui:field="eventPanel"/>

@@ -34,7 +34,7 @@ public abstract class AbstractObjectDescriber<T> implements ObjectDescriber<T> {
   protected abstract ObjectDescription<T> describeObject(final T obj);
 
   @Override
-  public List<ObjectDescription<T>> describeList(final List<T> list) {
+  public List<ObjectDescription<T>> describeList(final List<? extends T> list) {
     if (list == null) {
       return null;
     }

@@ -25,6 +25,7 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.AuthenticationWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.CanvasWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.EventsWidget;
+import com.denormans.facebookgwt.samples.client.showcase.widgets.FBObjectDisplay;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.GraphWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.SocialWidgetsWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.InitializationWidget;
@@ -69,6 +70,9 @@ public class Showcase extends Composite {
   @UiField GraphWidget graphWidget;
   @UiField LegacyWidget legacyWidget;
 
+  @UiField ScrollPanel itemDisplayContainer;
+  @UiField FBObjectDisplay<Object> itemDisplay;
+
   @UiField ScrollPanel eventContainer;
   @UiField FlowPanel eventPanel;
 
@@ -86,6 +90,15 @@ public class Showcase extends Composite {
 
   private void handleFacebookInitialized(final FBInitSuccessEvent event) {
     addEventMessage("Facebook initialized");
+  }
+
+  public void setItemDisplayValue(final Object value) {
+    itemDisplay.setValue(value);
+    itemDisplayContainer.scrollToTop();
+  }
+
+  public void setItemDisplayLabel(final String label) {
+    itemDisplay.setLabel(label);
   }
 
   public void addApiEventMessage(final String title, final FBEvent<?, ?> event) {

@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
-  <g:HTMLPanel>
+  <g:HTMLPanel styleName="FBGWTItemDisplay">
     <span ui:field="label" class="FBGWTLabel"/>
     <g:Tree ui:field="objectTree" visible="false"/>
     <g:DisclosurePanel>

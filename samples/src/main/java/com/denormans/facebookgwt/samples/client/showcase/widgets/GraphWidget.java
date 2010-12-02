@@ -114,8 +114,8 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final User result) {
         addApiEventMessage("Retrieve current user result (firstName=" + result.getFirstName() + ", lastName=" + result.getLastName() + ")", result);
-        retrieveCurrentUserDisplay.setValue(FBObjectDescribers.Graph.getUserDescriber().describe(result));
-        retrieveCurrentUserDisplay.setVisible(true);
+
+        setItemDisplayDescription(FBObjectDescribers.Graph.getUserDescriber(), result);
       }
     });
   }
@@ -131,8 +131,7 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final FBGraphDataListResult<Post> result) {
         addApiEventMessage("Retrieve current user home feed result", result);
-        retrieveCurrentUserHomeFeedDisplay.setValue(FBObjectDescribers.Graph.getPostDescriber().describeList(result.getData()));
-        retrieveCurrentUserHomeFeedDisplay.setVisible(true);
+        setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result.getData());
       }
     });
   }
@@ -148,8 +147,7 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final FBGraphDataListResult<Post> result) {
         addApiEventMessage("Retrieve current user wall feed result", result);
-        retrieveCurrentUserWallFeedDisplay.setValue(FBObjectDescribers.Graph.getPostDescriber().describeList(result.getData()));
-        retrieveCurrentUserWallFeedDisplay.setVisible(true);
+        setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result.getData());
       }
     });
   }
@@ -169,8 +167,7 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final Post result) {
         addApiEventMessage("Post to current user wall result", result);
-        postToCurrentUserWallDisplay.setValue(FBObjectDescribers.Graph.getPostDescriber().describe(result));
-        postToCurrentUserWallDisplay.setVisible(true);
+        setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result);
       }
     });
   }

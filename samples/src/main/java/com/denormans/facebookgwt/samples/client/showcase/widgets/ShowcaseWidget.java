@@ -20,21 +20,42 @@ package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
+import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
+import com.denormans.facebookgwt.samples.client.showcase.Showcase;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.user.client.ui.Composite;
 
+import java.util.List;
+
 public abstract class ShowcaseWidget extends Composite {
+  protected Showcase getShowcase() {
+    return FacebookGWTSamples.get().getShowcase();
+  }
+
+  protected void setItemDisplay(final String label, final Object value) {
+    getShowcase().setItemDisplayLabel(label);
+    getShowcase().setItemDisplayValue(value);
+  }
+
+  protected <T> void setItemDisplayDescription(final ObjectDescriber<T> describer, final T item) {
+    setItemDisplay(describer.getObjectTypeName(), describer.describe(item));
+  }
+
+  protected <T> void setItemDisplayDescription(final ObjectDescriber<T> describer, final List<? extends T> items) {
+    setItemDisplay(describer.getObjectTypeName(), describer.describeList(items));
+  }
+
   protected void addApiEventMessage(final String message, final FBEvent<?, ?> event) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, event);
+    getShowcase().addApiEventMessage(message, event);
   }
 
   protected void addApiEventMessage(final String message, final EnhancedJSObject apiResponse) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, apiResponse);
+    getShowcase().addApiEventMessage(message, apiResponse);
   }
 
   protected void addApiEventMessage(final String message, final Object apiResponse) {
-    FacebookGWTSamples.get().getShowcase().addApiEventMessage(message, apiResponse);
+    getShowcase().addApiEventMessage(message, apiResponse);
   }
 
   protected void handleError(final String message) {

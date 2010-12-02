@@ -25,11 +25,6 @@ import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
 public class GraphObjectDescription<T> extends ObjectDescription<T> {
   private ObjectType type;
 
-  public GraphObjectDescription(final T value, final ObjectType type) {
-    super(value);
-    this.type = type;
-  }
-
   public GraphObjectDescription(final T value, final ObjectDescriber<T> describer, final ObjectType type) {
     super(value, describer);
     this.type = type;

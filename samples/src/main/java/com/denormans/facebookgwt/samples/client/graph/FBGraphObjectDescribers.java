@@ -56,14 +56,14 @@ public class FBGraphObjectDescribers {
   private void registerDescribers() {
     objectDescribers.put(ObjectType.Post, new FBGraphObjectDescriber<Post>(ObjectType.Post) {
       @Override
-      public ObjectDescription<Post> describeObject(final Post obj) {
+      protected ObjectDescription<Post> describeObject(final Post obj) {
         return super.describeObject(obj);
       }
     });
 
     objectDescribers.put(ObjectType.User, new FBGraphObjectDescriber<User>(ObjectType.User) {
       @Override
-      public ObjectDescription<User> describeObject(final User obj) {
+      protected ObjectDescription<User> describeObject(final User obj) {
         return super.describeObject(obj).addValue("First Name", obj.getFirstName()).addValue("Last Name", obj.getLastName()).addValue("Link", obj.getLink()).addValue("About", obj.getAbout()).addValue("Birthday", obj.getBirthday()).
             addValue("Work", getWorkDescriber().describeList(obj.getWork())).addValue("Education", getEducationDescriber().describeList(obj.getEducation())).addValue("Email", obj.getEmail()).addValue("Website", obj.getWebsite()).
             addValue("Location", getLocationDescriber().describe(obj.getLocation())).addValue("Biography", obj.getBiography()).addValue("Quotes", obj.getQuotes()).addValue("Gender", obj.getGender()).
@@ -116,8 +116,13 @@ public class FBGraphObjectDescribers {
     if(educationDescriber == null) {
       educationDescriber = new AbstractObjectDescriber<Education>() {
         @Override
+        public String getObjectTypeName() {
+          return "Education";
+        }
+
+        @Override
         public ObjectDescription<Education> describeObject(final Education obj) {
-          return new ObjectDescription<Education>(obj).addValue("School", getSchoolDescriber().describe(obj.getSchool())).addValue("Year", getEducationYearDescriber().describe(obj.getYear())).addValue("Type", obj.getType());
+          return new ObjectDescription<Education>(obj, this).addValue("School", getSchoolDescriber().describe(obj.getSchool())).addValue("Year", getEducationYearDescriber().describe(obj.getYear())).addValue("Type", obj.getType());
         }
       };
     }
@@ -149,8 +154,13 @@ public class FBGraphObjectDescribers {
     if(workDescriber == null) {
       workDescriber = new AbstractObjectDescriber<Work>() {
         @Override
+        public String getObjectTypeName() {
+          return "Work";
+        }
+
+        @Override
         public ObjectDescription<Work> describeObject(final Work obj) {
-          return new ObjectDescription<Work>(obj).addValue("Employer", getCompanyDescriber().describe(obj.getEmployer())).addValue("Location", getLocationDescriber().describe(obj.getLocation())).
+          return new ObjectDescription<Work>(obj, this).addValue("Employer", getCompanyDescriber().describe(obj.getEmployer())).addValue("Location", getLocationDescriber().describe(obj.getLocation())).
               addValue("Position", getWorkPositionDescriber().describe(obj.getPosition())).addValue("Start Date", obj.getStartDate()).addValue("End Date", obj.getEndDate());
         }
       };
@@ -183,7 +193,12 @@ public class FBGraphObjectDescribers {
 
   private static abstract class AbstractGraphObjectDescriber<T extends FBGraphObject> extends AbstractObjectDescriber<T> {
     @Override
-    public ObjectDescription<T> describeObject(final T obj) {
+    public String getObjectTypeName() {
+      return getObjectType().name();
+    }
+
+    @Override
+    protected ObjectDescription<T> describeObject(final T obj) {
       return new GraphObjectDescription<T>(obj, this, getObjectType()).addValue("ID", obj.getID()).addValue("Name", obj.getName());
     }
 

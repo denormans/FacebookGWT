@@ -128,7 +128,7 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
 
     List<? extends NamedAction<?, ?>> actions = objectDescription.getActions();
     if(!actions.isEmpty()) {
-      TreeItem actionsTreeItem = new TreeItem(sFieldTemplates.fieldLabelOnly("Actions"));
+      TreeItem actionsTreeItem = new TreeItem(sFieldTemplates.fieldLabelOnly("Actions..."));
       for (final NamedAction<?, ?> action : actions) {
         actionsTreeItem.addItem(createTreeItem(objectDescription.getValue(), action));
       }
@@ -153,7 +153,11 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
     List<TreeItem> treeItems = new ArrayList<TreeItem>();
     int itemNumber = 1;
     for (final Object item : items) {
-      treeItems.add(createTreeItem("Item " + (itemNumber++), item));
+      String name = "Item";
+      if (item instanceof ObjectDescription) {
+        name = ((ObjectDescription)item).getDescriber().getObjectTypeName();
+      }
+      treeItems.add(createTreeItem(name + " " + (itemNumber++), item));
     }
     return treeItems;
   }
@@ -199,6 +203,7 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
           @Override
           public void onSuccess(final Object result) {
             setValue((T) result);
+            setLabel(action.getName() + " Results");
           }
         });
       }

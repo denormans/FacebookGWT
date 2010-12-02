@@ -25,6 +25,9 @@ body {
 
 .FBGWTEventContainer { border-top: 1px solid #999; }
 
+.FBGWTItemDisplayContainer { border-left: 1px solid #999; }
+.FBGWTItemDisplayContainer .FBGWTItemDisplay { padding: 5px; }
+
 .FBGWTEventMessage { padding: 6px; }
 
 .FBGWTEventMessage:nth-child(even) { background-color: #def; }
@@ -58,3 +61,4 @@ body {
 .FBGWTShowcaseCodeLink { float: right; }
 
 .FBGWTShowcaseCodeLink a { font-size: 10px; font-weight: normal; font-style: italic; margin-right: 10px; }
+
