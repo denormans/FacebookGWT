@@ -46,7 +46,6 @@ public class LegacyWidget extends ShowcaseWidget {
   private static LegacyWidgetUIBinder sUIBinder = GWT.create(LegacyWidgetUIBinder.class);
 
   @UiField Button linkStatsButton;
-  @UiField FBObjectDisplay<List<FBEventResponse>> linkStatsDisplay;
 
   public LegacyWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -74,8 +73,7 @@ public class LegacyWidget extends ShowcaseWidget {
       public void onSuccess(final JsArray<FBEventResponse> result) {
         String description = new JSONArray(result).toString();
         addApiEventMessage("Links Get Stats result", description);
-        linkStatsDisplay.setValue(EnhancedJSObject.convertJsArrayToList(result));
-        linkStatsDisplay.setVisible(true);
+        setItemDisplay("Link Stats", EnhancedJSObject.convertJsArrayToList(result));
       }
     });
   }

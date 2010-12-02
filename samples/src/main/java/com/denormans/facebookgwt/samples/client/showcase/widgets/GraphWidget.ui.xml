@@ -4,23 +4,19 @@
   <g:HTMLPanel>
     <div class="FBGWTField">
       <g:Button ui:field="retrieveCurrentUserButton" enabled="false">Get Current User</g:Button>
-      <sc:FBObjectDisplay ui:field="retrieveCurrentUserDisplay" label="Current User" visible="false"/>
     </div>
 
     <div class="FBGWTField">
       <g:Button ui:field="retrieveCurrentUserHomeFeedButton" enabled="false">Get Current User's Home Feed</g:Button>
-      <sc:FBObjectDisplay ui:field="retrieveCurrentUserHomeFeedDisplay" label="Current User's Home Feed" visible="false"/>
     </div>
 
     <div class="FBGWTField">
       <g:Button ui:field="retrieveCurrentUserWallFeedButton" enabled="false">Get Current User's Wall Feed</g:Button>
-      <sc:FBObjectDisplay ui:field="retrieveCurrentUserWallFeedDisplay" label="Current User's Wall Feed" visible="false"/>
     </div>
 
     <div class="FBGWTField">
       <g:Button ui:field="postToCurrentUserWallButton" enabled="false">Post to Current User's Home Feed</g:Button>
       <g:TextBox ui:field="postToCurrentUserWallMessageTextBox" enabled="false"/>
-      <sc:FBObjectDisplay ui:field="postToCurrentUserWallDisplay" label="Post to Current User's Wall" visible="false"/>
     </div>
 
     <div class="FBGWTField">
@@ -41,7 +37,6 @@
     <div class="FBGWTField">
       <g:Button ui:field="testButton" enabled="false">Test</g:Button>
       <g:TextBox ui:field="testTextBox" enabled="false"/>
-      <sc:FBObjectDisplay ui:field="testDisplay" label="Test Item" visible="false"/>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

@@ -27,7 +27,6 @@ import com.denormans.facebookgwt.api.client.graph.js.User;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.samples.client.FBObjectDescribers;
-import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,7 +38,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 public class GraphWidget extends ShowcaseWidget {
@@ -49,20 +47,16 @@ public class GraphWidget extends ShowcaseWidget {
   private static GraphWidgetUIBinder sUIBinder = GWT.create(GraphWidgetUIBinder.class);
 
   @UiField Button retrieveCurrentUserButton;
-  @UiField FBObjectDisplay<ObjectDescription> retrieveCurrentUserDisplay;
 
   @UiField Button retrieveCurrentUserHomeFeedButton;
-  @UiField FBObjectDisplay<List<ObjectDescription<Post>>> retrieveCurrentUserHomeFeedDisplay;
 
   @UiField Button retrieveCurrentUserWallFeedButton;
-  @UiField FBObjectDisplay<List<ObjectDescription<Post>>> retrieveCurrentUserWallFeedDisplay;
 
   @UiField Button postToCurrentUserWallButton;
   @UiField TextBox postToCurrentUserWallMessageTextBox;
 
   @UiField Button deletePostButton;
   @UiField TextBox deletePostIDTextBox;
-  @UiField FBObjectDisplay<ObjectDescription<Post>> postToCurrentUserWallDisplay;
 
   @UiField Button likeItemButton;
   @UiField TextBox likeItemIDTextBox;
@@ -72,7 +66,6 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiField Button testButton;
   @UiField TextBox testTextBox;
-  @UiField FBObjectDisplay<Object> testDisplay;
 
   public GraphWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -230,8 +223,7 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onSuccess(final FBGraphObject result) {
         addApiEventMessage("Test result", result);
-        testDisplay.setValue(result);
-        testDisplay.setVisible(true);
+        setItemDisplay("Test Results", result);
       }
     });
   }

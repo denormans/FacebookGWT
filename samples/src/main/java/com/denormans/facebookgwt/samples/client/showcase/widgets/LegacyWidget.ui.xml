@@ -4,7 +4,6 @@
   <g:HTMLPanel>
     <div class="FBGWTField">
       <g:Button ui:field="linkStatsButton" enabled="false">Get Link Stats</g:Button>
-      <sc:FBObjectDisplay ui:field="linkStatsDisplay" label="Link Stats" visible="false"/>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>
