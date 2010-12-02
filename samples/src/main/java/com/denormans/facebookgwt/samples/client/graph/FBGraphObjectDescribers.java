@@ -28,6 +28,7 @@ import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.Location;
 import com.denormans.facebookgwt.api.client.graph.js.Post;
 import com.denormans.facebookgwt.api.client.graph.js.School;
+import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.User;
 import com.denormans.facebookgwt.api.client.graph.js.Work;
 import com.denormans.facebookgwt.api.client.graph.js.WorkPosition;
@@ -101,11 +102,11 @@ public class FBGraphObjectDescribers {
       }
     });
 
-    objectDescribers.put(ObjectType.Company, new FBGraphObjectDescriber<Company>(ObjectType.Company));
-    objectDescribers.put(ObjectType.EducationYear, new FBGraphObjectDescriber<EducationYear>(ObjectType.EducationYear));
-    objectDescribers.put(ObjectType.Location, new FBGraphObjectDescriber<Location>(ObjectType.Location));
-    objectDescribers.put(ObjectType.School, new FBGraphObjectDescriber<School>(ObjectType.School));
-    objectDescribers.put(ObjectType.WorkPosition, new FBGraphObjectDescriber<WorkPosition>(ObjectType.WorkPosition));
+    objectDescribers.put(ObjectType.Company, new SimpleGraphObjectDescriber<Company>(ObjectType.Company));
+    objectDescribers.put(ObjectType.EducationYear, new SimpleGraphObjectDescriber<EducationYear>(ObjectType.EducationYear));
+    objectDescribers.put(ObjectType.Location, new SimpleGraphObjectDescriber<Location>(ObjectType.Location));
+    objectDescribers.put(ObjectType.School, new SimpleGraphObjectDescriber<School>(ObjectType.School));
+    objectDescribers.put(ObjectType.WorkPosition, new SimpleGraphObjectDescriber<WorkPosition>(ObjectType.WorkPosition));
   }
 
   private ObjectDescriber<Company> getCompanyDescriber() {
@@ -176,6 +177,34 @@ public class FBGraphObjectDescribers {
   @SuppressWarnings({"unchecked"})
   public <T extends FBGraphObject> ObjectDescriber<T> getObjectDescriber(final ObjectType objectType) {
     return (ObjectDescriber<T>)objectDescribers.get(objectType);
+  }
+
+  private static class SimpleGraphObjectDescriber<T extends SimpleGraphObject> extends FBGraphObjectDescriber<T> {
+    public SimpleGraphObjectDescriber(final ObjectType objectType) {
+      super(objectType);
+    }
+
+    @Override
+    protected ObjectDescription<T> describeObject(final T obj) {
+      return super.describeObject(obj).addValue("Picture URL", obj.getPictureURL()).addValue("Page URL", obj.getPageURL()).addValue("Category", obj.getCategory()).addValue("Is Community Page?", obj.isCommunityPage()).
+          addValue("Fan Count", obj.getFanCount()).
+          addAction("Get " + getObjectTypeName(), new Action<T, ObjectDescription<T>>() {
+            @Override
+            public void execute(final T obj, final AsyncCallback<ObjectDescription<T>> callback) {
+              FBGWT.Graph.retrieveItem(obj.getID(), null, new AsyncCallback<T>() {
+                @Override
+                public void onFailure(final Throwable caught) {
+                  callback.onFailure(caught);
+                }
+
+                @Override
+                public void onSuccess(final T result) {
+                  callback.onSuccess(describe(result));
+                }
+              });
+            }
+          });
+    }
   }
 
   private static class FBGraphObjectDescriber<T extends FBGraphObject> extends AbstractGraphObjectDescriber<T> {

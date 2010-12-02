@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
-public class Company extends FBGraphObject {
+public class Company extends SimpleGraphObject {
   protected Company() {
   }
 }

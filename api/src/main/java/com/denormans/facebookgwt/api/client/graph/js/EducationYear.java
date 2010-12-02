@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
-public class EducationYear extends FBGraphObject {
+public class EducationYear extends SimpleGraphObject {
   protected EducationYear() {
   }
 }

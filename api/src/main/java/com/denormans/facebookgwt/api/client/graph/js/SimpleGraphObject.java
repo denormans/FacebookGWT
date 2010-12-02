@@ -18,7 +18,34 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
-public class Location extends SimpleGraphObject {
-  protected Location() {
+import com.denormans.facebookgwt.api.shared.graph.ObjectCategories;
+import com.denormans.facebookgwt.api.shared.graph.ObjectCategory;
+
+public abstract class SimpleGraphObject extends FBGraphObject {
+  protected SimpleGraphObject() {
   }
+
+  public final native String getPictureURL() /*-{
+    return this.picture;
+  }-*/;
+
+  public final native String getPageURL() /*-{
+    return this.link;
+  }-*/;
+
+  public final ObjectCategory getCategory() {
+    return ObjectCategories.valueFromApiValue(getCategoryJS());
+  }
+
+  private final native String getCategoryJS() /*-{
+    return this.category;
+  }-*/;
+
+  public final native boolean isCommunityPage() /*-{
+    return this.is_community_page == true;
+  }-*/;
+
+  public final native int getFanCount() /*-{
+    return this.fan_count || 0;
+  }-*/;
 }

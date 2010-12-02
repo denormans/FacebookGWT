@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.graph.js;
 
-public class WorkPosition extends FBGraphObject {
+public class WorkPosition extends SimpleGraphObject {
   protected WorkPosition() {
   }
 }
