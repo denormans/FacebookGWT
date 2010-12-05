@@ -144,6 +144,27 @@ public class FBGraph extends FBIntegration {
   }
 
   /**
+   * Retrieves the current user's friends.
+   *
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveCurrentUserFriends(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+    retrieveUserFriends(CurrentUserID, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's friends.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserFriends(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Friends, options, callback);
+  }
+
+  /**
    * Posts the current user's wall feed.
    *
    * @param options The call options

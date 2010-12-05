@@ -16,12 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.samples.client.describe;
+package com.denormans.facebookgwt.api.client.graph.js;
 
-import java.util.List;
-
-public interface ObjectDescriber<T> {
-  public String getObjectTypeName(final T obj);
-  public ObjectDescription<T> describe(final T obj);
-  public List<ObjectDescription<T>> describeList(final List<? extends T> list);
+public class Interest extends SimpleGraphObject {
+  protected Interest() {
+  }
 }

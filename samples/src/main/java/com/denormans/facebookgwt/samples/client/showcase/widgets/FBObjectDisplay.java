@@ -149,13 +149,14 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
     return treeItems;
   }
 
+  @SuppressWarnings({"unchecked"})
   private List<TreeItem> createTreeItems(final List<Object> items) {
     List<TreeItem> treeItems = new ArrayList<TreeItem>();
     int itemNumber = 1;
     for (final Object item : items) {
       String name = "Item";
       if (item instanceof ObjectDescription) {
-        name = ((ObjectDescription)item).getDescriber().getObjectTypeName();
+        name = ((ObjectDescription<Object>)item).getDescriber().getObjectTypeName(((ObjectDescription<Object>)item).getValue());
       }
       treeItems.add(createTreeItem(name + " " + (itemNumber++), item));
     }

@@ -147,11 +147,12 @@ public class User extends FBGraphObject {
   }-*/;
 
   public final TimeZone getTimeZone() {
-    return TimeZone.createTimeZone(getTimeZoneInHoursJS() * 60);
+    int timeZoneInHours = getTimeZoneInHoursJS();
+    return timeZoneInHours > 0 ? TimeZone.createTimeZone(timeZoneInHours * 60) : null;
   }
 
   private native int getTimeZoneInHoursJS() /*-{
-    return this.timezone || 0;
+    return this.timezone || -1;
   }-*/;
 
   public final native String getThirdPartyID() /*-{

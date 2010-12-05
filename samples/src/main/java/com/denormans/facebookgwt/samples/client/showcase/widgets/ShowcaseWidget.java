@@ -39,11 +39,11 @@ public abstract class ShowcaseWidget extends Composite {
   }
 
   protected <T> void setItemDisplayDescription(final ObjectDescriber<T> describer, final T item) {
-    setItemDisplay(describer.getObjectTypeName(), describer.describe(item));
+    setItemDisplay(describer.getObjectTypeName(item), describer.describe(item));
   }
 
   protected <T> void setItemDisplayDescription(final ObjectDescriber<T> describer, final List<? extends T> items) {
-    setItemDisplay(describer.getObjectTypeName(), describer.describeList(items));
+    setItemDisplay(describer.getObjectTypeName(null), describer.describeList(items));
   }
 
   protected void addApiEventMessage(final String message, final FBEvent<?, ?> event) {

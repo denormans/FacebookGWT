@@ -23,6 +23,7 @@ import com.denormans.facebookgwt.api.client.graph.js.FBFeedPostOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.Post;
+import com.denormans.facebookgwt.api.client.graph.js.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.User;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
@@ -47,10 +48,11 @@ public class GraphWidget extends ShowcaseWidget {
   private static GraphWidgetUIBinder sUIBinder = GWT.create(GraphWidgetUIBinder.class);
 
   @UiField Button retrieveCurrentUserButton;
-
   @UiField Button retrieveCurrentUserHomeFeedButton;
-
   @UiField Button retrieveCurrentUserWallFeedButton;
+  @UiField Button retrieveCurrentUserTaggedInButton;
+  @UiField Button retrieveCurrentUserPostsButton;
+  @UiField Button retrieveCurrentUserFriendsButton;
 
   @UiField Button postToCurrentUserWallButton;
   @UiField TextBox postToCurrentUserWallMessageTextBox;
@@ -77,6 +79,9 @@ public class GraphWidget extends ShowcaseWidget {
         retrieveCurrentUserButton.setEnabled(FBGWT.Init.isInitialized());
         retrieveCurrentUserHomeFeedButton.setEnabled(FBGWT.Init.isInitialized());
         retrieveCurrentUserWallFeedButton.setEnabled(FBGWT.Init.isInitialized());
+        retrieveCurrentUserTaggedInButton.setEnabled(FBGWT.Init.isInitialized());
+        retrieveCurrentUserPostsButton.setEnabled(FBGWT.Init.isInitialized());
+        retrieveCurrentUserFriendsButton.setEnabled(FBGWT.Init.isInitialized());
 
         postToCurrentUserWallButton.setEnabled(FBGWT.Init.isInitialized());
         postToCurrentUserWallMessageTextBox.setEnabled(FBGWT.Init.isInitialized());
@@ -141,6 +146,54 @@ public class GraphWidget extends ShowcaseWidget {
       public void onSuccess(final FBGraphDataListResult<Post> result) {
         addApiEventMessage("Retrieve current user wall feed result", result);
         setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result.getData());
+      }
+    });
+  }
+
+  @UiHandler ("retrieveCurrentUserTaggedInButton")
+  public void handleRetrieveCurrentUserTaggedInButtonClick(final ClickEvent event) {
+    FBGWT.Graph.retrieveCurrentUserTaggedIn(null, new AsyncCallback<FBGraphDataListResult<Postable>>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error retrieving current user tagged in", caught);
+      }
+
+      @Override
+      public void onSuccess(final FBGraphDataListResult<Postable> result) {
+        addApiEventMessage("Retrieve current user tagged in result", result);
+        setItemDisplayDescription(FBObjectDescribers.Graph.getPostableDescriber(), result.getData());
+      }
+    });
+  }
+
+  @UiHandler ("retrieveCurrentUserPostsButton")
+  public void handleRetrieveCurrentUserPostsButtonClick(final ClickEvent event) {
+    FBGWT.Graph.retrieveCurrentUserPosts(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error retrieving current user posts", caught);
+      }
+
+      @Override
+      public void onSuccess(final FBGraphDataListResult<Post> result) {
+        addApiEventMessage("Retrieve current user posts result", result);
+        setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result.getData());
+      }
+    });
+  }
+
+  @UiHandler ("retrieveCurrentUserFriendsButton")
+  public void handleRetrieveCurrentUserFriendsButtonClick(final ClickEvent event) {
+    FBGWT.Graph.retrieveCurrentUserFriends(null, new AsyncCallback<FBGraphDataListResult<User>>() {
+      @Override
+      public void onFailure(final Throwable caught) {
+        handleError("Error retrieving current user friends", caught);
+      }
+
+      @Override
+      public void onSuccess(final FBGraphDataListResult<User> result) {
+        addApiEventMessage("Retrieve current user friends result", result);
+        setItemDisplayDescription(FBObjectDescribers.Graph.getUserDescriber(), result.getData());
       }
     });
   }
