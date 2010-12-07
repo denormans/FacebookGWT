@@ -103,7 +103,7 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiHandler ("retrieveCurrentUserButton")
   public void handleRetrieveCurrentUserButtonClick(final ClickEvent event) {
-    FBGWT.Graph.retrieveCurrentUser(null, new AsyncCallback<User>() {
+    FBGWT.Graph.User.retrieveCurrentUser(null, new AsyncCallback<User>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user", caught);
@@ -120,7 +120,7 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiHandler ("retrieveCurrentUserHomeFeedButton")
   public void handleRetrieveCurrentUserHomeFeedButtonClick(final ClickEvent event) {
-    FBGWT.Graph.retrieveCurrentUserHomeFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+    FBGWT.Graph.User.retrieveCurrentUserHomeFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user home feed", caught);
@@ -136,7 +136,7 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiHandler ("retrieveCurrentUserWallFeedButton")
   public void handleRetrieveCurrentUserWallFeedButtonClick(final ClickEvent event) {
-    FBGWT.Graph.retrieveCurrentUserWallFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+    FBGWT.Graph.User.retrieveCurrentUserWallFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user wall feed", caught);
@@ -152,7 +152,7 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiHandler ("retrieveCurrentUserTaggedInButton")
   public void handleRetrieveCurrentUserTaggedInButtonClick(final ClickEvent event) {
-    FBGWT.Graph.retrieveCurrentUserTaggedIn(null, new AsyncCallback<FBGraphDataListResult<Postable>>() {
+    FBGWT.Graph.User.retrieveCurrentUserTaggedIn(null, new AsyncCallback<FBGraphDataListResult<Postable>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user tagged in", caught);
@@ -168,7 +168,7 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiHandler ("retrieveCurrentUserPostsButton")
   public void handleRetrieveCurrentUserPostsButtonClick(final ClickEvent event) {
-    FBGWT.Graph.retrieveCurrentUserPosts(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+    FBGWT.Graph.User.retrieveCurrentUserPosts(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user posts", caught);
@@ -184,7 +184,7 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiHandler ("retrieveCurrentUserFriendsButton")
   public void handleRetrieveCurrentUserFriendsButtonClick(final ClickEvent event) {
-    FBGWT.Graph.retrieveCurrentUserFriends(null, new AsyncCallback<FBGraphDataListResult<User>>() {
+    FBGWT.Graph.User.retrieveCurrentUserFriends(null, new AsyncCallback<FBGraphDataListResult<User>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user friends", caught);
@@ -204,7 +204,7 @@ public class GraphWidget extends ShowcaseWidget {
 
     Log.info("Post options: " + postOptions.toJSONString());
 
-    FBGWT.Graph.postToCurrentUserWall(postOptions, new AsyncCallback<Post>() {
+    FBGWT.Graph.User.postToCurrentUserWall(postOptions, new AsyncCallback<Post>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error posting to current user wall", caught);
