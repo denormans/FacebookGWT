@@ -277,11 +277,6 @@ public class FBGraphObjectDescribers {
             }
           });
     }
-
-    @Override
-    protected void retrieveItem(final String itemID, final AsyncCallback<User> callback) {
-      FBGWT.Graph.User.retrieveUser(itemID, null, callback);
-    }
   }
 
   private class EducationDescriber extends AbstractObjectDescriber<Education> {

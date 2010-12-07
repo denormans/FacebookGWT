@@ -38,18 +38,7 @@ public class FBUserGraph extends FBItemGraph<User> {
    * @param callback Called with the result
    */
   public void retrieveCurrentUser(final FBGraphCallOptions options, final AsyncCallback<User> callback) {
-    retrieveUser(FBUserGraph.CurrentUserID, options, callback);
-  }
-
-  /**
-   * Retrieves the given user.
-   *
-   * @param userID The user ID
-   * @param options The call options
-   * @param callback Called with the result
-   */
-  public void retrieveUser(final String userID, final FBGraphCallOptions options, final AsyncCallback<User> callback) {
-    retrieveItem(userID, options, callback);
+    retrieveItem(FBUserGraph.CurrentUserID, options, callback);
   }
 
   /**
