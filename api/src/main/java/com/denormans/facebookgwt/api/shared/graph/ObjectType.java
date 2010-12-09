@@ -46,7 +46,6 @@ public enum ObjectType {
             ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
   PhotoAlbum(EnumSet.of(ConnectionTypes.Photos, ConnectionTypes.Comments, ConnectionTypes.Picture),
       EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Name, ObjectFields.Description, ObjectFields.Location, ObjectFields.Link, ObjectFields.Privacy, ObjectFields.Count, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
-  PlatformRequest(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Post(EnumSet.of(ConnectionTypes.Comments),
        EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.To, ObjectFields.Message, ObjectFields.Picture, ObjectFields.Link, ObjectFields.Name, ObjectFields.Caption, ObjectFields.Description, ObjectFields.Source,
            ObjectFields.Icon, ObjectFields.Attribution, ObjectFields.Actions, ObjectFields.Privacy, ObjectFields.Likes, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),

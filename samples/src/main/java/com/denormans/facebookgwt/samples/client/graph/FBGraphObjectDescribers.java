@@ -45,7 +45,6 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Note;
 import com.denormans.facebookgwt.api.client.graph.js.model.Page;
 import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
-import com.denormans.facebookgwt.api.client.graph.js.model.PlatformRequest;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.model.School;
@@ -92,7 +91,6 @@ public class FBGraphObjectDescribers {
     objectDescribers.put(ObjectType.Page, new PageDescriber());
     objectDescribers.put(ObjectType.Photo, new PhotoDescriber());
     objectDescribers.put(ObjectType.PhotoAlbum, new PhotoAlbumDescriber());
-    objectDescribers.put(ObjectType.PlatformRequest, new PlatformRequestDescriber());
     objectDescribers.put(ObjectType.Post, new PostDescriber());
     objectDescribers.put(ObjectType.StatusMessage, new StatusMessageDescriber());
     objectDescribers.put(ObjectType.Subscription, new SubscriptionDescriber());
@@ -204,10 +202,6 @@ public class FBGraphObjectDescribers {
 
   private ObjectDescriber<PhotoAlbum> getPhotoAlbumDescriber() {
     return getObjectDescriber(ObjectType.PhotoAlbum);
-  }
-
-  public ObjectDescriber<PlatformRequest> getPlatformRequestDescriber() {
-    return getObjectDescriber(ObjectType.PlatformRequest);
   }
 
   public ObjectDescriber<Post> getPostDescriber() {
@@ -476,18 +470,6 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private static class PlatformRequestDescriber extends FBGraphObjectDescriber<PlatformRequest> {
-    public PlatformRequestDescriber() {
-      super(ObjectType.PlatformRequest);
-    }
-
-    @Override
-    protected ObjectDescription<PlatformRequest> describeObject(final PlatformRequest obj) {
-      // todo: describe platform request
-      return super.describeObject(obj);
-    }
-  }
-
   private static class PostDescriber extends FBGraphObjectDescriber<Post> {
     public PostDescriber() {
       super(ObjectType.Post);
@@ -701,12 +683,6 @@ public class FBGraphObjectDescribers {
             @Override
             public void execute(final User obj, final AsyncCallback<List<ObjectDescription<CheckIn>>> callback) {
               FBGWT.Graph.User.retrieveUserCheckIns(obj.getID(), null, new ListTransformingCallback<CheckIn>(getCheckInDescriber(), callback));
-            }
-          }).
-          addAction("Platform Requests", new Action<User, List<ObjectDescription<PlatformRequest>>>() {
-            @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<PlatformRequest>>> callback) {
-              FBGWT.Graph.User.retrieveUserPlatformRequests(obj.getID(), null, new ListTransformingCallback<PlatformRequest>(getPlatformRequestDescriber(), callback));
             }
           }).
           addAction("FriendLists", new Action<User, List<ObjectDescription<FriendList>>>() {

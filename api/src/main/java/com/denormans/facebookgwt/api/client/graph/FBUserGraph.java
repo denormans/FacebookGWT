@@ -34,7 +34,6 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Music;
 import com.denormans.facebookgwt.api.client.graph.js.model.Note;
 import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
-import com.denormans.facebookgwt.api.client.graph.js.model.PlatformRequest;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
@@ -363,17 +362,6 @@ public class FBUserGraph extends FBItemGraph<User> {
    */
   public void retrieveUserCheckIns(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<CheckIn>> callback) {
     retrieveConnections(userID, ConnectionTypes.CheckIns, options, callback);
-  }
-
-  /**
-   * Retrieves the given user's platform requests.
-   *
-   * @param userID The user ID
-   * @param options The call options
-   * @param callback Called with the result
-   */
-  public void retrieveUserPlatformRequests(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<PlatformRequest>> callback) {
-    retrieveConnections(userID, ConnectionTypes.PlatformRequests, options, callback);
   }
 
   /**
