@@ -16,9 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class Company extends SimpleGraphObject {
-  protected Company() {
+import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
+
+public class Like extends SimpleGraphObject {
+  protected Like() {
   }
 }

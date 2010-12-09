@@ -16,9 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public abstract class Postable extends FBGraphObject {
-  protected Postable() {
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+
+public class Page extends FBGraphObject {
+  protected Page() {
   }
 }

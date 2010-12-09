@@ -16,38 +16,22 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.options;
 
-import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-
-import java.util.Date;
-
-public class FBGraphObject extends FBJSObject {
-  protected FBGraphObject() {
+public class FBFeedPostOptions extends FBGraphCallOptions {
+  public static FBFeedPostOptions createFeedPostOptions() {
+    return createEnhancedObject();
   }
 
-  public final native String getID() /*-{
-    return this.id;
-  }-*/;
-
-  public final native String getName() /*-{
-    return this.name;
-  }-*/;
-
-  public final Date getCreatedTime() {
-    return FBDateTimeFormats.parseDateTime(FBDateTimeFormats.RFC3339Format, getUpdatedTimeJS());
+  protected FBFeedPostOptions() {
   }
 
-  private native String getCreatedTimeJS() /*-{
-    return this.created_time;
+  public final native String getMessage() /*-{
+    return this.message;
   }-*/;
 
-  public final Date getUpdatedTime() {
-    return FBDateTimeFormats.parseDateTime(FBDateTimeFormats.RFC3339Format, getUpdatedTimeJS());
-  }
-
-  private native String getUpdatedTimeJS() /*-{
-    return this.updated_time;
+  public final native FBFeedPostOptions setMessage(final String message) /*-{
+    this.message = message;
+    return this;
   }-*/;
 }

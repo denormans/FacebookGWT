@@ -16,9 +16,10 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
 import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.shared.graph.Gender;
 import com.denormans.facebookgwt.api.shared.graph.PoliticalAffiliation;
 import com.denormans.facebookgwt.api.shared.graph.PoliticalAffiliations;
@@ -147,12 +148,12 @@ public class User extends FBGraphObject {
   }-*/;
 
   public final TimeZone getTimeZone() {
-    int timeZoneInHours = getTimeZoneInHoursJS();
-    return timeZoneInHours > 0 ? TimeZone.createTimeZone(timeZoneInHours * 60) : null;
+    int timeZoneInMinutes = getTimeZoneInMinutesJS();
+    return timeZoneInMinutes != -1 ? TimeZone.createTimeZone(timeZoneInMinutes) : null;
   }
 
-  private native int getTimeZoneInHoursJS() /*-{
-    return this.timezone || -1;
+  private native int getTimeZoneInMinutesJS() /*-{
+    return this.timezone * 60 || -1;
   }-*/;
 
   public final native String getThirdPartyID() /*-{

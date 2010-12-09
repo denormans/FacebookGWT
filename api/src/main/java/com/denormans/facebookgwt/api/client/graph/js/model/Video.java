@@ -16,9 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class Music extends SimpleGraphObject {
-  protected Music() {
+public class Video extends Postable {
+  protected Video() {
   }
 }

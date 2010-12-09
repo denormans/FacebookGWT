@@ -16,9 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class TelevisionShow extends SimpleGraphObject {
-  protected TelevisionShow() {
+import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
+
+public class Location extends SimpleGraphObject {
+  protected Location() {
   }
 }

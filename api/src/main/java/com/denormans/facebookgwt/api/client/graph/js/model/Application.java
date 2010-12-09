@@ -16,9 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class Book extends SimpleGraphObject {
-  protected Book() {
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+
+public class Application extends FBGraphObject {
+  protected Application() {
   }
 }

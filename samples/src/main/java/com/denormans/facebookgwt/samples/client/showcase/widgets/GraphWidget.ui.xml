@@ -6,8 +6,6 @@
       <g:Button ui:field="retrieveCurrentUserButton" enabled="false">Get Current User</g:Button>
       <g:Button ui:field="retrieveCurrentUserHomeFeedButton" enabled="false">Get Current User's Home Feed</g:Button>
       <g:Button ui:field="retrieveCurrentUserWallFeedButton" enabled="false">Get Current User's Wall Feed</g:Button>
-      <g:Button ui:field="retrieveCurrentUserTaggedInButton" enabled="false">Get Current User's Tagged In</g:Button>
-      <g:Button ui:field="retrieveCurrentUserPostsButton" enabled="false">Get Current User's Posts</g:Button>
       <g:Button ui:field="retrieveCurrentUserFriendsButton" enabled="false">Get Current User's Friends</g:Button>
     </div>
 

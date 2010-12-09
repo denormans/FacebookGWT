@@ -16,22 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class FBFeedPostOptions extends FBGraphCallOptions {
-  public static FBFeedPostOptions createFeedPostOptions() {
-    return createEnhancedObject();
+import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
+
+public class Activity extends SimpleGraphObject {
+  protected Activity() {
   }
-
-  protected FBFeedPostOptions() {
-  }
-
-  public final native String getMessage() /*-{
-    return this.message;
-  }-*/;
-
-  public final native FBFeedPostOptions setMessage(final String message) /*-{
-    this.message = message;
-    return this;
-  }-*/;
 }

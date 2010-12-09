@@ -29,6 +29,7 @@ public enum ObjectType {
           EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Place, ObjectFields.Message, ObjectFields.Application, ObjectFields.CreatedTime)),
   Event(EnumSet.of(ConnectionTypes.WallFeed, ConnectionTypes.NoReply, ConnectionTypes.Maybe, ConnectionTypes.Invited, ConnectionTypes.Attending, ConnectionTypes.Declined, ConnectionTypes.Picture),
         EnumSet.of(ObjectFields.ID, ObjectFields.Owner, ObjectFields.Name, ObjectFields.Description, ObjectFields.StartTime, ObjectFields.EndTime, ObjectFields.Location, ObjectFields.Venue, ObjectFields.Privacy, ObjectFields.UpdatedTime)),
+  FriendList(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Group(EnumSet.of(ConnectionTypes.WallFeed, ConnectionTypes.Members, ConnectionTypes.Picture),
         EnumSet.of(ObjectFields.ID, ObjectFields.Icon, ObjectFields.Owner, ObjectFields.Name, ObjectFields.Description, ObjectFields.Link, ObjectFields.Privacy, ObjectFields.UpdatedTime)),
   Insights(EnumSet.noneOf(ConnectionTypes.class),
@@ -44,7 +45,8 @@ public enum ObjectType {
         EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Name, ObjectFields.Picture, ObjectFields.Icon, ObjectFields.Source, ObjectFields.Height, ObjectFields.Width, ObjectFields.Link,
             ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
   PhotoAlbum(EnumSet.of(ConnectionTypes.Photos, ConnectionTypes.Comments, ConnectionTypes.Picture),
-             EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Name, ObjectFields.Description, ObjectFields.Location, ObjectFields.Link, ObjectFields.Privacy, ObjectFields.Count, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
+      EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Name, ObjectFields.Description, ObjectFields.Location, ObjectFields.Link, ObjectFields.Privacy, ObjectFields.Count, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
+  PlatformRequest(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Post(EnumSet.of(ConnectionTypes.Comments),
        EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.To, ObjectFields.Message, ObjectFields.Picture, ObjectFields.Link, ObjectFields.Name, ObjectFields.Caption, ObjectFields.Description, ObjectFields.Source,
            ObjectFields.Icon, ObjectFields.Attribution, ObjectFields.Actions, ObjectFields.Privacy, ObjectFields.Likes, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
@@ -63,11 +65,19 @@ public enum ObjectType {
         EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Name, ObjectFields.Picture, ObjectFields.EmbedHTML, ObjectFields.Icon, ObjectFields.Source, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
 
   // Other types
-  Company(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
-  EducationYear(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
-  Location(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
-  School(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
-  WorkPosition(EnumSet.noneOf(ConnectionTypes.class), EnumSet.noneOf(ObjectFields.class)),
+  Account(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Activity(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Book(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Company(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  EducationYear(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Interest(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Like(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Location(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Movie(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Music(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  School(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  TelevisionShow(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  WorkPosition(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   ;
 
   private Set<ConnectionTypes> connectionTypes;

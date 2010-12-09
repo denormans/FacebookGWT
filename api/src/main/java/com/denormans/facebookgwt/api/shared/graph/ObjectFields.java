@@ -21,6 +21,7 @@ package com.denormans.facebookgwt.api.shared.graph;
 import com.denormans.facebookgwt.api.shared.FBEnum;
 import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
@@ -90,6 +91,9 @@ public enum ObjectFields implements ObjectField {
 
   private static final Map<String, ObjectFields> sObjectFieldByApiValue = FBEnum.Util.createFBEnumByApiValueMap(ObjectFields.class);
   private static final FBEnumCreator<ObjectField> sObjectFieldCreator = new ObjectFieldCreator();
+
+  public static final EnumSet<ObjectFields> BasicFields = EnumSet.of(ObjectFields.ID, ObjectFields.Name);
+  public static final EnumSet<ObjectFields> SimpleObjectFields = EnumSet.of(ObjectFields.ID, ObjectFields.Name, ObjectFields.Picture, ObjectFields.Link, ObjectFields.Category, ObjectFields.FanCount);
 
   private String apiValue;
 

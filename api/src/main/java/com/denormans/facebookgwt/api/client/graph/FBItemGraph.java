@@ -20,12 +20,12 @@ package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBGWTException;
 import com.denormans.facebookgwt.api.client.FBIntegration;
-import com.denormans.facebookgwt.api.client.graph.js.FBFeedPostOptions;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.client.graph.js.options.FBFeedPostOptions;
+import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphError;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
-import com.denormans.facebookgwt.api.client.graph.js.Post;
+import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethod;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethods;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionType;

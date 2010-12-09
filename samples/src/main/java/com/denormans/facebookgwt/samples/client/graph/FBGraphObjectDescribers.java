@@ -20,19 +20,42 @@ package com.denormans.facebookgwt.samples.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-import com.denormans.facebookgwt.api.client.graph.js.Company;
-import com.denormans.facebookgwt.api.client.graph.js.Education;
-import com.denormans.facebookgwt.api.client.graph.js.EducationYear;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
-import com.denormans.facebookgwt.api.client.graph.js.Location;
-import com.denormans.facebookgwt.api.client.graph.js.Post;
-import com.denormans.facebookgwt.api.client.graph.js.Postable;
-import com.denormans.facebookgwt.api.client.graph.js.School;
 import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
-import com.denormans.facebookgwt.api.client.graph.js.User;
-import com.denormans.facebookgwt.api.client.graph.js.Work;
-import com.denormans.facebookgwt.api.client.graph.js.WorkPosition;
+import com.denormans.facebookgwt.api.client.graph.js.model.Account;
+import com.denormans.facebookgwt.api.client.graph.js.model.Activity;
+import com.denormans.facebookgwt.api.client.graph.js.model.Application;
+import com.denormans.facebookgwt.api.client.graph.js.model.Book;
+import com.denormans.facebookgwt.api.client.graph.js.model.CheckIn;
+import com.denormans.facebookgwt.api.client.graph.js.model.Company;
+import com.denormans.facebookgwt.api.client.graph.js.model.Education;
+import com.denormans.facebookgwt.api.client.graph.js.model.EducationYear;
+import com.denormans.facebookgwt.api.client.graph.js.model.Event;
+import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
+import com.denormans.facebookgwt.api.client.graph.js.model.Group;
+import com.denormans.facebookgwt.api.client.graph.js.model.Insights;
+import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
+import com.denormans.facebookgwt.api.client.graph.js.model.Like;
+import com.denormans.facebookgwt.api.client.graph.js.model.Link;
+import com.denormans.facebookgwt.api.client.graph.js.model.Location;
+import com.denormans.facebookgwt.api.client.graph.js.model.Movie;
+import com.denormans.facebookgwt.api.client.graph.js.model.Music;
+import com.denormans.facebookgwt.api.client.graph.js.model.Note;
+import com.denormans.facebookgwt.api.client.graph.js.model.Page;
+import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
+import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
+import com.denormans.facebookgwt.api.client.graph.js.model.PlatformRequest;
+import com.denormans.facebookgwt.api.client.graph.js.model.Post;
+import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
+import com.denormans.facebookgwt.api.client.graph.js.model.School;
+import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
+import com.denormans.facebookgwt.api.client.graph.js.model.Subscription;
+import com.denormans.facebookgwt.api.client.graph.js.model.TelevisionShow;
+import com.denormans.facebookgwt.api.client.graph.js.model.User;
+import com.denormans.facebookgwt.api.client.graph.js.model.Video;
+import com.denormans.facebookgwt.api.client.graph.js.model.Work;
+import com.denormans.facebookgwt.api.client.graph.js.model.WorkPosition;
 import com.denormans.facebookgwt.api.shared.graph.ObjectType;
 import com.denormans.facebookgwt.samples.client.describe.AbstractObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
@@ -58,18 +81,61 @@ public class FBGraphObjectDescribers {
   }
 
   private void registerDescribers() {
+    objectDescribers.put(ObjectType.Application, new ApplicationDescriber());
+    objectDescribers.put(ObjectType.CheckIn, new CheckInDescriber());
+    objectDescribers.put(ObjectType.Event, new EventDescriber());
+    objectDescribers.put(ObjectType.FriendList, new FriendListDescriber());
+    objectDescribers.put(ObjectType.Group, new GroupDescriber());
+    objectDescribers.put(ObjectType.Insights, new InsightsDescriber());
+    objectDescribers.put(ObjectType.Link, new LinkDescriber());
+    objectDescribers.put(ObjectType.Note, new NoteDescriber());
+    objectDescribers.put(ObjectType.Page, new PageDescriber());
+    objectDescribers.put(ObjectType.Photo, new PhotoDescriber());
+    objectDescribers.put(ObjectType.PhotoAlbum, new PhotoAlbumDescriber());
+    objectDescribers.put(ObjectType.PlatformRequest, new PlatformRequestDescriber());
     objectDescribers.put(ObjectType.Post, new PostDescriber());
+    objectDescribers.put(ObjectType.StatusMessage, new StatusMessageDescriber());
+    objectDescribers.put(ObjectType.Subscription, new SubscriptionDescriber());
     objectDescribers.put(ObjectType.User, new UserDescriber());
+    objectDescribers.put(ObjectType.Video, new VideoDescriber());
 
+    objectDescribers.put(ObjectType.Account, new SimpleGraphObjectDescriber<Account>(ObjectType.Account));
+    objectDescribers.put(ObjectType.Activity, new SimpleGraphObjectDescriber<Activity>(ObjectType.Activity));
+    objectDescribers.put(ObjectType.Book, new SimpleGraphObjectDescriber<Book>(ObjectType.Book));
     objectDescribers.put(ObjectType.Company, new SimpleGraphObjectDescriber<Company>(ObjectType.Company));
     objectDescribers.put(ObjectType.EducationYear, new SimpleGraphObjectDescriber<EducationYear>(ObjectType.EducationYear));
+    objectDescribers.put(ObjectType.Interest, new SimpleGraphObjectDescriber<Interest>(ObjectType.Interest));
+    objectDescribers.put(ObjectType.Like, new SimpleGraphObjectDescriber<Like>(ObjectType.Like));
     objectDescribers.put(ObjectType.Location, new SimpleGraphObjectDescriber<Location>(ObjectType.Location));
+    objectDescribers.put(ObjectType.Movie, new SimpleGraphObjectDescriber<Movie>(ObjectType.Movie));
+    objectDescribers.put(ObjectType.Music, new SimpleGraphObjectDescriber<Music>(ObjectType.Music));
     objectDescribers.put(ObjectType.School, new SimpleGraphObjectDescriber<School>(ObjectType.School));
+    objectDescribers.put(ObjectType.TelevisionShow, new SimpleGraphObjectDescriber<TelevisionShow>(ObjectType.TelevisionShow));
     objectDescribers.put(ObjectType.WorkPosition, new SimpleGraphObjectDescriber<WorkPosition>(ObjectType.WorkPosition));
 
     educationDescriber = new EducationDescriber();
     postableDescriber = new PostableDescriber();
     workDescriber = new WorkDescriber();
+  }
+
+  private ObjectDescriber<Account> getAccountDescriber() {
+    return getObjectDescriber(ObjectType.Account);
+  }
+
+  private ObjectDescriber<Activity> getActivityDescriber() {
+    return getObjectDescriber(ObjectType.Activity);
+  }
+
+  private ObjectDescriber<Application> getApplicationDescriber() {
+    return getObjectDescriber(ObjectType.Application);
+  }
+
+  private ObjectDescriber<Book> getBookDescriber() {
+    return getObjectDescriber(ObjectType.Book);
+  }
+
+  private ObjectDescriber<CheckIn> getCheckInDescriber() {
+    return getObjectDescriber(ObjectType.CheckIn);
   }
 
   private ObjectDescriber<Company> getCompanyDescriber() {
@@ -84,8 +150,64 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.EducationYear);
   }
 
+  private ObjectDescriber<Event> getEventDescriber() {
+    return getObjectDescriber(ObjectType.Event);
+  }
+
+  private ObjectDescriber<FriendList> getFriendListDescriber() {
+    return getObjectDescriber(ObjectType.FriendList);
+  }
+
+  private ObjectDescriber<Group> getGroupDescriber() {
+    return getObjectDescriber(ObjectType.Group);
+  }
+
+  private ObjectDescriber<Insights> getInsightsDescriber() {
+    return getObjectDescriber(ObjectType.Insights);
+  }
+
+  private ObjectDescriber<Interest> getInterestDescriber() {
+    return getObjectDescriber(ObjectType.Interest);
+  }
+
   private ObjectDescriber<Location> getLocationDescriber() {
     return getObjectDescriber(ObjectType.Location);
+  }
+
+  private ObjectDescriber<Like> getLikeDescriber() {
+    return getObjectDescriber(ObjectType.Like);
+  }
+
+  private ObjectDescriber<Link> getLinkDescriber() {
+    return getObjectDescriber(ObjectType.Link);
+  }
+
+  private ObjectDescriber<Movie> getMovieDescriber() {
+    return getObjectDescriber(ObjectType.Movie);
+  }
+
+  private ObjectDescriber<Music> getMusicDescriber() {
+    return getObjectDescriber(ObjectType.Music);
+  }
+
+  private ObjectDescriber<Note> getNoteDescriber() {
+    return getObjectDescriber(ObjectType.Note);
+  }
+
+  private ObjectDescriber<Page> getPageDescriber() {
+    return getObjectDescriber(ObjectType.Page);
+  }
+
+  private ObjectDescriber<Photo> getPhotoDescriber() {
+    return getObjectDescriber(ObjectType.Photo);
+  }
+
+  private ObjectDescriber<PhotoAlbum> getPhotoAlbumDescriber() {
+    return getObjectDescriber(ObjectType.PhotoAlbum);
+  }
+
+  public ObjectDescriber<PlatformRequest> getPlatformRequestDescriber() {
+    return getObjectDescriber(ObjectType.PlatformRequest);
   }
 
   public ObjectDescriber<Post> getPostDescriber() {
@@ -100,8 +222,24 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.School);
   }
 
+  private ObjectDescriber<StatusMessage> getStatusMessageDescriber() {
+    return getObjectDescriber(ObjectType.StatusMessage);
+  }
+
+  private ObjectDescriber<Subscription> getSubscriptionDescriber() {
+    return getObjectDescriber(ObjectType.Subscription);
+  }
+
+  private ObjectDescriber<TelevisionShow> getTelevisionShowDescriber() {
+    return getObjectDescriber(ObjectType.TelevisionShow);
+  }
+
   public ObjectDescriber<User> getUserDescriber() {
     return getObjectDescriber(ObjectType.User);
+  }
+
+  private ObjectDescriber<Video> getVideoDescriber() {
+    return getObjectDescriber(ObjectType.Video);
   }
 
   private ObjectDescriber<Work> getWorkDescriber() {
@@ -206,6 +344,150 @@ public class FBGraphObjectDescribers {
     }
   }
 
+  private class ApplicationDescriber extends FBGraphObjectDescriber<Application> {
+    public ApplicationDescriber() {
+      super(ObjectType.Application);
+    }
+
+    @Override
+    protected ObjectDescription<Application> describeObject(final Application obj) {
+      // todo: describe application
+      return super.describeObject(obj);
+    }
+  }
+
+  private class CheckInDescriber extends FBGraphObjectDescriber<CheckIn> {
+    public CheckInDescriber() {
+      super(ObjectType.CheckIn);
+    }
+
+    @Override
+    protected ObjectDescription<CheckIn> describeObject(final CheckIn obj) {
+      // todo: describe check-in
+      return super.describeObject(obj);
+    }
+  }
+
+  private class EventDescriber extends FBGraphObjectDescriber<Event> {
+    public EventDescriber() {
+      super(ObjectType.Event);
+    }
+
+    @Override
+    protected ObjectDescription<Event> describeObject(final Event obj) {
+      // todo: describe event
+      return super.describeObject(obj);
+    }
+  }
+
+  private class FriendListDescriber extends FBGraphObjectDescriber<FriendList> {
+    public FriendListDescriber() {
+      super(ObjectType.FriendList);
+    }
+
+    @Override
+    protected ObjectDescription<FriendList> describeObject(final FriendList obj) {
+      // todo: describe friend list
+      return super.describeObject(obj);
+    }
+  }
+
+  private class GroupDescriber extends FBGraphObjectDescriber<Group> {
+    public GroupDescriber() {
+      super(ObjectType.Group);
+    }
+
+    @Override
+    protected ObjectDescription<Group> describeObject(final Group obj) {
+      // todo: describe group
+      return super.describeObject(obj);
+    }
+  }
+
+  private class InsightsDescriber extends FBGraphObjectDescriber<Insights> {
+    public InsightsDescriber() {
+      super(ObjectType.Insights);
+    }
+
+    @Override
+    protected ObjectDescription<Insights> describeObject(final Insights obj) {
+      // todo: describe insights
+      return super.describeObject(obj);
+    }
+  }
+
+  private class LinkDescriber extends FBGraphObjectDescriber<Link> {
+    public LinkDescriber() {
+      super(ObjectType.Link);
+    }
+
+    @Override
+    protected ObjectDescription<Link> describeObject(final Link obj) {
+      // todo: describe link
+      return super.describeObject(obj);
+    }
+  }
+
+  private class NoteDescriber extends FBGraphObjectDescriber<Note> {
+    public NoteDescriber() {
+      super(ObjectType.Note);
+    }
+
+    @Override
+    protected ObjectDescription<Note> describeObject(final Note obj) {
+      // todo: describe note
+      return super.describeObject(obj);
+    }
+  }
+
+  private class PageDescriber extends FBGraphObjectDescriber<Page> {
+    public PageDescriber() {
+      super(ObjectType.Page);
+    }
+
+    @Override
+    protected ObjectDescription<Page> describeObject(final Page obj) {
+      // todo: describe page
+      return super.describeObject(obj);
+    }
+  }
+
+  private class PhotoDescriber extends FBGraphObjectDescriber<Photo> {
+    public PhotoDescriber() {
+      super(ObjectType.Photo);
+    }
+
+    @Override
+    protected ObjectDescription<Photo> describeObject(final Photo obj) {
+      // todo: describe photo
+      return super.describeObject(obj);
+    }
+  }
+
+  private class PhotoAlbumDescriber extends FBGraphObjectDescriber<PhotoAlbum> {
+    public PhotoAlbumDescriber() {
+      super(ObjectType.PhotoAlbum);
+    }
+
+    @Override
+    protected ObjectDescription<PhotoAlbum> describeObject(final PhotoAlbum obj) {
+      // todo: describe photo album
+      return super.describeObject(obj);
+    }
+  }
+
+  private static class PlatformRequestDescriber extends FBGraphObjectDescriber<PlatformRequest> {
+    public PlatformRequestDescriber() {
+      super(ObjectType.PlatformRequest);
+    }
+
+    @Override
+    protected ObjectDescription<PlatformRequest> describeObject(final PlatformRequest obj) {
+      // todo: describe platform request
+      return super.describeObject(obj);
+    }
+  }
+
   private static class PostDescriber extends FBGraphObjectDescriber<Post> {
     public PostDescriber() {
       super(ObjectType.Post);
@@ -213,6 +495,7 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Post> describeObject(final Post obj) {
+      // todo: describe post
       return super.describeObject(obj);
     }
   }
@@ -228,6 +511,30 @@ public class FBGraphObjectDescribers {
     public String getObjectTypeName(final Postable obj) {
       // todo: get the exact type
       return "Postable";
+    }
+  }
+
+  private class StatusMessageDescriber extends FBGraphObjectDescriber<StatusMessage> {
+    public StatusMessageDescriber() {
+      super(ObjectType.StatusMessage);
+    }
+
+    @Override
+    protected ObjectDescription<StatusMessage> describeObject(final StatusMessage obj) {
+      // todo: describe status message
+      return super.describeObject(obj);
+    }
+  }
+
+  private class SubscriptionDescriber extends FBGraphObjectDescriber<Subscription> {
+    public SubscriptionDescriber() {
+      super(ObjectType.Subscription);
+    }
+
+    @Override
+    protected ObjectDescription<Subscription> describeObject(final Subscription obj) {
+      // todo: describe subscription
+      return super.describeObject(obj);
     }
   }
 
@@ -275,10 +582,155 @@ public class FBGraphObjectDescribers {
             public void execute(final User obj, final AsyncCallback<List<ObjectDescription<User>>> callback) {
               FBGWT.Graph.User.retrieveUserFriends(obj.getID(), null, new ListTransformingCallback<User>(describer, callback));
             }
+          }).
+          addAction("Activities", new Action<User, List<ObjectDescription<Activity>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Activity>>> callback) {
+              FBGWT.Graph.User.retrieveUserActivities(obj.getID(), null, new ListTransformingCallback<Activity>(getActivityDescriber(), callback));
+            }
+          }).
+          addAction("Interests", new Action<User, List<ObjectDescription<Interest>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Interest>>> callback) {
+              FBGWT.Graph.User.retrieveUserInterests(obj.getID(), null, new ListTransformingCallback<Interest>(getInterestDescriber(), callback));
+            }
+          }).
+          addAction("Music", new Action<User, List<ObjectDescription<Music>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Music>>> callback) {
+              FBGWT.Graph.User.retrieveUserMusic(obj.getID(), null, new ListTransformingCallback<Music>(getMusicDescriber(), callback));
+            }
+          }).
+          addAction("Books", new Action<User, List<ObjectDescription<Book>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Book>>> callback) {
+              FBGWT.Graph.User.retrieveUserBooks(obj.getID(), null, new ListTransformingCallback<Book>(getBookDescriber(), callback));
+            }
+          }).
+          addAction("Movies", new Action<User, List<ObjectDescription<Movie>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Movie>>> callback) {
+              FBGWT.Graph.User.retrieveUserMovies(obj.getID(), null, new ListTransformingCallback<Movie>(getMovieDescriber(), callback));
+            }
+          }).
+          addAction("Television Shows", new Action<User, List<ObjectDescription<TelevisionShow>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<TelevisionShow>>> callback) {
+              FBGWT.Graph.User.retrieveUserTelevisionShows(obj.getID(), null, new ListTransformingCallback<TelevisionShow>(getTelevisionShowDescriber(), callback));
+            }
+          }).
+          addAction("Likes", new Action<User, List<ObjectDescription<Like>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
+              FBGWT.Graph.User.retrieveUserLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
+            }
+          }).
+          addAction("Photos", new Action<User, List<ObjectDescription<Photo>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Photo>>> callback) {
+              FBGWT.Graph.User.retrieveUserPhotos(obj.getID(), null, new ListTransformingCallback<Photo>(getPhotoDescriber(), callback));
+            }
+          }).
+          addAction("Photo Albums", new Action<User, List<ObjectDescription<PhotoAlbum>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<PhotoAlbum>>> callback) {
+              FBGWT.Graph.User.retrieveUserPhotoAlbums(obj.getID(), null, new ListTransformingCallback<PhotoAlbum>(getPhotoAlbumDescriber(), callback));
+            }
+          }).
+          addAction("Videos", new Action<User, List<ObjectDescription<Video>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Video>>> callback) {
+              FBGWT.Graph.User.retrieveUserVideos(obj.getID(), null, new ListTransformingCallback<Video>(getVideoDescriber(), callback));
+            }
+          }).
+          addAction("Groups", new Action<User, List<ObjectDescription<Group>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Group>>> callback) {
+              FBGWT.Graph.User.retrieveUserGroups(obj.getID(), null, new ListTransformingCallback<Group>(getGroupDescriber(), callback));
+            }
+          }).
+          addAction("Status Messages", new Action<User, List<ObjectDescription<StatusMessage>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<StatusMessage>>> callback) {
+              FBGWT.Graph.User.retrieveUserStatusMessages(obj.getID(), null, new ListTransformingCallback<StatusMessage>(getStatusMessageDescriber(), callback));
+            }
+          }).
+          addAction("Links", new Action<User, List<ObjectDescription<Link>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Link>>> callback) {
+              FBGWT.Graph.User.retrieveUserLinks(obj.getID(), null, new ListTransformingCallback<Link>(getLinkDescriber(), callback));
+            }
+          }).
+          addAction("Notes", new Action<User, List<ObjectDescription<Note>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
+              FBGWT.Graph.User.retrieveUserNotes(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
+            }
+          }).
+          addAction("Events", new Action<User, List<ObjectDescription<Event>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Event>>> callback) {
+              FBGWT.Graph.User.retrieveUserEvents(obj.getID(), null, new ListTransformingCallback<Event>(getEventDescriber(), callback));
+            }
+          }).
+          addAction("Inbox", new Action<User, List<ObjectDescription<Note>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
+              FBGWT.Graph.User.retrieveUserInbox(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
+            }
+          }).
+          addAction("Outbox", new Action<User, List<ObjectDescription<Note>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
+              FBGWT.Graph.User.retrieveUserOutbox(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
+            }
+          }).
+          addAction("Updates", new Action<User, List<ObjectDescription<Note>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
+              FBGWT.Graph.User.retrieveUserUpdates(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
+            }
+          }).
+          addAction("Accounts", new Action<User, List<ObjectDescription<Account>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Account>>> callback) {
+              FBGWT.Graph.User.retrieveUserAccounts(obj.getID(), null, new ListTransformingCallback<Account>(getAccountDescriber(), callback));
+            }
+          }).
+          addAction("Check-ins", new Action<User, List<ObjectDescription<CheckIn>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<CheckIn>>> callback) {
+              FBGWT.Graph.User.retrieveUserCheckIns(obj.getID(), null, new ListTransformingCallback<CheckIn>(getCheckInDescriber(), callback));
+            }
+          }).
+          addAction("Platform Requests", new Action<User, List<ObjectDescription<PlatformRequest>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<PlatformRequest>>> callback) {
+              FBGWT.Graph.User.retrieveUserPlatformRequests(obj.getID(), null, new ListTransformingCallback<PlatformRequest>(getPlatformRequestDescriber(), callback));
+            }
+          }).
+          addAction("FriendLists", new Action<User, List<ObjectDescription<FriendList>>>() {
+            @Override
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<FriendList>>> callback) {
+              FBGWT.Graph.User.retrieveUserFriendLists(obj.getID(), null, new ListTransformingCallback<FriendList>(getFriendListDescriber(), callback));
+            }
           });
     }
   }
 
+  private class VideoDescriber extends FBGraphObjectDescriber<Video> {
+    public VideoDescriber() {
+      super(ObjectType.Video);
+    }
+
+    @Override
+    protected ObjectDescription<Video> describeObject(final Video obj) {
+      // todo: describe video
+      return super.describeObject(obj);
+    }
+  }
+
+  // non graph objects
   private class EducationDescriber extends AbstractObjectDescriber<Education> {
     @Override
     public String getObjectTypeName(final Education obj) {
@@ -303,4 +755,5 @@ public class FBGraphObjectDescribers {
           addValue("Position", getWorkPositionDescriber().describe(obj.getPosition())).addValue("Start Date", obj.getStartDate()).addValue("End Date", obj.getEndDate());
     }
   }
+
 }

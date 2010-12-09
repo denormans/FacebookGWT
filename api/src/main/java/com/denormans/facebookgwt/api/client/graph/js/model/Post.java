@@ -16,9 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class WorkPosition extends SimpleGraphObject {
-  protected WorkPosition() {
+public class Post extends Postable {
+  protected Post() {
   }
 }

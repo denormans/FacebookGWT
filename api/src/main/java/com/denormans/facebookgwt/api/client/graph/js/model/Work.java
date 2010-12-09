@@ -16,38 +16,42 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
 import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 
 import java.util.Date;
 
-public class FBGraphObject extends FBJSObject {
-  protected FBGraphObject() {
+public class Work extends FBJSObject {
+  protected Work() {
   }
 
-  public final native String getID() /*-{
-    return this.id;
+  public final native Company getEmployer() /*-{
+    return this.employer;
   }-*/;
 
-  public final native String getName() /*-{
-    return this.name;
+  public final native Location getLocation() /*-{
+    return this.location;
   }-*/;
 
-  public final Date getCreatedTime() {
-    return FBDateTimeFormats.parseDateTime(FBDateTimeFormats.RFC3339Format, getUpdatedTimeJS());
+  public final native WorkPosition getPosition() /*-{
+    return this.position;
+  }-*/;
+
+  public final Date getStartDate() {
+    return FBDateTimeFormats.parseTimePeriodDate(getStartDateJS());
   }
 
-  private native String getCreatedTimeJS() /*-{
-    return this.created_time;
+  private native String getStartDateJS() /*-{
+    return this.start_date;
   }-*/;
 
-  public final Date getUpdatedTime() {
-    return FBDateTimeFormats.parseDateTime(FBDateTimeFormats.RFC3339Format, getUpdatedTimeJS());
+  public final Date getEndDate() {
+    return FBDateTimeFormats.parseTimePeriodDate(getEndDateJS());
   }
 
-  private native String getUpdatedTimeJS() /*-{
-    return this.updated_time;
+  private native String getEndDateJS() /*-{
+    return this.end_date;
   }-*/;
 }

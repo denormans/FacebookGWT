@@ -18,12 +18,31 @@
 
 package com.denormans.facebookgwt.api.client.graph;
 
-import com.denormans.facebookgwt.api.client.graph.js.FBFeedPostOptions;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
-import com.denormans.facebookgwt.api.client.graph.js.Post;
-import com.denormans.facebookgwt.api.client.graph.js.Postable;
-import com.denormans.facebookgwt.api.client.graph.js.User;
+import com.denormans.facebookgwt.api.client.graph.js.model.Account;
+import com.denormans.facebookgwt.api.client.graph.js.model.Activity;
+import com.denormans.facebookgwt.api.client.graph.js.model.Book;
+import com.denormans.facebookgwt.api.client.graph.js.model.CheckIn;
+import com.denormans.facebookgwt.api.client.graph.js.model.Event;
+import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
+import com.denormans.facebookgwt.api.client.graph.js.model.Group;
+import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
+import com.denormans.facebookgwt.api.client.graph.js.model.Like;
+import com.denormans.facebookgwt.api.client.graph.js.model.Link;
+import com.denormans.facebookgwt.api.client.graph.js.model.Movie;
+import com.denormans.facebookgwt.api.client.graph.js.model.Music;
+import com.denormans.facebookgwt.api.client.graph.js.model.Note;
+import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
+import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
+import com.denormans.facebookgwt.api.client.graph.js.model.PlatformRequest;
+import com.denormans.facebookgwt.api.client.graph.js.model.Post;
+import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
+import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
+import com.denormans.facebookgwt.api.client.graph.js.model.TelevisionShow;
+import com.denormans.facebookgwt.api.client.graph.js.model.User;
+import com.denormans.facebookgwt.api.client.graph.js.model.Video;
+import com.denormans.facebookgwt.api.client.graph.js.options.FBFeedPostOptions;
+import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -84,16 +103,6 @@ public class FBUserGraph extends FBItemGraph<User> {
   }
 
   /**
-   * Retrieves the posts, photos and videos that the current user is tagged in.
-   *
-   * @param options The call options
-   * @param callback Called with the result
-   */
-  public void retrieveCurrentUserTaggedIn(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Postable>> callback) {
-    retrieveUserTaggedIn(FBUserGraph.CurrentUserID, options, callback);
-  }
-
-  /**
    * Retrieves the posts, photos and videos that the given user is tagged in.
    *
    * @param userID The user ID
@@ -102,16 +111,6 @@ public class FBUserGraph extends FBItemGraph<User> {
    */
   public void retrieveUserTaggedIn(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Postable>> callback) {
     retrieveConnections(userID, ConnectionTypes.Tagged, options, callback);
-  }
-
-  /**
-   * Retrieves the given user's posts.
-   *
-   * @param options The call options
-   * @param callback Called with the result
-   */
-  public void retrieveCurrentUserPosts(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
-    retrieveUserPosts(FBUserGraph.CurrentUserID, options, callback);
   }
 
   /**
@@ -144,6 +143,248 @@ public class FBUserGraph extends FBItemGraph<User> {
    */
   public void retrieveUserFriends(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
     retrieveConnections(userID, ConnectionTypes.Friends, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's activities.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserActivities(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Activity>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Activities, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's interests.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserInterests(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Interest>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Interests, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's music.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserMusic(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Music>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Music, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's books.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserBooks(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Book>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Books, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's movies.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserMovies(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Movie>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Movies, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's television shows.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserTelevisionShows(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<TelevisionShow>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Television, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's likes.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserLikes(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Like>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Likes, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's photos.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserPhotos(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Photo>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Photos, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's albums.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserPhotoAlbums(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<PhotoAlbum>> callback) {
+    retrieveConnections(userID, ConnectionTypes.PhotoAlbums, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's videos.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserVideos(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Video>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Videos, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's groups.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserGroups(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Group>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Groups, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's status messages.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserStatusMessages(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<StatusMessage>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Statuses, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's links.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserLinks(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Link>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Links, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's albums.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserNotes(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Notes, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's events.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserEvents(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Event>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Events, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's inbox.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserInbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Inbox, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's outbox.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserOutbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Outbox, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's updates.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserUpdates(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Updates, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's accounts.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserAccounts(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Account>> callback) {
+    retrieveConnections(userID, ConnectionTypes.Accounts, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's events.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserCheckIns(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<CheckIn>> callback) {
+    retrieveConnections(userID, ConnectionTypes.CheckIns, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's platform requests.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserPlatformRequests(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<PlatformRequest>> callback) {
+    retrieveConnections(userID, ConnectionTypes.PlatformRequests, options, callback);
+  }
+
+  /**
+   * Retrieves the given user's friend lists.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  public void retrieveUserFriendLists(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<FriendList>> callback) {
+    retrieveConnections(userID, ConnectionTypes.FriendLists, options, callback);
   }
 
   /**

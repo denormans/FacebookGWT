@@ -16,7 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.options;
 
 import com.denormans.facebookgwt.api.client.common.js.FBOptions;
 import com.denormans.facebookgwt.api.shared.FBEnum;

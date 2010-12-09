@@ -29,6 +29,7 @@ public enum ConnectionTypes implements ConnectionType {
   Events("events"),
   WallFeed("feed"),
   Friends("friends"),
+  FriendLists("friendLists"),
   Groups("groups"),
   HomeFeed("home"),
   Inbox("inbox"),

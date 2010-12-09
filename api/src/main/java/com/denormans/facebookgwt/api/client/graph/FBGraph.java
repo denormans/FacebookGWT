@@ -19,7 +19,7 @@
 package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 

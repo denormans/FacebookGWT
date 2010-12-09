@@ -16,42 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-
-import java.util.Date;
-
-public class Work extends FBJSObject {
-  protected Work() {
+public class StatusMessage extends Postable {
+  protected StatusMessage() {
   }
-
-  public final native Company getEmployer() /*-{
-    return this.employer;
-  }-*/;
-
-  public final native Location getLocation() /*-{
-    return this.location;
-  }-*/;
-
-  public final native WorkPosition getPosition() /*-{
-    return this.position;
-  }-*/;
-
-  public final Date getStartDate() {
-    return FBDateTimeFormats.parseTimePeriodDate(getStartDateJS());
-  }
-
-  private native String getStartDateJS() /*-{
-    return this.start_date;
-  }-*/;
-
-  public final Date getEndDate() {
-    return FBDateTimeFormats.parseTimePeriodDate(getEndDateJS());
-  }
-
-  private native String getEndDateJS() /*-{
-    return this.end_date;
-  }-*/;
 }

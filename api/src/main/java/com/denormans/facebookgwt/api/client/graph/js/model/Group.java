@@ -16,9 +16,19 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class Photo extends Postable {
-  protected Photo() {
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+
+public class Group extends FBGraphObject {
+  protected Group() {
   }
+
+  public final native String getVersion() /*-{
+    return this.version;
+  }-*/;
+
+  public final native int getUnread() /*-{
+    return this.unread || 0;
+  }-*/;
 }

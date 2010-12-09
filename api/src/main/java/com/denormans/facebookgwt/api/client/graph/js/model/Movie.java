@@ -16,9 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class Video extends Postable {
-  protected Video() {
+import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
+
+public class Movie extends SimpleGraphObject {
+  protected Movie() {
   }
 }
