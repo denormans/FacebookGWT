@@ -2,10 +2,11 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <g:HTMLPanel styleName="FBGWTItemDisplay">
     <span ui:field="label" class="FBGWTLabel"/>
-    <g:Tree ui:field="objectTree" visible="false"/>
-    <g:DisclosurePanel>
+    <g:Tree ui:field="objectTree" visible="false" animationEnabled="true"/>
+    <g:DisclosurePanel ui:field="objectDetailsDisclosure">
       <g:header>Raw</g:header>
       <g:HTMLPanel><span ui:field="objectDetails" class="FBGWTCode"/></g:HTMLPanel>
     </g:DisclosurePanel>
+    <g:Button ui:field="previousValueButton" enabled="false">Previous Value</g:Button>
   </g:HTMLPanel>
 </ui:UiBinder>

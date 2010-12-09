@@ -32,9 +32,11 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -42,6 +44,7 @@ import com.google.gwt.user.client.ui.TreeItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> {
   interface FBObjectDisplayUIBinder extends UiBinder<HTMLPanel, FBObjectDisplay> {}
@@ -62,9 +65,12 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
 
   @UiField SpanElement label;
   @UiField Tree objectTree;
+  @UiField DisclosurePanel objectDetailsDisclosure;
   @UiField SpanElement objectDetails;
+  @UiField Button previousValueButton;
 
   private T value;
+  private Stack<T> previousValues = new Stack<T>();
 
   public FBObjectDisplay() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
@@ -79,9 +85,12 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
   @SuppressWarnings ( { "unchecked" })
   @Override
   public void setValue(final T value) {
+    pushPreviousValue();
+
     this.value = value;
 
     objectTree.setVisible(false);
+    objectDetailsDisclosure.setOpen(false);
 
     Object obj = value;
     if (value instanceof ObjectDescription) {
@@ -111,13 +120,31 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
       treeItems = createTreeItems((JavaScriptObject) value);
     }
 
-    if (treeItems != null) {
+    if (treeItems != null && !treeItems.isEmpty()) {
       for (final TreeItem treeItem : treeItems) {
         objectTree.addItem(treeItem);
       }
 
       objectTree.setVisible(true);
+    } else {
+      objectDetailsDisclosure.setOpen(true);
     }
+  }
+
+  @SuppressWarnings({"unchecked"})
+  private void pushPreviousValue() {
+    if(value != null) {
+      previousValues.push(value);
+    }
+
+    T previousValue = !previousValues.isEmpty() ? previousValues.peek() : null;
+    if (previousValue instanceof ObjectDescription) {
+      previousValueButton.setText("Previous " + getObjectDescriptionName((ObjectDescription<Object>)previousValue));
+    } else {
+      previousValueButton.setText("Previous Value");
+    }
+
+    previousValueButton.setEnabled(!previousValues.isEmpty());
   }
 
   private List<TreeItem> createTreeItems(final ObjectDescription<?> objectDescription) {
@@ -156,11 +183,15 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
     for (final Object item : items) {
       String name = "Item";
       if (item instanceof ObjectDescription) {
-        name = ((ObjectDescription<Object>)item).getDescriber().getObjectTypeName(((ObjectDescription<Object>)item).getValue());
+        name = getObjectDescriptionName((ObjectDescription<Object>)item);
       }
       treeItems.add(createTreeItem(name + " " + (itemNumber++), item));
     }
     return treeItems;
+  }
+
+  private String getObjectDescriptionName(final ObjectDescription<Object> item) {
+    return item.getDescriber().getObjectTypeName(item.getValue());
   }
 
   @SuppressWarnings ( { "unchecked" })
@@ -219,5 +250,20 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
 
   public void setLabel(final String labelText) {
     label.setInnerText(labelText + ":");
+  }
+
+  @SuppressWarnings({"unchecked"})
+  @UiHandler("previousValueButton")
+  public void handlePreviousValueButtonClick(final ClickEvent event) {
+    if (!previousValues.isEmpty()) {
+      value = null;
+      T previousValue = previousValues.pop();
+      setValue(previousValue);
+      if (previousValue instanceof ObjectDescription) {
+        setLabel(getObjectDescriptionName((ObjectDescription<Object>)previousValue));
+      } else {
+        setLabel("Value");
+      }
+    }
   }
 }
