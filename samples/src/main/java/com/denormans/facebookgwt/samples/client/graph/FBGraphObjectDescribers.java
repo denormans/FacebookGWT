@@ -28,6 +28,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Activity;
 import com.denormans.facebookgwt.api.client.graph.js.model.Application;
 import com.denormans.facebookgwt.api.client.graph.js.model.Book;
 import com.denormans.facebookgwt.api.client.graph.js.model.CheckIn;
+import com.denormans.facebookgwt.api.client.graph.js.model.Comment;
 import com.denormans.facebookgwt.api.client.graph.js.model.Company;
 import com.denormans.facebookgwt.api.client.graph.js.model.Education;
 import com.denormans.facebookgwt.api.client.graph.js.model.EducationYear;
@@ -82,6 +83,7 @@ public class FBGraphObjectDescribers {
   private void registerDescribers() {
     objectDescribers.put(ObjectType.Application, new ApplicationDescriber());
     objectDescribers.put(ObjectType.CheckIn, new CheckInDescriber());
+    objectDescribers.put(ObjectType.Comment, new CommentDescriber());
     objectDescribers.put(ObjectType.Event, new EventDescriber());
     objectDescribers.put(ObjectType.FriendList, new FriendListDescriber());
     objectDescribers.put(ObjectType.Group, new GroupDescriber());
@@ -362,6 +364,24 @@ public class FBGraphObjectDescribers {
     }
   }
 
+  private class CommentDescriber extends FBGraphObjectDescriber<Comment> {
+    public CommentDescriber() {
+      super(ObjectType.Comment);
+    }
+
+    @Override
+    protected ObjectDescription<Comment> describeObject(final Comment obj) {
+      // todo: describe comment
+      return super.describeObject(obj).addValue("Created", obj.getCreatedTime()).addValue("Message", obj.getMessage()).addValue("From", obj.getFrom()).addValue("Num Likes", obj.getNumLikes()).
+          addAction("Likes", new Action<Comment, List<ObjectDescription<Like>>>() {
+            @Override
+            public void execute(final Comment obj, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
+              FBGWT.Graph.Comment.retrieveLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
+            }
+          });
+    }
+  }
+
   private class EventDescriber extends FBGraphObjectDescriber<Event> {
     public EventDescriber() {
       super(ObjectType.Event);
@@ -381,12 +401,13 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<FriendList> describeObject(final FriendList obj) {
-      return super.describeObject(obj).addAction("Members", new Action<FriendList, List<ObjectDescription<User>>>() {
-        @Override
-        public void execute(final FriendList obj, final AsyncCallback<List<ObjectDescription<User>>> callback) {
-          FBGWT.Graph.FriendList.retrieveMembers(obj.getID(), null, new ListTransformingCallback<User>(getUserDescriber(), callback));
-        }
-      });
+      return super.describeObject(obj).
+          addAction("Members", new Action<FriendList, List<ObjectDescription<User>>>() {
+            @Override
+            public void execute(final FriendList obj, final AsyncCallback<List<ObjectDescription<User>>> callback) {
+              FBGWT.Graph.FriendList.retrieveMembers(obj.getID(), null, new ListTransformingCallback<User>(getUserDescriber(), callback));
+            }
+          });
     }
   }
 

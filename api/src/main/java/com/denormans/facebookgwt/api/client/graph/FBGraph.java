@@ -27,6 +27,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class FBGraph extends FBItemGraph {
   public final UserGraph User = new UserGraph();
   public final FriendListGraph FriendList = new FriendListGraph();
+  public final CommentGraph Comment = new CommentGraph();
 
   private final FBItemGraph genericItemGraph = new FBItemGraph() {};
 
