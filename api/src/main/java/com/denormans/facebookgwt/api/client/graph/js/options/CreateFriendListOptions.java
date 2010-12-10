@@ -18,20 +18,22 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.options;
 
-public class FBFeedPostOptions extends FBGraphCallOptions {
-  public static FBFeedPostOptions createFeedPostOptions() {
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
+
+public class CreateFriendListOptions extends FBGraphCallOptions {
+  public static CreateFriendListOptions createCreateFriendListOptions() {
     return createEnhancedObject();
   }
 
-  protected FBFeedPostOptions() {
+  protected CreateFriendListOptions() {
   }
 
-  public final native String getMessage() /*-{
-    return this.message;
+  public final native String getName() /*-{
+    return this.name;
   }-*/;
 
-  public final native FBFeedPostOptions setMessage(final String message) /*-{
-    this.message = message;
+  public final native CreateFriendListOptions setName(final String name) /*-{
+    this.name = name;
     return this;
   }-*/;
 }

@@ -16,7 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js.options;
+package com.denormans.facebookgwt.api.client.graph.js;
 
 import com.denormans.facebookgwt.api.client.common.js.FBOptions;
 import com.denormans.facebookgwt.api.shared.FBEnum;
@@ -116,7 +116,7 @@ public class FBGraphCallOptions extends FBOptions {
     return this;
   }-*/;
 
-  public final native boolean isIncludeMetadata() /*-{
+  public final native boolean getIncludeMetadata() /*-{
     return this.metadata == 1;
   }-*/;
 

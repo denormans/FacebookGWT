@@ -4,14 +4,19 @@
   <g:HTMLPanel>
     <div class="FBGWTField">
       <g:Button ui:field="retrieveCurrentUserButton" enabled="false">Get Current User</g:Button>
-      <g:Button ui:field="retrieveCurrentUserHomeFeedButton" enabled="false">Get Current User's Home Feed</g:Button>
-      <g:Button ui:field="retrieveCurrentUserWallFeedButton" enabled="false">Get Current User's Wall Feed</g:Button>
-      <g:Button ui:field="retrieveCurrentUserFriendsButton" enabled="false">Get Current User's Friends</g:Button>
+      <g:Button ui:field="retrieveHomeFeedButton" enabled="false">Home Feed</g:Button>
+      <g:Button ui:field="retrieveWallFeedButton" enabled="false">Wall Feed</g:Button>
+      <g:Button ui:field="retrieveFriendsButton" enabled="false">Friends</g:Button>
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="postToCurrentUserWallButton" enabled="false">Post to Current User's Home Feed</g:Button>
-      <g:TextBox ui:field="postToCurrentUserWallMessageTextBox" enabled="false"/>
+      <g:Button ui:field="postToWallButton" enabled="false">Post to Home Feed</g:Button>
+      <g:TextBox ui:field="postToWallMessageTextBox" enabled="false"/>
+    </div>
+
+    <div class="FBGWTField">
+      <g:Button ui:field="createFriendListButton" enabled="false">Create Friend List</g:Button>
+      <g:TextBox ui:field="createFriendListNameTextBox" enabled="false"/>
     </div>
 
     <div class="FBGWTField">

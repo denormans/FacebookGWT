@@ -20,13 +20,16 @@ package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBGWTException;
 import com.denormans.facebookgwt.api.client.FBIntegration;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphError;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.model.Account;
 import com.denormans.facebookgwt.api.client.graph.js.model.Activity;
+import com.denormans.facebookgwt.api.client.graph.js.model.Attachment;
 import com.denormans.facebookgwt.api.client.graph.js.model.Book;
 import com.denormans.facebookgwt.api.client.graph.js.model.CheckIn;
+import com.denormans.facebookgwt.api.client.graph.js.model.Comment;
 import com.denormans.facebookgwt.api.client.graph.js.model.Event;
 import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.Group;
@@ -34,6 +37,8 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Insights;
 import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
 import com.denormans.facebookgwt.api.client.graph.js.model.Like;
 import com.denormans.facebookgwt.api.client.graph.js.model.Link;
+import com.denormans.facebookgwt.api.client.graph.js.model.Message;
+import com.denormans.facebookgwt.api.client.graph.js.model.MessageThread;
 import com.denormans.facebookgwt.api.client.graph.js.model.Movie;
 import com.denormans.facebookgwt.api.client.graph.js.model.Music;
 import com.denormans.facebookgwt.api.client.graph.js.model.Note;
@@ -41,13 +46,13 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
+import com.denormans.facebookgwt.api.client.graph.js.model.Share;
 import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
 import com.denormans.facebookgwt.api.client.graph.js.model.Subscription;
 import com.denormans.facebookgwt.api.client.graph.js.model.TelevisionShow;
 import com.denormans.facebookgwt.api.client.graph.js.model.User;
 import com.denormans.facebookgwt.api.client.graph.js.model.Video;
-import com.denormans.facebookgwt.api.client.graph.js.options.FBFeedPostOptions;
-import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.client.graph.js.options.FeedPostOptions;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethod;
 import com.denormans.facebookgwt.api.shared.common.HTTPMethods;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionType;
@@ -90,6 +95,17 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
   }
 
   /**
+   * Retrieves the given item's attachments.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveAttachments(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Attachment>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.Books, options, callback);
+  }
+
+  /**
    * Retrieves the given item's books.
    *
    * @param itemID The item ID
@@ -112,6 +128,17 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
   }
 
   /**
+   * Retrieves the given item's comments.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveComments(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Comment>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.Comments, options, callback);
+  }
+
+  /**
    * Retrieves the given item's events.
    *
    * @param itemID The item ID
@@ -120,6 +147,17 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    */
   protected void retrieveEvents(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Event>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Events, options, callback);
+  }
+
+  /**
+   * Retrieves the given item's former participants.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveFormerParticipants(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.FormerParticipants, options, callback);
   }
 
   /**
@@ -173,7 +211,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveInbox(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+  protected void retrieveInbox(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<MessageThread>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Inbox, options, callback);
   }
 
@@ -255,6 +293,17 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
   }
 
   /**
+   * Retrieves the given item's messages.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveMessages(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Message>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.Messages, options, callback);
+  }
+
+  /**
    * Retrieves the given item's movies.
    *
    * @param itemID The item ID
@@ -310,6 +359,17 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
   }
 
   /**
+   * Retrieves the given item's participants.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveParticipants(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.Participants, options, callback);
+  }
+
+  /**
    * Retrieves the given item's albums.
    *
    * @param itemID The item ID
@@ -340,6 +400,28 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    */
   protected void retrievePosts(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Posts, options, callback);
+  }
+
+  /**
+   * Retrieves the given item's senders.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveSenders(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.Senders, options, callback);
+  }
+
+  /**
+   * Retrieves the given item's shares.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveShares(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Share>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.Shares, options, callback);
   }
 
   /**
@@ -443,6 +525,17 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
   }
 
   /**
+   * Posts to the item's wall feed.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called when complete
+   */
+  protected void postToWall(final String itemID, final FeedPostOptions options, final AsyncCallback<Post> callback) {
+    post(itemID, ConnectionTypes.WallFeed, options, callback);
+  }
+
+  /**
    * Post an item to the owner's feed/likes/etc.
    *
    * @param ownerID The owner item ID
@@ -452,17 +545,6 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    */
   protected void post(final String ownerID, final ConnectionType connectionType, final FBGraphCallOptions options, final AsyncCallback<?> callback) {
     executeGraphCall(ownerID, connectionType, HTTPMethods.Post, options, callback);
-  }
-
-  /**
-   * Posts to the item's wall feed.
-   *
-   * @param itemID The item ID
-   * @param options The call options
-   * @param callback Called when complete
-   */
-  protected void postToWall(final String itemID, final FBFeedPostOptions options, final AsyncCallback<Post> callback) {
-    post(itemID, ConnectionTypes.WallFeed, options, callback);
   }
 
   /**
@@ -559,4 +641,5 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
     fbgwtException.fillInStackTrace();
     callback.onFailure(fbgwtException);
   }
+
 }

@@ -26,6 +26,7 @@ import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.model.Account;
 import com.denormans.facebookgwt.api.client.graph.js.model.Activity;
 import com.denormans.facebookgwt.api.client.graph.js.model.Application;
+import com.denormans.facebookgwt.api.client.graph.js.model.Attachment;
 import com.denormans.facebookgwt.api.client.graph.js.model.Book;
 import com.denormans.facebookgwt.api.client.graph.js.model.CheckIn;
 import com.denormans.facebookgwt.api.client.graph.js.model.Comment;
@@ -40,6 +41,8 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
 import com.denormans.facebookgwt.api.client.graph.js.model.Like;
 import com.denormans.facebookgwt.api.client.graph.js.model.Link;
 import com.denormans.facebookgwt.api.client.graph.js.model.Location;
+import com.denormans.facebookgwt.api.client.graph.js.model.Message;
+import com.denormans.facebookgwt.api.client.graph.js.model.MessageThread;
 import com.denormans.facebookgwt.api.client.graph.js.model.Movie;
 import com.denormans.facebookgwt.api.client.graph.js.model.Music;
 import com.denormans.facebookgwt.api.client.graph.js.model.Note;
@@ -49,6 +52,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.model.School;
+import com.denormans.facebookgwt.api.client.graph.js.model.Share;
 import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
 import com.denormans.facebookgwt.api.client.graph.js.model.Subscription;
 import com.denormans.facebookgwt.api.client.graph.js.model.TelevisionShow;
@@ -82,6 +86,7 @@ public class FBGraphObjectDescribers {
 
   private void registerDescribers() {
     objectDescribers.put(ObjectType.Application, new ApplicationDescriber());
+    objectDescribers.put(ObjectType.Attachment, new AttachmentDescriber());
     objectDescribers.put(ObjectType.CheckIn, new CheckInDescriber());
     objectDescribers.put(ObjectType.Comment, new CommentDescriber());
     objectDescribers.put(ObjectType.Event, new EventDescriber());
@@ -89,11 +94,14 @@ public class FBGraphObjectDescribers {
     objectDescribers.put(ObjectType.Group, new GroupDescriber());
     objectDescribers.put(ObjectType.Insights, new InsightsDescriber());
     objectDescribers.put(ObjectType.Link, new LinkDescriber());
+    objectDescribers.put(ObjectType.Message, new MessageDescriber());
+    objectDescribers.put(ObjectType.MessageThread, new MessageThreadDescriber());
     objectDescribers.put(ObjectType.Note, new NoteDescriber());
     objectDescribers.put(ObjectType.Page, new PageDescriber());
     objectDescribers.put(ObjectType.Photo, new PhotoDescriber());
     objectDescribers.put(ObjectType.PhotoAlbum, new PhotoAlbumDescriber());
     objectDescribers.put(ObjectType.Post, new PostDescriber());
+    objectDescribers.put(ObjectType.Share, new ShareDescriber());
     objectDescribers.put(ObjectType.StatusMessage, new StatusMessageDescriber());
     objectDescribers.put(ObjectType.Subscription, new SubscriptionDescriber());
     objectDescribers.put(ObjectType.User, new UserDescriber());
@@ -130,12 +138,20 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.Application);
   }
 
+  private ObjectDescriber<Attachment> getAttachmentDescriber() {
+    return getObjectDescriber(ObjectType.Attachment);
+  }
+
   private ObjectDescriber<Book> getBookDescriber() {
     return getObjectDescriber(ObjectType.Book);
   }
 
   private ObjectDescriber<CheckIn> getCheckInDescriber() {
     return getObjectDescriber(ObjectType.CheckIn);
+  }
+
+  private ObjectDescriber<Comment> getCommentDescriber() {
+    return getObjectDescriber(ObjectType.Comment);
   }
 
   private ObjectDescriber<Company> getCompanyDescriber() {
@@ -190,6 +206,14 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.Music);
   }
 
+  private ObjectDescriber<Message> getMessageDescriber() {
+    return getObjectDescriber(ObjectType.Message);
+  }
+
+  private ObjectDescriber<MessageThread> getMessageThreadDescriber() {
+    return getObjectDescriber(ObjectType.MessageThread);
+  }
+
   private ObjectDescriber<Note> getNoteDescriber() {
     return getObjectDescriber(ObjectType.Note);
   }
@@ -216,6 +240,10 @@ public class FBGraphObjectDescribers {
 
   private ObjectDescriber<School> getSchoolDescriber() {
     return getObjectDescriber(ObjectType.School);
+  }
+
+  private ObjectDescriber<Share> getShareDescriber() {
+    return getObjectDescriber(ObjectType.Share);
   }
 
   private ObjectDescriber<StatusMessage> getStatusMessageDescriber() {
@@ -352,6 +380,18 @@ public class FBGraphObjectDescribers {
     }
   }
 
+  private class AttachmentDescriber extends FBGraphObjectDescriber<Attachment> {
+    public AttachmentDescriber() {
+      super(ObjectType.Attachment);
+    }
+
+    @Override
+    protected ObjectDescription<Attachment> describeObject(final Attachment obj) {
+      // todo: describe attachment
+      return super.describeObject(obj);
+    }
+  }
+
   private class CheckInDescriber extends FBGraphObjectDescriber<CheckIn> {
     public CheckInDescriber() {
       super(ObjectType.CheckIn);
@@ -371,7 +411,6 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Comment> describeObject(final Comment obj) {
-      // todo: describe comment
       return super.describeObject(obj).addValue("Created", obj.getCreatedTime()).addValue("Message", obj.getMessage()).addValue("From", obj.getFrom()).addValue("Num Likes", obj.getNumLikes()).
           addAction("Likes", new Action<Comment, List<ObjectDescription<Like>>>() {
             @Override
@@ -447,6 +486,30 @@ public class FBGraphObjectDescribers {
     }
   }
 
+  private class MessageDescriber extends FBGraphObjectDescriber<Message> {
+    public MessageDescriber() {
+      super(ObjectType.Message);
+    }
+
+    @Override
+    protected ObjectDescription<Message> describeObject(final Message obj) {
+      // todo: describe message
+      return super.describeObject(obj);
+    }
+  }
+
+  private class MessageThreadDescriber extends FBGraphObjectDescriber<MessageThread> {
+    public MessageThreadDescriber() {
+      super(ObjectType.MessageThread);
+    }
+
+    @Override
+    protected ObjectDescription<MessageThread> describeObject(final MessageThread obj) {
+      // todo: describe note
+      return super.describeObject(obj);
+    }
+  }
+
   private class NoteDescriber extends FBGraphObjectDescriber<Note> {
     public NoteDescriber() {
       super(ObjectType.Note);
@@ -518,6 +581,18 @@ public class FBGraphObjectDescribers {
     public String getObjectTypeName(final Postable obj) {
       // todo: get the exact type
       return "Postable";
+    }
+  }
+
+  private class ShareDescriber extends FBGraphObjectDescriber<Share> {
+    public ShareDescriber() {
+      super(ObjectType.Share);
+    }
+
+    @Override
+    protected ObjectDescription<Share> describeObject(final Share obj) {
+      // todo: describe share
+      return super.describeObject(obj);
     }
   }
 
@@ -680,10 +755,10 @@ public class FBGraphObjectDescribers {
               FBGWT.Graph.User.retrieveEvents(obj.getID(), null, new ListTransformingCallback<Event>(getEventDescriber(), callback));
             }
           }).
-          addAction("Inbox", new Action<User, List<ObjectDescription<Note>>>() {
+          addAction("Inbox", new Action<User, List<ObjectDescription<MessageThread>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
-              FBGWT.Graph.User.retrieveInbox(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
+            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<MessageThread>>> callback) {
+              FBGWT.Graph.User.retrieveInbox(obj.getID(), null, new ListTransformingCallback<MessageThread>(getMessageThreadDescriber(), callback));
             }
           }).
           addAction("Outbox", new Action<User, List<ObjectDescription<Note>>>() {
@@ -726,8 +801,14 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Video> describeObject(final Video obj) {
-      // todo: describe video
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("From", obj.getFrom()).addValue("Tags", getUserDescriber().describeList(obj.getTags())).addValue("Embed HTML URL", obj.getEmbedHTMLURL()).addValue("Icon URL", obj.getIconURL()).
+          addValue("Source URL", obj.getSourceURL()).addValue("Created", obj.getCreatedTime()).addValue("Updated", obj.getUpdatedTime()).
+          addAction("Comments", new Action<Video, List<ObjectDescription<Comment>>>() {
+            @Override
+            public void execute(final Video obj, final AsyncCallback<List<ObjectDescription<Comment>>> callback) {
+              FBGWT.Graph.Video.retrieveComments(obj.getID(), null, new ListTransformingCallback<Comment>(getCommentDescriber(), callback));
+            }
+          });
     }
   }
 

@@ -23,7 +23,7 @@ import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.User;
-import com.denormans.facebookgwt.api.client.graph.js.options.FBFeedPostOptions;
+import com.denormans.facebookgwt.api.client.graph.js.options.FeedPostOptions;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.samples.client.FBObjectDescribers;
@@ -47,12 +47,15 @@ public class GraphWidget extends ShowcaseWidget {
   private static GraphWidgetUIBinder sUIBinder = GWT.create(GraphWidgetUIBinder.class);
 
   @UiField Button retrieveCurrentUserButton;
-  @UiField Button retrieveCurrentUserHomeFeedButton;
-  @UiField Button retrieveCurrentUserWallFeedButton;
-  @UiField Button retrieveCurrentUserFriendsButton;
+  @UiField Button retrieveHomeFeedButton;
+  @UiField Button retrieveWallFeedButton;
+  @UiField Button retrieveFriendsButton;
 
-  @UiField Button postToCurrentUserWallButton;
-  @UiField TextBox postToCurrentUserWallMessageTextBox;
+  @UiField Button createFriendListButton;
+  @UiField TextBox createFriendListNameTextBox;
+
+  @UiField Button postToWallButton;
+  @UiField TextBox postToWallMessageTextBox;
 
   @UiField Button deletePostButton;
   @UiField TextBox deletePostIDTextBox;
@@ -74,12 +77,12 @@ public class GraphWidget extends ShowcaseWidget {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
         retrieveCurrentUserButton.setEnabled(FBGWT.Init.isInitialized());
-        retrieveCurrentUserHomeFeedButton.setEnabled(FBGWT.Init.isInitialized());
-        retrieveCurrentUserWallFeedButton.setEnabled(FBGWT.Init.isInitialized());
-        retrieveCurrentUserFriendsButton.setEnabled(FBGWT.Init.isInitialized());
+        retrieveHomeFeedButton.setEnabled(FBGWT.Init.isInitialized());
+        retrieveWallFeedButton.setEnabled(FBGWT.Init.isInitialized());
+        retrieveFriendsButton.setEnabled(FBGWT.Init.isInitialized());
 
-        postToCurrentUserWallButton.setEnabled(FBGWT.Init.isInitialized());
-        postToCurrentUserWallMessageTextBox.setEnabled(FBGWT.Init.isInitialized());
+        postToWallButton.setEnabled(FBGWT.Init.isInitialized());
+        postToWallMessageTextBox.setEnabled(FBGWT.Init.isInitialized());
 
         deletePostButton.setEnabled(FBGWT.Init.isInitialized());
         deletePostIDTextBox.setEnabled(FBGWT.Init.isInitialized());
@@ -113,9 +116,9 @@ public class GraphWidget extends ShowcaseWidget {
     });
   }
 
-  @UiHandler ("retrieveCurrentUserHomeFeedButton")
-  public void handleRetrieveCurrentUserHomeFeedButtonClick(final ClickEvent event) {
-    FBGWT.Graph.User.retrieveCurrentUserHomeFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+  @UiHandler ("retrieveHomeFeedButton")
+  public void handleRetrieveHomeFeedButtonClick(final ClickEvent event) {
+    FBGWT.Graph.User.retrieveHomeFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user home feed", caught);
@@ -129,9 +132,9 @@ public class GraphWidget extends ShowcaseWidget {
     });
   }
 
-  @UiHandler ("retrieveCurrentUserWallFeedButton")
-  public void handleRetrieveCurrentUserWallFeedButtonClick(final ClickEvent event) {
-    FBGWT.Graph.User.retrieveCurrentUserWallFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+  @UiHandler ("retrieveWallFeedButton")
+  public void handleRetrieveWallFeedButtonClick(final ClickEvent event) {
+    FBGWT.Graph.User.retrieveWallFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user wall feed", caught);
@@ -145,9 +148,9 @@ public class GraphWidget extends ShowcaseWidget {
     });
   }
 
-  @UiHandler ("retrieveCurrentUserFriendsButton")
-  public void handleRetrieveCurrentUserFriendsButtonClick(final ClickEvent event) {
-    FBGWT.Graph.User.retrieveCurrentUserFriends(null, new AsyncCallback<FBGraphDataListResult<User>>() {
+  @UiHandler ("retrieveFriendsButton")
+  public void handleRetrieveFriendsButtonClick(final ClickEvent event) {
+    FBGWT.Graph.User.retrieveFriends(null, new AsyncCallback<FBGraphDataListResult<User>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user friends", caught);
@@ -161,9 +164,9 @@ public class GraphWidget extends ShowcaseWidget {
     });
   }
 
-  @UiHandler ("postToCurrentUserWallButton")
-  public void handlePostToCurrentUserWallClick(final ClickEvent event) {
-    FBFeedPostOptions postOptions = FBFeedPostOptions.createFeedPostOptions().setMessage(postToCurrentUserWallMessageTextBox.getText());
+  @UiHandler ("postToWallButton")
+  public void handlePostToWallClick(final ClickEvent event) {
+    FeedPostOptions postOptions = FeedPostOptions.createFeedPostOptions().setMessage(postToWallMessageTextBox.getText());
 
     Log.info("Post options: " + postOptions.toJSONString());
 

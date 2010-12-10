@@ -18,6 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.graph;
 
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.model.Account;
 import com.denormans.facebookgwt.api.client.graph.js.model.Activity;
@@ -29,6 +30,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Group;
 import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
 import com.denormans.facebookgwt.api.client.graph.js.model.Like;
 import com.denormans.facebookgwt.api.client.graph.js.model.Link;
+import com.denormans.facebookgwt.api.client.graph.js.model.MessageThread;
 import com.denormans.facebookgwt.api.client.graph.js.model.Movie;
 import com.denormans.facebookgwt.api.client.graph.js.model.Music;
 import com.denormans.facebookgwt.api.client.graph.js.model.Note;
@@ -40,8 +42,9 @@ import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
 import com.denormans.facebookgwt.api.client.graph.js.model.TelevisionShow;
 import com.denormans.facebookgwt.api.client.graph.js.model.User;
 import com.denormans.facebookgwt.api.client.graph.js.model.Video;
-import com.denormans.facebookgwt.api.client.graph.js.options.FBFeedPostOptions;
-import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.client.graph.js.options.CreateFriendListOptions;
+import com.denormans.facebookgwt.api.client.graph.js.options.FeedPostOptions;
+import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -59,12 +62,12 @@ public class UserGraph extends FBItemGraph<User> {
   }
 
   /**
-   * Retrieves the given user's home feed.
+   * Retrieves the current user's home feed.
    *
    * @param options The call options
    * @param callback Called with the result
    */
-  public void retrieveCurrentUserHomeFeed(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  public void retrieveHomeFeed(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
     retrieveHomeFeed(CurrentUserID, options, callback);
   }
 
@@ -74,12 +77,12 @@ public class UserGraph extends FBItemGraph<User> {
   }
 
   /**
-   * Retrieves the given user's wall feed.
+   * Retrieves the current user's wall feed.
    *
    * @param options The call options
    * @param callback Called with the result
    */
-  public void retrieveCurrentUserWallFeed(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  public void retrieveWallFeed(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
     retrieveWallFeed(CurrentUserID, options, callback);
   }
 
@@ -94,7 +97,7 @@ public class UserGraph extends FBItemGraph<User> {
    * @param options The call options
    * @param callback Called with the result
    */
-  public void retrieveCurrentUserFriends(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  public void retrieveFriends(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
     retrieveFriends(CurrentUserID, options, callback);
   }
 
@@ -189,7 +192,7 @@ public class UserGraph extends FBItemGraph<User> {
   }
 
   @Override
-  public void retrieveInbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+  public void retrieveInbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<MessageThread>> callback) {
     super.retrieveInbox(userID, options, callback);
   }
 
@@ -224,7 +227,29 @@ public class UserGraph extends FBItemGraph<User> {
    * @param options The call options
    * @param callback Called when complete
    */
-  public void postToCurrentUserWall(final FBFeedPostOptions options, final AsyncCallback<Post> callback) {
+  public void postToCurrentUserWall(final FeedPostOptions options, final AsyncCallback<Post> callback) {
     postToWall(CurrentUserID, options, callback);
+  }
+
+  /**
+   * Posts to the item's wall feed.
+   *
+   * @param userID The user ID
+   * @param name The name of the new friend list
+   * @param callback Called when complete
+   */
+  public void createFriendList(final String userID, final String name, final AsyncCallback<FriendList> callback) {
+    createFriendList(userID, CreateFriendListOptions.createCreateFriendListOptions().setName(name), callback);
+  }
+
+  /**
+   * Posts to the item's wall feed.
+   *
+   * @param userID The user ID
+   * @param options The call options
+   * @param callback Called when complete
+   */
+  public void createFriendList(final String userID, final CreateFriendListOptions options, final AsyncCallback<FriendList> callback) {
+    post(userID, ConnectionTypes.FriendLists, options, callback);
   }
 }

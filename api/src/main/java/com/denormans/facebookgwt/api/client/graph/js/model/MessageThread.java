@@ -18,35 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
-import com.google.gwt.core.client.JsArray;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 
-import java.util.List;
-
-public class Video extends Postable {
-  protected Video() {
+public class MessageThread extends FBGraphObject {
+  protected MessageThread() {
   }
-
-  public final native User getFrom() /*-{
-    return this.from;
-  }-*/;
-
-  public final List<User> getTags() {
-    return convertJsArrayToList(getTagsJS());
-  }
-
-  private final native JsArray<User> getTagsJS() /*-{
-    return this.tags;
-  }-*/;
-
-  public final native String getEmbedHTMLURL() /*-{
-    return this.embed_html;
-  }-*/;
-
-  public final native String getIconURL() /*-{
-    return this.icon;
-  }-*/;
-
-  public final native String getSourceURL() /*-{
-    return this.source;
-  }-*/;
 }

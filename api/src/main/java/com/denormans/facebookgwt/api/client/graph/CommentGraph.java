@@ -18,16 +18,16 @@
 
 package com.denormans.facebookgwt.api.client.graph;
 
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.Like;
-import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class CommentGraph extends FBItemGraph<FriendList> {
   @Override
-  public void retrieveLikes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Like>> callback) {
-    super.retrieveLikes(itemID, options, callback);
+  public void retrieveLikes(final String commentID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Like>> callback) {
+    super.retrieveLikes(commentID, options, callback);
   }
 }
