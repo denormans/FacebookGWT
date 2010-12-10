@@ -22,7 +22,6 @@ import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.User;
-import com.denormans.facebookgwt.api.client.graph.js.options.FeedPostOptions;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -37,12 +36,21 @@ public class FriendListGraph extends FBItemGraph<FriendList> {
    * Adds a member to the given friend list.
    *
    * @param friendListID The friend list ID
-   * @param options The call options
+   * @param memberID The member ID
    * @param callback Called when complete
    */
-  public void addMember(final String friendListID, final FeedPostOptions options, final AsyncCallback<FriendList> callback) {
-    super.post(friendListID, ConnectionTypes.Members, options, callback);
+  public void addMember(final String friendListID, final String memberID, final AsyncCallback<Boolean> callback) {
+    super.post(friendListID, ConnectionTypes.Members, memberID, null, callback);
   }
 
-
+  /**
+   * Deletes a member from the given friend list.
+   *
+   * @param friendListID The friend list ID
+   * @param memberID The member ID
+   * @param callback Called when complete
+   */
+  public void deleteMember(final String friendListID, final String memberID, final AsyncCallback<Boolean> callback) {
+    super.deleteConnection(friendListID, ConnectionTypes.Members, memberID, null, callback);
+  }
 }

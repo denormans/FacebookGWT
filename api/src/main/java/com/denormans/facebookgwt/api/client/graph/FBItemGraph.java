@@ -69,7 +69,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param callback Called with the result
    */
   public void retrieveByID(final String itemID, final FBGraphCallOptions options, final AsyncCallback<T> callback) {
-    executeGraphCall(itemID, null, HTTPMethods.Get, options, callback);
+    executeGraphCall(itemID, null, null, HTTPMethods.Get, options, callback);
   }
 
   /**
@@ -521,7 +521,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param callback Called with the results
    */
   protected void retrieveConnections(final String itemID, final ConnectionType connectionType, final FBGraphCallOptions options, final AsyncCallback<? extends FBGraphDataListResult<? extends FBGraphObject>> callback) {
-    executeGraphCall(itemID, connectionType, HTTPMethods.Get, options, callback);
+    executeGraphCall(itemID, connectionType, null, HTTPMethods.Get, options, callback);
   }
 
   /**
@@ -544,7 +544,20 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param callback Called when complete
    */
   protected void post(final String ownerID, final ConnectionType connectionType, final FBGraphCallOptions options, final AsyncCallback<?> callback) {
-    executeGraphCall(ownerID, connectionType, HTTPMethods.Post, options, callback);
+    post(ownerID, connectionType, null, options, callback);
+  }
+
+  /**
+   * Post an item to the owner's feed/likes/etc.
+   *
+   * @param ownerID The owner item ID
+   * @param connectionType The type of connection to post
+   * @param additionalPath The additional path information, if any
+   * @param options The call options
+   * @param callback Called when complete
+   */
+  protected void post(final String ownerID, final ConnectionType connectionType, final String additionalPath, final FBGraphCallOptions options, final AsyncCallback<?> callback) {
+    executeGraphCall(ownerID, connectionType, additionalPath, HTTPMethods.Post, options, callback);
   }
 
   /**
@@ -555,7 +568,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param callback Called when complete
    */
   public void delete(final String itemID, final FBGraphCallOptions options, final AsyncCallback<Boolean> callback) {
-    executeGraphCall(itemID, null, HTTPMethods.Delete, options, callback);
+    executeGraphCall(itemID, null, null, HTTPMethods.Delete, options, callback);
   }
 
   /**
@@ -567,7 +580,20 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param callback Called when complete
    */
   protected void deleteConnection(final String itemID, final ConnectionType connectionType, final FBGraphCallOptions options, final AsyncCallback<Boolean> callback) {
-    executeGraphCall(itemID, connectionType, HTTPMethods.Delete, options, callback);
+    deleteConnection(itemID, connectionType, null, options, callback);
+  }
+
+  /**
+   * Deletes the unidentified connection (e.g. Like) for an item.
+   *
+   * @param itemID The item ID
+   * @param connectionType The type of connection
+   * @param additionalPath The additional path information, if any
+   * @param options The call options
+   * @param callback Called when complete
+   */
+  protected void deleteConnection(final String itemID, final ConnectionType connectionType, final String additionalPath, final FBGraphCallOptions options, final AsyncCallback<Boolean> callback) {
+    executeGraphCall(itemID, connectionType, additionalPath, HTTPMethods.Delete, options, callback);
   }
 
   /**
@@ -575,11 +601,12 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    *
    * @param objectID The object to retrieve from/post to
    * @param connectionType The type of connections (if any) to retrieve from the object
+   * @param additionalPath Any additional path information, if any
    * @param httpMethod The HTTP method to use
    * @param options The call options
    * @param callback Called with the result
    */
-  protected native void executeGraphCall(final String objectID, final ConnectionType connectionType, final HTTPMethod httpMethod, final FBGraphCallOptions options, final AsyncCallback<?> callback) /*-{
+  protected native void executeGraphCall(final String objectID, final ConnectionType connectionType, final String additionalPath, final HTTPMethod httpMethod, final FBGraphCallOptions options, final AsyncCallback<?> callback) /*-{
     try {
       var path = "/";
 
@@ -589,6 +616,10 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
 
       if (connectionType != null) {
         path += "/" + connectionType.@com.denormans.facebookgwt.api.shared.graph.ConnectionType::getApiValue()();
+      }
+
+      if (additionalPath != null) {
+        path += "/" + additionalPath;
       }
 
       var method = "get";
