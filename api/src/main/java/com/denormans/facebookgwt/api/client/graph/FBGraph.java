@@ -18,15 +18,15 @@
 
 package com.denormans.facebookgwt.api.client.graph;
 
-import com.denormans.facebookgwt.api.client.FBIntegration;
-import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class FBGraph extends FBIntegration {
-  public final FBUserGraph User = new FBUserGraph();
+public class FBGraph extends FBItemGraph {
+  public final UserGraph User = new UserGraph();
+  public final FriendListGraph FriendList = new FriendListGraph();
 
   private final FBItemGraph genericItemGraph = new FBItemGraph() {};
 
@@ -37,7 +37,7 @@ public class FBGraph extends FBIntegration {
    * @param callback Called when complete
    */
   public void likeItem(final String itemID, final AsyncCallback<Boolean> callback) {
-    genericItemGraph.postItem(itemID, ConnectionTypes.Likes, null, callback);
+    genericItemGraph.post(itemID, ConnectionTypes.Likes, null, callback);
   }
 
   /**
@@ -60,7 +60,7 @@ public class FBGraph extends FBIntegration {
    */
   @SuppressWarnings({"unchecked"})
   public void retrieveItem(final String itemID, final FBGraphCallOptions options, final AsyncCallback<? extends FBGraphObject> callback) {
-    genericItemGraph.retrieveItem(itemID, options, callback);
+    genericItemGraph.retrieveByID(itemID, options, callback);
   }
 
   /**
@@ -71,6 +71,6 @@ public class FBGraph extends FBIntegration {
    * @param callback Called when complete
    */
   public void deleteItem(final String itemID, final FBGraphCallOptions options, final AsyncCallback<Boolean> callback) {
-    genericItemGraph.deleteItem(itemID, options, callback);
+    genericItemGraph.delete(itemID, options, callback);
   }
 }

@@ -16,56 +16,18 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.shared.graph;
+package com.denormans.facebookgwt.api.client.graph;
 
-public enum ConnectionTypes implements ConnectionType {
-  Accounts("accounts"),
-  Activities("activities"),
-  Attending("attending"),
-  Books("books"),
-  CheckIns("checkins"),
-  Comments("comments"),
-  Declined("declined"),
-  Events("events"),
-  WallFeed("feed"),
-  Friends("friends"),
-  FriendLists("friendLists"),
-  Groups("groups"),
-  HomeFeed("home"),
-  Inbox("inbox"),
-  Insights("insights"),
-  Interests("interests"),
-  Invited("invited"),
-  Likes("likes"),
-  Links("links"),
-  Maybe("maybe"),
-  Members("members"),
-  Movies("movies"),
-  Music("music"),
-  NoReply("noreply"),
-  Notes("notes"),
-  Outbox("outbox"),
-  Picture("picture"),
-  Photos("photos"),
-  PhotoAlbums("albums"),
-  Posts("posts"),
-  StatusMessages("statuses"),
-  Subscriptions("subscriptions"),
-  Tagged("tagged"),
-  Television("television"),
-  Updates("updates"),
-  Videos("videos"),
-  VideoUploads("videos/uploaded"),
-  ;
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
+import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
+import com.denormans.facebookgwt.api.client.graph.js.model.User;
+import com.denormans.facebookgwt.api.client.graph.js.options.FBGraphCallOptions;
 
-  private String apiValue;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
-  private ConnectionTypes(final String apiValue) {
-    this.apiValue = apiValue;
-  }
-
+public class FriendListGraph extends FBItemGraph<FriendList> {
   @Override
-  public String getApiValue() {
-    return apiValue;
+  public void retrieveMembers(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+    super.retrieveMembers(itemID, options, callback);
   }
 }

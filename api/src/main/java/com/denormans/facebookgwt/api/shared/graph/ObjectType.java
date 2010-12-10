@@ -23,7 +23,7 @@ import java.util.Set;
 
 public enum ObjectType {
   Application(EnumSet.of(ConnectionTypes.WallFeed, ConnectionTypes.Posts, ConnectionTypes.Picture, ConnectionTypes.Tagged, ConnectionTypes.Links, ConnectionTypes.Photos, ConnectionTypes.PhotoAlbums,
-                  ConnectionTypes.Statuses, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Notes, ConnectionTypes.Events, ConnectionTypes.Subscriptions, ConnectionTypes.Insights),
+                  ConnectionTypes.StatusMessages, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Notes, ConnectionTypes.Events, ConnectionTypes.Subscriptions, ConnectionTypes.Insights),
               EnumSet.of(ObjectFields.ID, ObjectFields.Name, ObjectFields.Description, ObjectFields.Category, ObjectFields.Link)),
   CheckIn(EnumSet.noneOf(ConnectionTypes.class),
           EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Place, ObjectFields.Message, ObjectFields.Application, ObjectFields.CreatedTime)),
@@ -38,7 +38,7 @@ public enum ObjectType {
        EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Link, ObjectFields.Name, ObjectFields.Caption, ObjectFields.Description, ObjectFields.Icon, ObjectFields.Picture, ObjectFields.Message, ObjectFields.CreatedTime)),
   Note(EnumSet.of(ConnectionTypes.Comments, ConnectionTypes.Likes),
        EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Subject, ObjectFields.Message, ObjectFields.CreatedTime, ObjectFields.UpdatedTime, ObjectFields.Icon)),
-  Page(EnumSet.of(ConnectionTypes.WallFeed, ConnectionTypes.Picture, ConnectionTypes.Tagged, ConnectionTypes.Links, ConnectionTypes.Photos, ConnectionTypes.PhotoAlbums, ConnectionTypes.Statuses,
+  Page(EnumSet.of(ConnectionTypes.WallFeed, ConnectionTypes.Picture, ConnectionTypes.Tagged, ConnectionTypes.Links, ConnectionTypes.Photos, ConnectionTypes.PhotoAlbums, ConnectionTypes.StatusMessages,
            ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Notes, ConnectionTypes.Posts, ConnectionTypes.Events, ConnectionTypes.CheckIns),
        EnumSet.of(ObjectFields.ID, ObjectFields.Name, ObjectFields.Category, ObjectFields.FanCount)),
   Photo(EnumSet.of(ConnectionTypes.Comments, ConnectionTypes.Likes),
@@ -55,8 +55,8 @@ public enum ObjectType {
                EnumSet.of(ObjectFields.Object, ObjectFields.Fields, ObjectFields.CallbackURL, ObjectFields.Active)),
   User(EnumSet.of(ConnectionTypes.HomeFeed, ConnectionTypes.WallFeed, ConnectionTypes.Tagged, ConnectionTypes.Posts, ConnectionTypes.Picture, ConnectionTypes.Friends, ConnectionTypes.Activities,
            ConnectionTypes.Interests, ConnectionTypes.Music, ConnectionTypes.Books, ConnectionTypes.Movies, ConnectionTypes.Television, ConnectionTypes.Likes, ConnectionTypes.Photos,
-           ConnectionTypes.PhotoAlbums, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Groups, ConnectionTypes.Statuses, ConnectionTypes.Links, ConnectionTypes.Notes, ConnectionTypes.Events,
-           ConnectionTypes.Inbox, ConnectionTypes.Outbox, ConnectionTypes.Updates, ConnectionTypes.Accounts, ConnectionTypes.CheckIns, ConnectionTypes.PlatformRequests),
+           ConnectionTypes.PhotoAlbums, ConnectionTypes.Videos, ConnectionTypes.VideoUploads, ConnectionTypes.Groups, ConnectionTypes.StatusMessages, ConnectionTypes.Links, ConnectionTypes.Notes, ConnectionTypes.Events,
+           ConnectionTypes.Inbox, ConnectionTypes.Outbox, ConnectionTypes.Updates, ConnectionTypes.Accounts, ConnectionTypes.CheckIns),
        EnumSet.of(ObjectFields.ID, ObjectFields.FirstName, ObjectFields.LastName, ObjectFields.Name, ObjectFields.Link, ObjectFields.About, ObjectFields.Birthday, ObjectFields.Work, ObjectFields.Education, ObjectFields.Email,
            ObjectFields.Website, ObjectFields.Hometown, ObjectFields.Location, ObjectFields.Bio, ObjectFields.Quotes, ObjectFields.Gender, ObjectFields.InterestedIn, ObjectFields.MeetingFor, ObjectFields.RelationshipStatus,
            ObjectFields.Religion, ObjectFields.Political, ObjectFields.Verified, ObjectFields.SignificantOther, ObjectFields.Timezone, ObjectFields.ThirdPartyID, ObjectFields.LastUpdated, ObjectFields.Locale)),
