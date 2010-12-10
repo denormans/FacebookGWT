@@ -58,6 +58,7 @@ import com.denormans.facebookgwt.api.shared.common.HTTPMethods;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionType;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.List;
@@ -608,7 +609,16 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected native void executeGraphCall(final String objectID, final ConnectionType connectionType, final String additionalPath, final HTTPMethod httpMethod, final FBGraphCallOptions options, final AsyncCallback<?> callback) /*-{
+  protected void executeGraphCall(final String objectID, final ConnectionType connectionType, final String additionalPath, final HTTPMethod httpMethod, final FBGraphCallOptions options, final AsyncCallback<?> callback) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        executeGraphCallJS(objectID, connectionType, additionalPath, httpMethod, options, callback);
+      }
+    });
+  }
+
+  private native void executeGraphCallJS(final String objectID, final ConnectionType connectionType, final String additionalPath, final HTTPMethod httpMethod, final FBGraphCallOptions options, final AsyncCallback<?> callback) /*-{
     try {
       var path = "/";
 

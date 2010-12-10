@@ -2,12 +2,12 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <g:HTMLPanel>
     <div class="FBGWTField">
-      <g:Button ui:field="enableAutoResizeButton" enabled="false">Enable Auto Resize</g:Button>
-      <g:Button ui:field="disableAutoResizeButton" enabled="false">Disable Auto Resize</g:Button>
+      <g:Button ui:field="enableAutoResizeButton">Enable Auto Resize</g:Button>
+      <g:Button ui:field="disableAutoResizeButton">Disable Auto Resize</g:Button>
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="setSizeButton" enabled="false">Set Size</g:Button>
+      <g:Button ui:field="setSizeButton">Set Size</g:Button>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

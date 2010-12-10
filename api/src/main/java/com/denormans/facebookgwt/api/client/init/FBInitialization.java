@@ -27,6 +27,7 @@ import com.denormans.facebookgwt.api.client.init.events.HasFBInitHandlers;
 import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.BodyElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -39,12 +40,15 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public final class FBInitialization implements HasFBInitHandlers  {
   private static final Logger Log = Logger.getLogger(FBInitialization.class.getName());
-
   public enum InitializationState { Uninitialized, LoadingScript, ScriptLoaded, Initialized;}
+
+  public static final int InitializationTimeoutSeconds = 10;
 
   public static final String FacebookRootElementID = "fb-root";
   public static final String FacebookScriptElementID = "fb-script-all";
@@ -53,7 +57,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
 
   private EventBus eventBus = new SimpleEventBus();
 
-  public static final int InitializationTimeout = 10;
+  private List<Scheduler.ScheduledCommand> deferredFBCommands = new ArrayList<Scheduler.ScheduledCommand>();
 
   private FBInitialization.InitializationState initializationState = FBInitialization.InitializationState.Uninitialized;
   private Timer initializationTimer;
@@ -84,7 +88,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
    * @param initOptions initialization options
    */
   public void initialize(final FBInitOptions initOptions) {
-    initialize(initOptions, FBInitialization.InitializationTimeout);
+    initialize(initOptions, FBInitialization.InitializationTimeoutSeconds);
   }
 
   /**
@@ -165,6 +169,19 @@ public final class FBInitialization implements HasFBInitHandlers  {
     return false;
   }
 
+  /**
+   * Executes the given command with Facebook, whenever it's initialized.
+   *
+   * @param command The command to execute
+   */
+  public synchronized void executeWithFB(final Scheduler.ScheduledCommand command) {
+    if(isInitialized()) {
+      command.execute();
+    } else {
+      deferredFBCommands.add(command);
+    }
+  }
+
   private native void setupFBAsyncInitCallback(final FBInitOptions initOptions) /*-{
     try {
       var self = this;
@@ -186,7 +203,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
   }-*/;
 
   @SuppressWarnings ({ "UnusedDeclaration" })
-  private void handleFBAsyncInit(final FBInitOptions initOptions) {
+  private synchronized void handleFBAsyncInit(final FBInitOptions initOptions) {
     try {
       initializationState = InitializationState.ScriptLoaded;
 
@@ -196,6 +213,18 @@ public final class FBInitialization implements HasFBInitHandlers  {
       if (initOptions != null) {
         executeFBInit(initOptions);
       }
+
+      final List<Scheduler.ScheduledCommand> deferredCommands = new ArrayList<Scheduler.ScheduledCommand>(deferredFBCommands);
+      deferredFBCommands.clear();
+
+      Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+        @Override
+        public void execute() {
+          for(Scheduler.ScheduledCommand deferredCommand : deferredCommands) {
+            deferredCommand.execute();
+          }
+        }
+      });
 
       initializationState = InitializationState.Initialized;
 
@@ -211,7 +240,12 @@ public final class FBInitialization implements HasFBInitHandlers  {
     }
   }
 
-  public native void executeFBInit(final FBInitOptions initOptions) /*-{
+  /**
+   * Must be called after FB script is loaded.
+   *
+   * @param initOptions The initialization options
+   */
+  private native void executeFBInit(final FBInitOptions initOptions) /*-{
     $wnd.FB.init(initOptions);
   }-*/;
 

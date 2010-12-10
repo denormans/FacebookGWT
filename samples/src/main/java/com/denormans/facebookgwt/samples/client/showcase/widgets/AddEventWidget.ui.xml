@@ -15,7 +15,7 @@
         <g:HTML ui:field="eventMessageError" styleName="FBGWTErrorMessage" visible="false"/>
       </div>
 
-      <g:Button ui:field="addEventHandlerButton" enabled="false">Add Event</g:Button>
+      <g:Button ui:field="addEventHandlerButton">Add Event</g:Button>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

@@ -3,40 +3,40 @@
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:HTMLPanel>
     <div class="FBGWTField">
-      <g:Button ui:field="retrieveCurrentUserButton" enabled="false">Get Current User</g:Button>
-      <g:Button ui:field="retrieveHomeFeedButton" enabled="false">Home Feed</g:Button>
-      <g:Button ui:field="retrieveWallFeedButton" enabled="false">Wall Feed</g:Button>
-      <g:Button ui:field="retrieveFriendsButton" enabled="false">Friends</g:Button>
+      <g:Button ui:field="retrieveCurrentUserButton">Get Current User</g:Button>
+      <g:Button ui:field="retrieveHomeFeedButton">Home Feed</g:Button>
+      <g:Button ui:field="retrieveWallFeedButton">Wall Feed</g:Button>
+      <g:Button ui:field="retrieveFriendsButton">Friends</g:Button>
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="postToWallButton" enabled="false">Post to Home Feed</g:Button>
-      <g:TextBox ui:field="postToWallMessageTextBox" enabled="false"/>
+      <g:Button ui:field="postToWallButton">Post to Home Feed</g:Button>
+      <g:TextBox ui:field="postToWallMessageTextBox"/>
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="createFriendListButton" enabled="false">Create Friend List</g:Button>
-      <g:TextBox ui:field="createFriendListNameTextBox" enabled="false"/>
+      <g:Button ui:field="createFriendListButton">Create Friend List</g:Button>
+      <g:TextBox ui:field="createFriendListNameTextBox"/>
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="deletePostButton" enabled="false">Delete a Post</g:Button>
-      <g:TextBox ui:field="deletePostIDTextBox" enabled="false"/>
+      <g:Button ui:field="deletePostButton">Delete a Post</g:Button>
+      <g:TextBox ui:field="deletePostIDTextBox"/>
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="likeItemButton" enabled="false">Like an item</g:Button>
-      <g:TextBox ui:field="likeItemIDTextBox" enabled="false"/>
+      <g:Button ui:field="likeItemButton">Like an item</g:Button>
+      <g:TextBox ui:field="likeItemIDTextBox"/>
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="unlikeItemButton" enabled="false">Unlike an item</g:Button>
-      <g:TextBox ui:field="unlikeItemIDTextBox" enabled="false"/>
+      <g:Button ui:field="unlikeItemButton">Unlike an item</g:Button>
+      <g:TextBox ui:field="unlikeItemIDTextBox"/>
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="testButton" enabled="false">Test</g:Button>
-      <g:TextBox ui:field="testTextBox" enabled="false"/>
+      <g:Button ui:field="testButton">Test</g:Button>
+      <g:TextBox ui:field="testTextBox"/>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

@@ -34,6 +34,7 @@ import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -55,7 +56,16 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
    * @param forceReload Whether or not to force reloading the login status
    * @param callback The callback to receive the results
    */
-  public native void retrieveLoginStatus(final boolean forceReload, final AsyncCallback<FBAuthEventResponse> callback) /*-{
+  public void retrieveLoginStatus(final boolean forceReload, final AsyncCallback<FBAuthEventResponse> callback) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        retrieveLoginStatusJS(forceReload, callback);
+      }
+    });
+  }
+
+  private native void retrieveLoginStatusJS(final boolean forceReload, final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       var self = this;
       $wnd.FB.getLoginStatus(function(response) {
@@ -72,12 +82,12 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
   }-*/;
 
   /**
-   * Gets the session synchronously.
+   * Gets the session synchronously.  If Facebook is not initialized, this will return an empty object.
    *
    * @return The Facebook session
    */
   public native FBSession getSession() /*-{
-    return $wnd.FB.getSession();
+    return $wnd.FB != null ? $wnd.FB.getSession() : {};
   }-*/;
 
   /**
@@ -95,7 +105,16 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
    * @param loginOptions Any options (e.g. permissions) to be used during login
    * @param callback Called after login
    */
-  public native void login(final FBLoginOptions loginOptions, final AsyncCallback<FBAuthEventResponse> callback) /*-{
+  public void login(final FBLoginOptions loginOptions, final AsyncCallback<FBAuthEventResponse> callback) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        loginJS(loginOptions, callback);
+      }
+    });
+  }
+
+  private native void loginJS(final FBLoginOptions loginOptions, final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       var self = this;
       $wnd.FB.login(function(response) {
@@ -122,7 +141,16 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
    *
    * @param callback Called after logout
    */
-  public native void logout(final AsyncCallback<FBAuthEventResponse> callback) /*-{
+  public void logout(final AsyncCallback<FBAuthEventResponse> callback) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        logoutJS(callback);
+      }
+    });
+  }
+
+  private native void logoutJS(final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       var self = this;
       $wnd.FB.logout(function(response) {

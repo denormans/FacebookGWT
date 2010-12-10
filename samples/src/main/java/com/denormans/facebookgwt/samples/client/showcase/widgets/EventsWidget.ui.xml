@@ -2,7 +2,7 @@
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:HTMLPanel>
-    <sc:AddEventWidget ui:field="addEventWidget" enabled="false"/>
+    <sc:AddEventWidget ui:field="addEventWidget"/>
     <g:ScrollPanel ui:field="eventWidgets" styleName="FBGWTWidgetContainer" visible="false">
       <g:FlowPanel ui:field="eventWidgetsPanel"/>
     </g:ScrollPanel>

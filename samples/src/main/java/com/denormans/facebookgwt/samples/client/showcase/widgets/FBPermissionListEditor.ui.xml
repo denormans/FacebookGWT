@@ -5,8 +5,8 @@
     <div class="FBGWTHeader">Permissions:</div>
 
     <div class="FBGWTContent">
-      <g:ListBox ui:field="permissionsListBox" visibleItemCount="1" enabled="false"/>
-      <g:Button ui:field="addAllPermissionsButton" enabled="false">Add All</g:Button>
+      <g:ListBox ui:field="permissionsListBox" visibleItemCount="1"/>
+      <g:Button ui:field="addAllPermissionsButton">Add All</g:Button>
 
       <g:ScrollPanel ui:field="permissionWidgets" styleName="FBGWTWidgetContainer" visible="false">
         <g:FlowPanel ui:field="permissionWidgetsPanel"/>

@@ -3,7 +3,7 @@
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:HTMLPanel>
     <div class="FBGWTField">
-      <g:Button ui:field="linkStatsButton" enabled="false">Get Link Stats</g:Button>
+      <g:Button ui:field="linkStatsButton">Get Link Stats</g:Button>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

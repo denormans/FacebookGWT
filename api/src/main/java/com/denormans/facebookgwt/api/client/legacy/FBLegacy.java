@@ -22,6 +22,7 @@ import com.denormans.facebookgwt.api.client.FBIntegration;
 import com.denormans.facebookgwt.api.client.legacy.js.FBLegacyMethodOptions;
 import com.denormans.facebookgwt.api.shared.legacy.LegacyMethod;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class FBLegacy extends FBIntegration {
@@ -32,7 +33,16 @@ public class FBLegacy extends FBIntegration {
    * @param methodOptions The method options
    * @param callback Called when the method is complete
    */
-  public native void executeLegacyMethod(final LegacyMethod method, final FBLegacyMethodOptions methodOptions, final AsyncCallback<?> callback) /*-{
+  public void executeLegacyMethod(final LegacyMethod method, final FBLegacyMethodOptions methodOptions, final AsyncCallback<?> callback) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        executeLegacyMethodJS(method, methodOptions, callback);
+      }
+    });
+  }
+
+  private native void executeLegacyMethodJS(final LegacyMethod method, final FBLegacyMethodOptions methodOptions, final AsyncCallback<?> callback) /*-{
     try {
       if (methodOptions == null) {
         methodOptions = {};

@@ -42,6 +42,7 @@ import com.denormans.facebookgwt.api.shared.ui.UIMethod;
 import com.denormans.facebookgwt.api.shared.ui.UIMethods;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -72,7 +73,16 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    * 
    * @param element The element to parse within, or <tt>null</tt> to parse the entire document
    */
-  public native void parseXFBML(final Element element) /*-{
+  public void parseXFBML(final Element element) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        parseXFBMLJS(element);
+      }
+    });
+  }
+
+  private native void parseXFBMLJS(final Element element) /*-{
     $wnd.FB.XFBML.parse(element);
   }-*/;
 
@@ -88,14 +98,32 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    *
    * @param interval The interval (in milliseconds) to use
    */
-  public native void enableCanvasAutoResize(final int interval) /*-{
+  public void enableCanvasAutoResize(final int interval) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        enableCanvasAutoResizeJS(interval);
+      }
+    });
+  }
+
+  private native void enableCanvasAutoResizeJS(final int interval) /*-{
     $wnd.FB.Canvas.setAutoResize(interval);
   }-*/;
 
   /**
    * Stops the Canvas resize timer.
    */
-  public native void disableCanvasAutoResize() /*-{
+  public void disableCanvasAutoResize() {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        disableCanvasAutoResizeJS();
+      }
+    });
+  }
+
+  private native void disableCanvasAutoResizeJS() /*-{
     $wnd.FB.Canvas.setAutoResize(false);
   }-*/;
 
@@ -111,7 +139,16 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    *
    * @param size The canvas size.  If <tt>null</tt>, automatically sets the canvas size based on the size of the content.
    */
-  public native void setCanvasSize(final CanvasSize size) /*-{
+  public void setCanvasSize(final CanvasSize size) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        setCanvasSizeJS(size);
+      }
+    });
+  }
+
+  private native void setCanvasSizeJS(final CanvasSize size) /*-{
     if (size != null) {
       $wnd.FB.Canvas.setSize(size);
     } else {
@@ -170,7 +207,16 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
    * @param methodOptions The method options
    * @param callback Called when the method is complete
    */
-  public native void executeUIMethod(final UIMethod method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<?> callback) /*-{
+  public void executeUIMethod(final UIMethod method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<?> callback) {
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        executeUIMethodJS(method, displayFormat, methodOptions, callback);
+      }
+    });
+  }
+
+  private native void executeUIMethodJS(final UIMethod method, final DisplayFormat displayFormat, final FBUIMethodOptions methodOptions, final AsyncCallback<?> callback) /*-{
     try {
       if (methodOptions == null) {
         methodOptions = {};

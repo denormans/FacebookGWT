@@ -3,18 +3,18 @@
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:HTMLPanel>
     <div class="FBGWTField">
-      <g:Button ui:field="getSessionButton" enabled="false">Get Session</g:Button>
+      <g:Button ui:field="getSessionButton">Get Session</g:Button>
     </div>
 
 
     <div class="FBGWTField">
-      <g:Button ui:field="checkStatusButton" enabled="false">Check Status</g:Button>
-      <g:CheckBox ui:field="checkStatusForceReloadCheckbox" enabled="false">Force reload</g:CheckBox>
+      <g:Button ui:field="checkStatusButton">Check Status</g:Button>
+      <g:CheckBox ui:field="checkStatusForceReloadCheckbox">Force reload</g:CheckBox>
     </div>
 
-    <sc:FBLoginOptionsEditor ui:field="loginOptionsEditor" enabled="false"/>
+    <sc:FBLoginOptionsEditor ui:field="loginOptionsEditor"/>
 
-    <g:Button ui:field="loginButton" enabled="false">Login</g:Button>
-    <g:Button ui:field="logoutButton" enabled="false">Logout</g:Button>
+    <g:Button ui:field="loginButton">Login</g:Button>
+    <g:Button ui:field="logoutButton">Logout</g:Button>
   </g:HTMLPanel>
 </ui:UiBinder>

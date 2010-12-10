@@ -83,23 +83,38 @@ public abstract class FBIntegration implements HasHandlers {
 
   private JSFunction subscribeToEvent(final FBEventType eventType) {
     Log.fine("Subscribing to event: " + eventType + " (" + eventType.getApiValue() + ")");
-    return subscribeToEventJS(eventType.getApiValue());
+
+    final JSFunction eventCallbackJSFunction = createEventCallbackFunctionJS(eventType.getApiValue());
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        subscribeToEventJS(eventType.getApiValue(), eventCallbackJSFunction);
+      }
+    });
+    return eventCallbackJSFunction;
   }
 
-  private native JSFunction subscribeToEventJS(final String eventName) /*-{
+  private native JSFunction createEventCallbackFunctionJS(final String eventName) /*-{
     var self = this;
     var callback = function(response) {
       self.@com.denormans.facebookgwt.api.client.FBIntegration::handleFBEvent(Ljava/lang/String;Ljava/lang/Object;)(eventName, response);
     };
-
-    $wnd.FB.Event.subscribe(eventName, callback);
-
     return callback;
+  }-*/;
+
+  private native void subscribeToEventJS(final String eventName, final JSFunction callback) /*-{
+    $wnd.FB.Event.subscribe(eventName, callback);
   }-*/;
 
   private void unsubscribeFromEvent(final FBEventType eventType, final JSFunction callback) {
     Log.fine("Unsubscribing from event: " + eventType + " (" + eventType.getApiValue() + ")");
-    unsubscribeFromEventJS(eventType.getApiValue(), callback);
+
+    executeWithFB(new Scheduler.ScheduledCommand() {
+      @Override
+      public void execute() {
+        unsubscribeFromEventJS(eventType.getApiValue(), callback);
+      }
+    });
   }
 
   private native void unsubscribeFromEventJS(final String eventName, final JSFunction callback) /*-{
@@ -175,6 +190,15 @@ public abstract class FBIntegration implements HasHandlers {
         });
       }
     };
+  }
+
+  /**
+   * Executes the given command with Facebook, whenever it's ready.
+   *
+   * @param command The command to execute
+   */
+  protected void executeWithFB(final Scheduler.ScheduledCommand command) {
+    FBGWT.Init.executeWithFB(command);
   }
 
   public void fireEvent(final GwtEvent<?> event) {
