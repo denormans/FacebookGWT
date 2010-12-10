@@ -19,7 +19,6 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.User;
@@ -38,6 +37,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class GraphWidget extends ShowcaseWidget {
@@ -118,48 +118,48 @@ public class GraphWidget extends ShowcaseWidget {
 
   @UiHandler ("retrieveHomeFeedButton")
   public void handleRetrieveHomeFeedButtonClick(final ClickEvent event) {
-    FBGWT.Graph.User.retrieveHomeFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+    FBGWT.Graph.User.retrieveHomeFeed(null, new AsyncCallback<List<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user home feed", caught);
       }
 
       @Override
-      public void onSuccess(final FBGraphDataListResult<Post> result) {
+      public void onSuccess(final List<Post> result) {
         addApiEventMessage("Retrieve current user home feed result", result);
-        setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result.getData());
+        setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result);
       }
     });
   }
 
   @UiHandler ("retrieveWallFeedButton")
   public void handleRetrieveWallFeedButtonClick(final ClickEvent event) {
-    FBGWT.Graph.User.retrieveWallFeed(null, new AsyncCallback<FBGraphDataListResult<Post>>() {
+    FBGWT.Graph.User.retrieveWallFeed(null, new AsyncCallback<List<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user wall feed", caught);
       }
 
       @Override
-      public void onSuccess(final FBGraphDataListResult<Post> result) {
+      public void onSuccess(final List<Post> result) {
         addApiEventMessage("Retrieve current user wall feed result", result);
-        setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result.getData());
+        setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result);
       }
     });
   }
 
   @UiHandler ("retrieveFriendsButton")
   public void handleRetrieveFriendsButtonClick(final ClickEvent event) {
-    FBGWT.Graph.User.retrieveFriends(null, new AsyncCallback<FBGraphDataListResult<User>>() {
+    FBGWT.Graph.User.retrieveFriends(null, new AsyncCallback<List<User>>() {
       @Override
       public void onFailure(final Throwable caught) {
         handleError("Error retrieving current user friends", caught);
       }
 
       @Override
-      public void onSuccess(final FBGraphDataListResult<User> result) {
+      public void onSuccess(final List<User> result) {
         addApiEventMessage("Retrieve current user friends result", result);
-        setItemDisplayDescription(FBObjectDescribers.Graph.getUserDescriber(), result.getData());
+        setItemDisplayDescription(FBObjectDescribers.Graph.getUserDescriber(), result);
       }
     });
   }

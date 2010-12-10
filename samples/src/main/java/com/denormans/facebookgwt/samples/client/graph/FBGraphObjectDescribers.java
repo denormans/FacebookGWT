@@ -20,7 +20,6 @@ package com.denormans.facebookgwt.samples.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.model.Account;
@@ -348,7 +347,7 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private static class ListTransformingCallback<T extends FBJSObject> implements AsyncCallback<FBGraphDataListResult<T>> {
+  private static class ListTransformingCallback<T extends FBJSObject> implements AsyncCallback<List<T>> {
     private final ObjectDescriber<T> describer;
     private final AsyncCallback<List<ObjectDescription<T>>> callback;
 
@@ -363,8 +362,8 @@ public class FBGraphObjectDescribers {
     }
 
     @Override
-    public void onSuccess(final FBGraphDataListResult<T> result) {
-      callback.onSuccess(describer.describeList(result.getData()));
+    public void onSuccess(final List<T> result) {
+      callback.onSuccess(describer.describeList(result));
     }
   }
 

@@ -60,6 +60,8 @@ import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import java.util.List;
+
 public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration {
   /**
    * Retrieves an item by ID.
@@ -79,7 +81,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveAccounts(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Account>> callback) {
+  protected void retrieveAccounts(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Account>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Accounts, options, callback);
   }
 
@@ -90,7 +92,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveActivities(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Activity>> callback) {
+  protected void retrieveActivities(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Activity>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Activities, options, callback);
   }
 
@@ -101,7 +103,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveAttachments(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Attachment>> callback) {
+  protected void retrieveAttachments(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Attachment>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Books, options, callback);
   }
 
@@ -112,7 +114,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveBooks(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Book>> callback) {
+  protected void retrieveBooks(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Book>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Books, options, callback);
   }
 
@@ -123,7 +125,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveCheckIns(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<CheckIn>> callback) {
+  protected void retrieveCheckIns(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<CheckIn>> callback) {
     retrieveConnections(itemID, ConnectionTypes.CheckIns, options, callback);
   }
 
@@ -134,7 +136,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveComments(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Comment>> callback) {
+  protected void retrieveComments(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Comment>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Comments, options, callback);
   }
 
@@ -145,7 +147,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveEvents(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Event>> callback) {
+  protected void retrieveEvents(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Event>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Events, options, callback);
   }
 
@@ -156,7 +158,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveFormerParticipants(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  protected void retrieveFormerParticipants(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveConnections(itemID, ConnectionTypes.FormerParticipants, options, callback);
   }
 
@@ -167,7 +169,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveFriends(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  protected void retrieveFriends(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Friends, options, callback);
   }
 
@@ -178,7 +180,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveFriendLists(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<FriendList>> callback) {
+  protected void retrieveFriendLists(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<FriendList>> callback) {
     retrieveConnections(itemID, ConnectionTypes.FriendLists, options, callback);
   }
 
@@ -189,7 +191,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveGroups(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Group>> callback) {
+  protected void retrieveGroups(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Group>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Groups, options, callback);
   }
 
@@ -200,7 +202,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveHomeFeed(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  protected void retrieveHomeFeed(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     retrieveConnections(itemID, ConnectionTypes.HomeFeed, options, callback);
   }
 
@@ -211,7 +213,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveInbox(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<MessageThread>> callback) {
+  protected void retrieveInbox(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<MessageThread>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Inbox, options, callback);
   }
 
@@ -222,7 +224,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveInsights(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Insights>> callback) {
+  protected void retrieveInsights(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Insights>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Insights, options, callback);
   }
 
@@ -233,7 +235,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveInterests(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Interest>> callback) {
+  protected void retrieveInterests(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Interest>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Interests, options, callback);
   }
 
@@ -244,7 +246,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveInvitees(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  protected void retrieveInvitees(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Invited, options, callback);
   }
 
@@ -255,7 +257,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveLikes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Like>> callback) {
+  protected void retrieveLikes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Like>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Likes, options, callback);
   }
 
@@ -266,7 +268,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveLinks(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Link>> callback) {
+  protected void retrieveLinks(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Link>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Links, options, callback);
   }
 
@@ -277,7 +279,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveMaybes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  protected void retrieveMaybes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Maybe, options, callback);
   }
 
@@ -288,7 +290,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveMembers(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  protected void retrieveMembers(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Members, options, callback);
   }
 
@@ -299,7 +301,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveMessages(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Message>> callback) {
+  protected void retrieveMessages(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Message>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Messages, options, callback);
   }
 
@@ -310,7 +312,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveMovies(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Movie>> callback) {
+  protected void retrieveMovies(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Movie>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Movies, options, callback);
   }
 
@@ -321,7 +323,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveMusic(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Music>> callback) {
+  protected void retrieveMusic(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Music>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Music, options, callback);
   }
 
@@ -332,7 +334,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveNoReplies(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  protected void retrieveNoReplies(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveConnections(itemID, ConnectionTypes.NoReply, options, callback);
   }
 
@@ -343,7 +345,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveNotes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+  protected void retrieveNotes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Note>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Notes, options, callback);
   }
 
@@ -354,7 +356,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveOutbox(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+  protected void retrieveOutbox(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Note>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Outbox, options, callback);
   }
 
@@ -365,7 +367,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveParticipants(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  protected void retrieveParticipants(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Participants, options, callback);
   }
 
@@ -376,7 +378,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrievePhotoAlbums(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<PhotoAlbum>> callback) {
+  protected void retrievePhotoAlbums(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<PhotoAlbum>> callback) {
     retrieveConnections(itemID, ConnectionTypes.PhotoAlbums, options, callback);
   }
 
@@ -387,7 +389,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrievePhotos(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Photo>> callback) {
+  protected void retrievePhotos(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Photo>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Photos, options, callback);
   }
 
@@ -398,7 +400,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrievePosts(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  protected void retrievePosts(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Posts, options, callback);
   }
 
@@ -409,7 +411,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveSenders(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  protected void retrieveSenders(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Senders, options, callback);
   }
 
@@ -420,7 +422,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveShares(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Share>> callback) {
+  protected void retrieveShares(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Share>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Shares, options, callback);
   }
 
@@ -431,7 +433,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveStatusMessages(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<StatusMessage>> callback) {
+  protected void retrieveStatusMessages(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<StatusMessage>> callback) {
     retrieveConnections(itemID, ConnectionTypes.StatusMessages, options, callback);
   }
 
@@ -442,7 +444,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveSubscriptions(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Subscription>> callback) {
+  protected void retrieveSubscriptions(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Subscription>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Subscriptions, options, callback);
   }
 
@@ -453,7 +455,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveTaggedIn(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Postable>> callback) {
+  protected void retrieveTaggedIn(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Postable>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Tagged, options, callback);
   }
 
@@ -464,7 +466,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveTelevisionShows(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<TelevisionShow>> callback) {
+  protected void retrieveTelevisionShows(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<TelevisionShow>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Television, options, callback);
   }
 
@@ -475,7 +477,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveUpdates(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+  protected void retrieveUpdates(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Note>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Updates, options, callback);
   }
 
@@ -486,7 +488,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveVideos(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Video>> callback) {
+  protected void retrieveVideos(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Video>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Videos, options, callback);
   }
 
@@ -497,7 +499,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveVideoUploads(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Video>> callback) {
+  protected void retrieveVideoUploads(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Video>> callback) {
     retrieveConnections(itemID, ConnectionTypes.VideoUploads, options, callback);
   }
 
@@ -508,7 +510,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveWallFeed(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  protected void retrieveWallFeed(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     retrieveConnections(itemID, ConnectionTypes.WallFeed, options, callback);
   }
 
@@ -520,8 +522,8 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the results
    */
-  protected void retrieveConnections(final String itemID, final ConnectionType connectionType, final FBGraphCallOptions options, final AsyncCallback<? extends FBGraphDataListResult<? extends FBGraphObject>> callback) {
-    executeGraphCall(itemID, connectionType, null, HTTPMethods.Get, options, callback);
+  protected <G extends FBGraphObject> void retrieveConnections(final String itemID, final ConnectionType connectionType, final FBGraphCallOptions options, final AsyncCallback<List<G>> callback) {
+    executeGraphCall(itemID, connectionType, null, HTTPMethods.Get, options, callback != null ? new FBGraphDataListTransformingCallback<G>(callback) : null);
   }
 
   /**
@@ -673,4 +675,21 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
     callback.onFailure(fbgwtException);
   }
 
+  private static class FBGraphDataListTransformingCallback<G extends FBGraphObject> implements AsyncCallback<FBGraphDataListResult<G>> {
+    private final AsyncCallback<List<G>> callback;
+
+    public FBGraphDataListTransformingCallback(final AsyncCallback<List<G>> callback) {
+      this.callback = callback;
+    }
+
+    @Override
+    public void onFailure(final Throwable caught) {
+      callback.onFailure(caught);
+    }
+
+    @Override
+    public void onSuccess(final FBGraphDataListResult<G> result) {
+      callback.onSuccess(result.getData());
+    }
+  }
 }

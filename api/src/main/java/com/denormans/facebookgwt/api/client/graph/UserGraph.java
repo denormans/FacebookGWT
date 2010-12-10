@@ -19,7 +19,6 @@
 package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.model.Account;
 import com.denormans.facebookgwt.api.client.graph.js.model.Activity;
 import com.denormans.facebookgwt.api.client.graph.js.model.Book;
@@ -48,6 +47,8 @@ import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import java.util.List;
+
 public class UserGraph extends FBItemGraph<User> {
   public static final String CurrentUserID = "me";
 
@@ -67,12 +68,12 @@ public class UserGraph extends FBItemGraph<User> {
    * @param options The call options
    * @param callback Called with the result
    */
-  public void retrieveHomeFeed(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  public void retrieveHomeFeed(final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     retrieveHomeFeed(CurrentUserID, options, callback);
   }
 
   @Override
-  public void retrieveHomeFeed(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  public void retrieveHomeFeed(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     super.retrieveHomeFeed(userID, options, callback);
   }
 
@@ -82,12 +83,12 @@ public class UserGraph extends FBItemGraph<User> {
    * @param options The call options
    * @param callback Called with the result
    */
-  public void retrieveWallFeed(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  public void retrieveWallFeed(final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     retrieveWallFeed(CurrentUserID, options, callback);
   }
 
   @Override
-  public void retrieveWallFeed(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  public void retrieveWallFeed(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     super.retrieveWallFeed(userID, options, callback);
   }
 
@@ -97,127 +98,127 @@ public class UserGraph extends FBItemGraph<User> {
    * @param options The call options
    * @param callback Called with the result
    */
-  public void retrieveFriends(final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  public void retrieveFriends(final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     retrieveFriends(CurrentUserID, options, callback);
   }
 
   @Override
-  public void retrieveFriends(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  public void retrieveFriends(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     super.retrieveFriends(userID, options, callback);
   }
 
   @Override
-  public void retrieveTaggedIn(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Postable>> callback) {
+  public void retrieveTaggedIn(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Postable>> callback) {
     super.retrieveTaggedIn(userID, options, callback);
   }
 
   @Override
-  public void retrievePosts(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Post>> callback) {
+  public void retrievePosts(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     super.retrievePosts(userID, options, callback);
   }
 
   @Override
-  public void retrieveActivities(final String itemID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Activity>> callback) {
+  public void retrieveActivities(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Activity>> callback) {
     super.retrieveActivities(itemID, options, callback);
   }
 
   @Override
-  public void retrieveInterests(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Interest>> callback) {
+  public void retrieveInterests(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Interest>> callback) {
     super.retrieveInterests(userID, options, callback);
   }
 
   @Override
-  public void retrieveMusic(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Music>> callback) {
+  public void retrieveMusic(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Music>> callback) {
     super.retrieveMusic(userID, options, callback);
   }
 
   @Override
-  public void retrieveBooks(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Book>> callback) {
+  public void retrieveBooks(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Book>> callback) {
     super.retrieveBooks(userID, options, callback);
   }
 
   @Override
-  public void retrieveMovies(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Movie>> callback) {
+  public void retrieveMovies(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Movie>> callback) {
     super.retrieveMovies(userID, options, callback);
   }
 
   @Override
-  public void retrieveTelevisionShows(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<TelevisionShow>> callback) {
+  public void retrieveTelevisionShows(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<TelevisionShow>> callback) {
     super.retrieveTelevisionShows(userID, options, callback);
   }
 
   @Override
-  public void retrieveLikes(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Like>> callback) {
+  public void retrieveLikes(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Like>> callback) {
     super.retrieveLikes(userID, options, callback);
   }
 
   @Override
-  public void retrievePhotos(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Photo>> callback) {
+  public void retrievePhotos(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Photo>> callback) {
     super.retrievePhotos(userID, options, callback);
   }
 
   @Override
-  public void retrievePhotoAlbums(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<PhotoAlbum>> callback) {
+  public void retrievePhotoAlbums(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<PhotoAlbum>> callback) {
     super.retrievePhotoAlbums(userID, options, callback);
   }
 
   @Override
-  public void retrieveVideos(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Video>> callback) {
+  public void retrieveVideos(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Video>> callback) {
     super.retrieveVideos(userID, options, callback);
   }
 
   @Override
-  public void retrieveGroups(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Group>> callback) {
+  public void retrieveGroups(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Group>> callback) {
     super.retrieveGroups(userID, options, callback);
   }
 
   @Override
-  public void retrieveStatusMessages(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<StatusMessage>> callback) {
+  public void retrieveStatusMessages(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<StatusMessage>> callback) {
     super.retrieveStatusMessages(userID, options, callback);
   }
 
   @Override
-  public void retrieveLinks(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Link>> callback) {
+  public void retrieveLinks(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Link>> callback) {
     super.retrieveLinks(userID, options, callback);
   }
 
   @Override
-  public void retrieveNotes(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+  public void retrieveNotes(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Note>> callback) {
     super.retrieveNotes(userID, options, callback);
   }
 
   @Override
-  public void retrieveEvents(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Event>> callback) {
+  public void retrieveEvents(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Event>> callback) {
     super.retrieveEvents(userID, options, callback);
   }
 
   @Override
-  public void retrieveInbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<MessageThread>> callback) {
+  public void retrieveInbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<MessageThread>> callback) {
     super.retrieveInbox(userID, options, callback);
   }
 
   @Override
-  public void retrieveOutbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+  public void retrieveOutbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Note>> callback) {
     super.retrieveOutbox(userID, options, callback);
   }
 
   @Override
-  public void retrieveUpdates(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Note>> callback) {
+  public void retrieveUpdates(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Note>> callback) {
     super.retrieveUpdates(userID, options, callback);
   }
 
   @Override
-  public void retrieveAccounts(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Account>> callback) {
+  public void retrieveAccounts(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Account>> callback) {
     super.retrieveAccounts(userID, options, callback);
   }
 
   @Override
-  public void retrieveCheckIns(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<CheckIn>> callback) {
+  public void retrieveCheckIns(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<CheckIn>> callback) {
     super.retrieveCheckIns(userID, options, callback);
   }
 
   @Override
-  public void retrieveFriendLists(final String userID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<FriendList>> callback) {
+  public void retrieveFriendLists(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<FriendList>> callback) {
     super.retrieveFriendLists(userID, options, callback);
   }
 

@@ -19,15 +19,16 @@
 package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.model.Comment;
 import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import java.util.List;
+
 public class VideoGraph extends FBItemGraph<FriendList> {
   @Override
-  public void retrieveComments(final String videoID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<Comment>> callback) {
+  public void retrieveComments(final String videoID, final FBGraphCallOptions options, final AsyncCallback<List<Comment>> callback) {
     super.retrieveComments(videoID, options, callback);
   }
 }

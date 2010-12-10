@@ -19,16 +19,17 @@
 package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphDataListResult;
 import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.User;
 import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import java.util.List;
+
 public class FriendListGraph extends FBItemGraph<FriendList> {
   @Override
-  public void retrieveMembers(final String friendListID, final FBGraphCallOptions options, final AsyncCallback<FBGraphDataListResult<User>> callback) {
+  public void retrieveMembers(final String friendListID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
     super.retrieveMembers(friendListID, options, callback);
   }
 
