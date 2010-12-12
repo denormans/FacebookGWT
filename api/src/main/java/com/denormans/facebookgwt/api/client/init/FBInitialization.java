@@ -187,6 +187,9 @@ public final class FBInitialization implements HasFBInitHandlers  {
       var self = this;
       var oldFBAsyncInit = $wnd.fbAsyncInit;
       $wnd.fbAsyncInit = function() {
+        // reset the old fbAsyncInit in case this is called again
+        $wnd.fbAsyncInit = oldFBAsyncInit;
+
         try {
           // call the old one first
           if (oldFBAsyncInit) {
