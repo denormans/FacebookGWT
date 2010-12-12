@@ -37,7 +37,9 @@ import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 
@@ -223,10 +225,13 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
   @SuppressWarnings({"unchecked"})
   private TreeItem createTreeItem(final Object obj, final NamedAction action) {
     Button actionButton = new Button(action.getName());
+    final TextBox actionParamTextBox = action.requiresParam() ? new TextBox() : null;
+
     actionButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
-        action.execute(obj, new AsyncCallback() {
+        String paramValue = actionParamTextBox != null ? actionParamTextBox.getText() : null;
+        action.execute(obj, paramValue, new AsyncCallback() {
           @Override
           public void onFailure(final Throwable caught) {
             FacebookGWTSamples.get().handleError("Error executing action", caught);
@@ -234,13 +239,21 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
 
           @Override
           public void onSuccess(final Object result) {
+            addApiEventMessage(action.getName() + " results", result);
             setValue((T) result);
             setLabel(action.getName() + " Results");
           }
         });
       }
     });
-    return new TreeItem(actionButton);
+
+    FlowPanel actionContainer = new FlowPanel();
+    actionContainer.add(actionButton);
+    if (actionParamTextBox != null) {
+      actionContainer.add(actionParamTextBox);
+    }
+
+    return new TreeItem(actionContainer);
   }
 
   @Override

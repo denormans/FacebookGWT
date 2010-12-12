@@ -63,7 +63,8 @@ import com.denormans.facebookgwt.api.shared.graph.ObjectType;
 import com.denormans.facebookgwt.samples.client.describe.AbstractObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescription;
-import com.denormans.facebookgwt.samples.client.showcase.Action;
+import com.denormans.facebookgwt.samples.client.showcase.AbstractAction;
+import com.denormans.facebookgwt.samples.client.showcase.AbstractParameterizedAction;
 
 import com.google.gwt.i18n.client.TimeZone;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -312,9 +313,9 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
       return new GraphObjectDescription<T>(obj, this, getObjectType()).addValue("ID", obj.getID()).addValue("Name", obj.getName()).
-          addAction("Get " + getObjectTypeName(obj), new Action<T, ObjectDescription<T>>() {
+          addAction("Get " + getObjectTypeName(obj), new AbstractAction<T, ObjectDescription<T>>() {
             @Override
-            public void execute(final T obj, final AsyncCallback<ObjectDescription<T>> callback) {
+            public void execute(final T obj, final String param, final AsyncCallback<ObjectDescription<T>> callback) {
               retrieveItem(obj.getID(), new ObjectTransformingCallback<T>(AbstractGraphObjectDescriber.this, callback));
             }
           });
@@ -411,9 +412,9 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Comment> describeObject(final Comment obj) {
       return super.describeObject(obj).addValue("Created", obj.getCreatedTime()).addValue("Message", obj.getMessage()).addValue("From", obj.getFrom()).addValue("Num Likes", obj.getNumLikes()).
-          addAction("Likes", new Action<Comment, List<ObjectDescription<Like>>>() {
+          addAction("Likes", new AbstractAction<Comment, List<ObjectDescription<Like>>>() {
             @Override
-            public void execute(final Comment obj, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
+            public void execute(final Comment obj, final String param, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
               FBGWT.Graph.Comment.retrieveLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
             }
           });
@@ -440,10 +441,28 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<FriendList> describeObject(final FriendList obj) {
       return super.describeObject(obj).
-          addAction("Members", new Action<FriendList, List<ObjectDescription<User>>>() {
+          addAction("Delete Friend List", new AbstractAction<FriendList, Boolean>() {
             @Override
-            public void execute(final FriendList obj, final AsyncCallback<List<ObjectDescription<User>>> callback) {
+            public void execute(final FriendList obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.FriendList.delete(obj.getID(), null, callback);
+            }
+          }).
+          addAction("Members", new AbstractAction<FriendList, List<ObjectDescription<User>>>() {
+            @Override
+            public void execute(final FriendList obj, final String param, final AsyncCallback<List<ObjectDescription<User>>> callback) {
               FBGWT.Graph.FriendList.retrieveMembers(obj.getID(), null, new ListTransformingCallback<User>(getUserDescriber(), callback));
+            }
+          }).
+          addAction("Add Member", new AbstractParameterizedAction<FriendList, Boolean>() {
+            @Override
+            public void execute(final FriendList obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.FriendList.addMember(obj.getID(), param, callback);
+            }
+          }).
+          addAction("Remove Member", new AbstractParameterizedAction<FriendList, Boolean>() {
+            @Override
+            public void execute(final FriendList obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.FriendList.removeMember(obj.getID(), param, callback);
             }
           });
     }
@@ -634,160 +653,166 @@ public class FBGraphObjectDescribers {
           addValue("Interested in", obj.getInterestedIn()).addValue("Seeking", obj.getSeeking()).addValue("Religion", obj.getReligion()).addValue("Political Affiliation", obj.getPoliticalAffiliation()).
           addValue("Verified", obj.isVerified()).addValue("Significant Other", describe(obj.getSignificantOther())).addValue("Time Zone", timeZone != null ? timeZone.getID() : null).addValue("Third-Party ID", obj.getThirdPartyID()).
           addValue("Locale", obj.getLocale()).addValue("Updated Time", obj.getUpdatedTime()).
-          addAction("Home Feed", new Action<User, List<ObjectDescription<Post>>>() {
+          addAction("Home Feed", new AbstractAction<User, List<ObjectDescription<Post>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
               FBGWT.Graph.User.retrieveHomeFeed(obj.getID(), null, new ListTransformingCallback<Post>(getPostDescriber(), callback));
             }
           }).
-          addAction("Wall Feed", new Action<User, List<ObjectDescription<Post>>>() {
+          addAction("Wall Feed", new AbstractAction<User, List<ObjectDescription<Post>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
               FBGWT.Graph.User.retrieveWallFeed(obj.getID(), null, new ListTransformingCallback<Post>(getPostDescriber(), callback));
             }
           }).
-          addAction("Tagged In", new Action<User, List<ObjectDescription<Postable>>>() {
+          addAction("Tagged In", new AbstractAction<User, List<ObjectDescription<Postable>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Postable>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Postable>>> callback) {
               FBGWT.Graph.User.retrieveTaggedIn(obj.getID(), null, new ListTransformingCallback<Postable>(getPostableDescriber(), callback));
             }
           }).
-          addAction("Posts", new Action<User, List<ObjectDescription<Post>>>() {
+          addAction("Posts", new AbstractAction<User, List<ObjectDescription<Post>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
               FBGWT.Graph.User.retrievePosts(obj.getID(), null, new ListTransformingCallback<Post>(getPostDescriber(), callback));
             }
           }).
-          addAction("Friends", new Action<User, List<ObjectDescription<User>>>() {
+          addAction("Friends", new AbstractAction<User, List<ObjectDescription<User>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<User>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<User>>> callback) {
               FBGWT.Graph.User.retrieveFriends(obj.getID(), null, new ListTransformingCallback<User>(describer, callback));
             }
           }).
-          addAction("Activities", new Action<User, List<ObjectDescription<Activity>>>() {
+          addAction("Activities", new AbstractAction<User, List<ObjectDescription<Activity>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Activity>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Activity>>> callback) {
               FBGWT.Graph.User.retrieveActivities(obj.getID(), null, new ListTransformingCallback<Activity>(getActivityDescriber(), callback));
             }
           }).
-          addAction("Interests", new Action<User, List<ObjectDescription<Interest>>>() {
+          addAction("Interests", new AbstractAction<User, List<ObjectDescription<Interest>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Interest>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Interest>>> callback) {
               FBGWT.Graph.User.retrieveInterests(obj.getID(), null, new ListTransformingCallback<Interest>(getInterestDescriber(), callback));
             }
           }).
-          addAction("Music", new Action<User, List<ObjectDescription<Music>>>() {
+          addAction("Music", new AbstractAction<User, List<ObjectDescription<Music>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Music>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Music>>> callback) {
               FBGWT.Graph.User.retrieveMusic(obj.getID(), null, new ListTransformingCallback<Music>(getMusicDescriber(), callback));
             }
           }).
-          addAction("Books", new Action<User, List<ObjectDescription<Book>>>() {
+          addAction("Books", new AbstractAction<User, List<ObjectDescription<Book>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Book>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Book>>> callback) {
               FBGWT.Graph.User.retrieveBooks(obj.getID(), null, new ListTransformingCallback<Book>(getBookDescriber(), callback));
             }
           }).
-          addAction("Movies", new Action<User, List<ObjectDescription<Movie>>>() {
+          addAction("Movies", new AbstractAction<User, List<ObjectDescription<Movie>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Movie>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Movie>>> callback) {
               FBGWT.Graph.User.retrieveMovies(obj.getID(), null, new ListTransformingCallback<Movie>(getMovieDescriber(), callback));
             }
           }).
-          addAction("Television Shows", new Action<User, List<ObjectDescription<TelevisionShow>>>() {
+          addAction("Television Shows", new AbstractAction<User, List<ObjectDescription<TelevisionShow>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<TelevisionShow>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<TelevisionShow>>> callback) {
               FBGWT.Graph.User.retrieveTelevisionShows(obj.getID(), null, new ListTransformingCallback<TelevisionShow>(getTelevisionShowDescriber(), callback));
             }
           }).
-          addAction("Likes", new Action<User, List<ObjectDescription<Like>>>() {
+          addAction("Likes", new AbstractAction<User, List<ObjectDescription<Like>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
               FBGWT.Graph.User.retrieveLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
             }
           }).
-          addAction("Photos", new Action<User, List<ObjectDescription<Photo>>>() {
+          addAction("Photos", new AbstractAction<User, List<ObjectDescription<Photo>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Photo>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Photo>>> callback) {
               FBGWT.Graph.User.retrievePhotos(obj.getID(), null, new ListTransformingCallback<Photo>(getPhotoDescriber(), callback));
             }
           }).
-          addAction("Photo Albums", new Action<User, List<ObjectDescription<PhotoAlbum>>>() {
+          addAction("Photo Albums", new AbstractAction<User, List<ObjectDescription<PhotoAlbum>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<PhotoAlbum>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<PhotoAlbum>>> callback) {
               FBGWT.Graph.User.retrievePhotoAlbums(obj.getID(), null, new ListTransformingCallback<PhotoAlbum>(getPhotoAlbumDescriber(), callback));
             }
           }).
-          addAction("Videos", new Action<User, List<ObjectDescription<Video>>>() {
+          addAction("Videos", new AbstractAction<User, List<ObjectDescription<Video>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Video>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Video>>> callback) {
               FBGWT.Graph.User.retrieveVideos(obj.getID(), null, new ListTransformingCallback<Video>(getVideoDescriber(), callback));
             }
           }).
-          addAction("Groups", new Action<User, List<ObjectDescription<Group>>>() {
+          addAction("Groups", new AbstractAction<User, List<ObjectDescription<Group>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Group>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Group>>> callback) {
               FBGWT.Graph.User.retrieveGroups(obj.getID(), null, new ListTransformingCallback<Group>(getGroupDescriber(), callback));
             }
           }).
-          addAction("Status Messages", new Action<User, List<ObjectDescription<StatusMessage>>>() {
+          addAction("Status Messages", new AbstractAction<User, List<ObjectDescription<StatusMessage>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<StatusMessage>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<StatusMessage>>> callback) {
               FBGWT.Graph.User.retrieveStatusMessages(obj.getID(), null, new ListTransformingCallback<StatusMessage>(getStatusMessageDescriber(), callback));
             }
           }).
-          addAction("Links", new Action<User, List<ObjectDescription<Link>>>() {
+          addAction("Links", new AbstractAction<User, List<ObjectDescription<Link>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Link>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Link>>> callback) {
               FBGWT.Graph.User.retrieveLinks(obj.getID(), null, new ListTransformingCallback<Link>(getLinkDescriber(), callback));
             }
           }).
-          addAction("Notes", new Action<User, List<ObjectDescription<Note>>>() {
+          addAction("Notes", new AbstractAction<User, List<ObjectDescription<Note>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
               FBGWT.Graph.User.retrieveNotes(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
             }
           }).
-          addAction("Events", new Action<User, List<ObjectDescription<Event>>>() {
+          addAction("Events", new AbstractAction<User, List<ObjectDescription<Event>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Event>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Event>>> callback) {
               FBGWT.Graph.User.retrieveEvents(obj.getID(), null, new ListTransformingCallback<Event>(getEventDescriber(), callback));
             }
           }).
-          addAction("Inbox", new Action<User, List<ObjectDescription<MessageThread>>>() {
+          addAction("Inbox", new AbstractAction<User, List<ObjectDescription<MessageThread>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<MessageThread>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<MessageThread>>> callback) {
               FBGWT.Graph.User.retrieveInbox(obj.getID(), null, new ListTransformingCallback<MessageThread>(getMessageThreadDescriber(), callback));
             }
           }).
-          addAction("Outbox", new Action<User, List<ObjectDescription<Note>>>() {
+          addAction("Outbox", new AbstractAction<User, List<ObjectDescription<Note>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
               FBGWT.Graph.User.retrieveOutbox(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
             }
           }).
-          addAction("Updates", new Action<User, List<ObjectDescription<Note>>>() {
+          addAction("Updates", new AbstractAction<User, List<ObjectDescription<Note>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
               FBGWT.Graph.User.retrieveUpdates(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
             }
           }).
-          addAction("Accounts", new Action<User, List<ObjectDescription<Account>>>() {
+          addAction("Accounts", new AbstractAction<User, List<ObjectDescription<Account>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<Account>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Account>>> callback) {
               FBGWT.Graph.User.retrieveAccounts(obj.getID(), null, new ListTransformingCallback<Account>(getAccountDescriber(), callback));
             }
           }).
-          addAction("Check-ins", new Action<User, List<ObjectDescription<CheckIn>>>() {
+          addAction("Check-ins", new AbstractAction<User, List<ObjectDescription<CheckIn>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<CheckIn>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<CheckIn>>> callback) {
               FBGWT.Graph.User.retrieveCheckIns(obj.getID(), null, new ListTransformingCallback<CheckIn>(getCheckInDescriber(), callback));
             }
           }).
-          addAction("Friend Lists", new Action<User, List<ObjectDescription<FriendList>>>() {
+          addAction("Friend Lists", new AbstractAction<User, List<ObjectDescription<FriendList>>>() {
             @Override
-            public void execute(final User obj, final AsyncCallback<List<ObjectDescription<FriendList>>> callback) {
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<FriendList>>> callback) {
               FBGWT.Graph.User.retrieveFriendLists(obj.getID(), null, new ListTransformingCallback<FriendList>(getFriendListDescriber(), callback));
+            }
+          }).
+          addAction("Create Friend List", new AbstractParameterizedAction<User, ObjectDescription<FriendList>>() {
+            @Override
+            public void execute(final User obj, final String param, final AsyncCallback<ObjectDescription<FriendList>> callback) {
+              FBGWT.Graph.User.createFriendList(obj.getID(), param, new ObjectTransformingCallback<FriendList>(getFriendListDescriber(), callback));
             }
           });
     }
@@ -802,9 +827,9 @@ public class FBGraphObjectDescribers {
     protected ObjectDescription<Video> describeObject(final Video obj) {
       return super.describeObject(obj).addValue("From", obj.getFrom()).addValue("Tags", getUserDescriber().describeList(obj.getTags())).addValue("Embed HTML URL", obj.getEmbedHTMLURL()).addValue("Icon URL", obj.getIconURL()).
           addValue("Source URL", obj.getSourceURL()).addValue("Created", obj.getCreatedTime()).addValue("Updated", obj.getUpdatedTime()).
-          addAction("Comments", new Action<Video, List<ObjectDescription<Comment>>>() {
+          addAction("Comments", new AbstractAction<Video, List<ObjectDescription<Comment>>>() {
             @Override
-            public void execute(final Video obj, final AsyncCallback<List<ObjectDescription<Comment>>> callback) {
+            public void execute(final Video obj, final String param, final AsyncCallback<List<ObjectDescription<Comment>>> callback) {
               FBGWT.Graph.Video.retrieveComments(obj.getID(), null, new ListTransformingCallback<Comment>(getCommentDescriber(), callback));
             }
           });

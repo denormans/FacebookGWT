@@ -37,12 +37,14 @@ public enum FBPermissions implements FBPermission {
   Email("email"),
   ContactEmail("contact_email", false),
   ReadFriendlists("read_friendlists"),
+  ManageFriendlists("manage_friendlists"),
   ReadInsights("read_insights"),
   ReadMailbox("read_mailbox"),
   ReadRequests("read_requests"),
   ReadStream("read_stream"),
   XMPPLogin("xmpp_login"),
   ADSManagement("ads_management"),
+  ManagePages("manage_pages"),
 
   UserAboutMe("user_about_me"),
   UserActivities("user_activities"),
@@ -90,8 +92,7 @@ public enum FBPermissions implements FBPermission {
   FriendsWebsite("friends_website"),
   FriendsWorkHistory("friends_work_history"),
 
-  // Page Permissions
-  ManagePages("manage_pages");
+  ;
 
   public static final EnumSet<FBPermissions> PublishingPermissions = EnumSet.range(PublishStream, OfflineAccess);
 
@@ -99,8 +100,6 @@ public enum FBPermissions implements FBPermission {
   public static final EnumSet<FBPermissions> FriendsDataPermissions = EnumSet.range(FriendsAboutMe, FriendsWorkHistory);
 
   public static final EnumSet<FBPermissions> DataPermissions = EnumSet.range(Email, FriendsWorkHistory);
-
-  public static final EnumSet<FBPermissions> PagePermissions = EnumSet.of(ManagePages);
 
   private static final Map<String, FBPermissions> sPermissionByApiValue = FBEnum.Util.createFBEnumByApiValueMap(FBPermissions.class);
   private static final FBEnumCreator<FBPermission> sPermissionCreator = new FBPermissionCreator();

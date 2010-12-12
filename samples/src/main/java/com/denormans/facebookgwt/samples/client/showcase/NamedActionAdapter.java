@@ -20,7 +20,27 @@ package com.denormans.facebookgwt.samples.client.showcase;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public interface Action<T, R> {
-  void execute(final T obj, final String param, final AsyncCallback<R> callback);
-  boolean requiresParam();
+public class NamedActionAdapter<T, R> implements NamedAction<T, R> {
+  private final String name;
+  private final Action<T, R> action;
+
+  public NamedActionAdapter(final String name, final Action<T, R> action) {
+    this.name = name;
+    this.action = action;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public void execute(final T obj, final String param, final AsyncCallback<R> callback) {
+    action.execute(obj, param, callback);
+  }
+
+  @Override
+  public boolean requiresParam() {
+    return action.requiresParam();
+  }
 }

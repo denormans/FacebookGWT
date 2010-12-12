@@ -45,13 +45,13 @@ public class FriendListGraph extends FBItemGraph<FriendList> {
   }
 
   /**
-   * Deletes a member from the given friend list.
+   * Removes a member from the given friend list.
    *
    * @param friendListID The friend list ID
    * @param memberID The member ID
    * @param callback Called when complete
    */
-  public void deleteMember(final String friendListID, final String memberID, final AsyncCallback<Boolean> callback) {
+  public void removeMember(final String friendListID, final String memberID, final AsyncCallback<Boolean> callback) {
     super.deleteConnection(friendListID, ConnectionTypes.Members, memberID, null, callback);
   }
 }

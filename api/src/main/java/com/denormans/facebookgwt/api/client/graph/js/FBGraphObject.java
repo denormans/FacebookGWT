@@ -28,7 +28,7 @@ public class FBGraphObject extends FBJSObject {
   }
 
   public final native String getID() /*-{
-    return this.id;
+    return String(this.id);
   }-*/;
 
   public final native String getName() /*-{

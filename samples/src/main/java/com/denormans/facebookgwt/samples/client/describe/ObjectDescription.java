@@ -20,8 +20,7 @@ package com.denormans.facebookgwt.samples.client.describe;
 
 import com.denormans.facebookgwt.samples.client.showcase.Action;
 import com.denormans.facebookgwt.samples.client.showcase.NamedAction;
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.denormans.facebookgwt.samples.client.showcase.NamedActionAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,17 +71,7 @@ public class ObjectDescription<T> {
   }
 
   public <V extends T, R> ObjectDescription<T> addAction(final String name, final Action<V, R> action) {
-    return addAction(new NamedAction<V, R>() {
-      @Override
-      public String getName() {
-        return name;
-      }
-
-      @Override
-      public void execute(final V obj, final AsyncCallback<R> callback) {
-        action.execute(obj, callback);
-      }
-    });
+    return addAction(new NamedActionAdapter<V, R>(name, action));
   }
 
   public ObjectDescription<T> addAction(final NamedAction<? extends T, ?> action) {

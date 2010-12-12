@@ -18,9 +18,9 @@
 
 package com.denormans.facebookgwt.samples.client.showcase;
 
-import com.google.gwt.user.client.rpc.AsyncCallback;
-
-public interface Action<T, R> {
-  void execute(final T obj, final String param, final AsyncCallback<R> callback);
-  boolean requiresParam();
+public abstract class AbstractParameterizedAction<T, R> implements Action<T, R> {
+  @Override
+  public boolean requiresParam() {
+    return true;
+  }
 }
