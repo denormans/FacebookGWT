@@ -59,6 +59,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.User;
 import com.denormans.facebookgwt.api.client.graph.js.model.Video;
 import com.denormans.facebookgwt.api.client.graph.js.model.Work;
 import com.denormans.facebookgwt.api.client.graph.js.model.WorkPosition;
+import com.denormans.facebookgwt.api.client.graph.js.options.FeedPostOptions;
 import com.denormans.facebookgwt.api.shared.graph.ObjectType;
 import com.denormans.facebookgwt.samples.client.describe.AbstractObjectDescriber;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
@@ -584,7 +585,13 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Post> describeObject(final Post obj) {
       // todo: describe post
-      return super.describeObject(obj);
+      return super.describeObject(obj).
+          addAction("Delete Post", new AbstractAction<Post, Boolean>() {
+            @Override
+            public void execute(final Post obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.deleteItem(obj.getID(), null, callback);
+            }
+          });
     }
   }
 
@@ -663,6 +670,13 @@ public class FBGraphObjectDescribers {
             @Override
             public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
               FBGWT.Graph.User.retrieveWallFeed(obj.getID(), null, new ListTransformingCallback<Post>(getPostDescriber(), callback));
+            }
+          }).
+          addAction("Post to Wall", new AbstractParameterizedAction<User, ObjectDescription<Post>>() {
+            @Override
+            public void execute(final User obj, final String param, final AsyncCallback<ObjectDescription<Post>> callback) {
+              FeedPostOptions postOptions = FeedPostOptions.createFeedPostOptions().setMessage(param);
+              FBGWT.Graph.User.postToWall(obj.getID(), postOptions, new ObjectTransformingCallback<Post>(getPostDescriber(), callback));
             }
           }).
           addAction("Tagged In", new AbstractAction<User, List<ObjectDescription<Postable>>>() {

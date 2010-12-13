@@ -228,8 +228,13 @@ public class UserGraph extends FBItemGraph<User> {
    * @param options The call options
    * @param callback Called when complete
    */
-  public void postToCurrentUserWall(final FeedPostOptions options, final AsyncCallback<Post> callback) {
+  public void postToWall(final FeedPostOptions options, final AsyncCallback<Post> callback) {
     postToWall(CurrentUserID, options, callback);
+  }
+
+  @Override
+  public void postToWall(final String userID, final FeedPostOptions options, final AsyncCallback<Post> callback) {
+    super.postToWall(userID, options, callback);
   }
 
   /**

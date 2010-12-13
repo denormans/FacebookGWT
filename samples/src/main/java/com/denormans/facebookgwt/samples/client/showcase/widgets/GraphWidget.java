@@ -121,12 +121,12 @@ public class GraphWidget extends ShowcaseWidget {
     FBGWT.Graph.User.retrieveHomeFeed(null, new AsyncCallback<List<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
-        handleError("Error retrieving current user home feed", caught);
+        handleError("Error retrieving home feed", caught);
       }
 
       @Override
       public void onSuccess(final List<Post> result) {
-        addApiEventMessage("Retrieve current user home feed result", result);
+        addApiEventMessage("Retrieve home feed result", result);
         setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result);
       }
     });
@@ -137,12 +137,12 @@ public class GraphWidget extends ShowcaseWidget {
     FBGWT.Graph.User.retrieveWallFeed(null, new AsyncCallback<List<Post>>() {
       @Override
       public void onFailure(final Throwable caught) {
-        handleError("Error retrieving current user wall feed", caught);
+        handleError("Error retrieving wall feed", caught);
       }
 
       @Override
       public void onSuccess(final List<Post> result) {
-        addApiEventMessage("Retrieve current user wall feed result", result);
+        addApiEventMessage("Retrieve wall feed result", result);
         setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result);
       }
     });
@@ -153,12 +153,12 @@ public class GraphWidget extends ShowcaseWidget {
     FBGWT.Graph.User.retrieveFriends(null, new AsyncCallback<List<User>>() {
       @Override
       public void onFailure(final Throwable caught) {
-        handleError("Error retrieving current user friends", caught);
+        handleError("Error retrieving friends", caught);
       }
 
       @Override
       public void onSuccess(final List<User> result) {
-        addApiEventMessage("Retrieve current user friends result", result);
+        addApiEventMessage("Retrieve friends result", result);
         setItemDisplayDescription(FBObjectDescribers.Graph.getUserDescriber(), result);
       }
     });
@@ -170,15 +170,15 @@ public class GraphWidget extends ShowcaseWidget {
 
     Log.info("Post options: " + postOptions.toJSONString());
 
-    FBGWT.Graph.User.postToCurrentUserWall(postOptions, new AsyncCallback<Post>() {
+    FBGWT.Graph.User.postToWall(postOptions, new AsyncCallback<Post>() {
       @Override
       public void onFailure(final Throwable caught) {
-        handleError("Error posting to current user wall", caught);
+        handleError("Error posting to wall", caught);
       }
 
       @Override
       public void onSuccess(final Post result) {
-        addApiEventMessage("Post to current user wall result", result);
+        addApiEventMessage("Post to wall result", result);
         setItemDisplayDescription(FBObjectDescribers.Graph.getPostDescriber(), result);
       }
     });
