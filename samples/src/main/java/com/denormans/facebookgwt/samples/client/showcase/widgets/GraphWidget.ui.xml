@@ -15,11 +15,6 @@
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="createFriendListButton">Create Friend List</g:Button>
-      <g:TextBox ui:field="createFriendListNameTextBox"/>
-    </div>
-
-    <div class="FBGWTField">
       <g:Button ui:field="deletePostButton">Delete a Post</g:Button>
       <g:TextBox ui:field="deletePostIDTextBox"/>
     </div>

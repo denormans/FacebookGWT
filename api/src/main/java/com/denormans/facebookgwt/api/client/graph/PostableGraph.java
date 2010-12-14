@@ -21,24 +21,35 @@ package com.denormans.facebookgwt.api.client.graph;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.model.Comment;
 import com.denormans.facebookgwt.api.client.graph.js.model.Like;
+import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.List;
 
-public class CommentGraph extends FBItemGraph<Comment> {
+public class PostableGraph<T extends Postable> extends FBItemGraph<T> {
   @Override
-  public void retrieveLikes(final String commentID, final FBGraphCallOptions options, final AsyncCallback<List<Like>> callback) {
-    super.retrieveLikes(commentID, options, callback);
+  public void retrieveComments(final String videoID, final FBGraphCallOptions options, final AsyncCallback<List<Comment>> callback) {
+    super.retrieveComments(videoID, options, callback);
   }
 
   @Override
-  public void like(final String commentID, final AsyncCallback<Boolean> callback) {
-    super.like(commentID, callback);
+  public void postComment(final String itemID, final FBGraphCallOptions options, final AsyncCallback<Comment> callback) {
+    super.postComment(itemID, options, callback);
   }
 
   @Override
-  public void unlike(final String commentID, final AsyncCallback<Boolean> callback) {
-    super.unlike(commentID, callback);
+  public void retrieveLikes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Like>> callback) {
+    super.retrieveLikes(itemID, options, callback);
+  }
+
+  @Override
+  public void like(final String itemID, final AsyncCallback<Boolean> callback) {
+    super.like(itemID, callback);
+  }
+
+  @Override
+  public void unlike(final String itemID, final AsyncCallback<Boolean> callback) {
+    super.unlike(itemID, callback);
   }
 }

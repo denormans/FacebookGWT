@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.graph;
 
-import com.denormans.facebookgwt.api.client.graph.js.model.Video;
+import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
 
-public class VideoGraph extends PostableGraph<Video> {
+public class StatusMessageGraph extends PostableGraph<StatusMessage> {
 }

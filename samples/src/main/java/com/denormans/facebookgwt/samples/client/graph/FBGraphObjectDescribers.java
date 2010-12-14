@@ -292,6 +292,64 @@ public class FBGraphObjectDescribers {
     }
   }
 
+  private abstract class PostableObjectDescriber<T extends Postable> extends AbstractGraphObjectDescriber<T> {
+    private ObjectType objectType;
+
+    public PostableObjectDescriber(final ObjectType objectType) {
+      this.objectType = objectType;
+    }
+
+    @Override
+    protected ObjectType getObjectType() {
+      return objectType;
+    }
+
+    @Override
+    protected ObjectDescription<T> describeObject(final T obj) {
+      return super.describeObject(obj).addValue("From", getUserDescriber().describe(obj.getFrom())).addValue("Comments", getCommentDescriber().describeList(obj.getComments())).
+          addAction("Delete", new AbstractAction<T, Boolean>() {
+            @Override
+            public void execute(final T obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.Postable.delete(getFullID(obj), null, callback);
+            }
+          }).
+          addAction("Comments", new AbstractAction<T, List<ObjectDescription<Comment>>>() {
+            @Override
+            public void execute(final T obj, final String param, final AsyncCallback<List<ObjectDescription<Comment>>> callback) {
+              FBGWT.Graph.Postable.retrieveComments(obj.getID(), null, new ListTransformingCallback<Comment>(getCommentDescriber(), callback));
+            }
+          }).
+          addAction("Post Comment", new AbstractParameterizedAction<T, ObjectDescription<Comment>>() {
+            @Override
+            public void execute(final T obj, final String param, final AsyncCallback<ObjectDescription<Comment>> callback) {
+              FBGWT.Graph.Postable.postComment(obj.getID(), FeedPostOptions.createFeedPostOptions().setMessage(param), new ObjectTransformingCallback<Comment>(getCommentDescriber(), callback));
+            }
+          }).
+          addAction("Likes", new AbstractAction<T, List<ObjectDescription<Like>>>() {
+            @Override
+            public void execute(final T obj, final String param, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
+              FBGWT.Graph.Postable.retrieveLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
+            }
+          }).
+          addAction("Like", new AbstractAction<T, Boolean>() {
+            @Override
+            public void execute(final T obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.Postable.like(getFullID(obj), callback);
+            }
+          }).
+          addAction("Unlike", new AbstractAction<T, Boolean>() {
+            @Override
+            public void execute(final T obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.Postable.unlike(getFullID(obj), callback);
+            }
+          });
+    }
+
+    protected String getFullID(final T obj) {
+      return getFullID(obj, obj.getFrom());
+    }
+  }
+
   private static abstract class FBGraphObjectDescriber<T extends FBGraphObject> extends AbstractGraphObjectDescriber<T> {
     private ObjectType objectType;
 
@@ -303,6 +361,11 @@ public class FBGraphObjectDescribers {
     protected ObjectType getObjectType() {
       return objectType;
     }
+
+    @Override
+    protected ObjectDescription<T> describeObject(final T obj) {
+      return super.describeObject(obj).addValue("Name", obj.getName());
+    }
   }
 
   private static abstract class AbstractGraphObjectDescriber<T extends FBGraphObject> extends AbstractObjectDescriber<T> {
@@ -313,7 +376,7 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
-      return new GraphObjectDescription<T>(obj, this, getObjectType()).addValue("ID", obj.getID()).addValue("Name", obj.getName()).
+      return new GraphObjectDescription<T>(obj, this, getObjectType()).addValue("ID", obj.getID()).
           addAction("Get " + getObjectTypeName(obj), new AbstractAction<T, ObjectDescription<T>>() {
             @Override
             public void execute(final T obj, final String param, final AsyncCallback<ObjectDescription<T>> callback) {
@@ -326,6 +389,24 @@ public class FBGraphObjectDescribers {
 
     protected void retrieveItem(final String itemID, final AsyncCallback<T> callback) {
       FBGWT.Graph.retrieveItem(itemID, null, callback);
+    }
+
+    /**
+     * HACK: This is needed because of issue http://bugs.developers.facebook.net/show_bug.cgi?id=10714
+     *
+     * <tt>/likes/</tt> and <tt>delete</tt> need an ID that looks like USERID_ITEMID
+     *
+     * @param obj The object
+     * @param user The object's user
+     *
+     * @return The full ID for use with like and delete
+     */
+    protected String getFullID(final T obj, final User user) {
+      String id = obj.getID();
+      if (user != null && !id.contains(user.getID())) {
+        id = user.getID() + "_" + id;
+      }
+      return id;
     }
   }
 
@@ -412,13 +493,35 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Comment> describeObject(final Comment obj) {
-      return super.describeObject(obj).addValue("Created", obj.getCreatedTime()).addValue("Message", obj.getMessage()).addValue("From", obj.getFrom()).addValue("Num Likes", obj.getNumLikes()).
+      return super.describeObject(obj).addValue("Message", obj.getMessage()).addValue("From", getUserDescriber().describe(obj.getFrom())).addValue("Num Likes", obj.getNumLikes()).addValue("Created Time", obj.getCreatedTime()).
+          addAction("Delete", new AbstractAction<Comment, Boolean>() {
+            @Override
+            public void execute(final Comment obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.Postable.delete(obj.getID(), null, callback);
+            }
+          }).
           addAction("Likes", new AbstractAction<Comment, List<ObjectDescription<Like>>>() {
             @Override
             public void execute(final Comment obj, final String param, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
               FBGWT.Graph.Comment.retrieveLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
             }
+          }).
+          addAction("Like", new AbstractAction<Comment, Boolean>() {
+            @Override
+            public void execute(final Comment obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.Comment.like(getFullID(obj), callback);
+            }
+          }).
+          addAction("Unlike", new AbstractAction<Comment, Boolean>() {
+            @Override
+            public void execute(final Comment obj, final String param, final AsyncCallback<Boolean> callback) {
+              FBGWT.Graph.Comment.unlike(getFullID(obj), callback);
+            }
           });
+    }
+
+    private String getFullID(final Comment obj) {
+      return getFullID(obj, obj.getFrom());
     }
   }
 
@@ -442,7 +545,7 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<FriendList> describeObject(final FriendList obj) {
       return super.describeObject(obj).
-          addAction("Delete Friend List", new AbstractAction<FriendList, Boolean>() {
+          addAction("Delete", new AbstractAction<FriendList, Boolean>() {
             @Override
             public void execute(final FriendList obj, final String param, final AsyncCallback<Boolean> callback) {
               FBGWT.Graph.FriendList.delete(obj.getID(), null, callback);
@@ -577,7 +680,7 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private static class PostDescriber extends FBGraphObjectDescriber<Post> {
+  private class PostDescriber extends PostableObjectDescriber<Post> {
     public PostDescriber() {
       super(ObjectType.Post);
     }
@@ -586,7 +689,7 @@ public class FBGraphObjectDescribers {
     protected ObjectDescription<Post> describeObject(final Post obj) {
       // todo: describe post
       return super.describeObject(obj).
-          addAction("Delete Post", new AbstractAction<Post, Boolean>() {
+          addAction("Delete", new AbstractAction<Post, Boolean>() {
             @Override
             public void execute(final Post obj, final String param, final AsyncCallback<Boolean> callback) {
               FBGWT.Graph.deleteItem(obj.getID(), null, callback);
@@ -595,11 +698,9 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private static class PostableDescriber extends AbstractObjectDescriber<Postable> {
-    @Override
-    protected ObjectDescription<Postable> describeObject(final Postable obj) {
-      // todo: get postables by type
-      return null;
+  private class PostableDescriber extends PostableObjectDescriber<Postable> {
+    public PostableDescriber() {
+      super(null);
     }
 
     @Override
@@ -621,15 +722,15 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private class StatusMessageDescriber extends FBGraphObjectDescriber<StatusMessage> {
+  private class StatusMessageDescriber extends PostableObjectDescriber<StatusMessage> {
     public StatusMessageDescriber() {
       super(ObjectType.StatusMessage);
     }
 
     @Override
     protected ObjectDescription<StatusMessage> describeObject(final StatusMessage obj) {
-      // todo: describe status message
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("Message", obj.getMessage()).addValue("Updated Time", obj.getUpdatedTime());
+
     }
   }
 
@@ -654,7 +755,7 @@ public class FBGraphObjectDescribers {
     protected ObjectDescription<User> describeObject(final User obj) {
       final ObjectDescriber<User> describer = this;
       TimeZone timeZone = obj.getTimeZone();
-      return super.describeObject(obj).addValue("First Name", obj.getFirstName()).addValue("Last Name", obj.getLastName()).addValue("Link", obj.getLink()).addValue("About", obj.getAbout()).addValue("Birthday", obj.getBirthday()).
+      return super.describeObject(obj).addValue("Name", obj.getName()).addValue("First Name", obj.getFirstName()).addValue("Last Name", obj.getLastName()).addValue("Link", obj.getLink()).addValue("About", obj.getAbout()).addValue("Birthday", obj.getBirthday()).
           addValue("Work", getWorkDescriber().describeList(obj.getWork())).addValue("Education", getEducationDescriber().describeList(obj.getEducation())).addValue("Email", obj.getEmail()).addValue("Website", obj.getWebsite()).
           addValue("Location", getLocationDescriber().describe(obj.getLocation())).addValue("Biography", obj.getBiography()).addValue("Quotes", obj.getQuotes()).addValue("Gender", obj.getGender()).
           addValue("Interested in", obj.getInterestedIn()).addValue("Seeking", obj.getSeeking()).addValue("Religion", obj.getReligion()).addValue("Political Affiliation", obj.getPoliticalAffiliation()).
@@ -832,21 +933,15 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private class VideoDescriber extends FBGraphObjectDescriber<Video> {
+  private class VideoDescriber extends PostableObjectDescriber<Video> {
     public VideoDescriber() {
       super(ObjectType.Video);
     }
 
     @Override
     protected ObjectDescription<Video> describeObject(final Video obj) {
-      return super.describeObject(obj).addValue("From", obj.getFrom()).addValue("Tags", getUserDescriber().describeList(obj.getTags())).addValue("Embed HTML URL", obj.getEmbedHTMLURL()).addValue("Icon URL", obj.getIconURL()).
-          addValue("Source URL", obj.getSourceURL()).addValue("Created", obj.getCreatedTime()).addValue("Updated", obj.getUpdatedTime()).
-          addAction("Comments", new AbstractAction<Video, List<ObjectDescription<Comment>>>() {
-            @Override
-            public void execute(final Video obj, final String param, final AsyncCallback<List<ObjectDescription<Comment>>> callback) {
-              FBGWT.Graph.Video.retrieveComments(obj.getID(), null, new ListTransformingCallback<Comment>(getCommentDescriber(), callback));
-            }
-          });
+      return super.describeObject(obj).addValue("Tags", getUserDescriber().describeList(obj.getTags())).addValue("Embed HTML URL", obj.getEmbedHTMLURL()).addValue("Icon URL", obj.getIconURL()).
+          addValue("Source URL", obj.getSourceURL()).addValue("Created Time", obj.getCreatedTime()).addValue("Updated Time", obj.getUpdatedTime());
     }
   }
 

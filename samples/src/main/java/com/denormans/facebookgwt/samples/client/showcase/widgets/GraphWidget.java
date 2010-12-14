@@ -51,9 +51,6 @@ public class GraphWidget extends ShowcaseWidget {
   @UiField Button retrieveWallFeedButton;
   @UiField Button retrieveFriendsButton;
 
-  @UiField Button createFriendListButton;
-  @UiField TextBox createFriendListNameTextBox;
-
   @UiField Button postToWallButton;
   @UiField TextBox postToWallMessageTextBox;
 

@@ -94,21 +94,7 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
     objectTree.setVisible(false);
     objectDetailsDisclosure.setOpen(false);
 
-    Object obj = value;
-    if (value instanceof ObjectDescription) {
-      obj = ((ObjectDescription<?>) value).getValue();
-      if (obj == null) {
-        obj = value;
-      }
-    }
-
-    if (obj instanceof JavaScriptObject) {
-      objectDetails.setInnerText(new JSONObject((JavaScriptObject) obj).toString());
-    } else if (obj != null) {
-      objectDetails.setInnerText(obj.toString());
-    } else {
-      objectDetails.setInnerText("");
-    }
+    objectDetails.setInnerText(generateRawText(value));
 
     objectTree.clear();
     List<TreeItem> treeItems = null;
@@ -131,6 +117,36 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
     } else {
       objectDetailsDisclosure.setOpen(true);
     }
+  }
+
+  private String generateRawText(final Object value) {
+    Object obj = value;
+    if (value instanceof ObjectDescription) {
+      obj = ((ObjectDescription<?>) value).getValue();
+      if (obj == null) {
+        obj = value;
+      }
+    }
+
+    String objText;
+    if (obj instanceof JavaScriptObject) {
+      objText = new JSONObject((JavaScriptObject)obj).toString();
+    } else if (obj instanceof List) {
+      StringBuilder textBuilder = new StringBuilder("[");
+      for (Object o : (List) obj) {
+        if (textBuilder.length() > 1) {
+          textBuilder.append(", ");
+        }
+        textBuilder.append(generateRawText(o));
+      }
+      textBuilder.append("]");
+      objText = textBuilder.toString();
+    } else if (obj != null) {
+      objText = obj.toString();
+    } else {
+      objText = "";
+    }
+    return objText;
   }
 
   @SuppressWarnings({"unchecked"})

@@ -116,7 +116,7 @@ public enum LegacyMethods implements LegacyMethod {
   UsersSetStatus("users.setStatus"),
   VideoUpload("video.upload"),
   PhotosCreateAlbum("photos.createAlbum"),
-  StreamAddComment("stream.addComment"),
+  StreamAddComment("stream.postComment"),
 
   // Facebook Connect Methods
   ConnectGetUnconnectedFriendsCount("connect.getUnconnectedFriendsCount"),

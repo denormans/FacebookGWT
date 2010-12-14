@@ -26,10 +26,6 @@ public class Video extends Postable {
   protected Video() {
   }
 
-  public final native User getFrom() /*-{
-    return this.from;
-  }-*/;
-
   public final List<User> getTags() {
     return convertJsArrayToList(getTagsJS());
   }

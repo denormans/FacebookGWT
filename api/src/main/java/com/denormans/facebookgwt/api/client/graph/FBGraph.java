@@ -22,7 +22,6 @@ import com.denormans.facebookgwt.api.client.FBIntegration;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.model.Like;
-import com.denormans.facebookgwt.api.shared.graph.ConnectionTypes;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -31,8 +30,8 @@ import java.util.List;
 public class FBGraph extends FBIntegration {
   public final CommentGraph Comment = new CommentGraph();
   public final FriendListGraph FriendList = new FriendListGraph();
+  public final PostableGraph Postable = new PostableGraph();
   public final UserGraph User = new UserGraph();
-  public final VideoGraph Video = new VideoGraph();
 
   private final FBItemGraph<FBGraphObject> genericItemGraph = new FBItemGraph<FBGraphObject>() {};
 
@@ -54,7 +53,7 @@ public class FBGraph extends FBIntegration {
    * @param callback Called when complete
    */
   public void likeItem(final String itemID, final AsyncCallback<Boolean> callback) {
-    genericItemGraph.post(itemID, ConnectionTypes.Likes, null, callback);
+    genericItemGraph.like(itemID, callback);
   }
 
   /**
@@ -64,7 +63,7 @@ public class FBGraph extends FBIntegration {
    * @param callback Called when complete
    */
   public void unlikeItem(final String itemID, final AsyncCallback<Boolean> callback) {
-    genericItemGraph.deleteConnection(itemID, ConnectionTypes.Likes, null, callback);
+    genericItemGraph.unlike(itemID, callback);
   }
 
   // Generic graph methods

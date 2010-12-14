@@ -21,4 +21,8 @@ package com.denormans.facebookgwt.api.client.graph.js.model;
 public class StatusMessage extends Postable {
   protected StatusMessage() {
   }
+
+  public final native String getMessage() /*-{
+    return this.message;
+  }-*/;
 }

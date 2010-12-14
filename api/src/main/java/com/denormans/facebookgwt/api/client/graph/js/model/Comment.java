@@ -18,18 +18,12 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
-
-public class Comment extends FBGraphObject {
+public class Comment extends Postable {
   protected Comment() {
   }
 
   public final native String getMessage() /*-{
     return this.message;
-  }-*/;
-
-  public final native User getFrom() /*-{
-    return this.from;
   }-*/;
 
   public final native int getNumLikes() /*-{

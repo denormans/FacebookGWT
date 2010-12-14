@@ -20,7 +20,23 @@ package com.denormans.facebookgwt.api.client.graph.js.model;
 
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 
+import com.google.gwt.core.client.JsArray;
+
+import java.util.List;
+
 public abstract class Postable extends FBGraphObject {
   protected Postable() {
   }
+
+  public final native User getFrom() /*-{
+    return this.from;
+  }-*/;
+
+  public final List<Comment> getComments() {
+    return convertJsArrayToList(getCommentsJS());
+  }
+
+  private native JsArray<Comment> getCommentsJS() /*-{
+    return this.comments != null ? this.comments.data : null;
+  }-*/;
 }
