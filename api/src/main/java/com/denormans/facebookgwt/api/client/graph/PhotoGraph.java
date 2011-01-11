@@ -16,29 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js.model;
+package com.denormans.facebookgwt.api.client.graph;
 
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
-import com.denormans.facebookgwt.api.shared.graph.ApplicationCategories;
-import com.denormans.facebookgwt.api.shared.graph.ApplicationCategory;
+import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 
-public class Application extends FBGraphObject {
-  protected Application() {
-  }
-
-  public final native String getDescription() /*-{
-    return this.description;
-  }-*/;
-
-  public final ApplicationCategory getCategory() {
-    return ApplicationCategories.valueFromApiValue(getCategoryJS());
-  }
-
-  public final native String getCategoryJS() /*-{
-    return this.category;
-  }-*/;
-
-  public final native String getLink() /*-{
-    return this.link;
-  }-*/;
+public class PhotoGraph extends PostableGraph<Photo> {
 }

@@ -31,12 +31,25 @@ public class FBGraphObject extends FBJSObject {
     return String(this.id);
   }-*/;
 
+  protected final String getIDScopedByUserID(final String userID) {
+    String id = getID();
+    if (id == null) {
+      return null;
+    }
+
+    if (userID != null && !id.contains(userID)) {
+      id = userID + "_" + id;
+    }
+
+    return id;
+  }
+
   public final native String getName() /*-{
     return this.name;
   }-*/;
 
   public final Date getCreatedTime() {
-    return FBDateTimeFormats.parseDateTime(FBDateTimeFormats.RFC3339Format, getUpdatedTimeJS());
+    return FBDateTimeFormats.parseDateTime(FBDateTimeFormats.RFC3339Format, getCreatedTimeJS());
   }
 
   private native String getCreatedTimeJS() /*-{

@@ -30,8 +30,8 @@
     </div>
 
     <div class="FBGWTField">
-      <g:Button ui:field="testButton">Test</g:Button>
-      <g:TextBox ui:field="testTextBox"/>
+      <g:Button ui:field="retrieveApplicationButton">Get Application</g:Button>
+      <g:TextBox ui:field="applicationIDTextBox"/>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

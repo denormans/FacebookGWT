@@ -32,6 +32,18 @@ public abstract class Postable extends FBGraphObject {
     return this.from;
   }-*/;
 
+  /**
+   * Returns an ID for the postable that can be used in likes/unlikes and responses.
+   * This is necessary because the ID returned from this.id doesn't work in other API calls.
+   *
+   * @return The fully-qualified ID
+   */
+  public final String getFullPostableID() {
+    User user = getFrom();
+    String fromID = user != null ? user.getID() : null;
+    return getIDScopedByUserID(fromID);
+  }
+
   public final List<Comment> getComments() {
     return convertJsArrayToList(getCommentsJS());
   }

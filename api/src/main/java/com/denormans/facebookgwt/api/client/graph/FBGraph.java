@@ -28,10 +28,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.util.List;
 
 public class FBGraph extends FBIntegration {
+  public final ApplicationGraph Application = new ApplicationGraph();
   public final CommentGraph Comment = new CommentGraph();
   public final FriendListGraph FriendList = new FriendListGraph();
+  public final PhotoGraph Photo = new PhotoGraph();
   public final PostableGraph Postable = new PostableGraph();
   public final UserGraph User = new UserGraph();
+  public final VideoGraph Video = new VideoGraph();
 
   private final FBItemGraph<FBGraphObject> genericItemGraph = new FBItemGraph<FBGraphObject>() {};
 

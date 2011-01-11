@@ -135,7 +135,7 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.Activity);
   }
 
-  private ObjectDescriber<Application> getApplicationDescriber() {
+  public ObjectDescriber<Application> getApplicationDescriber() {
     return getObjectDescriber(ObjectType.Application);
   }
 
@@ -310,7 +310,7 @@ public class FBGraphObjectDescribers {
           addAction("Delete", new AbstractAction<T, Boolean>() {
             @Override
             public void execute(final T obj, final String param, final AsyncCallback<Boolean> callback) {
-              FBGWT.Graph.Postable.delete(getFullID(obj), null, callback);
+              FBGWT.Graph.Postable.delete(obj.getFullPostableID(), null, callback);
             }
           }).
           addAction("Comments", new AbstractAction<T, List<ObjectDescription<Comment>>>() {
@@ -334,19 +334,15 @@ public class FBGraphObjectDescribers {
           addAction("Like", new AbstractAction<T, Boolean>() {
             @Override
             public void execute(final T obj, final String param, final AsyncCallback<Boolean> callback) {
-              FBGWT.Graph.Postable.like(getFullID(obj), callback);
+              FBGWT.Graph.Postable.like(obj.getFullPostableID(), callback);
             }
           }).
           addAction("Unlike", new AbstractAction<T, Boolean>() {
             @Override
             public void execute(final T obj, final String param, final AsyncCallback<Boolean> callback) {
-              FBGWT.Graph.Postable.unlike(getFullID(obj), callback);
+              FBGWT.Graph.Postable.unlike(obj.getFullPostableID(), callback);
             }
           });
-    }
-
-    protected String getFullID(final T obj) {
-      return getFullID(obj, obj.getFrom());
     }
   }
 
@@ -457,8 +453,8 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Application> describeObject(final Application obj) {
-      // todo: describe application
-      return super.describeObject(obj);
+      // todo: describe application actions
+      return super.describeObject(obj).addValue("Description", obj.getDescription()).addValue("Category", obj.getCategory()).addValue("Link", obj.getLink());
     }
   }
 
@@ -509,19 +505,15 @@ public class FBGraphObjectDescribers {
           addAction("Like", new AbstractAction<Comment, Boolean>() {
             @Override
             public void execute(final Comment obj, final String param, final AsyncCallback<Boolean> callback) {
-              FBGWT.Graph.Comment.like(getFullID(obj), callback);
+              FBGWT.Graph.Comment.like(obj.getFullPostableID(), callback);
             }
           }).
           addAction("Unlike", new AbstractAction<Comment, Boolean>() {
             @Override
             public void execute(final Comment obj, final String param, final AsyncCallback<Boolean> callback) {
-              FBGWT.Graph.Comment.unlike(getFullID(obj), callback);
+              FBGWT.Graph.Comment.unlike(obj.getFullPostableID(), callback);
             }
           });
-    }
-
-    private String getFullID(final Comment obj) {
-      return getFullID(obj, obj.getFrom());
     }
   }
 
@@ -753,6 +745,7 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<User> describeObject(final User obj) {
+      // todo: describe user content actions
       final ObjectDescriber<User> describer = this;
       TimeZone timeZone = obj.getTimeZone();
       return super.describeObject(obj).addValue("Name", obj.getName()).addValue("First Name", obj.getFirstName()).addValue("Last Name", obj.getLastName()).addValue("Link", obj.getLink()).addValue("About", obj.getAbout()).addValue("Birthday", obj.getBirthday()).

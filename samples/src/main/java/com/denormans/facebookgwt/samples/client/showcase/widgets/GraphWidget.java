@@ -19,13 +19,12 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+import com.denormans.facebookgwt.api.client.graph.js.model.Application;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.User;
 import com.denormans.facebookgwt.api.client.graph.js.options.FeedPostOptions;
-import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
-import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.samples.client.FBObjectDescribers;
+import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -63,37 +62,14 @@ public class GraphWidget extends ShowcaseWidget {
   @UiField Button unlikeItemButton;
   @UiField TextBox unlikeItemIDTextBox;
 
-  @UiField Button testButton;
-  @UiField TextBox testTextBox;
+  @UiField Button retrieveApplicationButton;
+  @UiField TextBox applicationIDTextBox;
 
   public GraphWidget() {
     HTMLPanel rootElement = sUIBinder.createAndBindUi(this);
     initWidget(rootElement);
 
-    FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
-      @Override
-      public void onFBInitSuccess(final FBInitSuccessEvent event) {
-        retrieveCurrentUserButton.setEnabled(FBGWT.Init.isInitialized());
-        retrieveHomeFeedButton.setEnabled(FBGWT.Init.isInitialized());
-        retrieveWallFeedButton.setEnabled(FBGWT.Init.isInitialized());
-        retrieveFriendsButton.setEnabled(FBGWT.Init.isInitialized());
-
-        postToWallButton.setEnabled(FBGWT.Init.isInitialized());
-        postToWallMessageTextBox.setEnabled(FBGWT.Init.isInitialized());
-
-        deletePostButton.setEnabled(FBGWT.Init.isInitialized());
-        deletePostIDTextBox.setEnabled(FBGWT.Init.isInitialized());
-
-        likeItemButton.setEnabled(FBGWT.Init.isInitialized());
-        likeItemIDTextBox.setEnabled(FBGWT.Init.isInitialized());
-
-        unlikeItemButton.setEnabled(FBGWT.Init.isInitialized());
-        unlikeItemIDTextBox.setEnabled(FBGWT.Init.isInitialized());
-
-        testButton.setEnabled(FBGWT.Init.isInitialized());
-        testTextBox.setEnabled(FBGWT.Init.isInitialized());
-      }
-    });
+    applicationIDTextBox.setText(FacebookGWTSamples.SamplesFacebookApplicationID);
   }
 
   @UiHandler ("retrieveCurrentUserButton")
@@ -226,20 +202,18 @@ public class GraphWidget extends ShowcaseWidget {
     });
   }
 
-  @UiHandler ("testButton")
-  public void handleTestButtonClick(final ClickEvent event) {
-    String testValue = testTextBox.getText();
-
-    FBGWT.Graph.retrieveItem(testValue, null, new AsyncCallback<FBGraphObject>() {
+  @UiHandler("retrieveApplicationButton")
+  public void handleRetrieveApplicationButtonClick(final ClickEvent event) {
+    FBGWT.Graph.Application.retrieveByID(applicationIDTextBox.getText(), null, new AsyncCallback<Application>() {
       @Override
       public void onFailure(final Throwable caught) {
-        handleError("Error during test", caught);
+        handleError("Error retrieving application", caught);
       }
 
       @Override
-      public void onSuccess(final FBGraphObject result) {
-        addApiEventMessage("Test result", result);
-        setItemDisplay("Test Results", result);
+      public void onSuccess(final Application result) {
+        addApiEventMessage("Retrieve Application result", result);
+        setItemDisplayDescription(FBObjectDescribers.Graph.getApplicationDescriber(), result);
       }
     });
   }
