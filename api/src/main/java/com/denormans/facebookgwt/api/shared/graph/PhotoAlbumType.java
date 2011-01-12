@@ -18,47 +18,7 @@
 
 package com.denormans.facebookgwt.api.shared.graph;
 
-import com.denormans.facebookgwt.api.shared.FBEnumCreator;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-import java.util.Map;
-
-public enum PrivacyTypes implements PrivacyType {
-  Everyone("everyone"),
-  Open("OPEN"),
-  Closed("CLOSED"),
-  Secret("SECRET");
-
-  private static final Map<String, PrivacyTypes> sPrivacyTypesByApiValue = Util.createFBEnumByApiValueMap(PrivacyTypes.class);
-  private static final PrivacyTypeCreator sPrivacyTypeCreator = new PrivacyTypeCreator();
-
-  private String apiValue;
-
-  PrivacyTypes(final String apiValue) {
-    this.apiValue = apiValue;
-  }
-
-  public String getApiValue() {
-    return apiValue;
-  }
-
-  public static PrivacyType valueFromApiValue(final String apiValue) {
-    return Util.valueFromApiValue(sPrivacyTypesByApiValue, apiValue, sPrivacyTypeCreator);
-  }
-
-  private static class PrivacyTypeCreator implements FBEnumCreator<PrivacyType> {
-    @Override
-    public PrivacyType create(final String apiValue) {
-      return new PrivacyType() {
-        @Override
-        public String getApiValue() {
-          return apiValue;
-        }
-
-        @Override
-        public String toString() {
-          return apiValue;
-        }
-      };
-    }
-  }
+public interface PhotoAlbumType extends FBEnum {
 }

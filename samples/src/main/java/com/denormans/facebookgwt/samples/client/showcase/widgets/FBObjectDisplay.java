@@ -246,11 +246,15 @@ public class FBObjectDisplay<T> extends ShowcaseWidget implements TakesValue<T> 
     actionButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
-        String paramValue = actionParamTextBox != null ? actionParamTextBox.getText() : null;
+        final String paramValue = actionParamTextBox != null ? actionParamTextBox.getText() : null;
         action.execute(obj, paramValue, new AsyncCallback() {
           @Override
           public void onFailure(final Throwable caught) {
-            FacebookGWTSamples.get().handleError("Error executing action", caught);
+            String actionDescription = action.toString();
+            if (action.requiresParam()) {
+              actionDescription += ", param='" + paramValue + "'";
+            }
+            FacebookGWTSamples.get().handleError("Error executing action " + actionDescription, caught);
           }
 
           @Override

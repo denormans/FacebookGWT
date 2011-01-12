@@ -16,36 +16,24 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.samples.client.showcase;
+package com.denormans.facebookgwt.api.client.graph;
+
+import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.client.graph.js.model.Comment;
+import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class NamedActionAdapter<T, R> implements NamedAction<T, R> {
-  private final String name;
-  private final Action<T, R> action;
+import java.util.List;
 
-  public NamedActionAdapter(final String name, final Action<T, R> action) {
-    this.name = name;
-    this.action = action;
+public class PhotoAlbumGraph extends FBItemGraph<Photo> {
+  @Override
+  public void retrievePhotos(final String photoAlbumID, final FBGraphCallOptions options, final AsyncCallback<List<Photo>> callback) {
+    super.retrievePhotos(photoAlbumID, options, callback);
   }
 
   @Override
-  public String getName() {
-    return name;
-  }
-
-  @Override
-  public void execute(final T obj, final String param, final AsyncCallback<R> callback) {
-    action.execute(obj, param, callback);
-  }
-
-  @Override
-  public boolean requiresParam() {
-    return action.requiresParam();
-  }
-
-  @Override
-  public String toString() {
-    return getName();
+  public void retrieveComments(final String photoAlbumID, final FBGraphCallOptions options, final AsyncCallback<List<Comment>> callback) {
+    super.retrieveComments(photoAlbumID, options, callback);
   }
 }

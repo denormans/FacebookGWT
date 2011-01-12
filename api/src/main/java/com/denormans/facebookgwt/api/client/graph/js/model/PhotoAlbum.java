@@ -19,8 +19,48 @@
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+import com.denormans.facebookgwt.api.shared.graph.PhotoAlbumType;
+import com.denormans.facebookgwt.api.shared.graph.PhotoAlbumTypes;
+import com.denormans.facebookgwt.api.shared.graph.PrivacyType;
+import com.denormans.facebookgwt.api.shared.graph.PrivacyTypes;
 
 public class PhotoAlbum extends FBGraphObject {
   protected PhotoAlbum() {
   }
+
+  public final native User getFrom() /*-{
+    return this.from;
+  }-*/;
+
+  public final native String getDescription() /*-{
+    return this.description
+  }-*/;
+
+  public final native String getLocation() /*-{
+    return this.location;
+  }-*/;
+
+  public final native String getPageURL() /*-{
+    return this.link;
+  }-*/;
+
+  public final native int getNumPhotos() /*-{
+    return this.count || 0;
+  }-*/;
+
+  public final PhotoAlbumType getType() {
+    return PhotoAlbumTypes.valueFromApiValue(getTypeJS());
+  }
+
+  private native String getTypeJS() /*-{
+    return this.type;
+  }-*/;
+
+  public final PrivacyType getPrivacy() {
+    return PrivacyTypes.valueFromApiValue(getPrivacyJS());
+  }
+
+  private native String getPrivacyJS() /*-{
+    return this.privacy
+  }-*/;
 }

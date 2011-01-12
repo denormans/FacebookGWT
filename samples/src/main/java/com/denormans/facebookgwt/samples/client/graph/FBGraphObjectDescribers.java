@@ -483,7 +483,7 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Comment> describeObject(final Comment obj) {
-      return super.describeObject(obj).addValue("Message", obj.getMessage()).addValue("From", getUserDescriber().describe(obj.getFrom())).addValue("Num Likes", obj.getNumLikes()).addValue("Created Time", obj.getCreatedTime()).
+      return super.describeObject(obj).addValue("Message", obj.getMessage()).addValue("From", getUserDescriber().describe(obj.getFrom())).addValue("# Likes", obj.getNumLikes()).addValue("Created Time", obj.getCreatedTime()).
           addAction("Delete", new AbstractAction<Comment, Boolean>() {
             @Override
             public void execute(final Comment obj, final String param, final AsyncCallback<Boolean> callback) {
@@ -643,7 +643,7 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private class PhotoDescriber extends FBGraphObjectDescriber<Photo> {
+  private class PhotoDescriber extends PostableObjectDescriber<Photo> {
     public PhotoDescriber() {
       super(ObjectType.Photo);
     }
@@ -651,7 +651,7 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Photo> describeObject(final Photo obj) {
       // todo: describe photo
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("Name", obj.getName());
     }
   }
 
@@ -662,8 +662,20 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<PhotoAlbum> describeObject(final PhotoAlbum obj) {
-      // todo: describe photo album
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("From", getUserDescriber().describe(obj.getFrom())).addValue("Description", obj.getDescription()).addValue("Location", obj.getLocation()).addValue("Page URL", obj.getPageURL()).
+          addValue("# Photos", obj.getNumPhotos()).addValue("Type", obj.getType()).addValue("Privacy", obj.getPrivacy()).addValue("Created Time", obj.getCreatedTime()).addValue("Updated Time", obj.getUpdatedTime()).
+          addAction("Photos", new AbstractAction<PhotoAlbum, List<ObjectDescription<Photo>>>() {
+            @Override
+            public void execute(final PhotoAlbum obj, final String param, final AsyncCallback<List<ObjectDescription<Photo>>> callback) {
+              FBGWT.Graph.PhotoAlbum.retrievePhotos(obj.getID(), null, new ListTransformingCallback<Photo>(getPhotoDescriber(), callback));
+            }
+          }).
+          addAction("Comments", new AbstractAction<PhotoAlbum, List<ObjectDescription<Comment>>>() {
+            @Override
+            public void execute(final PhotoAlbum obj, final String param, final AsyncCallback<List<ObjectDescription<Comment>>> callback) {
+              FBGWT.Graph.PhotoAlbum.retrieveComments(obj.getID(), null, new ListTransformingCallback<Comment>(getCommentDescriber(), callback));
+            }
+          });
     }
   }
 

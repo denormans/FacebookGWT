@@ -22,18 +22,16 @@ import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
 import java.util.Map;
 
-public enum PrivacyTypes implements PrivacyType {
-  Everyone("everyone"),
-  Open("OPEN"),
-  Closed("CLOSED"),
-  Secret("SECRET");
+public enum PhotoAlbumTypes implements PhotoAlbumType {
+  Wall("wall"),
+  Profile("profile");
 
-  private static final Map<String, PrivacyTypes> sPrivacyTypesByApiValue = Util.createFBEnumByApiValueMap(PrivacyTypes.class);
-  private static final PrivacyTypeCreator sPrivacyTypeCreator = new PrivacyTypeCreator();
+  private static final Map<String, PhotoAlbumTypes> sPhotoAlbumTypesByApiValue = Util.createFBEnumByApiValueMap(PhotoAlbumTypes.class);
+  private static final PhotoAlbumTypeCreator sPhotoAlbumTypeCreator = new PhotoAlbumTypeCreator();
 
   private String apiValue;
 
-  PrivacyTypes(final String apiValue) {
+  PhotoAlbumTypes(final String apiValue) {
     this.apiValue = apiValue;
   }
 
@@ -41,14 +39,14 @@ public enum PrivacyTypes implements PrivacyType {
     return apiValue;
   }
 
-  public static PrivacyType valueFromApiValue(final String apiValue) {
-    return Util.valueFromApiValue(sPrivacyTypesByApiValue, apiValue, sPrivacyTypeCreator);
+  public static PhotoAlbumType valueFromApiValue(final String apiValue) {
+    return Util.valueFromApiValue(sPhotoAlbumTypesByApiValue, apiValue, sPhotoAlbumTypeCreator);
   }
 
-  private static class PrivacyTypeCreator implements FBEnumCreator<PrivacyType> {
+  private static class PhotoAlbumTypeCreator implements FBEnumCreator<PhotoAlbumType> {
     @Override
-    public PrivacyType create(final String apiValue) {
-      return new PrivacyType() {
+    public PhotoAlbumType create(final String apiValue) {
+      return new PhotoAlbumType() {
         @Override
         public String getApiValue() {
           return apiValue;

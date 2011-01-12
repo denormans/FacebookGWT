@@ -29,6 +29,7 @@ public class FBGraph extends FBIntegration {
   public final CommentGraph Comment = new CommentGraph();
   public final FriendListGraph FriendList = new FriendListGraph();
   public final PhotoGraph Photo = new PhotoGraph();
+  public final PhotoAlbumGraph PhotoAlbum = new PhotoAlbumGraph();
   public final PostableGraph Postable = new PostableGraph();
   public final UserGraph User = new UserGraph();
   public final VideoGraph Video = new VideoGraph();
