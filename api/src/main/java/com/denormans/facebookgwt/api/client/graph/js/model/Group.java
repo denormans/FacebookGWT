@@ -19,16 +19,38 @@
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+import com.denormans.facebookgwt.api.shared.graph.PrivacyType;
+import com.denormans.facebookgwt.api.shared.graph.PrivacyTypes;
 
 public class Group extends FBGraphObject {
   protected Group() {
   }
 
-  public final native String getVersion() /*-{
-    return this.version;
+  public final native int getVersion() /*-{
+    return this.version || 0;
   }-*/;
 
-  public final native int getUnread() /*-{
-    return this.unread || 0;
+  public final native String getDescription() /*-{
+    return this.description;
+  }-*/;
+
+  public final native String getIconURL() /*-{
+    return this.icon;
+  }-*/;
+
+  public final native String getPageURL() /*-{
+    return this.link;
+  }-*/;
+
+  public final native User getOwner() /*-{
+    return this.owner;
+  }-*/;
+
+  public final PrivacyType getPrivacy() {
+    return PrivacyTypes.valueFromApiValue(getPrivacyJS());
+  }
+
+  private native String getPrivacyJS() /*-{
+    return this.privacy;
   }-*/;
 }

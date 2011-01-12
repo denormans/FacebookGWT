@@ -63,4 +63,8 @@ public class FBGraphObject extends FBJSObject {
   private native String getUpdatedTimeJS() /*-{
     return this.updated_time;
   }-*/;
+
+  protected final native int getNumLikesJS() /*-{
+    return this.likes || this.fan_count || 0;
+  }-*/;
 }

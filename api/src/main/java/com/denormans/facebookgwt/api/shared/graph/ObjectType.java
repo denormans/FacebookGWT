@@ -81,7 +81,6 @@ public enum ObjectType {
   Company(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   EducationYear(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Interest(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
-  Like(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Location(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Movie(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Music(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),

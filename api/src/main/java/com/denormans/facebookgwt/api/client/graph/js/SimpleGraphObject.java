@@ -37,7 +37,7 @@ public abstract class SimpleGraphObject extends FBGraphObject {
     return ObjectCategories.valueFromApiValue(getCategoryJS());
   }
 
-  private final native String getCategoryJS() /*-{
+  private native String getCategoryJS() /*-{
     return this.category;
   }-*/;
 
@@ -45,7 +45,7 @@ public abstract class SimpleGraphObject extends FBGraphObject {
     return this.is_community_page == true;
   }-*/;
 
-  public final native int getFanCount() /*-{
-    return this.fan_count || 0;
-  }-*/;
+  public final int getNumLikes() {
+    return getNumLikesJS();
+  }
 }

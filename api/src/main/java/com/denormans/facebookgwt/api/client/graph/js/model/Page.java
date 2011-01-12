@@ -18,9 +18,9 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
 
-public class Page extends FBGraphObject {
+public class Page extends SimpleGraphObject {
   protected Page() {
   }
 }

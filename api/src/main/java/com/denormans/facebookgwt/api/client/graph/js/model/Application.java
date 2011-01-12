@@ -30,15 +30,15 @@ public class Application extends FBGraphObject {
     return this.description;
   }-*/;
 
+  public final native String getPageURL() /*-{
+    return this.link;
+  }-*/;
+
   public final ApplicationCategory getCategory() {
     return ApplicationCategories.valueFromApiValue(getCategoryJS());
   }
 
-  public final native String getCategoryJS() /*-{
+  private native String getCategoryJS() /*-{
     return this.category;
-  }-*/;
-
-  public final native String getLink() /*-{
-    return this.link;
   }-*/;
 }

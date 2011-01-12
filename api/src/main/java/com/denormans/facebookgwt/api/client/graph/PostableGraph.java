@@ -20,8 +20,8 @@ package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.model.Comment;
-import com.denormans.facebookgwt.api.client.graph.js.model.Like;
 import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
+import com.denormans.facebookgwt.api.client.graph.js.model.User;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -39,8 +39,8 @@ public class PostableGraph<T extends Postable> extends FBItemGraph<T> {
   }
 
   @Override
-  public void retrieveLikes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Like>> callback) {
-    super.retrieveLikes(itemID, options, callback);
+  public void retrieveLikedByUsers(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
+    super.retrieveLikedByUsers(itemID, options, callback);
   }
 
   @Override

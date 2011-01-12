@@ -35,13 +35,13 @@ import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.Group;
 import com.denormans.facebookgwt.api.client.graph.js.model.Insights;
 import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
-import com.denormans.facebookgwt.api.client.graph.js.model.Like;
 import com.denormans.facebookgwt.api.client.graph.js.model.Link;
 import com.denormans.facebookgwt.api.client.graph.js.model.Message;
 import com.denormans.facebookgwt.api.client.graph.js.model.MessageThread;
 import com.denormans.facebookgwt.api.client.graph.js.model.Movie;
 import com.denormans.facebookgwt.api.client.graph.js.model.Music;
 import com.denormans.facebookgwt.api.client.graph.js.model.Note;
+import com.denormans.facebookgwt.api.client.graph.js.model.Page;
 import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
@@ -351,13 +351,24 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
   }
 
   /**
-   * Retrieves the given item's likes.
+   * Retrieves the users that liked the given item.
    *
    * @param itemID The item ID
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveLikes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Like>> callback) {
+  protected void retrieveLikedByUsers(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<User>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.Likes, options, callback);
+  }
+
+  /**
+   * Retrieves the given item's liked pages.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveLikedPages(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Page>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Likes, options, callback);
   }
 

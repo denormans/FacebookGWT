@@ -16,11 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js.model;
+package com.denormans.facebookgwt.api.shared.graph;
 
-import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-public class Like extends SimpleGraphObject {
-  protected Like() {
-  }
+public interface PrivacyType extends FBEnum {
 }

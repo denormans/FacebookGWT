@@ -27,12 +27,12 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Event;
 import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.Group;
 import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
-import com.denormans.facebookgwt.api.client.graph.js.model.Like;
 import com.denormans.facebookgwt.api.client.graph.js.model.Link;
 import com.denormans.facebookgwt.api.client.graph.js.model.MessageThread;
 import com.denormans.facebookgwt.api.client.graph.js.model.Movie;
 import com.denormans.facebookgwt.api.client.graph.js.model.Music;
 import com.denormans.facebookgwt.api.client.graph.js.model.Note;
+import com.denormans.facebookgwt.api.client.graph.js.model.Page;
 import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
@@ -148,8 +148,8 @@ public class UserGraph extends FBItemGraph<User> {
   }
 
   @Override
-  public void retrieveLikes(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Like>> callback) {
-    super.retrieveLikes(userID, options, callback);
+  public void retrieveLikedPages(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Page>> callback) {
+    super.retrieveLikedPages(userID, options, callback);
   }
 
   @Override

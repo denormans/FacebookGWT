@@ -37,7 +37,6 @@ import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.Group;
 import com.denormans.facebookgwt.api.client.graph.js.model.Insights;
 import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
-import com.denormans.facebookgwt.api.client.graph.js.model.Like;
 import com.denormans.facebookgwt.api.client.graph.js.model.Link;
 import com.denormans.facebookgwt.api.client.graph.js.model.Location;
 import com.denormans.facebookgwt.api.client.graph.js.model.Message;
@@ -114,7 +113,6 @@ public class FBGraphObjectDescribers {
     objectDescribers.put(ObjectType.Company, new SimpleGraphObjectDescriber<Company>(ObjectType.Company));
     objectDescribers.put(ObjectType.EducationYear, new SimpleGraphObjectDescriber<EducationYear>(ObjectType.EducationYear));
     objectDescribers.put(ObjectType.Interest, new SimpleGraphObjectDescriber<Interest>(ObjectType.Interest));
-    objectDescribers.put(ObjectType.Like, new SimpleGraphObjectDescriber<Like>(ObjectType.Like));
     objectDescribers.put(ObjectType.Location, new SimpleGraphObjectDescriber<Location>(ObjectType.Location));
     objectDescribers.put(ObjectType.Movie, new SimpleGraphObjectDescriber<Movie>(ObjectType.Movie));
     objectDescribers.put(ObjectType.Music, new SimpleGraphObjectDescriber<Music>(ObjectType.Music));
@@ -189,10 +187,6 @@ public class FBGraphObjectDescribers {
 
   private ObjectDescriber<Location> getLocationDescriber() {
     return getObjectDescriber(ObjectType.Location);
-  }
-
-  private ObjectDescriber<Like> getLikeDescriber() {
-    return getObjectDescriber(ObjectType.Like);
   }
 
   private ObjectDescriber<Link> getLinkDescriber() {
@@ -288,7 +282,7 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
       return super.describeObject(obj).addValue("Picture URL", obj.getPictureURL()).addValue("Page URL", obj.getPageURL()).addValue("Category", obj.getCategory()).addValue("Is Community Page?", obj.isCommunityPage()).
-          addValue("Fan Count", obj.getFanCount());
+          addValue("# Likes", obj.getNumLikes());
     }
   }
 
@@ -325,10 +319,10 @@ public class FBGraphObjectDescribers {
               FBGWT.Graph.Postable.postComment(obj.getID(), FeedPostOptions.createFeedPostOptions().setMessage(param), new ObjectTransformingCallback<Comment>(getCommentDescriber(), callback));
             }
           }).
-          addAction("Likes", new AbstractAction<T, List<ObjectDescription<Like>>>() {
+          addAction("Likes", new AbstractAction<T, List<ObjectDescription<User>>>() {
             @Override
-            public void execute(final T obj, final String param, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
-              FBGWT.Graph.Postable.retrieveLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
+            public void execute(final T obj, final String param, final AsyncCallback<List<ObjectDescription<User>>> callback) {
+              FBGWT.Graph.Postable.retrieveLikedByUsers(obj.getID(), null, new ListTransformingCallback<User>(getUserDescriber(), callback));
             }
           }).
           addAction("Like", new AbstractAction<T, Boolean>() {
@@ -454,7 +448,7 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Application> describeObject(final Application obj) {
       // todo: describe application actions
-      return super.describeObject(obj).addValue("Description", obj.getDescription()).addValue("Category", obj.getCategory()).addValue("Link", obj.getLink());
+      return super.describeObject(obj).addValue("Description", obj.getDescription()).addValue("Category", obj.getCategory()).addValue("Page URL", obj.getPageURL());
     }
   }
 
@@ -496,10 +490,10 @@ public class FBGraphObjectDescribers {
               FBGWT.Graph.Postable.delete(obj.getID(), null, callback);
             }
           }).
-          addAction("Likes", new AbstractAction<Comment, List<ObjectDescription<Like>>>() {
+          addAction("Likes", new AbstractAction<Comment, List<ObjectDescription<User>>>() {
             @Override
-            public void execute(final Comment obj, final String param, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
-              FBGWT.Graph.Comment.retrieveLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
+            public void execute(final Comment obj, final String param, final AsyncCallback<List<ObjectDescription<User>>> callback) {
+              FBGWT.Graph.Comment.retrieveLikedByUsers(obj.getID(), null, new ListTransformingCallback<User>(getUserDescriber(), callback));
             }
           }).
           addAction("Like", new AbstractAction<Comment, Boolean>() {
@@ -571,8 +565,9 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Group> describeObject(final Group obj) {
-      // todo: describe group
-      return super.describeObject(obj);
+      // todo: describe group actions
+      return super.describeObject(obj).addValue("Version", obj.getVersion()).addValue("Description", obj.getDescription()).addValue("Icon URL", obj.getIconURL()).addValue("Page URL", obj.getPageURL()).
+          addValue("Owner", getUserDescriber().describe(obj.getOwner())).addValue("Privacy", obj.getPrivacy()).addValue("Updated Time", obj.getUpdatedTime());
     }
   }
 
@@ -636,7 +631,7 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private class PageDescriber extends FBGraphObjectDescriber<Page> {
+  private class PageDescriber extends SimpleGraphObjectDescriber<Page> {
     public PageDescriber() {
       super(ObjectType.Page);
     }
@@ -827,10 +822,10 @@ public class FBGraphObjectDescribers {
               FBGWT.Graph.User.retrieveTelevisionShows(obj.getID(), null, new ListTransformingCallback<TelevisionShow>(getTelevisionShowDescriber(), callback));
             }
           }).
-          addAction("Likes", new AbstractAction<User, List<ObjectDescription<Like>>>() {
+          addAction("Liked Pages", new AbstractAction<User, List<ObjectDescription<Page>>>() {
             @Override
-            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Like>>> callback) {
-              FBGWT.Graph.User.retrieveLikes(obj.getID(), null, new ListTransformingCallback<Like>(getLikeDescriber(), callback));
+            public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Page>>> callback) {
+              FBGWT.Graph.User.retrieveLikedPages(obj.getID(), null, new ListTransformingCallback<Page>(getPageDescriber(), callback));
             }
           }).
           addAction("Photos", new AbstractAction<User, List<ObjectDescription<Photo>>>() {

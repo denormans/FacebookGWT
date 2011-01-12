@@ -21,11 +21,8 @@ package com.denormans.facebookgwt.api.client.graph;
 import com.denormans.facebookgwt.api.client.FBIntegration;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
-import com.denormans.facebookgwt.api.client.graph.js.model.Like;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
-import java.util.List;
 
 public class FBGraph extends FBIntegration {
   public final ApplicationGraph Application = new ApplicationGraph();
@@ -37,17 +34,6 @@ public class FBGraph extends FBIntegration {
   public final VideoGraph Video = new VideoGraph();
 
   private final FBItemGraph<FBGraphObject> genericItemGraph = new FBItemGraph<FBGraphObject>() {};
-
-  /**
-   * Retrieves the given item's likes.
-   *
-   * @param itemID The item ID
-   * @param options The call options
-   * @param callback Called with the result
-   */
-  public void retrieveLikes(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Like>> callback) {
-    genericItemGraph.retrieveLikes(itemID, options, callback);
-  }
 
   /**
    * Like an item (e.g. post, comment, etc.)
