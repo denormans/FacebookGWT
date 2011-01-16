@@ -70,7 +70,8 @@ public enum ObjectType {
            ConnectionTypes.Inbox, ConnectionTypes.Outbox, ConnectionTypes.Updates, ConnectionTypes.Accounts, ConnectionTypes.CheckIns),
        EnumSet.of(ObjectFields.ID, ObjectFields.FirstName, ObjectFields.LastName, ObjectFields.Name, ObjectFields.Link, ObjectFields.About, ObjectFields.Birthday, ObjectFields.Work, ObjectFields.Education, ObjectFields.Email,
            ObjectFields.Website, ObjectFields.Hometown, ObjectFields.Location, ObjectFields.Bio, ObjectFields.Quotes, ObjectFields.Gender, ObjectFields.InterestedIn, ObjectFields.MeetingFor, ObjectFields.RelationshipStatus,
-           ObjectFields.Religion, ObjectFields.Political, ObjectFields.Verified, ObjectFields.SignificantOther, ObjectFields.Timezone, ObjectFields.ThirdPartyID, ObjectFields.LastUpdated, ObjectFields.Locale)),
+           ObjectFields.Religion, ObjectFields.Political, ObjectFields.Verified, ObjectFields.SignificantOther, ObjectFields.Timezone, ObjectFields.ThirdPartyID, ObjectFields.LastUpdated, ObjectFields.Locale, ObjectFields.Address,
+           ObjectFields.MobilePhone, ObjectFields.Languages)),
   Video(EnumSet.of(ConnectionTypes.Comments),
         EnumSet.of(ObjectFields.ID, ObjectFields.From, ObjectFields.Tags, ObjectFields.Name, ObjectFields.Picture, ObjectFields.EmbedHTML, ObjectFields.Icon, ObjectFields.Source, ObjectFields.CreatedTime, ObjectFields.UpdatedTime)),
 
@@ -81,6 +82,7 @@ public enum ObjectType {
   Company(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   EducationYear(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Interest(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Language(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Location(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Movie(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Music(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),

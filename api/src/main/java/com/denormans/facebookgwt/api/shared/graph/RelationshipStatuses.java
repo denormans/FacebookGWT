@@ -20,33 +20,51 @@ package com.denormans.facebookgwt.api.shared.graph;
 
 import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
+import java.util.List;
 import java.util.Map;
 
-public enum ObjectCategories implements ObjectCategory {
-  Interest("Interest")
+public enum RelationshipStatuses implements RelationshipStatus {
+  Single("Single"),
+  InRelationship("In a relationship"),
+  Engaged("Engaged"),
+  Complicated("It's complicated"),
+  Married("Married"),
+  OpenRelationship("In an open relationship"),
+  Widowed("Widowed"),
+  Separated("Separated"),
+  Divorced("Divorced")
   ;
 
-  private static final Map<String, ObjectCategories> sObjectCategoriesByApiValue = Util.createFBEnumByApiValueMap(ObjectCategories.class);
-  private static final ObjectCategoryCreator sObjectCategoryCreator = new ObjectCategoryCreator();
+  private static final Map<String, RelationshipStatuses> sRelationshipStatusesByApiValue = Util.createFBEnumByApiValueMap(RelationshipStatuses.class);
+  private static final FBEnumCreator<RelationshipStatus> sRelationshipStatusCreator = new RelationshipStatusCreator();
 
   private String apiValue;
 
-  ObjectCategories(final String apiValue) {
+  private RelationshipStatuses(final String apiValue) {
     this.apiValue = apiValue;
   }
 
+  public static List<RelationshipStatus> valuesFromApiValues(final List<String> apiValues) {
+    return Util.valuesFromApiValues(sRelationshipStatusesByApiValue, apiValues, sRelationshipStatusCreator);
+  }
+
+  public static RelationshipStatus valueFromApiValue(final String apiValue) {
+    return Util.valueFromApiValue(sRelationshipStatusesByApiValue, apiValue, sRelationshipStatusCreator);
+  }
+
+  public static List<RelationshipStatus> parseApiValues(final String apiValues) {
+    return valuesFromApiValues(Util.splitApiValues(apiValues));
+  }
+
+  @Override
   public String getApiValue() {
     return apiValue;
   }
 
-  public static ObjectCategory valueFromApiValue(final String apiValue) {
-    return Util.valueFromApiValue(sObjectCategoriesByApiValue, apiValue, sObjectCategoryCreator);
-  }
-
-  private static class ObjectCategoryCreator implements FBEnumCreator<ObjectCategory> {
+  private static class RelationshipStatusCreator implements FBEnumCreator<RelationshipStatus> {
     @Override
-    public ObjectCategory create(final String apiValue) {
-      return new ObjectCategory() {
+    public RelationshipStatus create(final String apiValue) {
+      return new RelationshipStatus() {
         @Override
         public String getApiValue() {
           return apiValue;

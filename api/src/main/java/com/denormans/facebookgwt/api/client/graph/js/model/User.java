@@ -23,6 +23,8 @@ import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.shared.graph.Gender;
 import com.denormans.facebookgwt.api.shared.graph.PoliticalAffiliation;
 import com.denormans.facebookgwt.api.shared.graph.PoliticalAffiliations;
+import com.denormans.facebookgwt.api.shared.graph.RelationshipStatus;
+import com.denormans.facebookgwt.api.shared.graph.RelationshipStatuses;
 import com.denormans.facebookgwt.api.shared.graph.RelationshipType;
 import com.denormans.facebookgwt.api.shared.graph.RelationshipTypes;
 import com.denormans.facebookgwt.api.shared.graph.Religion;
@@ -153,7 +155,7 @@ public class User extends FBGraphObject {
   }
 
   private native int getTimeZoneInMinutesJS() /*-{
-    return this.timezone * 60 || -1;
+    return this.timezone != null ? this.timezone * 60 : -1;
   }-*/;
 
   public final native String getThirdPartyID() /*-{
@@ -170,5 +172,21 @@ public class User extends FBGraphObject {
 
   public final native String getMobilePhone() /*-{
     return this.mobile_phone;
+  }-*/;
+
+  public final RelationshipStatus getRelationshipStatus() {
+    return RelationshipStatuses.valueFromApiValue(getRelationshipStatusJS());
+  }
+
+  private native String getRelationshipStatusJS() /*-{
+    return this.relationship_status;
+  }-*/;
+
+  public final List<Language> getLanguages() {
+    return convertJsArrayToList(getLanguagesJS());
+  }
+
+  private native JsArray<Language> getLanguagesJS() /*-{
+    return this.languages;
   }-*/;
 }

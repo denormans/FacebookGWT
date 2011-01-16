@@ -16,40 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js;
+package com.denormans.facebookgwt.api.client.graph.js.model;
 
-import com.denormans.facebookgwt.api.shared.graph.ObjectCategories;
-import com.denormans.facebookgwt.api.shared.graph.ObjectCategory;
+import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
 
-public abstract class SimpleGraphObject extends FBGraphObject {
-  protected SimpleGraphObject() {
-  }
-
-  public final native String getDescription() /*-{
-    return this.description;
-  }-*/;
-
-  public final native String getPictureURL() /*-{
-    return this.picture;
-  }-*/;
-
-  public final native String getPageURL() /*-{
-    return this.link;
-  }-*/;
-
-  public final ObjectCategory getCategory() {
-    return ObjectCategories.valueFromApiValue(getCategoryJS());
-  }
-
-  private native String getCategoryJS() /*-{
-    return this.category;
-  }-*/;
-
-  public final native boolean isCommunityPage() /*-{
-    return this.is_community_page == true;
-  }-*/;
-
-  public final int getNumLikes() {
-    return getNumLikesJS();
+public class Language extends SimpleGraphObject {
+  protected Language() {
   }
 }
