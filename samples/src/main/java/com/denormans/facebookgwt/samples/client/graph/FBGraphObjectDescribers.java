@@ -24,6 +24,7 @@ import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.SimpleGraphObject;
 import com.denormans.facebookgwt.api.client.graph.js.model.Account;
 import com.denormans.facebookgwt.api.client.graph.js.model.Activity;
+import com.denormans.facebookgwt.api.client.graph.js.model.Address;
 import com.denormans.facebookgwt.api.client.graph.js.model.Application;
 import com.denormans.facebookgwt.api.client.graph.js.model.Attachment;
 import com.denormans.facebookgwt.api.client.graph.js.model.Book;
@@ -76,6 +77,7 @@ import java.util.Map;
 public class FBGraphObjectDescribers {
   private Map<ObjectType, ObjectDescriber<? extends FBGraphObject>> objectDescribers = new HashMap<ObjectType, ObjectDescriber<? extends FBGraphObject>>();
 
+  private ObjectDescriber<Address> addressDescriber;
   private ObjectDescriber<Work> workDescriber;
   private ObjectDescriber<Education> educationDescriber;
   private ObjectDescriber<Postable> postableDescriber;
@@ -120,6 +122,7 @@ public class FBGraphObjectDescribers {
     objectDescribers.put(ObjectType.TelevisionShow, new SimpleGraphObjectDescriber<TelevisionShow>(ObjectType.TelevisionShow));
     objectDescribers.put(ObjectType.WorkPosition, new SimpleGraphObjectDescriber<WorkPosition>(ObjectType.WorkPosition));
 
+    addressDescriber = new AddressDescriber();
     educationDescriber = new EducationDescriber();
     postableDescriber = new PostableDescriber();
     workDescriber = new WorkDescriber();
@@ -131,6 +134,10 @@ public class FBGraphObjectDescribers {
 
   private ObjectDescriber<Activity> getActivityDescriber() {
     return getObjectDescriber(ObjectType.Activity);
+  }
+
+  private ObjectDescriber<Address> getAddressDescriber() {
+    return addressDescriber;
   }
 
   public ObjectDescriber<Application> getApplicationDescriber() {
@@ -760,7 +767,7 @@ public class FBGraphObjectDescribers {
           addValue("Location", getLocationDescriber().describe(obj.getLocation())).addValue("Biography", obj.getBiography()).addValue("Quotes", obj.getQuotes()).addValue("Gender", obj.getGender()).
           addValue("Interested in", obj.getInterestedIn()).addValue("Seeking", obj.getSeeking()).addValue("Religion", obj.getReligion()).addValue("Political Affiliation", obj.getPoliticalAffiliation()).
           addValue("Verified", obj.isVerified()).addValue("Significant Other", describe(obj.getSignificantOther())).addValue("Time Zone", timeZone != null ? timeZone.getID() : null).addValue("Third-Party ID", obj.getThirdPartyID()).
-          addValue("Locale", obj.getLocale()).addValue("Updated Time", obj.getUpdatedTime()).
+          addValue("Locale", obj.getLocale()).addValue("Address", getAddressDescriber().describe(obj.getAddress())).addValue("Mobile Phone", obj.getMobilePhone()).addValue("Updated Time", obj.getUpdatedTime()).
           addAction("Home Feed", new AbstractAction<User, List<ObjectDescription<Post>>>() {
             @Override
             public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
@@ -971,4 +978,15 @@ public class FBGraphObjectDescribers {
     }
   }
 
+  private class AddressDescriber extends AbstractObjectDescriber<Address> {
+    @Override
+    public String getObjectTypeName(final Address obj) {
+      return "Address";
+    }
+
+    @Override
+    protected ObjectDescription<Address> describeObject(final Address obj) {
+      return new ObjectDescription<Address>(obj, this).addValue("Street", obj.getStreet()).addValue("City", obj.getCity()).addValue("State", obj.getState()).addValue("Country", obj.getCountry()).addValue("Postal Code", obj.getPostalCode());
+    }
+  }
 }

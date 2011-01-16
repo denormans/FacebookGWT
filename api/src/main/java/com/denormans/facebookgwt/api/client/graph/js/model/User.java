@@ -163,4 +163,12 @@ public class User extends FBGraphObject {
   public final native String getLocale() /*-{
     return this.locale;
   }-*/;
+
+  public final native Address getAddress() /*-{
+    return this.address;
+  }-*/;
+
+  public final native String getMobilePhone() /*-{
+    return this.mobile_phone;
+  }-*/;
 }

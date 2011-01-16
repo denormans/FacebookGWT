@@ -48,6 +48,7 @@ public enum FBPermissions implements FBPermission {
 
   UserAboutMe("user_about_me"),
   UserActivities("user_activities"),
+  UserAddress("user_address"),
   UserBirthday("user_birthday"),
   UserCheckins("user_checkins"),
   UserEducationHistory("user_education_history"),
@@ -57,6 +58,7 @@ public enum FBPermissions implements FBPermission {
   UserInterests("user_interests"),
   UserLikes("user_likes"),
   UserLocation("user_location"),
+  UserMobilePhone("user_mobile_phone"),
   UserNotes("user_notes"),
   UserOnlinePresence("user_online_presence"),
   UserPhotoVideoTags("user_photo_video_tags"),
