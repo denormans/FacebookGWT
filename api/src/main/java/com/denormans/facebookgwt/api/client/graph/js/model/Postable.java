@@ -52,6 +52,14 @@ public abstract class Postable extends FBGraphObject {
     return this.comments != null ? this.comments.data : null;
   }-*/;
 
+  public final List<User> getLikes() {
+    return convertJsArrayToList(getLikesJS());
+  }
+
+  private native JsArray<User> getLikesJS() /*-{
+    return this.likes != null ? this.likes.data : null;
+  }-*/;
+
   public final int getNumLikes() {
     return getNumLikesJS();
   }

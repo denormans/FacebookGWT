@@ -18,9 +18,31 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+import com.google.gwt.core.client.JsArray;
 
-public class CheckIn extends FBGraphObject {
+import java.util.List;
+
+public class CheckIn extends Postable {
   protected CheckIn() {
   }
+
+  public final native String getMessage() /*-{
+    return this.message;
+  }-*/;
+
+  public final native Place getPlace() /*-{
+    return this.place;
+  }-*/;
+
+  public final List<User> getUserTags() {
+    return convertJsArrayToList(getUserTagsJS());
+  }
+
+  private native JsArray<User> getUserTagsJS() /*-{
+    return this.tags ? this.tags.data : null;
+  }-*/;
+
+  public final native Application getApplication() /*-{
+    return this.application;
+  }-*/;
 }

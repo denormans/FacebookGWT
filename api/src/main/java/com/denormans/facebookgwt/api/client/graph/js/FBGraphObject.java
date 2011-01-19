@@ -65,6 +65,10 @@ public class FBGraphObject extends FBJSObject {
   }-*/;
 
   protected final native int getNumLikesJS() /*-{
-    return this.likes || this.fan_count || 0;
+    if (this.likes && typeof(this.likes) == "number") {
+      return this.likes;
+    }
+
+    return this.fan_count || 0;
   }-*/;
 }

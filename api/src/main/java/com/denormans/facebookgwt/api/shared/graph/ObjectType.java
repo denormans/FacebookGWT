@@ -86,6 +86,7 @@ public enum ObjectType {
   Location(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Movie(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Music(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Place(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   School(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   TelevisionShow(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   WorkPosition(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),

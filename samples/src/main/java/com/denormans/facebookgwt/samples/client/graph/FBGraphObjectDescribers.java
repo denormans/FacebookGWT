@@ -51,6 +51,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Page;
 import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoTag;
+import com.denormans.facebookgwt.api.client.graph.js.model.Place;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.model.School;
@@ -107,6 +108,7 @@ public class FBGraphObjectDescribers {
     objectDescribers.put(ObjectType.Page, new PageDescriber());
     objectDescribers.put(ObjectType.Photo, new PhotoDescriber());
     objectDescribers.put(ObjectType.PhotoAlbum, new PhotoAlbumDescriber());
+    objectDescribers.put(ObjectType.Place, new PlaceDescriber());
     objectDescribers.put(ObjectType.Post, new PostDescriber());
     objectDescribers.put(ObjectType.Share, new ShareDescriber());
     objectDescribers.put(ObjectType.StatusMessage, new StatusMessageDescriber());
@@ -256,6 +258,10 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.Post);
   }
 
+  public ObjectDescriber<Place> getPlaceDescriber() {
+    return getObjectDescriber(ObjectType.Place);
+  }
+
   public ObjectDescriber<Postable> getPostableDescriber() {
     return postableDescriber;
   }
@@ -328,6 +334,7 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
       return super.describeObject(obj).addValue("From", getUserDescriber().describe(obj.getFrom())).addValue("Comments", getCommentDescriber().describeList(obj.getComments())).addValue("# Likes", obj.getNumLikes()).
+          addValue("Likes", getUserDescriber().describeList(obj.getLikes())).
           addAction("Delete", new AbstractAction<T, Boolean>() {
             @Override
             public void execute(final T obj, final String param, final AsyncCallback<Boolean> callback) {
@@ -491,7 +498,7 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private class CheckInDescriber extends FBGraphObjectDescriber<CheckIn> {
+  private class CheckInDescriber extends PostableObjectDescriber<CheckIn> {
     public CheckInDescriber() {
       super(ObjectType.CheckIn);
     }
@@ -499,7 +506,8 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<CheckIn> describeObject(final CheckIn obj) {
       // todo: describe check-in
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("Message", obj.getMessage()).addValue("Place", getPlaceDescriber().describe(obj.getPlace())).addValue("User Tags", getUserDescriber().describeList(obj.getUserTags())).addValue("Application", getApplicationDescriber().describe(obj.getApplication())).
+          addValue("Created Time", obj.getCreatedTime());
     }
   }
 
@@ -705,6 +713,18 @@ public class FBGraphObjectDescribers {
               FBGWT.Graph.PhotoAlbum.retrieveComments(obj.getID(), null, new ListTransformingCallback<Comment>(getCommentDescriber(), callback));
             }
           });
+    }
+  }
+
+  private class PlaceDescriber extends SimpleGraphObjectDescriber<Place> {
+    public PlaceDescriber() {
+      super(ObjectType.Place);
+    }
+
+    @Override
+    protected ObjectDescription<Place> describeObject(final Place obj) {
+      // todo: describe place
+      return super.describeObject(obj).addValue("Location", getAddressDescriber().describe(obj.getLocation()));
     }
   }
 
@@ -1031,7 +1051,8 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Address> describeObject(final Address obj) {
-      return new ObjectDescription<Address>(obj, this).addValue("Street", obj.getStreet()).addValue("City", obj.getCity()).addValue("State", obj.getState()).addValue("Country", obj.getCountry()).addValue("Postal Code", obj.getPostalCode());
+      return new ObjectDescription<Address>(obj, this).addValue("Street", obj.getStreet()).addValue("City", obj.getCity()).addValue("State", obj.getState()).addValue("Country", obj.getCountry()).addValue("Postal Code", obj.getPostalCode()).
+          addValue("Has Latitude/Longitude?", obj.hasLatitudeAndLongitude()).addValue("Latitude", obj.getLatitude()).addValue("Longitude", obj.getLongitude());
     }
   }
 }
