@@ -36,6 +36,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.EducationYear;
 import com.denormans.facebookgwt.api.client.graph.js.model.Event;
 import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.Group;
+import com.denormans.facebookgwt.api.client.graph.js.model.Image;
 import com.denormans.facebookgwt.api.client.graph.js.model.Insights;
 import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
 import com.denormans.facebookgwt.api.client.graph.js.model.Language;
@@ -49,6 +50,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Note;
 import com.denormans.facebookgwt.api.client.graph.js.model.Page;
 import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
+import com.denormans.facebookgwt.api.client.graph.js.model.PhotoTag;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
 import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.model.School;
@@ -79,9 +81,11 @@ public class FBGraphObjectDescribers {
   private Map<ObjectType, ObjectDescriber<? extends FBGraphObject>> objectDescribers = new HashMap<ObjectType, ObjectDescriber<? extends FBGraphObject>>();
 
   private ObjectDescriber<Address> addressDescriber;
-  private ObjectDescriber<Work> workDescriber;
   private ObjectDescriber<Education> educationDescriber;
+  private ObjectDescriber<Image> imageDescriber;
+  private ObjectDescriber<PhotoTag> photoTagDescriber;
   private ObjectDescriber<Postable> postableDescriber;
+  private ObjectDescriber<Work> workDescriber;
 
   public FBGraphObjectDescribers() {
     registerDescribers();
@@ -126,6 +130,8 @@ public class FBGraphObjectDescribers {
 
     addressDescriber = new AddressDescriber();
     educationDescriber = new EducationDescriber();
+    imageDescriber = new ImageDescriber();
+    photoTagDescriber = new PhotoTagDescriber();
     postableDescriber = new PostableDescriber();
     workDescriber = new WorkDescriber();
   }
@@ -186,6 +192,10 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.Group);
   }
 
+  private ObjectDescriber<Image> getImageDescriber() {
+    return imageDescriber;
+  }
+
   private ObjectDescriber<Insights> getInsightsDescriber() {
     return getObjectDescriber(ObjectType.Insights);
   }
@@ -236,6 +246,10 @@ public class FBGraphObjectDescribers {
 
   private ObjectDescriber<PhotoAlbum> getPhotoAlbumDescriber() {
     return getObjectDescriber(ObjectType.PhotoAlbum);
+  }
+
+  private ObjectDescriber<PhotoTag> getPhotoTagDescriber() {
+    return photoTagDescriber;
   }
 
   public ObjectDescriber<Post> getPostDescriber() {
@@ -294,8 +308,8 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
-      return super.describeObject(obj).addValue("Description", obj.getDescription()).addValue("Picture URL", obj.getPictureURL()).addValue("Page URL", obj.getPageURL()).addValue("Category", obj.getCategory()).addValue("Is Community Page?", obj.isCommunityPage()).
-          addValue("# Likes", obj.getNumLikes());
+      return super.describeObject(obj).addValue("Description", obj.getDescription()).addValue("Picture URL", obj.getPictureURL()).addValue("Page URL", obj.getPageURL()).addValue("Category", obj.getCategory()).
+          addValue("Is Community Page?", obj.isCommunityPage()).addValue("# Likes", obj.getNumLikes());
     }
   }
 
@@ -313,7 +327,7 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
-      return super.describeObject(obj).addValue("From", getUserDescriber().describe(obj.getFrom())).addValue("Comments", getCommentDescriber().describeList(obj.getComments())).
+      return super.describeObject(obj).addValue("From", getUserDescriber().describe(obj.getFrom())).addValue("Comments", getCommentDescriber().describeList(obj.getComments())).addValue("# Likes", obj.getNumLikes()).
           addAction("Delete", new AbstractAction<T, Boolean>() {
             @Override
             public void execute(final T obj, final String param, final AsyncCallback<Boolean> callback) {
@@ -663,8 +677,10 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Photo> describeObject(final Photo obj) {
-      // todo: describe photo
-      return super.describeObject(obj).addValue("Name", obj.getName());
+      // todo: describe photo actions
+      return super.describeObject(obj).addValue("Name", obj.getName()).addValue("Page URL", obj.getPageURL()).addValue("Icon URL", obj.getIconURL()).addValue("Tags", getPhotoTagDescriber().describeList(obj.getTags())).
+          addValue("Full Size Image", getImageDescriber().describe(obj.getFullSizeImage())).addValue("Images", getImageDescriber().describeList(obj.getImages())).addValue("Album Position", obj.getAlbumPosition()).
+          addValue("Created Time", obj.getCreatedTime()).addValue("Updated Time", obj.getUpdatedTime());
     }
   }
 
@@ -968,6 +984,28 @@ public class FBGraphObjectDescribers {
     @Override
     public ObjectDescription<Education> describeObject(final Education obj) {
       return new ObjectDescription<Education>(obj, this).addValue("School", getSchoolDescriber().describe(obj.getSchool())).addValue("Year", getEducationYearDescriber().describe(obj.getYear())).addValue("Type", obj.getType());
+    }
+  }
+
+  private class ImageDescriber extends AbstractObjectDescriber<Image> {
+    @Override
+    public String getObjectTypeName(final Image obj) {
+      return "Image";
+    }
+    @Override
+    public ObjectDescription<Image> describeObject(final Image obj) {
+      return new ObjectDescription<Image>(obj, this).addValue("Photo URL", obj.getImageURL()).addValue("Height", obj.getHeight()).addValue("Width", obj.getWidth());
+    }
+  }
+
+  private class PhotoTagDescriber extends AbstractObjectDescriber<PhotoTag> {
+    @Override
+    public String getObjectTypeName(final PhotoTag obj) {
+      return "Photo Tag";
+    }
+    @Override
+    public ObjectDescription<PhotoTag> describeObject(final PhotoTag obj) {
+      return new ObjectDescription<PhotoTag>(obj, this).addValue("Tagged User", getUserDescriber().describe(obj.getTaggedUser())).addValue("X", obj.getX()).addValue("Y", obj.getY());
     }
 
   }

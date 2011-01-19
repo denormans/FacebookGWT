@@ -18,11 +18,22 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class Comment extends Postable {
-  protected Comment() {
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+
+public class PhotoTag extends FBJSObject {
+  protected PhotoTag() {
   }
 
-  public final native String getMessage() /*-{
-    return this.message;
+  public final native User getTaggedUser() /*-{
+    // the id and name properties on this object constitute the user
+    return this;
+  }-*/;
+
+  public final native double getX() /*-{
+    return this.x;
+  }-*/;
+
+  public final native double getY() /*-{
+    return this.y;
   }-*/;
 }

@@ -18,7 +18,44 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
+import com.google.gwt.core.client.JsArray;
+
+import java.util.List;
+
 public class Photo extends Postable {
   protected Photo() {
   }
+
+  public final native String getPageURL() /*-{
+    return this.link;
+  }-*/;
+
+  public final native String getIconURL() /*-{
+    return this.icon;
+  }-*/;
+
+  public final List<PhotoTag> getTags() {
+    return convertJsArrayToList(getTagsJS());
+  }
+
+  private native JsArray<PhotoTag> getTagsJS() /*-{
+    return this.tags != null ? this.tags.data : null;
+  }-*/;
+
+  public final native Image getFullSizeImage() /*-{
+    // The full-size image is constructed from the source, height, and width parts
+    return this;
+  }-*/;
+
+  public final List<Image> getImages() {
+    return convertJsArrayToList(getImagesJS());
+  }
+
+  private native JsArray<Image> getImagesJS() /*-{
+    return this.images;
+  }-*/;
+
+  public final native int getAlbumPosition() /*-{
+    return this.position || 0;
+  }-*/;
 }

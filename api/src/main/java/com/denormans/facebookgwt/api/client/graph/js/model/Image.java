@@ -18,11 +18,21 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
-public class Comment extends Postable {
-  protected Comment() {
+import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+
+public class Image extends FBJSObject {
+  protected Image() {
   }
 
-  public final native String getMessage() /*-{
-    return this.message;
+  public final native String getImageURL() /*-{
+    return this.source;
+  }-*/;
+
+  public final native int getHeight() /*-{
+    return this.height || 0;
+  }-*/;
+
+  public final native int getWidth() /*-{
+    return this.width || 0;
   }-*/;
 }
