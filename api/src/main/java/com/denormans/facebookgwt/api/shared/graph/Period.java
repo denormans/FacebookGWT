@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 deNormans
+ * Copyright (C) 2010 deNormans
  * http://www.denormans.com/
  * All rights reserved.
  *
@@ -16,43 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js.model;
+package com.denormans.facebookgwt.api.shared.graph;
 
-import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-public class Address extends FBJSObject {
-  protected Address() {
-  }
-
-  public final native String getStreet() /*-{
-    return this.street;
-  }-*/;
-
-  public final native String getCity() /*-{
-    return this.city;
-  }-*/;
-
-  public final native String getState() /*-{
-    return this.state;
-  }-*/;
-
-  public final native String getCountry() /*-{
-    return this.country;
-  }-*/;
-
-  public final native String getPostalCode() /*-{
-    return this.zip;
-  }-*/;
-
-  public final native boolean hasLatitudeAndLongitude() /*-{
-    return this.latitude !== null && this.latitude !== undefined && this.longitude !== null && this.longitude !== undefined;
-  }-*/;
-
-  public final native double getLatitude() /*-{
-    return this.latitude || 0;
-  }-*/;
-
-  public final native double getLongitude() /*-{
-    return this.longitude || 0;
-  }-*/;
+public interface Period extends FBEnum {
 }

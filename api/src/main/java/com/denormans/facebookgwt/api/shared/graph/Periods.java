@@ -16,33 +16,49 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.js.model;
+package com.denormans.facebookgwt.api.shared.graph;
 
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
-import com.denormans.facebookgwt.api.shared.graph.Period;
-import com.denormans.facebookgwt.api.shared.graph.Periods;
+import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
-import com.google.gwt.core.client.JsArray;
+import java.util.Map;
 
-import java.util.List;
+public enum Periods implements Period {
+  Day("day"),
+  Week("week"),
+  Month("month")
+  ;
 
-public class Insights extends FBGraphObject {
-  protected Insights() {
+  private static final Map<String, Periods> sPeriodsByApiValue = Util.createFBEnumByApiValueMap(Periods.class);
+  private static final PeriodCreator sPeriodCreator = new PeriodCreator();
+
+  private String apiValue;
+
+  Periods(final String apiValue) {
+    this.apiValue = apiValue;
   }
 
-  public final Period getPeriod() {
-    return Periods.valueFromApiValue(getPeriodJS());
+  public String getApiValue() {
+    return apiValue;
   }
 
-  private native String getPeriodJS() /*-{
-    return this.period;
-  }-*/;
-
-  public final List<InsightData> getValues() {
-    return convertJsArrayToList(getValuesJS());
+  public static Period valueFromApiValue(final String apiValue) {
+    return Util.valueFromApiValue(sPeriodsByApiValue, apiValue, sPeriodCreator);
   }
 
-  private native JsArray<InsightData> getValuesJS() /*-{
-    return values;
-  }-*/;
+  private static class PeriodCreator implements FBEnumCreator<Period> {
+    @Override
+    public Period create(final String apiValue) {
+      return new Period() {
+        @Override
+        public String getApiValue() {
+          return apiValue;
+        }
+
+        @Override
+        public String toString() {
+          return apiValue;
+        }
+      };
+    }
+  }
 }

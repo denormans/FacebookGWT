@@ -37,6 +37,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Event;
 import com.denormans.facebookgwt.api.client.graph.js.model.FriendList;
 import com.denormans.facebookgwt.api.client.graph.js.model.Group;
 import com.denormans.facebookgwt.api.client.graph.js.model.Image;
+import com.denormans.facebookgwt.api.client.graph.js.model.InsightData;
 import com.denormans.facebookgwt.api.client.graph.js.model.Insights;
 import com.denormans.facebookgwt.api.client.graph.js.model.Interest;
 import com.denormans.facebookgwt.api.client.graph.js.model.Language;
@@ -84,6 +85,7 @@ public class FBGraphObjectDescribers {
   private ObjectDescriber<Address> addressDescriber;
   private ObjectDescriber<Education> educationDescriber;
   private ObjectDescriber<Image> imageDescriber;
+  private ObjectDescriber<InsightData> insightDataDescriber;
   private ObjectDescriber<PhotoTag> photoTagDescriber;
   private ObjectDescriber<Postable> postableDescriber;
   private ObjectDescriber<Work> workDescriber;
@@ -133,6 +135,7 @@ public class FBGraphObjectDescribers {
     addressDescriber = new AddressDescriber();
     educationDescriber = new EducationDescriber();
     imageDescriber = new ImageDescriber();
+    insightDataDescriber = new InsightDataDescriber();
     photoTagDescriber = new PhotoTagDescriber();
     postableDescriber = new PostableDescriber();
     workDescriber = new WorkDescriber();
@@ -196,6 +199,10 @@ public class FBGraphObjectDescribers {
 
   private ObjectDescriber<Image> getImageDescriber() {
     return imageDescriber;
+  }
+
+  private ObjectDescriber<InsightData> getInsightDataDescriber() {
+    return insightDataDescriber;
   }
 
   private ObjectDescriber<Insights> getInsightsDescriber() {
@@ -616,7 +623,7 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Insights> describeObject(final Insights obj) {
       // todo: describe insights
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("Period", obj.getPeriod()).addValue("Values", getInsightDataDescriber().describeList(obj.getValues()));
     }
   }
 
@@ -998,11 +1005,25 @@ public class FBGraphObjectDescribers {
   }
 
   // non graph objects
+  private class AddressDescriber extends AbstractObjectDescriber<Address> {
+    @Override
+    public String getObjectTypeName(final Address obj) {
+      return "Address";
+    }
+
+    @Override
+    protected ObjectDescription<Address> describeObject(final Address obj) {
+      return new ObjectDescription<Address>(obj, this).addValue("Street", obj.getStreet()).addValue("City", obj.getCity()).addValue("State", obj.getState()).addValue("Country", obj.getCountry()).addValue("Postal Code", obj.getPostalCode()).
+          addValue("Has Latitude/Longitude?", obj.hasLatitudeAndLongitude()).addValue("Latitude", obj.getLatitude()).addValue("Longitude", obj.getLongitude());
+    }
+  }
+
   private class EducationDescriber extends AbstractObjectDescriber<Education> {
     @Override
     public String getObjectTypeName(final Education obj) {
       return "Education";
     }
+
     @Override
     public ObjectDescription<Education> describeObject(final Education obj) {
       return new ObjectDescription<Education>(obj, this).addValue("School", getSchoolDescriber().describe(obj.getSchool())).addValue("Year", getEducationYearDescriber().describe(obj.getYear())).addValue("Type", obj.getType());
@@ -1014,9 +1035,22 @@ public class FBGraphObjectDescribers {
     public String getObjectTypeName(final Image obj) {
       return "Image";
     }
+
     @Override
     public ObjectDescription<Image> describeObject(final Image obj) {
       return new ObjectDescription<Image>(obj, this).addValue("Photo URL", obj.getImageURL()).addValue("Height", obj.getHeight()).addValue("Width", obj.getWidth());
+    }
+  }
+
+  private class InsightDataDescriber extends AbstractObjectDescriber<InsightData> {
+    @Override
+    public String getObjectTypeName(final InsightData obj) {
+      return "Insight Data";
+    }
+
+    @Override
+    public ObjectDescription<InsightData> describeObject(final InsightData obj) {
+      return new ObjectDescription<InsightData>(obj, this).addValue("Value", obj.getValue()).addValue("End Time", obj.getEndTime());
     }
   }
 
@@ -1025,11 +1059,11 @@ public class FBGraphObjectDescribers {
     public String getObjectTypeName(final PhotoTag obj) {
       return "Photo Tag";
     }
+
     @Override
     public ObjectDescription<PhotoTag> describeObject(final PhotoTag obj) {
       return new ObjectDescription<PhotoTag>(obj, this).addValue("Tagged User", getUserDescriber().describe(obj.getTaggedUser())).addValue("X", obj.getX()).addValue("Y", obj.getY());
     }
-
   }
 
   private class WorkDescriber extends AbstractObjectDescriber<Work> {
@@ -1042,19 +1076,6 @@ public class FBGraphObjectDescribers {
     public ObjectDescription<Work> describeObject(final Work obj) {
       return new ObjectDescription<Work>(obj, this).addValue("Employer", getCompanyDescriber().describe(obj.getEmployer())).addValue("Location", getLocationDescriber().describe(obj.getLocation())).
           addValue("Position", getWorkPositionDescriber().describe(obj.getPosition())).addValue("Start Date", obj.getStartDate()).addValue("End Date", obj.getEndDate());
-    }
-  }
-
-  private class AddressDescriber extends AbstractObjectDescriber<Address> {
-    @Override
-    public String getObjectTypeName(final Address obj) {
-      return "Address";
-    }
-
-    @Override
-    protected ObjectDescription<Address> describeObject(final Address obj) {
-      return new ObjectDescription<Address>(obj, this).addValue("Street", obj.getStreet()).addValue("City", obj.getCity()).addValue("State", obj.getState()).addValue("Country", obj.getCountry()).addValue("Postal Code", obj.getPostalCode()).
-          addValue("Has Latitude/Longitude?", obj.hasLatitudeAndLongitude()).addValue("Latitude", obj.getLatitude()).addValue("Longitude", obj.getLongitude());
     }
   }
 }

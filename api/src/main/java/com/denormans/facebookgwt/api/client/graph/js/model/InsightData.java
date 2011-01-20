@@ -18,41 +18,24 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
+import com.denormans.facebookgwt.api.client.common.FBDateTimeFormats;
 import com.denormans.facebookgwt.api.client.common.js.FBJSObject;
 
-public class Address extends FBJSObject {
-  protected Address() {
+import java.util.Date;
+
+public class InsightData extends FBJSObject {
+  protected InsightData() {
   }
 
-  public final native String getStreet() /*-{
-    return this.street;
+  public final native double getValue() /*-{
+    return this.value;
   }-*/;
 
-  public final native String getCity() /*-{
-    return this.city;
-  }-*/;
+  public final Date getEndTime() {
+    return FBDateTimeFormats.parseDateTime(FBDateTimeFormats.RFC3339Format, getEndTimeJS());
+  }
 
-  public final native String getState() /*-{
-    return this.state;
-  }-*/;
-
-  public final native String getCountry() /*-{
-    return this.country;
-  }-*/;
-
-  public final native String getPostalCode() /*-{
-    return this.zip;
-  }-*/;
-
-  public final native boolean hasLatitudeAndLongitude() /*-{
-    return this.latitude !== null && this.latitude !== undefined && this.longitude !== null && this.longitude !== undefined;
-  }-*/;
-
-  public final native double getLatitude() /*-{
-    return this.latitude || 0;
-  }-*/;
-
-  public final native double getLongitude() /*-{
-    return this.longitude || 0;
+  private native String getEndTimeJS() /*-{
+    return this.end_time;
   }-*/;
 }
