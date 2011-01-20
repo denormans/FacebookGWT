@@ -21,4 +21,28 @@ package com.denormans.facebookgwt.api.client.graph.js.model;
 public class Link extends Postable {
   protected Link() {
   }
+
+  public final native String getURL() /*-{
+    return this.link;
+  }-*/;
+
+  public final native String getCaption() /*-{
+    return this.caption;
+  }-*/;
+
+  public final native String getDescription() /*-{
+    return this.description;
+  }-*/;
+
+  public final native String getIconURL() /*-{
+    return this.icon;
+  }-*/;
+
+  public final native String getThumbnailURL() /*-{
+    return this.picture;
+  }-*/;
+
+  public final native String getMessage() /*-{
+    return this.message;
+  }-*/;
 }

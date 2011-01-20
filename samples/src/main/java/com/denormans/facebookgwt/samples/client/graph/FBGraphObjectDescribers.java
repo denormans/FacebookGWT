@@ -635,7 +635,8 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Link> describeObject(final Link obj) {
       // todo: describe link
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("URL", obj.getURL()).addValue("Caption", obj.getCaption()).addValue("Description", obj.getDescription()).addValue("Icon URL", obj.getIconURL()).addValue("Thumbnail URL", obj.getThumbnailURL()).
+          addValue("Message", obj.getMessage()).addValue("Created Time", obj.getCreatedTime());
     }
   }
 
