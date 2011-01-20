@@ -23,4 +23,6 @@ import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 public class Subscription extends FBGraphObject {
   protected Subscription() {
   }
+
+  // todo: get subscription fields
 }

@@ -23,4 +23,6 @@ import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 public class MessageThread extends FBGraphObject {
   protected MessageThread() {
   }
+
+  // todo: add message thread fields
 }
