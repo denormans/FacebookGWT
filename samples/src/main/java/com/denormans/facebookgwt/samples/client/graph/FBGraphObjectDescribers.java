@@ -554,7 +554,9 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Event> describeObject(final Event obj) {
       // todo: describe event
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("Owner", getUserDescriber().describe(obj.getOwner())).addValue("Description", obj.getDescription()).addValue("Start Time", obj.getStartTime()).addValue("End Time", obj.getEndTime()).
+          addValue("Location", obj.getLocation()).addValue("Venue", getAddressDescriber().describe(obj.getVenue())).addValue("Privacy", obj.getPrivacy()).addValue("RSVP Status", obj.getRSVPStatus()).
+          addValue("Updated Time", obj.getUpdatedTime());
     }
   }
 
