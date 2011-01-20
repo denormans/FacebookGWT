@@ -36,7 +36,6 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Page;
 import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
-import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
 import com.denormans.facebookgwt.api.client.graph.js.model.TelevisionShow;
 import com.denormans.facebookgwt.api.client.graph.js.model.User;
@@ -108,7 +107,7 @@ public class UserGraph extends FBItemGraph<User> {
   }
 
   @Override
-  public void retrieveTaggedIn(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Postable>> callback) {
+  public void retrieveTaggedIn(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     super.retrieveTaggedIn(userID, options, callback);
   }
 

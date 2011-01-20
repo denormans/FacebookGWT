@@ -54,6 +54,7 @@ import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoTag;
 import com.denormans.facebookgwt.api.client.graph.js.model.Place;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
+import com.denormans.facebookgwt.api.client.graph.js.model.PostAction;
 import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.model.School;
 import com.denormans.facebookgwt.api.client.graph.js.model.Share;
@@ -87,7 +88,7 @@ public class FBGraphObjectDescribers {
   private ObjectDescriber<Image> imageDescriber;
   private ObjectDescriber<InsightData> insightDataDescriber;
   private ObjectDescriber<PhotoTag> photoTagDescriber;
-  private ObjectDescriber<Postable> postableDescriber;
+  private ObjectDescriber<PostAction> postActionDescriber;
   private ObjectDescriber<Work> workDescriber;
 
   public FBGraphObjectDescribers() {
@@ -137,7 +138,7 @@ public class FBGraphObjectDescribers {
     imageDescriber = new ImageDescriber();
     insightDataDescriber = new InsightDataDescriber();
     photoTagDescriber = new PhotoTagDescriber();
-    postableDescriber = new PostableDescriber();
+    postActionDescriber = new PostActionDescriber();
     workDescriber = new WorkDescriber();
   }
 
@@ -269,8 +270,8 @@ public class FBGraphObjectDescribers {
     return getObjectDescriber(ObjectType.Place);
   }
 
-  public ObjectDescriber<Postable> getPostableDescriber() {
-    return postableDescriber;
+  public ObjectDescriber<PostAction> getPostActionDescriber() {
+    return postActionDescriber;
   }
 
   private ObjectDescriber<School> getSchoolDescriber() {
@@ -746,25 +747,16 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Post> describeObject(final Post obj) {
       // todo: describe post
-      return super.describeObject(obj).
+      return super.describeObject(obj).addValue("Mentioned Users", getUserDescriber().describeList(obj.getMentionedUsers())).addValue("Message", obj.getMessage()).addValue("Picture URL", obj.getPictureURL()).
+          addValue("Link URL", obj.getLinkURL()).addValue("Caption", obj.getCaption()).addValue("Description", obj.getDescription()).addValue("Source URL", obj.getSourceURL()).addValue("Icon URL", obj.getIconURL()).
+          addValue("Application Attribution", obj.getApplicationAttribution()).addValue("Actions", getPostActionDescriber().describeList(obj.getActions())).addValue("Target Restrictions", obj.getTargetRestrictions()).
+          addValue("Created Time", obj.getCreatedTime()).addValue("Updated Time", obj.getUpdatedTime()).
           addAction("Delete", new AbstractAction<Post, Boolean>() {
             @Override
             public void execute(final Post obj, final String param, final AsyncCallback<Boolean> callback) {
               FBGWT.Graph.deleteItem(obj.getID(), null, callback);
             }
           });
-    }
-  }
-
-  private class PostableDescriber extends PostableObjectDescriber<Postable> {
-    public PostableDescriber() {
-      super(null);
-    }
-
-    @Override
-    public String getObjectTypeName(final Postable obj) {
-      // todo: get the exact type
-      return "Postable";
     }
   }
 
@@ -840,10 +832,10 @@ public class FBGraphObjectDescribers {
                   FBGWT.Graph.User.postToWall(obj.getID(), postOptions, new ObjectTransformingCallback<Post>(getPostDescriber(), callback));
                 }
               }).
-              addAction("Tagged In", new AbstractAction<User, List<ObjectDescription<Postable>>>() {
+              addAction("Tagged In", new AbstractAction<User, List<ObjectDescription<Post>>>() {
                 @Override
-                public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Postable>>> callback) {
-                  FBGWT.Graph.User.retrieveTaggedIn(obj.getID(), null, new ListTransformingCallback<Postable>(getPostableDescriber(), callback));
+                public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Post>>> callback) {
+                  FBGWT.Graph.User.retrieveTaggedIn(obj.getID(), null, new ListTransformingCallback<Post>(getPostDescriber(), callback));
                 }
               }).
               addAction("Posts", new AbstractAction<User, List<ObjectDescription<Post>>>() {
@@ -1064,6 +1056,18 @@ public class FBGraphObjectDescribers {
     @Override
     public ObjectDescription<PhotoTag> describeObject(final PhotoTag obj) {
       return new ObjectDescription<PhotoTag>(obj, this).addValue("Tagged User", getUserDescriber().describe(obj.getTaggedUser())).addValue("X", obj.getX()).addValue("Y", obj.getY());
+    }
+  }
+
+  private class PostActionDescriber extends AbstractObjectDescriber<PostAction> {
+    @Override
+    public String getObjectTypeName(final PostAction obj) {
+      return "Post Action";
+    }
+
+    @Override
+    public ObjectDescription<PostAction> describeObject(final PostAction obj) {
+      return new ObjectDescription<PostAction>(obj, this).addValue("Name", obj.getName()).addValue("URL", obj.getURL());
     }
   }
 

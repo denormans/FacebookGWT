@@ -45,7 +45,6 @@ import com.denormans.facebookgwt.api.client.graph.js.model.Page;
 import com.denormans.facebookgwt.api.client.graph.js.model.Photo;
 import com.denormans.facebookgwt.api.client.graph.js.model.PhotoAlbum;
 import com.denormans.facebookgwt.api.client.graph.js.model.Post;
-import com.denormans.facebookgwt.api.client.graph.js.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.js.model.Share;
 import com.denormans.facebookgwt.api.client.graph.js.model.StatusMessage;
 import com.denormans.facebookgwt.api.client.graph.js.model.Subscription;
@@ -685,7 +684,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveTaggedIn(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Postable>> callback) {
+  protected void retrieveTaggedIn(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Post>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Tagged, options, callback);
   }
 

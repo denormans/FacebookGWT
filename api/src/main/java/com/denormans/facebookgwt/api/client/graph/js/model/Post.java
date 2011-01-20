@@ -18,7 +18,78 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
+import com.denormans.facebookgwt.api.shared.FBEnum;
+import com.denormans.facebookgwt.api.shared.graph.PostTarget;
+import com.denormans.facebookgwt.api.shared.graph.PostTargets;
+
+import com.google.gwt.core.client.JsArray;
+
+import java.util.Collections;
+import java.util.List;
+
 public class Post extends Postable {
   protected Post() {
   }
+  
+  public final List<User> getMentionedUsers() {
+    return convertJsArrayToList(getMentionedUsersJS());
+  }
+
+  public final native JsArray<User> getMentionedUsersJS() /*-{
+    return this.to != null ? this.to.data : null;
+  }-*/;
+
+  public final native String getMessage() /*-{
+    return this.message;
+  }-*/;
+
+  public final native String getPictureURL() /*-{
+    return this.picture;
+  }-*/;
+
+  public final native String getLinkURL() /*-{
+    return this.link;
+  }-*/;
+
+  public final native String getCaption() /*-{
+    return this.caption;
+  }-*/;
+
+  public final native String getDescription() /*-{
+    return this.description;
+  }-*/;
+
+  public final native String getSourceURL() /*-{
+    return this.source;
+  }-*/;
+
+  public final native String getIconURL() /*-{
+    return this.icon;
+  }-*/;
+
+  public final native String getApplicationAttribution() /*-{
+    return this.attribution;
+  }-*/;
+
+  public final List<PostAction> getActions() {
+    return convertJsArrayToList(getActionsJS());
+  }
+
+  private native JsArray<PostAction> getActionsJS() /*-{
+    return this.actions;
+  }-*/;
+
+  // todo: add privacy
+
+  public final List<PostTarget> getTargetRestrictions() {
+    String targetRestrictionsJS = getTargetRestrictionsJS();
+    if (targetRestrictionsJS == null || targetRestrictionsJS.length() == 0) {
+      return Collections.emptyList();
+    }
+    return PostTargets.valuesFromApiValues(FBEnum.Util.splitApiValues(targetRestrictionsJS));
+  }
+
+  private native String getTargetRestrictionsJS() /*-{
+    return this.targets;
+  }-*/;
 }
