@@ -46,14 +46,16 @@ import java.util.logging.Logger;
 
 public final class FBInitialization implements HasFBInitHandlers  {
   private static final Logger Log = Logger.getLogger(FBInitialization.class.getName());
+
   public enum InitializationState { Uninitialized, LoadingScript, ScriptLoaded, Initialized;}
 
   public static final int InitializationTimeoutSeconds = 10;
 
   public static final String FacebookRootElementID = "fb-root";
   public static final String FacebookScriptElementID = "fb-script-all";
+  public static final String DefaultLocale = "en_US";
   private static final String FacebookScriptServer = "connect.facebook.net";
-  private static final String FacebookScriptLocation = "en_US/all.js";
+  private static final String FacebookScriptName = "all.js";
 
   private EventBus eventBus = new SimpleEventBus();
 
@@ -88,7 +90,19 @@ public final class FBInitialization implements HasFBInitHandlers  {
    * @param initOptions initialization options
    */
   public void initialize(final FBInitOptions initOptions) {
-    initialize(initOptions, FBInitialization.InitializationTimeoutSeconds);
+    initialize(null, initOptions, FBInitialization.InitializationTimeoutSeconds);
+  }
+
+  /**
+   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered to be called when Facebook is initialized.
+   *
+   * Uses the default initialization timeout.
+   *
+   * @param locale The explicit locale
+   * @param initOptions initialization options
+   */
+  public void initialize(final String locale, final FBInitOptions initOptions) {
+    initialize(locale, initOptions, FBInitialization.InitializationTimeoutSeconds);
   }
 
   /**
@@ -100,6 +114,19 @@ public final class FBInitialization implements HasFBInitHandlers  {
    * @param initializationTimeout The timeout (in seconds) before an init failure event is fired.
    */
   public synchronized void initialize(final FBInitOptions initOptions, final int initializationTimeout) {
+    initialize(null, initOptions, initializationTimeout);
+  }
+
+  /**
+   * Initialize Facebook.  This is handled asynchronously so callbacks should be registered to be called when Facebook is initialized.
+   * <p>
+   * Calling this method will eventually fire all registered init events, even if already initialized.
+   *
+   * @param locale The explicit locale
+   * @param initOptions initialization options
+   * @param initializationTimeout The timeout (in seconds) before an init failure event is fired.
+   */
+  public synchronized void initialize(final String locale, final FBInitOptions initOptions, final int initializationTimeout) {
     if (initializationState == FBInitialization.InitializationState.LoadingScript || initializationState == FBInitialization.InitializationState.ScriptLoaded) {
       return;
     }
@@ -135,10 +162,16 @@ public final class FBInitialization implements HasFBInitHandlers  {
       bodyElement.appendChild(fbRootElement);
     }
 
+    String fbLocale = locale;
+    if (fbLocale == null) {
+      // todo: get default locale from user, accounting for list of Facebook-allowed locales, available from http://www.facebook.com/translations/FacebookLocales.xml
+      fbLocale = DefaultLocale;
+    }
+
     ScriptElement script = doc.createScriptElement();
     script.setType("text/javascript");
     script.setId(FacebookScriptElementID);
-    script.setSrc(Window.Location.getProtocol() + "//" + FacebookScriptServer + "/" + FacebookScriptLocation);
+    script.setSrc(Window.Location.getProtocol() + "//" + FacebookScriptServer + "/" + fbLocale + "/" + FacebookScriptName);
     // facebook seems to think this async is necessary
     script.setPropertyBoolean("async", true);
 
