@@ -18,9 +18,19 @@
 
 package com.denormans.facebookgwt.api.client.graph.js.model;
 
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
-
-public class Note extends FBGraphObject {
+public class Note extends Postable {
   protected Note() {
   }
+
+  public final native String getSubject() /*-{
+    return this.subject;
+  }-*/;
+
+  public final native String getMessage() /*-{
+    return this.message;
+  }-*/;
+
+  public final native String getIconURL() /*-{
+    return this.icon;
+  }-*/;
 }

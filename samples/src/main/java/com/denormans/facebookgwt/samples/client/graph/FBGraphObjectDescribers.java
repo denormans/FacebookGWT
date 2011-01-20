@@ -664,7 +664,7 @@ public class FBGraphObjectDescribers {
     }
   }
 
-  private class NoteDescriber extends FBGraphObjectDescriber<Note> {
+  private class NoteDescriber extends PostableObjectDescriber<Note> {
     public NoteDescriber() {
       super(ObjectType.Note);
     }
@@ -672,7 +672,7 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Note> describeObject(final Note obj) {
       // todo: describe note
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("Subject", obj.getSubject()).addValue("Message", obj.getMessage()).addValue("Icon URL", obj.getIconURL()).addValue("Created Time", obj.getCreatedTime()).addValue("Updated Time", obj.getUpdatedTime());
     }
   }
 
