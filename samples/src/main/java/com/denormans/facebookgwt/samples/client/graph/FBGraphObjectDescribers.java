@@ -648,7 +648,7 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Message> describeObject(final Message obj) {
       // todo: describe message
-      return super.describeObject(obj);
+      return super.describeObject(obj).addValue("To Users", getUserDescriber().describeList(obj.getToUsers())).addValue("Message", obj.getMessage()).addValue("Created Time", obj.getCreatedTime());
     }
   }
 

@@ -20,7 +20,23 @@ package com.denormans.facebookgwt.api.client.graph.js.model;
 
 import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
 
+import com.google.gwt.core.client.JsArray;
+
+import java.util.List;
+
 public class Message extends FBGraphObject {
   protected Message() {
   }
+
+  public final List<User> getToUsers() {
+    return convertJsArrayToList(getToUsersJS());
+  }
+
+  private native JsArray<User> getToUsersJS() /*-{
+    return this.to != null ? this.to.data : null;
+  }-*/;
+
+  public final native String getMessage() /*-{
+    return this.message;
+  }-*/;
 }
