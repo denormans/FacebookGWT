@@ -19,6 +19,7 @@
 package com.denormans.facebookgwt.api.client.auth;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
+import com.denormans.facebookgwt.api.client.auth.events.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.auth.events.FBLoginEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBLoginHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBLogoutEvent;
@@ -28,9 +29,6 @@ import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBStatusChangeHandler;
 import com.denormans.facebookgwt.api.client.auth.events.HasFBAuthHandlers;
-import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
-import com.denormans.facebookgwt.api.client.auth.js.FBSession;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
 
 import com.google.gwt.core.client.JavaScriptObject;

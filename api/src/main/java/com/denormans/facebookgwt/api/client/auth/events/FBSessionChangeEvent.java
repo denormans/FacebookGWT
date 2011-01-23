@@ -18,8 +18,6 @@
 
 package com.denormans.facebookgwt.api.client.auth.events;
 
-import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
-
 public class FBSessionChangeEvent extends FBAuthEvent<FBSessionChangeHandler> {
   private static Type<FBSessionChangeHandler> sType;
 

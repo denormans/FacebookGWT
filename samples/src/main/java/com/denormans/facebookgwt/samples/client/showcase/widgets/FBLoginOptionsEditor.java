@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
-import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
+import com.denormans.facebookgwt.api.client.auth.FBLoginOptions;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;

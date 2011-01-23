@@ -19,7 +19,6 @@
 package com.denormans.facebookgwt.api.client.ui.events;
 
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
-import com.denormans.facebookgwt.api.client.ui.js.FBAddCommentEventResponse;
 
 public class FBAddCommentEvent extends FBEvent<FBAddCommentHandler, FBAddCommentEventResponse> {
   private static Type<FBAddCommentHandler> sType;

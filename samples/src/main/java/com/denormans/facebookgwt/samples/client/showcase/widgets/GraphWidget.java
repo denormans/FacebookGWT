@@ -19,10 +19,12 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.graph.js.model.Application;
-import com.denormans.facebookgwt.api.client.graph.js.model.Post;
-import com.denormans.facebookgwt.api.client.graph.js.model.User;
-import com.denormans.facebookgwt.api.client.graph.js.options.FeedPostOptions;
+import com.denormans.facebookgwt.api.client.graph.actions.FBItemGraph;
+import com.denormans.facebookgwt.api.client.graph.model.Application;
+import com.denormans.facebookgwt.api.client.graph.model.FBGraphObject;
+import com.denormans.facebookgwt.api.client.graph.model.Post;
+import com.denormans.facebookgwt.api.client.graph.model.User;
+import com.denormans.facebookgwt.api.client.graph.options.FeedPostOptions;
 import com.denormans.facebookgwt.samples.client.FBObjectDescribers;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 
@@ -44,6 +46,8 @@ public class GraphWidget extends ShowcaseWidget {
 
   interface GraphWidgetUIBinder extends UiBinder<HTMLPanel, GraphWidget> {}
   private static GraphWidgetUIBinder sUIBinder = GWT.create(GraphWidgetUIBinder.class);
+
+  private final FBItemGraph<FBGraphObject> genericItemGraph = new FBItemGraph<FBGraphObject>() {};
 
   @UiField Button retrieveCurrentUserButton;
   @UiField Button retrieveHomeFeedButton;

@@ -19,8 +19,17 @@
 package com.denormans.facebookgwt.api.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphCallOptions;
-import com.denormans.facebookgwt.api.client.graph.js.FBGraphObject;
+import com.denormans.facebookgwt.api.client.graph.actions.ApplicationGraph;
+import com.denormans.facebookgwt.api.client.graph.actions.CommentGraph;
+import com.denormans.facebookgwt.api.client.graph.actions.FBItemGraph;
+import com.denormans.facebookgwt.api.client.graph.actions.FriendListGraph;
+import com.denormans.facebookgwt.api.client.graph.actions.PhotoAlbumGraph;
+import com.denormans.facebookgwt.api.client.graph.actions.PhotoGraph;
+import com.denormans.facebookgwt.api.client.graph.actions.PostableGraph;
+import com.denormans.facebookgwt.api.client.graph.actions.UserGraph;
+import com.denormans.facebookgwt.api.client.graph.actions.VideoGraph;
+import com.denormans.facebookgwt.api.client.graph.options.FBGraphCallOptions;
+import com.denormans.facebookgwt.api.client.graph.model.FBGraphObject;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -34,7 +43,7 @@ public class FBGraph extends FBIntegration {
   public final UserGraph User = new UserGraph();
   public final VideoGraph Video = new VideoGraph();
 
-  private final FBItemGraph<FBGraphObject> genericItemGraph = new FBItemGraph<FBGraphObject>() {};
+  private final GenericItemGraph genericItemGraph = new GenericItemGraph();
 
   /**
    * Like an item (e.g. post, comment, etc.)
@@ -78,5 +87,17 @@ public class FBGraph extends FBIntegration {
    */
   public void deleteItem(final String itemID, final FBGraphCallOptions options, final AsyncCallback<Boolean> callback) {
     genericItemGraph.delete(itemID, options, callback);
+  }
+
+  private static class GenericItemGraph extends FBItemGraph<FBGraphObject> {
+    @Override
+    protected void like(final String itemID, final AsyncCallback<Boolean> callback) {
+      super.like(itemID, callback);
+    }
+
+    @Override
+    protected void unlike(final String itemID, final AsyncCallback<Boolean> callback) {
+      super.unlike(itemID, callback);
+    }
   }
 }

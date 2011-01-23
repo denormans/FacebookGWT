@@ -19,16 +19,16 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.ui.js.Attachment;
-import com.denormans.facebookgwt.api.client.ui.js.Link;
+import com.denormans.facebookgwt.api.client.ui.callbacks.FriendAddCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.callbacks.StreamPublishCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.model.Attachment;
+import com.denormans.facebookgwt.api.client.ui.model.Link;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.ui.js.BookmarkApplicationCallbackResponse;
-import com.denormans.facebookgwt.api.client.ui.js.FriendAddCallbackResponse;
-import com.denormans.facebookgwt.api.client.ui.js.FriendAddOptions;
-import com.denormans.facebookgwt.api.client.ui.js.StreamPublishCallbackResponse;
-import com.denormans.facebookgwt.api.client.ui.js.StreamPublishOptions;
-import com.denormans.facebookgwt.api.client.ui.js.StreamShareOptions;
+import com.denormans.facebookgwt.api.client.ui.callbacks.BookmarkApplicationCallbackResponse;
+import com.denormans.facebookgwt.api.client.ui.options.FriendAddOptions;
+import com.denormans.facebookgwt.api.client.ui.options.StreamPublishOptions;
+import com.denormans.facebookgwt.api.client.ui.options.StreamShareOptions;
 import com.denormans.facebookgwt.api.shared.ui.DisplayFormats;
 
 import com.google.gwt.core.client.GWT;

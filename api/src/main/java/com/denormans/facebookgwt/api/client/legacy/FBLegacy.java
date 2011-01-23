@@ -19,7 +19,6 @@
 package com.denormans.facebookgwt.api.client.legacy;
 
 import com.denormans.facebookgwt.api.client.FBIntegration;
-import com.denormans.facebookgwt.api.client.legacy.js.FBLegacyMethodOptions;
 import com.denormans.facebookgwt.api.shared.legacy.LegacyMethod;
 
 import com.google.gwt.core.client.Scheduler;

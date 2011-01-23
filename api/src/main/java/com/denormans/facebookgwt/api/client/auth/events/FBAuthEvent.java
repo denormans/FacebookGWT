@@ -18,7 +18,6 @@
 
 package com.denormans.facebookgwt.api.client.auth.events;
 
-import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.common.events.FBEvent;
 
 public abstract class FBAuthEvent<H extends FBAuthHandler> extends FBEvent<H, FBAuthEventResponse> {

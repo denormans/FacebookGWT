@@ -19,7 +19,7 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
+import com.denormans.facebookgwt.api.client.init.FBInitOptions;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 
 import com.google.gwt.core.client.GWT;

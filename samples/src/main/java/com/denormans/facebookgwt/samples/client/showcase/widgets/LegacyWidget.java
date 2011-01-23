@@ -19,10 +19,10 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
-import com.denormans.facebookgwt.api.client.common.js.FBEventResponse;
+import com.denormans.facebookgwt.api.client.common.events.FBEventResponse;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
-import com.denormans.facebookgwt.api.client.legacy.js.FBLegacyMethodOptions;
+import com.denormans.facebookgwt.api.client.legacy.FBLegacyMethodOptions;
 import com.denormans.facebookgwt.api.shared.legacy.LegacyMethods;
 import com.denormans.gwtutil.client.js.EnhancedJSObject;
 import com.denormans.gwtutil.client.js.GenericJSObject;
@@ -37,8 +37,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTMLPanel;
-
-import java.util.List;
 
 public class LegacyWidget extends ShowcaseWidget {
   interface LegacyWidgetUIBinder extends UiBinder<HTMLPanel, LegacyWidget> {}

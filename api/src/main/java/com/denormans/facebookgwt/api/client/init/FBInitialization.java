@@ -24,7 +24,6 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitFailureHandler;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.init.events.HasFBInitHandlers;
-import com.denormans.facebookgwt.api.client.init.js.FBInitOptions;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -232,7 +231,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
           @com.denormans.gwtutil.client.js.JSError::raiseException(Ljava/lang/Object;)(e);
         }
 
-        self.@com.denormans.facebookgwt.api.client.init.FBInitialization::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/init/js/FBInitOptions;)(initOptions);
+        self.@com.denormans.facebookgwt.api.client.init.FBInitialization::handleFBAsyncInit(Lcom/denormans/facebookgwt/api/client/init/FBInitOptions;)(initOptions);
       }
     } catch(e) {
     }

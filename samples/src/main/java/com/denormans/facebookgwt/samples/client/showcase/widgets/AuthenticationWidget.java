@@ -19,11 +19,11 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.auth.events.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
-import com.denormans.facebookgwt.api.client.auth.js.FBAuthEventResponse;
-import com.denormans.facebookgwt.api.client.auth.js.FBLoginOptions;
-import com.denormans.facebookgwt.api.client.auth.js.FBSession;
+import com.denormans.facebookgwt.api.client.auth.FBLoginOptions;
+import com.denormans.facebookgwt.api.client.auth.FBSession;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
