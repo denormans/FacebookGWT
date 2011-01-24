@@ -16,40 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.model;
+package com.denormans.facebookgwt.api.shared.graph;
 
-import com.denormans.facebookgwt.api.shared.graph.ObjectField;
-import com.denormans.facebookgwt.api.shared.graph.ObjectFields;
-import com.denormans.facebookgwt.api.shared.graph.SubscriptionObjectType;
-import com.denormans.facebookgwt.api.shared.graph.SubscriptionObjectTypes;
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-import java.util.List;
-
-public class Subscription extends FBGraphObject {
-  protected Subscription() {
-  }
-
-  public final SubscriptionObjectType getObjectType() {
-    return SubscriptionObjectTypes.valueFromApiValue(getObjectTypeJS());
-  }
-
-  private native String getObjectTypeJS() /*-{
-    return this.object;
-  }-*/;
-
-  public final List<ObjectField> getFields() {
-    return ObjectFields.parseApiValues(getFieldsJS());
-  }
-
-  private native String getFieldsJS() /*-{
-    return this.fields;
-  }-*/;
-
-  public final native String getCallbackURL() /*-{
-    return this.callback_url;
-  }-*/;
-
-  public final native boolean isActive() /*-{
-    return !!this.active;
-  }-*/;
+public interface SubscriptionObjectType extends FBEnum {
 }

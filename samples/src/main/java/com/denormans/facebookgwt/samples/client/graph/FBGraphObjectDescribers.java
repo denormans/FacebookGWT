@@ -660,8 +660,8 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<MessageThread> describeObject(final MessageThread obj) {
-      // todo: describe note
-      return super.describeObject(obj);
+      // todo: describe message thread actions
+      return super.describeObject(obj).addValue("Snippet", obj.getSnippet()).addValue("Message Count", obj.getMessageCount()).addValue("Unread Count", obj.getUnreadCount()).addValue("Tags", obj.getTags()).addValue("Updated Time", obj.getUpdatedTime());
     }
   }
 
@@ -791,8 +791,8 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<Subscription> describeObject(final Subscription obj) {
-      // todo: describe subscription
-      return super.describeObject(obj);
+      // todo: describe subscription actions
+      return super.describeObject(obj).addValue("Object Type", obj.getObjectType()).addValue("Fields", obj.getFields()).addValue("Callback URL", obj.getCallbackURL()).addValue("Active?", obj.isActive());
     }
   }
 
@@ -940,10 +940,16 @@ public class FBGraphObjectDescribers {
                   FBGWT.Graph.User.retrieveEvents(obj.getID(), null, new ListTransformingCallback<Event>(getEventDescriber(), callback));
                 }
               }).
-              addAction("Inbox", new AbstractAction<User, List<ObjectDescription<MessageThread>>>() {
+              addAction("Message Threads", new AbstractAction<User, List<ObjectDescription<MessageThread>>>() {
                 @Override
                 public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<MessageThread>>> callback) {
-                  FBGWT.Graph.User.retrieveInbox(obj.getID(), null, new ListTransformingCallback<MessageThread>(getMessageThreadDescriber(), callback));
+                  FBGWT.Graph.User.retrieveMessageThreads(obj.getID(), null, new ListTransformingCallback<MessageThread>(getMessageThreadDescriber(), callback));
+                }
+              }).
+              addAction("Inbox", new AbstractAction<User, List<ObjectDescription<Note>>>() {
+                @Override
+                public void execute(final User obj, final String param, final AsyncCallback<List<ObjectDescription<Note>>> callback) {
+                  FBGWT.Graph.User.retrieveInbox(obj.getID(), null, new ListTransformingCallback<Note>(getNoteDescriber(), callback));
                 }
               }).
               addAction("Outbox", new AbstractAction<User, List<ObjectDescription<Note>>>() {

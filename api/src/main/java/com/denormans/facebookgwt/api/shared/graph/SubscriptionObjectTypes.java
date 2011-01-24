@@ -18,61 +18,45 @@
 
 package com.denormans.facebookgwt.api.shared.graph;
 
-public enum ConnectionTypes implements ConnectionType {
-  Accounts("accounts"),
-  Activities("activities"),
-  Attending("attending"),
-  Attachments("attachments"),
-  Books("books"),
-  CheckIns("checkins"),
-  Comments("comments"),
-  Declined("declined"),
-  Events("events"),
-  FormerParticipants("former_participants"),
-  WallFeed("feed"),
-  Friends("friends"),
-  FriendLists("friendLists"),
-  Groups("groups"),
-  HomeFeed("home"),
-  Inbox("inbox"),
-  Insights("insights"),
-  Interests("interests"),
-  Invited("invited"),
-  Likes("likes"),
-  Links("links"),
-  Maybe("maybe"),
-  Members("members"),
-  Messages("messages"),
-  Movies("movies"),
-  Music("music"),
-  NoReply("noreply"),
-  Notes("notes"),
-  Outbox("outbox"),
-  Participants("participants"),
-  Picture("picture"),
-  Photos("photos"),
-  PhotoAlbums("albums"),
-  Posts("posts"),
-  Senders("senders"),
-  Shares("shares"),
-  StatusMessages("statuses"),
-  Subscriptions("subscriptions"),
-  Tagged("tagged"),
-  Television("television"),
-  MessageThreads("threads"),
-  Updates("updates"),
-  Videos("videos"),
-  VideoUploads("videos/uploaded"),
-  ;
+import com.denormans.facebookgwt.api.shared.FBEnumCreator;
+
+import java.util.Map;
+
+public enum SubscriptionObjectTypes implements SubscriptionObjectType {
+  Code("code"),
+  Permissions("permissions");
+
+  private static final Map<String, SubscriptionObjectTypes> sSubscriptionObjectTypesByApiValue = Util.createFBEnumByApiValueMap(SubscriptionObjectTypes.class);
+  private static final SubscriptionObjectTypeCreator sSubscriptionObjectTypeCreator = new SubscriptionObjectTypeCreator();
 
   private String apiValue;
 
-  private ConnectionTypes(final String apiValue) {
+  SubscriptionObjectTypes(final String apiValue) {
     this.apiValue = apiValue;
   }
 
-  @Override
   public String getApiValue() {
     return apiValue;
+  }
+
+  public static SubscriptionObjectType valueFromApiValue(final String apiValue) {
+    return Util.valueFromApiValue(sSubscriptionObjectTypesByApiValue, apiValue, sSubscriptionObjectTypeCreator);
+  }
+
+  private static class SubscriptionObjectTypeCreator implements FBEnumCreator<SubscriptionObjectType> {
+    @Override
+    public SubscriptionObjectType create(final String apiValue) {
+      return new SubscriptionObjectType() {
+        @Override
+        public String getApiValue() {
+          return apiValue;
+        }
+
+        @Override
+        public String toString() {
+          return apiValue;
+        }
+      };
+    }
   }
 }

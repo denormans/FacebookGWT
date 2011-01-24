@@ -18,13 +18,11 @@
 
 package com.denormans.facebookgwt.api.client.graph.model;
 
-import com.denormans.facebookgwt.api.shared.FBEnum;
 import com.denormans.facebookgwt.api.shared.graph.PostTarget;
 import com.denormans.facebookgwt.api.shared.graph.PostTargets;
 
 import com.google.gwt.core.client.JsArray;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Post extends Postable {
@@ -82,11 +80,7 @@ public class Post extends Postable {
   // todo: add privacy
 
   public final List<PostTarget> getTargetRestrictions() {
-    String targetRestrictionsJS = getTargetRestrictionsJS();
-    if (targetRestrictionsJS == null || targetRestrictionsJS.length() == 0) {
-      return Collections.emptyList();
-    }
-    return PostTargets.valuesFromApiValues(FBEnum.Util.splitApiValues(targetRestrictionsJS));
+    return PostTargets.parseApiValues(getTargetRestrictionsJS());
   }
 
   private native String getTargetRestrictionsJS() /*-{

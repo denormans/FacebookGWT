@@ -300,7 +300,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    * @param options The call options
    * @param callback Called with the result
    */
-  protected void retrieveInbox(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<MessageThread>> callback) {
+  protected void retrieveInbox(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Note>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Inbox, options, callback);
   }
 
@@ -674,6 +674,17 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
    */
   protected void retrieveSubscriptions(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<Subscription>> callback) {
     retrieveConnections(itemID, ConnectionTypes.Subscriptions, options, callback);
+  }
+
+  /**
+   * Retrieves the given item's threads.
+   *
+   * @param itemID The item ID
+   * @param options The call options
+   * @param callback Called with the result
+   */
+  protected void retrieveMessageThreads(final String itemID, final FBGraphCallOptions options, final AsyncCallback<List<MessageThread>> callback) {
+    retrieveConnections(itemID, ConnectionTypes.MessageThreads, options, callback);
   }
 
   /**

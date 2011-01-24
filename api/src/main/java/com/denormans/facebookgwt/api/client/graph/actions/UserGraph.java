@@ -192,7 +192,12 @@ public class UserGraph extends FBItemGraph<User> {
   }
 
   @Override
-  public void retrieveInbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<MessageThread>> callback) {
+  public void retrieveMessageThreads(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<MessageThread>> callback) {
+    super.retrieveMessageThreads(userID, options, callback);
+  }
+
+  @Override
+  public void retrieveInbox(final String userID, final FBGraphCallOptions options, final AsyncCallback<List<Note>> callback) {
     super.retrieveInbox(userID, options, callback);
   }
 

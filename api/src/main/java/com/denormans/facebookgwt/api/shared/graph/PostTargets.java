@@ -51,6 +51,10 @@ public enum PostTargets implements PostTarget {
     return Util.valueFromApiValue(sPostTargetsByApiValue, apiValue, sPostTargetCreator);
   }
 
+  public static List<PostTarget> parseApiValues(final String apiValues) {
+    return valuesFromApiValues(FBEnum.Util.splitApiValues(apiValues));
+  }
+
   private static class PostTargetCreator implements FBEnumCreator<PostTarget> {
     @Override
     public PostTarget create(final String apiValue) {

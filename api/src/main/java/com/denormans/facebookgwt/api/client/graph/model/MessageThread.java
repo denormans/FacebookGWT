@@ -18,9 +18,31 @@
 
 package com.denormans.facebookgwt.api.client.graph.model;
 
+import com.google.gwt.core.client.JsArrayString;
+
+import java.util.List;
+
 public class MessageThread extends FBGraphObject {
   protected MessageThread() {
   }
 
-  // todo: add message thread fields
+  public final native String getSnippet() /*-{
+    return this.snippet;
+  }-*/;
+
+  public final native int getMessageCount() /*-{
+    return this.message_count || 0;
+  }-*/;
+
+  public final native int getUnreadCount() /*-{
+    return this.unread_count || 0;
+  }-*/;
+
+  public final List<String> getTags() {
+    return convertJsArrayStringToList(getTagsJS());
+  }
+
+  private native JsArrayString getTagsJS() /*-{
+    return this.tags;
+  }-*/;
 }

@@ -38,10 +38,12 @@ public interface FBEnum {
       if (enumValues == null) {
         return null;
       }
+
       List<String> apiValues = new ArrayList<String>(enumValues.size());
       for (final FBEnum enumValue : enumValues) {
         apiValues.add(enumValue.getApiValue());
       }
+
       return apiValues;
     }
 
@@ -56,6 +58,10 @@ public interface FBEnum {
      * Splits the given string into a list of strings with the given token.
      */
     public static List<String> splitApiValues(final String apiValues, final String token) {
+      if (apiValues == null || apiValues.length() == 0) {
+        return null;
+      }
+
       return Arrays.asList(apiValues.split(token));
     }
 
