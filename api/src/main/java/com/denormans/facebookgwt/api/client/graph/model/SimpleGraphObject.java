@@ -25,6 +25,10 @@ public abstract class SimpleGraphObject extends FBGraphObject {
   protected SimpleGraphObject() {
   }
 
+  public final native String getUsername() /*-{
+    return this.username;
+  }-*/;
+
   public final native String getDescription() /*-{
     return this.description;
   }-*/;
@@ -35,6 +39,10 @@ public abstract class SimpleGraphObject extends FBGraphObject {
 
   public final native String getPageURL() /*-{
     return this.link;
+  }-*/;
+
+  public final native String getWebsite() /*-{
+    return this.website;
   }-*/;
 
   public final ObjectCategory getCategory() {
@@ -49,7 +57,31 @@ public abstract class SimpleGraphObject extends FBGraphObject {
     return this.is_community_page == true;
   }-*/;
 
+  public final native boolean canPost() /*-{
+    return this.can_post == true;
+  }-*/;
+
   public final int getNumLikes() {
     return getNumLikesJS();
   }
+
+  public final native String getHometown() /*-{
+    return this.hometown;
+  }-*/;
+
+  public final native String getCurrentLocation() /*-{
+    return this.current_location;
+  }-*/;
+
+  public final native String getBiography() /*-{
+    return this.bio;
+  }-*/;
+
+  public final native String getReleaseDate() /*-{
+    return this.release_date;
+  }-*/;
+
+  public final native String getAwards() /*-{
+    return this.awards;
+  }-*/;
 }

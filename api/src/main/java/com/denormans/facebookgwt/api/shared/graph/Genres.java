@@ -22,26 +22,19 @@ import com.denormans.facebookgwt.api.shared.FBEnumCreator;
 
 import java.util.Map;
 
-public enum ObjectCategories implements ObjectCategory {
-  Author("Author"),
-  Book("Book"),
-  City("City"),
-  FieldOfStudy("Field of study"),
-  GameOrToy("Games/toys"),
-  Interest("Interest"),
-  Movie("Movie"),
-  MusicianOrBand("Musician/band"),
-  Song("Song"),
-  Sport("Sport"),
-  TelevisionShow("Tv show")
+public enum Genres implements Genre {
+  CrappyPunkRock("Crappy Punk Rock"),
+  Drama("Drama"),
+  Pop("Pop"),
+  HardRockOrHeavyMetal("Hard Rock, Heavy Metal")
   ;
 
-  private static final Map<String, ObjectCategories> sObjectCategoriesByApiValue = Util.createFBEnumByApiValueMap(ObjectCategories.class);
-  private static final ObjectCategoryCreator sObjectCategoryCreator = new ObjectCategoryCreator();
+  private static final Map<String, Genres> sGenresByApiValue = Util.createFBEnumByApiValueMap(Genres.class);
+  private static final GenreCreator sGenreCreator = new GenreCreator();
 
   private String apiValue;
 
-  ObjectCategories(final String apiValue) {
+  Genres(final String apiValue) {
     this.apiValue = apiValue;
   }
 
@@ -49,14 +42,14 @@ public enum ObjectCategories implements ObjectCategory {
     return apiValue;
   }
 
-  public static ObjectCategory valueFromApiValue(final String apiValue) {
-    return Util.valueFromApiValue(sObjectCategoriesByApiValue, apiValue, sObjectCategoryCreator);
+  public static Genre valueFromApiValue(final String apiValue) {
+    return Util.valueFromApiValue(sGenresByApiValue, apiValue, sGenreCreator);
   }
 
-  private static class ObjectCategoryCreator implements FBEnumCreator<ObjectCategory> {
+  private static class GenreCreator implements FBEnumCreator<Genre> {
     @Override
-    public ObjectCategory create(final String apiValue) {
-      return new ObjectCategory() {
+    public Genre create(final String apiValue) {
+      return new Genre() {
         @Override
         public String getApiValue() {
           return apiValue;

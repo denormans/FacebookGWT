@@ -50,6 +50,6 @@ public class Subscription extends FBGraphObject {
   }-*/;
 
   public final native boolean isActive() /*-{
-    return !!this.active;
+    return this.active == true;
   }-*/;
 }

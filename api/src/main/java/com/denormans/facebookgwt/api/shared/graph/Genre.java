@@ -16,33 +16,9 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.facebookgwt.api.client.graph.model;
+package com.denormans.facebookgwt.api.shared.graph;
 
-public class TelevisionShow extends SimpleGraphObject {
-  protected TelevisionShow() {
-  }
+import com.denormans.facebookgwt.api.shared.FBEnum;
 
-  public final native String getStarring() /*-{
-    return this.starring;
-  }-*/;
-
-  public final native String getPlotOutline() /*-{
-    return this.plot_outline;
-  }-*/;
-
-  public final native String getNetwork() /*-{
-    return this.network;
-  }-*/;
-
-  public final native String getWrittenBy() /*-{
-    return this.written_by;
-  }-*/;
-
-  public final native String getSeason() /*-{
-    return this.season;
-  }-*/;
-
-  public final native String getSchedule() /*-{
-    return this.schedule;
-  }-*/;
+public interface Genre extends FBEnum {
 }

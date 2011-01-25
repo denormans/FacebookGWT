@@ -20,8 +20,6 @@ package com.denormans.facebookgwt.samples.client.graph;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.common.FBJSObject;
-import com.denormans.facebookgwt.api.client.graph.model.FBGraphObject;
-import com.denormans.facebookgwt.api.client.graph.model.SimpleGraphObject;
 import com.denormans.facebookgwt.api.client.graph.model.Account;
 import com.denormans.facebookgwt.api.client.graph.model.Activity;
 import com.denormans.facebookgwt.api.client.graph.model.Address;
@@ -34,7 +32,9 @@ import com.denormans.facebookgwt.api.client.graph.model.Company;
 import com.denormans.facebookgwt.api.client.graph.model.Education;
 import com.denormans.facebookgwt.api.client.graph.model.EducationYear;
 import com.denormans.facebookgwt.api.client.graph.model.Event;
+import com.denormans.facebookgwt.api.client.graph.model.FBGraphObject;
 import com.denormans.facebookgwt.api.client.graph.model.FriendList;
+import com.denormans.facebookgwt.api.client.graph.model.Game;
 import com.denormans.facebookgwt.api.client.graph.model.Group;
 import com.denormans.facebookgwt.api.client.graph.model.Image;
 import com.denormans.facebookgwt.api.client.graph.model.InsightData;
@@ -58,6 +58,7 @@ import com.denormans.facebookgwt.api.client.graph.model.PostAction;
 import com.denormans.facebookgwt.api.client.graph.model.Postable;
 import com.denormans.facebookgwt.api.client.graph.model.School;
 import com.denormans.facebookgwt.api.client.graph.model.Share;
+import com.denormans.facebookgwt.api.client.graph.model.SimpleGraphObject;
 import com.denormans.facebookgwt.api.client.graph.model.StatusMessage;
 import com.denormans.facebookgwt.api.client.graph.model.Subscription;
 import com.denormans.facebookgwt.api.client.graph.model.TelevisionShow;
@@ -102,11 +103,14 @@ public class FBGraphObjectDescribers {
     objectDescribers.put(ObjectType.Comment, new CommentDescriber());
     objectDescribers.put(ObjectType.Event, new EventDescriber());
     objectDescribers.put(ObjectType.FriendList, new FriendListDescriber());
+    objectDescribers.put(ObjectType.Game, new GameDescriber());
     objectDescribers.put(ObjectType.Group, new GroupDescriber());
     objectDescribers.put(ObjectType.Insights, new InsightsDescriber());
     objectDescribers.put(ObjectType.Link, new LinkDescriber());
     objectDescribers.put(ObjectType.Message, new MessageDescriber());
     objectDescribers.put(ObjectType.MessageThread, new MessageThreadDescriber());
+    objectDescribers.put(ObjectType.Movie, new MovieDescriber());
+    objectDescribers.put(ObjectType.Music, new MusicDescriber());
     objectDescribers.put(ObjectType.Note, new NoteDescriber());
     objectDescribers.put(ObjectType.Page, new PageDescriber());
     objectDescribers.put(ObjectType.Photo, new PhotoDescriber());
@@ -116,6 +120,7 @@ public class FBGraphObjectDescribers {
     objectDescribers.put(ObjectType.Share, new ShareDescriber());
     objectDescribers.put(ObjectType.StatusMessage, new StatusMessageDescriber());
     objectDescribers.put(ObjectType.Subscription, new SubscriptionDescriber());
+    objectDescribers.put(ObjectType.TelevisionShow, new TelevisionShowDescriber());
     objectDescribers.put(ObjectType.User, new UserDescriber());
     objectDescribers.put(ObjectType.Video, new VideoDescriber());
 
@@ -127,10 +132,7 @@ public class FBGraphObjectDescribers {
     objectDescribers.put(ObjectType.Interest, new SimpleGraphObjectDescriber<Interest>(ObjectType.Interest));
     objectDescribers.put(ObjectType.Language, new SimpleGraphObjectDescriber<Location>(ObjectType.Language));
     objectDescribers.put(ObjectType.Location, new SimpleGraphObjectDescriber<Location>(ObjectType.Location));
-    objectDescribers.put(ObjectType.Movie, new SimpleGraphObjectDescriber<Movie>(ObjectType.Movie));
-    objectDescribers.put(ObjectType.Music, new SimpleGraphObjectDescriber<Music>(ObjectType.Music));
     objectDescribers.put(ObjectType.School, new SimpleGraphObjectDescriber<School>(ObjectType.School));
-    objectDescribers.put(ObjectType.TelevisionShow, new SimpleGraphObjectDescriber<TelevisionShow>(ObjectType.TelevisionShow));
     objectDescribers.put(ObjectType.WorkPosition, new SimpleGraphObjectDescriber<WorkPosition>(ObjectType.WorkPosition));
 
     addressDescriber = new AddressDescriber();
@@ -322,8 +324,9 @@ public class FBGraphObjectDescribers {
 
     @Override
     protected ObjectDescription<T> describeObject(final T obj) {
-      return super.describeObject(obj).addValue("Description", obj.getDescription()).addValue("Picture URL", obj.getPictureURL()).addValue("Page URL", obj.getPageURL()).addValue("Category", obj.getCategory()).
-          addValue("Is Community Page?", obj.isCommunityPage()).addValue("# Likes", obj.getNumLikes());
+      return super.describeObject(obj).addValue("Username", obj.getUsername()).addValue("Description", obj.getDescription()).addValue("Picture URL", obj.getPictureURL()).addValue("Page URL", obj.getPageURL()).
+          addValue("Website", obj.getWebsite()).addValue("Category", obj.getCategory()).addValue("Biography", obj.getBiography()).addValue("Hometown", obj.getHometown()).addValue("Current Location", obj.getCurrentLocation()).
+          addValue("Awards", obj.getAwards()).addValue("# Likes", obj.getNumLikes()).addValue("Is Community Page?", obj.isCommunityPage()).addValue("Can Post?", obj.canPost());
     }
   }
 
@@ -603,6 +606,17 @@ public class FBGraphObjectDescribers {
     }
   }
 
+  private static class GameDescriber extends SimpleGraphObjectDescriber<Game> {
+    public GameDescriber() {
+      super(ObjectType.Game);
+    }
+
+    @Override
+    protected ObjectDescription<Game> describeObject(final Game obj) {
+      return super.describeObject(obj).addValue("Mission", obj.getMission()).addValue("Founded", obj.getFounded()).addValue("Company Overview", obj.getCompanyOverview()).addValue("Products", obj.getProducts());
+    }
+  }
+
   private class GroupDescriber extends FBGraphObjectDescriber<Group> {
     public GroupDescriber() {
       super(ObjectType.Group);
@@ -662,6 +676,28 @@ public class FBGraphObjectDescribers {
     protected ObjectDescription<MessageThread> describeObject(final MessageThread obj) {
       // todo: describe message thread actions
       return super.describeObject(obj).addValue("Snippet", obj.getSnippet()).addValue("Message Count", obj.getMessageCount()).addValue("Unread Count", obj.getUnreadCount()).addValue("Tags", obj.getTags()).addValue("Updated Time", obj.getUpdatedTime());
+    }
+  }
+
+  private static class MovieDescriber extends SimpleGraphObjectDescriber<Movie> {
+    public MovieDescriber() {
+      super(ObjectType.Movie);
+    }
+
+    @Override
+    protected ObjectDescription<Movie> describeObject(final Movie obj) {
+      return super.describeObject(obj).addValue("Directed By", obj.getDirectedBy()).addValue("Screenplay By", obj.getScreenplayBy()).addValue("Plot Outline", obj.getPlotOutline()).addValue("Starring", obj.getStarring()).addValue("Studio", obj.getStudio());
+    }
+  }
+
+  private static class MusicDescriber extends SimpleGraphObjectDescriber<Music> {
+    public MusicDescriber() {
+      super(ObjectType.Music);
+    }
+
+    @Override
+    protected ObjectDescription<Music> describeObject(final Music obj) {
+      return super.describeObject(obj).addValue("Genre", obj.getGenre()).addValue("Band Members", obj.getBandMembers()).addValue("Record Label", obj.getRecordLabel());
     }
   }
 
@@ -792,7 +828,19 @@ public class FBGraphObjectDescribers {
     @Override
     protected ObjectDescription<Subscription> describeObject(final Subscription obj) {
       // todo: describe subscription actions
-      return super.describeObject(obj).addValue("Object Type", obj.getObjectType()).addValue("Fields", obj.getFields()).addValue("Callback URL", obj.getCallbackURL()).addValue("Active?", obj.isActive());
+      return super.describeObject(obj).addValue("Object Type", obj.getObjectType()).addValue("Fields", obj.getFields()).addValue("Callback URL", obj.getCallbackURL()).addValue("Is Active?", obj.isActive());
+    }
+  }
+
+  private static class TelevisionShowDescriber extends SimpleGraphObjectDescriber<TelevisionShow> {
+    public TelevisionShowDescriber() {
+      super(ObjectType.TelevisionShow);
+    }
+
+    @Override
+    protected ObjectDescription<TelevisionShow> describeObject(final TelevisionShow obj) {
+      return super.describeObject(obj).addValue("Starring", obj.getStarring()).addValue("Written By", obj.getWrittenBy()).addValue("Plot Outline", obj.getPlotOutline()).addValue("Network", obj.getNetwork()).
+          addValue("Season", obj.getSeason()).addValue("Schedule", obj.getSchedule());
     }
   }
 

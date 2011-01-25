@@ -21,4 +21,24 @@ package com.denormans.facebookgwt.api.client.graph.model;
 public class Movie extends SimpleGraphObject {
   protected Movie() {
   }
+
+  public final native String getDirectedBy() /*-{
+    return this.directed_by;
+  }-*/;
+
+  public final native String getScreenplayBy() /*-{
+    return this.screenplay_by;
+  }-*/;
+
+  public final native String getPlotOutline() /*-{
+    return this.plot_outline;
+  }-*/;
+
+  public final native String getStarring() /*-{
+    return this.starring;
+  }-*/;
+
+  public final native String getStudio() /*-{
+    return this.studio;
+  }-*/;
 }

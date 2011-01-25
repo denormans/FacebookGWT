@@ -18,31 +18,23 @@
 
 package com.denormans.facebookgwt.api.client.graph.model;
 
-public class TelevisionShow extends SimpleGraphObject {
-  protected TelevisionShow() {
+public class Game extends SimpleGraphObject {
+  protected Game() {
   }
 
-  public final native String getStarring() /*-{
-    return this.starring;
+  public final native String getMission() /*-{
+    return this.mission;
   }-*/;
 
-  public final native String getPlotOutline() /*-{
-    return this.plot_outline;
+  public final native String getFounded() /*-{
+    return this.founded;
   }-*/;
 
-  public final native String getNetwork() /*-{
-    return this.network;
+  public final native String getCompanyOverview() /*-{
+    return this.company_overview;
   }-*/;
 
-  public final native String getWrittenBy() /*-{
-    return this.written_by;
-  }-*/;
-
-  public final native String getSeason() /*-{
-    return this.season;
-  }-*/;
-
-  public final native String getSchedule() /*-{
-    return this.schedule;
+  public final native String getProducts() /*-{
+    return this.products;
   }-*/;
 }

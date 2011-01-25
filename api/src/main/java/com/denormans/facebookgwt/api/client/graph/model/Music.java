@@ -18,7 +18,26 @@
 
 package com.denormans.facebookgwt.api.client.graph.model;
 
+import com.denormans.facebookgwt.api.shared.graph.Genre;
+import com.denormans.facebookgwt.api.shared.graph.Genres;
+
 public class Music extends SimpleGraphObject {
   protected Music() {
   }
+
+  public final Genre getGenre() {
+    return Genres.valueFromApiValue(getGenreJS());
+  }
+
+  private native String getGenreJS() /*-{
+    return this.genre;
+  }-*/;
+
+  public final native String getBandMembers() /*-{
+    return this.band_members;
+  }-*/;
+
+  public final native String getRecordLabel() /*-{
+    return this.record_label;
+  }-*/;
 }

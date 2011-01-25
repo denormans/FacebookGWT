@@ -81,6 +81,7 @@ public enum ObjectType {
   Book(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Company(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   EducationYear(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
+  Game(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Interest(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Language(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
   Location(EnumSet.noneOf(ConnectionTypes.class), ObjectFields.SimpleObjectFields),
