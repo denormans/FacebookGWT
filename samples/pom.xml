@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.denormans.facebook-gwt</groupId>
     <artifactId>parent</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.5.0-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
 
@@ -20,7 +20,7 @@
     <dependency>
       <groupId>com.denormans.facebook-gwt</groupId>
       <artifactId>api</artifactId>
-      <version>0.5-SNAPSHOT</version>
+      <version>0.5.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -62,6 +62,22 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>maven-jetty-plugin</artifactId>
+          <configuration>
+              <scanIntervalSeconds>10</scanIntervalSeconds>
+              <stopKey>jettyStopKey</stopKey>
+              <stopPort>8349</stopPort>
+
+              <connectors>
+                  <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                      <port>8341</port>
+                  </connector>
+              </connectors>
+          </configuration>
       </plugin>
     </plugins>
   </build>
