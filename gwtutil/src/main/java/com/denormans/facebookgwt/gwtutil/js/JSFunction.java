@@ -16,22 +16,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.gwtutil.shared;
+package com.denormans.facebookgwt.gwtutil.js;
 
-public interface Transformer<V, R> {
-  R transform(final V value);
+import com.google.gwt.core.client.JavaScriptObject;
 
-  public static class IdentityTransformer<T> implements Transformer<T, T> {
-    private static IdentityTransformer Instance = new IdentityTransformer();
-
-    @SuppressWarnings ( { "unchecked" })
-    public static <T> IdentityTransformer<T> get() {
-      return Instance;
-    }
-
-    @Override
-    public T transform(final T value) {
-      return value;
-    }
+public class JSFunction extends JavaScriptObject {
+  protected JSFunction() {
   }
 }

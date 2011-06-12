@@ -16,21 +16,21 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.gwtutil.shared.events;
+package com.denormans.facebookgwt.gwtutil.shared.events;
 
 import com.google.gwt.event.shared.EventHandler;
 
 /**
- * Handler interface for {@link ValueRemoveEvent} events.
+ * Handler interface for {@link ValueAddEvent} events.
  * 
- * @param <I> the value about to be removed
+ * @param <I> the value about to be added
  */
-public interface ValueRemoveHandler<I> extends EventHandler {
+public interface ValueAddHandler<I> extends EventHandler {
 
   /**
-   * Called when {@link ValueRemoveEvent} is fired.
+   * Called when {@link ValueAddEvent} is fired.
    * 
-   * @param event the {@link ValueRemoveEvent} that was fired
+   * @param event the {@link ValueAddEvent} that was fired
    */
-  void onValueRemove(ValueRemoveEvent<I> event);
+  void onValueAdd(ValueAddEvent<I> event);
 }

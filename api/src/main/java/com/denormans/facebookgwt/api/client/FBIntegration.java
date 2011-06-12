@@ -22,8 +22,8 @@ import com.denormans.facebookgwt.api.client.common.events.FBEventHandler;
 import com.denormans.facebookgwt.api.client.core.FBAPIException;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventType;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
-import com.denormans.gwtutil.client.js.JSFunction;
+import com.denormans.facebookgwt.gwtutil.js.EnhancedJSObject;
+import com.denormans.facebookgwt.gwtutil.js.JSFunction;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;

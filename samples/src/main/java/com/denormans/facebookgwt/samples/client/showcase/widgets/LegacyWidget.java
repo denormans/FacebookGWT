@@ -24,8 +24,8 @@ import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.client.legacy.FBLegacyMethodOptions;
 import com.denormans.facebookgwt.api.shared.legacy.LegacyMethods;
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
-import com.denormans.gwtutil.client.js.GenericJSObject;
+import com.denormans.facebookgwt.gwtutil.js.EnhancedJSObject;
+import com.denormans.facebookgwt.gwtutil.js.GenericJSObject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;

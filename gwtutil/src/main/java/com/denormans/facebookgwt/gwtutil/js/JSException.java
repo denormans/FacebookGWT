@@ -16,7 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.gwtutil.client.js;
+package com.denormans.facebookgwt.gwtutil.js;
 
 public class JSException extends RuntimeException {
   private JSError javaScriptError;

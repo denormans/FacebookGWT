@@ -16,21 +16,23 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.gwtutil.shared.events;
+package com.denormans.facebookgwt.gwtutil.shared.events;
 
-import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.event.shared.HasHandlers;
 
 /**
- * Handler interface for {@link ValueAddEvent} events.
+ * A widget that implements this interface is a public source of
+ * {@link ValueRemoveEvent} events.
  * 
- * @param <I> the value about to be added
+ * @param <I> the value about to be removed
  */
-public interface ValueAddHandler<I> extends EventHandler {
-
+public interface HasValueRemoveHandlers<I> extends HasHandlers {
   /**
-   * Called when {@link ValueAddEvent} is fired.
+   * Adds a {@link ValueRemoveEvent} handler.
    * 
-   * @param event the {@link ValueAddEvent} that was fired
+   * @param handler the handler
+   * @return the registration for the event
    */
-  void onValueAdd(ValueAddEvent<I> event);
+  HandlerRegistration addValueRemoveHandler(ValueRemoveHandler<I> handler);
 }

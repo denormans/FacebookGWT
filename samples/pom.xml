@@ -43,7 +43,7 @@
         <configuration>
           <module>com.denormans.facebookgwt.samples.FacebookGWTSamples</module>
           
-          <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+          <extraJvmArgs>-Xmx512M -Xss1M</extraJvmArgs>
 
           <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
         </configuration>

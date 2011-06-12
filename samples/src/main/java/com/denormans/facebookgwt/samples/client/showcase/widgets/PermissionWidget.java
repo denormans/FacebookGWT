@@ -19,9 +19,9 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
-import com.denormans.gwtutil.shared.events.HasValueRemoveHandlers;
-import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
-import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
+import com.denormans.facebookgwt.gwtutil.shared.events.HasValueRemoveHandlers;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueRemoveEvent;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueRemoveHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;

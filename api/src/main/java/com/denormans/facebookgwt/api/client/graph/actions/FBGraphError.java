@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.graph.actions;
 
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+import com.denormans.facebookgwt.gwtutil.js.EnhancedJSObject;
 
 public class FBGraphError extends EnhancedJSObject {
   protected FBGraphError() {

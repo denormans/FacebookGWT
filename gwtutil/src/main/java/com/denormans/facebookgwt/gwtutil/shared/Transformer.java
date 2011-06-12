@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -16,23 +16,22 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.gwtutil.shared.events;
+package com.denormans.facebookgwt.gwtutil.shared;
 
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.event.shared.HasHandlers;
+public interface Transformer<V, R> {
+  R transform(final V value);
 
-/**
- * A widget that implements this interface is a public source of
- * {@link ValueRemoveEvent} events.
- * 
- * @param <I> the value about to be removed
- */
-public interface HasValueRemoveHandlers<I> extends HasHandlers {
-  /**
-   * Adds a {@link ValueRemoveEvent} handler.
-   * 
-   * @param handler the handler
-   * @return the registration for the event
-   */
-  HandlerRegistration addValueRemoveHandler(ValueRemoveHandler<I> handler);
+  public static class IdentityTransformer<T> implements Transformer<T, T> {
+    private static IdentityTransformer Instance = new IdentityTransformer();
+
+    @SuppressWarnings ( { "unchecked" })
+    public static <T> IdentityTransformer<T> get() {
+      return Instance;
+    }
+
+    @Override
+    public T transform(final T value) {
+      return value;
+    }
+  }
 }

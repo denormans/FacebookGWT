@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.common;
 
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+import com.denormans.facebookgwt.gwtutil.js.EnhancedJSObject;
 
 public abstract class FBJSObject extends EnhancedJSObject {
   protected FBJSObject() {

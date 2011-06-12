@@ -74,7 +74,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
         self.@com.denormans.facebookgwt.api.client.FBIntegration::executeCallback(Lcom/google/gwt/user/client/rpc/AsyncCallback;Ljava/lang/Object;)(callback, response);
       }, forceReload);
     } catch(e) {
-      var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
+      var ex = @com.denormans.facebookgwt.gwtutil.js.JSError::createException(Ljava/lang/Object;)(e);
       callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
     }
   }-*/;
@@ -126,7 +126,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       }, loginOptions);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
+        var ex = @com.denormans.facebookgwt.gwtutil.js.JSError::createException(Ljava/lang/Object;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
         throw e;
@@ -162,7 +162,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       });
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
+        var ex = @com.denormans.facebookgwt.gwtutil.js.JSError::createException(Ljava/lang/Object;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
         throw e;

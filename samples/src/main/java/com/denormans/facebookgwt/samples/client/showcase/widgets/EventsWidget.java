@@ -22,9 +22,9 @@ import com.denormans.facebookgwt.api.client.FBGWT;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
-import com.denormans.gwtutil.shared.events.ValueAddEvent;
-import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
-import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueAddEvent;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueRemoveEvent;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueRemoveHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

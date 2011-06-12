@@ -19,9 +19,9 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.shared.common.events.FBEventTypes;
-import com.denormans.gwtutil.shared.events.HasValueAddHandlers;
-import com.denormans.gwtutil.shared.events.ValueAddEvent;
-import com.denormans.gwtutil.shared.events.ValueAddHandler;
+import com.denormans.facebookgwt.gwtutil.shared.events.HasValueAddHandlers;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueAddEvent;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueAddHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;

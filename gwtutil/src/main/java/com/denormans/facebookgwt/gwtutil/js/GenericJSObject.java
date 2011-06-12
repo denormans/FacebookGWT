@@ -16,7 +16,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.gwtutil.client.js;
+package com.denormans.facebookgwt.gwtutil.js;
 
 import com.google.gwt.core.client.JavaScriptObject;
 

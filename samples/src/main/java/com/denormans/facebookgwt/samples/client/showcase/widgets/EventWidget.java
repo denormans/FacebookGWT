@@ -36,9 +36,9 @@ import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateEvent;
 import com.denormans.facebookgwt.api.client.ui.events.FBEdgeCreateHandler;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderEvent;
 import com.denormans.facebookgwt.api.client.ui.events.XFBMLRenderHandler;
-import com.denormans.gwtutil.shared.events.HasValueRemoveHandlers;
-import com.denormans.gwtutil.shared.events.ValueRemoveEvent;
-import com.denormans.gwtutil.shared.events.ValueRemoveHandler;
+import com.denormans.facebookgwt.gwtutil.shared.events.HasValueRemoveHandlers;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueRemoveEvent;
+import com.denormans.facebookgwt.gwtutil.shared.events.ValueRemoveHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;

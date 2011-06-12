@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -16,11 +16,21 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.denormans.gwtutil.client.js;
+package com.denormans.facebookgwt.gwtutil.shared.events;
 
-import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.event.shared.EventHandler;
 
-public class JSFunction extends JavaScriptObject {
-  protected JSFunction() {
-  }
+/**
+ * Handler interface for {@link ValueRemoveEvent} events.
+ * 
+ * @param <I> the value about to be removed
+ */
+public interface ValueRemoveHandler<I> extends EventHandler {
+
+  /**
+   * Called when {@link ValueRemoveEvent} is fired.
+   * 
+   * @param event the {@link ValueRemoveEvent} that was fired
+   */
+  void onValueRemove(ValueRemoveEvent<I> event);
 }

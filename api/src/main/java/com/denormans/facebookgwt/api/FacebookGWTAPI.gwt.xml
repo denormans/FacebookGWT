@@ -2,7 +2,7 @@
 <module>
   <inherits name='com.google.gwt.user.User'/>
   <inherits name="com.google.gwt.jsonp.Jsonp"/>
-  <inherits name="com.denormans.gwtutil.GWTUtil"/>
+  <inherits name="com.denormans.facebookgwt.gwtutil.GWTUtil"/>
 
   <source path="client"/>
   <source path="shared"/>

@@ -19,7 +19,7 @@
 package com.denormans.facebookgwt.api.client.ui.model;
 
 import com.denormans.facebookgwt.api.client.common.FBJSObject;
-import com.denormans.gwtutil.client.js.EnhancedJSObject;
+import com.denormans.facebookgwt.gwtutil.js.EnhancedJSObject;
 
 public abstract class Media extends FBJSObject {
   protected static <T extends Media> T createMedia(final String type) {

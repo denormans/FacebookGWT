@@ -35,7 +35,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
-          <module>com.denormans.gwtutil.GWTUtil</module>
+          <module>com.denormans.facebookgwt.gwtutil.GWTUtil</module>
         </configuration>
         <executions>
           <execution>
