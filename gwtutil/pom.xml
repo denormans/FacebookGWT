@@ -4,17 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>com.denormans.facebook-gwt</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.5-SNAPSHOT</version>
+    <relativePath>../parent</relativePath>
+  </parent>
+
   <artifactId>gwtutil</artifactId>
   <packaging>jar</packaging>
 
   <name>deNormans GWT Utilities</name>
-
-  <!-- TODO: break off into separate project -->
-  <parent>
-    <artifactId>facebook-gwt</artifactId>
-    <groupId>com.denormans</groupId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
 
   <dependencies>
     <dependency>
