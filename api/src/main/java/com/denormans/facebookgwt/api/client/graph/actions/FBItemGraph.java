@@ -925,7 +925,7 @@ public abstract class FBItemGraph<T extends FBGraphObject> extends FBIntegration
       $wnd.FB.api(path, method, params, cb);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.gwtutil.js.JSError::createException(Ljava/lang/Object;)(e);
+        var ex = @com.denormans.facebookgwt.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
         throw e;

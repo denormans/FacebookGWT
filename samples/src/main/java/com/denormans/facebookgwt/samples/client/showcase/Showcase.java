@@ -31,7 +31,7 @@ import com.denormans.facebookgwt.samples.client.showcase.widgets.SocialWidgetsWi
 import com.denormans.facebookgwt.samples.client.showcase.widgets.InitializationWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.LegacyWidget;
 import com.denormans.facebookgwt.samples.client.showcase.widgets.UIMethodsWidget;
-import com.denormans.facebookgwt.gwtutil.js.EnhancedJSObject;
+import com.denormans.facebookgwt.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;

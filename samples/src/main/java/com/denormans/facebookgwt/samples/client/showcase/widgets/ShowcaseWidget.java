@@ -22,7 +22,7 @@ import com.denormans.facebookgwt.api.client.common.events.FBEvent;
 import com.denormans.facebookgwt.samples.client.FacebookGWTSamples;
 import com.denormans.facebookgwt.samples.client.describe.ObjectDescriber;
 import com.denormans.facebookgwt.samples.client.showcase.Showcase;
-import com.denormans.facebookgwt.gwtutil.js.EnhancedJSObject;
+import com.denormans.facebookgwt.gwtutil.client.js.EnhancedJSObject;
 
 import com.google.gwt.user.client.ui.Composite;
 

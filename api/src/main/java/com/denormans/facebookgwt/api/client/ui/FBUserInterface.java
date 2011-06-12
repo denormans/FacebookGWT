@@ -250,7 +250,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
       $wnd.FB.ui(methodOptions, cb);
     } catch(e) {
       if (callback != null) {
-        var ex = @com.denormans.facebookgwt.gwtutil.js.JSError::createException(Ljava/lang/Object;)(e);
+        var ex = @com.denormans.facebookgwt.gwtutil.client.js.JSError::createException(Ljava/lang/Object;)(e);
         callback.@com.google.gwt.user.client.rpc.AsyncCallback::onFailure(Ljava/lang/Throwable;)(ex);
       } else {
         throw e;
