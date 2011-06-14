@@ -10,7 +10,7 @@
 
   <groupId>com.denormans.facebook-gwt</groupId>
   <artifactId>parent</artifactId>
-  <version>0.5.3-SNAPSHOT</version>
+  <version>0.5.3</version>
   <packaging>pom</packaging>
 
   <name>Facebook GWT Parent</name>
