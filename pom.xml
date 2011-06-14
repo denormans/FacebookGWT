@@ -48,4 +48,12 @@
       </plugin>
     </plugins>
   </build>
+
+  <developers>
+    <developer>
+      <name>Michael D. Norman</name>
+      <email>michael.norman@denormans.com</email>
+      <organization>deNormans</organization>
+    </developer>
+  </developers>
 </project>
