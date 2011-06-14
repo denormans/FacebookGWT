@@ -43,7 +43,7 @@
         <version>2.1</version>
         <configuration>
           <preparationGoals>clean source:jar install</preparationGoals>
-          <goals>install</goals>
+          <goals>deploy</goals>
         </configuration>
       </plugin>
     </plugins>
