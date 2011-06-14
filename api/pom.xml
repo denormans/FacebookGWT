@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.denormans.facebook-gwt</groupId>
     <artifactId>parent</artifactId>
-    <version>0.5.4</version>
+    <version>0.5.5-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
 
@@ -17,7 +17,7 @@
     <dependency>
       <groupId>com.denormans.facebook-gwt</groupId>
       <artifactId>gwtutil</artifactId>
-      <version>0.5.4</version>
+      <version>0.5.5-SNAPSHOT</version>
     </dependency>
 
     <dependency>
