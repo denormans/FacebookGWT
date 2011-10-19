@@ -239,6 +239,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
 
   @SuppressWarnings ({ "UnusedDeclaration" })
   private synchronized void handleFBAsyncInit(final FBInitOptions initOptions) {
+    
     try {
       initializationState = InitializationState.ScriptLoaded;
 
