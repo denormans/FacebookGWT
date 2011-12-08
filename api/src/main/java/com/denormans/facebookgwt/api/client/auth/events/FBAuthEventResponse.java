@@ -38,7 +38,7 @@ public class FBAuthEventResponse extends FBEventResponse {
   }-*/;
 
   public final native boolean hasSession() /*-{
-    return this.session != null;
+    return this.authResponse != null;
   }-*/;
 
   public final boolean isConnected() {
@@ -46,7 +46,7 @@ public class FBAuthEventResponse extends FBEventResponse {
   }
 
   public final native FBSession getSession() /*-{
-    return this.session;
+    return this.authResponse;
   }-*/;
 
   public final List<FBPermission> getPermissions() {
@@ -54,6 +54,6 @@ public class FBAuthEventResponse extends FBEventResponse {
   }
 
   private native String getPermissionsJS() /*-{
-    return this.perms || "";
+    return this.scope || "";
   }-*/;
 }

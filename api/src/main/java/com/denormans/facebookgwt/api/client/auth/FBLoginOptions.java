@@ -47,7 +47,7 @@ public class FBLoginOptions extends FBOptions {
   }
 
   private native String getPermissionsJS() /*-{
-    return this.perms || "";
+    return this.scope || "";
   }-*/;
 
   public final FBLoginOptions setPermissions(final FBPermission... permissions) {
@@ -65,6 +65,6 @@ public class FBLoginOptions extends FBOptions {
   }
 
   private native void setPermissionsJS(final String permissions) /*-{
-    this.perms = permissions;
+    this.scope = permissions;
   }-*/;
 }

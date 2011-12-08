@@ -25,11 +25,14 @@ import java.util.Map;
 public enum FBEventTypes implements FBEventType {
   AuthLogin("auth.login"),
   AuthLogout("auth.logout"),
-  AuthSessionChange("auth.sessionChange"),
+  AuthSessionChange("auth.authResponseChange"),
   AuthStatusChange("auth.statusChange"),
+  AuthPrompt("auth.prompt"),
   XFBMLRender("xfbml.render"),
   EdgeCreate("edge.create"),
-  CommentsAdd("comments.add"),
+  EdgeRemove("edge.remove"),
+  CommentCreate("comment.create"),
+  CommentRemove("comment.remove"),
   Log("fb.log");
 
   private static final Map<String, FBEventTypes> sEventTypeByApiValue = Util.createFBEnumByApiValueMap(FBEventTypes.class);

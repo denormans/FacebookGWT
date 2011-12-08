@@ -53,7 +53,7 @@ public class FBInitOptions extends FBOptions {
   public static FBInitOptions createInitOptions(final String applicationID, final boolean parseXFBMLTags) {
     return createInitOptions(applicationID).setParseXFBMLTags(parseXFBMLTags);
   }
-
+  
   protected FBInitOptions() {
   }
 
@@ -69,11 +69,29 @@ public class FBInitOptions extends FBOptions {
   public final native boolean getEnableCookieSupport() /*-{
     return this.cookie;
   }-*/;
+  
+  public final native String getChannelURL() /*-{
+  return this.channelUrl;
+}-*/;
+
+public final native FBInitOptions setChannelURL(final String channelURL) /*-{
+  this.channelUrl = channelURL;
+  return this;
+}-*/;
 
   public final native FBInitOptions setEnableCookieSupport(final boolean enableCookieSupport) /*-{
     this.cookie = enableCookieSupport;
     return this;
   }-*/;
+  
+  public final native boolean getEnableOAuthSupport() /*-{
+  return this.oauth;
+}-*/;
+
+public final native FBInitOptions setEnableOAuthSupport(final boolean enableOAuthSupport) /*-{
+  this.oauth = enableOAuthSupport;
+  return this;
+}-*/;
 
   public final native boolean getEnableLogging() /*-{
     return this.logging;
@@ -85,11 +103,11 @@ public class FBInitOptions extends FBOptions {
   }-*/;
 
   public final native FBSession getSession() /*-{
-    return this.session;
+    return this.authResponse;
   }-*/;
 
   public final native FBInitOptions setSession(final FBSession session) /*-{
-    this.session = session;
+    this.authResponse = session;
     return this;
   }-*/;
 

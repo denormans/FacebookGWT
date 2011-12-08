@@ -62,7 +62,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       }
     });
   }
-
+  
   private native void retrieveLoginStatusJS(final boolean forceReload, final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       var self = this;
@@ -85,7 +85,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
    * @return The Facebook session
    */
   public native FBSession getSession() /*-{
-    return $wnd.FB != null ? $wnd.FB.getSession() : {};
+    return $wnd.FB != null ? $wnd.FB.getAuthResponse() : {};
   }-*/;
 
   /**
@@ -111,7 +111,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       }
     });
   }
-
+  
   private native void loginJS(final FBLoginOptions loginOptions, final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       var self = this;
@@ -147,7 +147,7 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
       }
     });
   }
-
+  
   private native void logoutJS(final AsyncCallback<FBAuthEventResponse> callback) /*-{
     try {
       var self = this;

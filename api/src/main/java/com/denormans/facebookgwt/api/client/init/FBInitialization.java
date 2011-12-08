@@ -51,7 +51,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
   public static final int InitializationTimeoutSeconds = 10;
 
   public static final String FacebookRootElementID = "fb-root";
-  public static final String FacebookScriptElementID = "fb-script-all";
+  public static final String FacebookScriptElementID = "facebook-jssdk";
   public static final String DefaultLocale = "en_US";
   private static final String FacebookScriptServer = "connect.facebook.net";
   private static final String FacebookScriptName = "all.js";
@@ -192,7 +192,7 @@ public final class FBInitialization implements HasFBInitHandlers  {
 
   private boolean hasFacebookScriptElement() {
     Document doc = Document.get();
-    if (doc.getElementById(FacebookScriptElementID) != null) {
+    if (doc.getElementById(FacebookScriptElementID) != null && doc.getElementById(FacebookRootElementID) != null) {
       return true;
     }
 

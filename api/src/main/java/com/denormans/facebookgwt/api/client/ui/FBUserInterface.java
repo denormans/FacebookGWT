@@ -261,7 +261,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
   @Override
   protected void handleFBEvent(final FBEventTypes eventType, final Object apiResponse) {
     switch (eventType) {
-      case CommentsAdd:
+      case CommentCreate:
         FBAddCommentEvent.fire(this, ((JavaScriptObject) apiResponse).<FBAddCommentEventResponse>cast());
         break;
 
@@ -280,7 +280,7 @@ public final class FBUserInterface extends FBIntegration implements HasFBUIHandl
 
   @Override
   public HandlerRegistration addFBAddCommentHandler(final FBAddCommentHandler handler) {
-    return addFBEventHandler(handler, FBAddCommentEvent.getType(), FBEventTypes.CommentsAdd);
+    return addFBEventHandler(handler, FBAddCommentEvent.getType(), FBEventTypes.CommentCreate);
   }
 
   @Override
