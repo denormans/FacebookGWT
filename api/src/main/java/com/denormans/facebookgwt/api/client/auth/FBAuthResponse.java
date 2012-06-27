@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -22,16 +22,12 @@ import com.denormans.facebookgwt.api.client.common.FBJSObject;
 
 import java.util.Date;
 
-public class FBSession extends FBJSObject {
-  protected FBSession() {
+public class FBAuthResponse extends FBJSObject {
+  protected FBAuthResponse() {
   }
 
-  public final native String getSessionKey() /*-{
-    return this.session_key;
-  }-*/;
-
   public final native String getUserID() /*-{
-    return this.uid;
+    return this.userID;
   }-*/;
 
   public final Date getExpirationDate() {
@@ -39,22 +35,14 @@ public class FBSession extends FBJSObject {
   }
 
   public final native int getExpirationInSeconds() /*-{
-    return this.expires || 0;
-  }-*/;
-
-  public final native String getSecret() /*-{
-    return this.secret;
-  }-*/;
-
-  public final native String getBaseDomain() /*-{
-    return this.base_domain;
+    return this.expiresIn || 0;
   }-*/;
 
   public final native String getAccessToken() /*-{
-    return this.access_token;
+    return this.accessToken;
   }-*/;
 
   public final native String getSignature() /*-{
-    return this.sig;
+    return this.signedRequest;
   }-*/;
 }

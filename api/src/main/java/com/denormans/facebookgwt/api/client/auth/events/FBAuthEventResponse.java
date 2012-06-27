@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -18,10 +18,12 @@
 
 package com.denormans.facebookgwt.api.client.auth.events;
 
-import com.denormans.facebookgwt.api.client.auth.FBSession;
+import com.denormans.facebookgwt.api.client.auth.FBAuthResponse;
 import com.denormans.facebookgwt.api.client.auth.Permissions;
 import com.denormans.facebookgwt.api.client.common.events.FBEventResponse;
-import com.denormans.facebookgwt.api.shared.auth.*;
+import com.denormans.facebookgwt.api.shared.auth.FBPermission;
+import com.denormans.facebookgwt.api.shared.auth.FBUserStatus;
+import com.denormans.facebookgwt.api.shared.auth.FBUserStatuses;
 
 import java.util.List;
 
@@ -45,10 +47,11 @@ public class FBAuthEventResponse extends FBEventResponse {
     return hasSession() && getStatus() == FBUserStatuses.Connected;
   }
 
-  public final native FBSession getSession() /*-{
-    return this.session;
+  public final native FBAuthResponse getAuthResponse() /*-{
+    return this.authResponse;
   }-*/;
 
+  @Deprecated
   public final List<FBPermission> getPermissions() {
     return Permissions.parseApiValues(getPermissionsJS());
   }

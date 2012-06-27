@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -80,12 +80,12 @@ public final class FBAuthentication extends FBIntegration implements HasFBAuthHa
   }-*/;
 
   /**
-   * Gets the session synchronously.  If Facebook is not initialized, this will return an empty object.
+   * Gets the auth response synchronously.  If Facebook is not initialized, this will return an empty object.
    *
-   * @return The Facebook session
+   * @return The Facebook auth response
    */
-  public native FBSession getSession() /*-{
-    return $wnd.FB != null ? $wnd.FB.getSession() : {};
+  public native FBAuthResponse getAuthResponse() /*-{
+    return $wnd.FB != null ? $wnd.FB.getAuthResponse() : {};
   }-*/;
 
   /**

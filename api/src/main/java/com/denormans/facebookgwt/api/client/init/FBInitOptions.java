@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -18,7 +18,7 @@
 
 package com.denormans.facebookgwt.api.client.init;
 
-import com.denormans.facebookgwt.api.client.auth.FBSession;
+import com.denormans.facebookgwt.api.client.auth.FBAuthResponse;
 import com.denormans.facebookgwt.api.client.common.FBOptions;
 
 public class FBInitOptions extends FBOptions {
@@ -84,12 +84,12 @@ public class FBInitOptions extends FBOptions {
     return this;
   }-*/;
 
-  public final native FBSession getSession() /*-{
-    return this.session;
+  public final native FBAuthResponse getAuthResponse() /*-{
+    return this.authResponse;
   }-*/;
 
-  public final native FBInitOptions setSession(final FBSession session) /*-{
-    this.session = session;
+  public final native FBInitOptions setAuthResponse(final FBAuthResponse authResponse) /*-{
+    this.authResponse = authResponse;
     return this;
   }-*/;
 
@@ -110,4 +110,24 @@ public class FBInitOptions extends FBOptions {
     this.xfbml = parseXFBMLTags;
     return this;
   }-*/;
+
+  public final native String getChannelURL() /*-{
+    return this.channelUrl;
+  }-*/;
+
+  public final native FBInitOptions setChannelURL(final String channelURL) /*-{
+    this.channelURL = channelURL;
+    return this;
+  }-*/;
+
+  public final native boolean isFrictionlessRequestsEnabled() /*-{
+    return this.frictionlessRequests;
+  }-*/;
+
+  public final native FBInitOptions setFrictionlessRequestsEnabled(final boolean frictionlessRequestsEnabled) /*-{
+    this.frictionlessRequests = frictionlessRequestsEnabled;
+    return this;
+  }-*/;
+
+  // todo: add hideFlashCallback
 }

@@ -3,7 +3,7 @@
              xmlns:sc="urn:import:com.denormans.facebookgwt.samples.client.showcase.widgets">
   <g:HTMLPanel>
     <div class="FBGWTField">
-      <g:Button ui:field="getSessionButton">Get Session</g:Button>
+      <g:Button ui:field="getAuthResponseButton">Get Auth Response</g:Button>
     </div>
 
 

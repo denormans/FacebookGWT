@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -19,11 +19,11 @@
 package com.denormans.facebookgwt.samples.client.showcase.widgets;
 
 import com.denormans.facebookgwt.api.client.FBGWT;
+import com.denormans.facebookgwt.api.client.auth.FBAuthResponse;
+import com.denormans.facebookgwt.api.client.auth.FBLoginOptions;
 import com.denormans.facebookgwt.api.client.auth.events.FBAuthEventResponse;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeEvent;
 import com.denormans.facebookgwt.api.client.auth.events.FBSessionChangeHandler;
-import com.denormans.facebookgwt.api.client.auth.FBLoginOptions;
-import com.denormans.facebookgwt.api.client.auth.FBSession;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessEvent;
 import com.denormans.facebookgwt.api.client.init.events.FBInitSuccessHandler;
 import com.denormans.facebookgwt.api.shared.auth.FBPermission;
@@ -51,7 +51,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
 //  interface FBLoginOptionsEditorDriver extends SimpleBeanEditorDriver<FBLoginOptions, FBLoginOptionsEditor> {}
 //  static FBLoginOptionsEditorDriver sFBLoginOptionsEditorDriver = GWT.create(FBLoginOptionsEditorDriver.class);
 
-  @UiField Button getSessionButton;
+  @UiField Button getAuthResponseButton;
 
   @UiField Button checkStatusButton;
   @UiField CheckBox checkStatusForceReloadCheckbox;
@@ -68,7 +68,7 @@ public class AuthenticationWidget extends ShowcaseWidget {
     FBGWT.Init.addFBInitSuccessHandler(new FBInitSuccessHandler() {
       @Override
       public void onFBInitSuccess(final FBInitSuccessEvent event) {
-        getSessionButton.setEnabled(FBGWT.Init.isInitialized());
+        getAuthResponseButton.setEnabled(FBGWT.Init.isInitialized());
         checkStatusButton.setEnabled(FBGWT.Init.isInitialized());
         checkStatusForceReloadCheckbox.setEnabled(FBGWT.Init.isInitialized());
         loginOptionsEditor.setEnabled(FBGWT.Init.isInitialized());
@@ -123,11 +123,11 @@ public class AuthenticationWidget extends ShowcaseWidget {
     logoutButton.setEnabled(isInitialized && isConnected);
   }
 
-  @UiHandler ("getSessionButton")
+  @UiHandler ("getAuthResponseButton")
   public void handleGetSessionButtonClick(final ClickEvent event) {
-    FBSession session = FBGWT.Auth.getSession();
-    addApiEventMessage("Get Session result", session);
-    setItemDisplay("Session", session);
+    FBAuthResponse authResponse = FBGWT.Auth.getAuthResponse();
+    addApiEventMessage("Get Auth Response result", authResponse);
+    setItemDisplay("Auth Response", authResponse);
   }
 
   @UiHandler ("checkStatusButton")

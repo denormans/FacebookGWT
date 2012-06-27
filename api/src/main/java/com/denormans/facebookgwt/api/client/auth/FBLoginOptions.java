@@ -3,7 +3,7 @@
  * http://www.denormans.com/
  * All rights reserved.
  *
- * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You 
+ * This software is the confidential and proprietary information of deNormans ("Confidential Information"). You
  * shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license
  * agreement you entered into with deNormans.
  *
@@ -47,7 +47,7 @@ public class FBLoginOptions extends FBOptions {
   }
 
   private native String getPermissionsJS() /*-{
-    return this.perms || "";
+    return this.scope || "";
   }-*/;
 
   public final FBLoginOptions setPermissions(final FBPermission... permissions) {
@@ -65,6 +65,6 @@ public class FBLoginOptions extends FBOptions {
   }
 
   private native void setPermissionsJS(final String permissions) /*-{
-    this.perms = permissions;
+    this.scope = permissions;
   }-*/;
 }
