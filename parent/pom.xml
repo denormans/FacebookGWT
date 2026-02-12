@@ -20,7 +20,7 @@
 
     <java.source.version>1.6</java.source.version>
     <java.target.version>${java.source.version}</java.target.version>
-    <gwt.version>2.9.0</gwt.version>
+    <gwt.version>2.10.0</gwt.version>
   </properties>
 
   <dependencyManagement>
