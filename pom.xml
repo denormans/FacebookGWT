@@ -42,7 +42,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.3.1</version>
         <configuration>
           <preparationGoals>clean source:jar install</preparationGoals>
           <goals>deploy</goals>
